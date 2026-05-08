@@ -1,0 +1,3752 @@
+[
+  {
+    "id": "beijing-001",
+    "name": "华彬高尔夫俱乐部",
+    "location": "北京市昌平区",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 39.95076258848953,
+    "longitude": 116.16975730536275,
+    "par": 72
+  },
+  {
+    "id": "beijing-002",
+    "name": "北京国际高尔夫俱乐部",
+    "location": "北京市海淀区",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 40.0534773190195,
+    "longitude": 116.76782525543102,
+    "par": 72
+  },
+  {
+    "id": "beijing-003",
+    "name": "万柳高尔夫俱乐部",
+    "location": "北京市朝阳区",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 39.50928771310059,
+    "longitude": 116.43798281089454,
+    "par": 72
+  },
+  {
+    "id": "beijing-004",
+    "name": "香山国际高尔夫",
+    "location": "北京市顺义区",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 39.505872097175306,
+    "longitude": 116.74098454908318,
+    "par": 72
+  },
+  {
+    "id": "beijing-005",
+    "name": "CBD国际高尔夫",
+    "location": "北京市怀柔区",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 40.10635724825646,
+    "longitude": 116.66369096045719,
+    "par": 72
+  },
+  {
+    "id": "beijing-006",
+    "name": "伯爵园高尔夫俱乐部",
+    "location": "北京市通州区",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 39.829471363918714,
+    "longitude": 116.89146886941916,
+    "par": 72
+  },
+  {
+    "id": "beijing-007",
+    "name": "北京红枫湖高尔夫俱乐部",
+    "location": "北京市大兴区",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 39.79644761179078,
+    "longitude": 116.58248971790118,
+    "par": 72
+  },
+  {
+    "id": "beijing-008",
+    "name": "北京 Golden Harbor 高尔夫",
+    "location": "北京市昌平区",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 39.90613208745283,
+    "longitude": 116.88165958136932,
+    "par": 72
+  },
+  {
+    "id": "beijing-009",
+    "name": "龙熙温泉高尔夫",
+    "location": "北京市海淀区",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 39.64642077241238,
+    "longitude": 116.68911547148194,
+    "par": 71
+  },
+  {
+    "id": "beijing-010",
+    "name": "太伟高尔夫",
+    "location": "北京市朝阳区",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 39.52186273436567,
+    "longitude": 116.28201205358341,
+    "par": 72
+  },
+  {
+    "id": "beijing-011",
+    "name": "顺峰高尔夫",
+    "location": "北京市顺义区",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 40.08391628928461,
+    "longitude": 116.4052875158151,
+    "par": 71
+  },
+  {
+    "id": "beijing-012",
+    "name": "清河湾高尔夫",
+    "location": "北京市怀柔区",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 39.61266544264513,
+    "longitude": 116.12047254953755,
+    "par": 71
+  },
+  {
+    "id": "beijing-013",
+    "name": "鸿华高尔夫",
+    "location": "北京市通州区",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 40.085397006932766,
+    "longitude": 116.8281418668789,
+    "par": 72
+  },
+  {
+    "id": "beijing-014",
+    "name": "叠泉高尔夫",
+    "location": "北京市大兴区",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 39.69703253558084,
+    "longitude": 116.75861369383028,
+    "par": 72
+  },
+  {
+    "id": "beijing-015",
+    "name": "森林假日高尔夫",
+    "location": "北京市昌平区",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 39.53330793233118,
+    "longitude": 116.78662741997981,
+    "par": 72
+  },
+  {
+    "id": "beijing-016",
+    "name": "北辰高尔夫",
+    "location": "北京市海淀区",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 40.28475365294532,
+    "longitude": 116.51612047479018,
+    "par": 72
+  },
+  {
+    "id": "beijing-017",
+    "name": "中粮高尔夫",
+    "location": "北京市朝阳区",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 39.8917933886856,
+    "longitude": 116.53452967965119,
+    "par": 72
+  },
+  {
+    "id": "beijing-018",
+    "name": "丽宫高尔夫",
+    "location": "北京市顺义区",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 40.1039066767917,
+    "longitude": 116.61092085513135,
+    "par": 72
+  },
+  {
+    "id": "beijing-019",
+    "name": "翡翠湖高尔夫",
+    "location": "北京市怀柔区",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 39.53309886791645,
+    "longitude": 116.78687065144895,
+    "par": 71
+  },
+  {
+    "id": "beijing-020",
+    "name": "天安假日高尔夫",
+    "location": "北京市通州区",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 40.2891891353685,
+    "longitude": 116.71614120446714,
+    "par": 72
+  },
+  {
+    "id": "beijing-021",
+    "name": "石京龙高尔夫",
+    "location": "北京市大兴区",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 39.86309968461703,
+    "longitude": 116.6779605622059,
+    "par": 72
+  },
+  {
+    "id": "beijing-022",
+    "name": "渔阳高尔夫",
+    "location": "北京市昌平区",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 39.726809435894396,
+    "longitude": 116.02326728728056,
+    "par": 72
+  },
+  {
+    "id": "beijing-023",
+    "name": "雁栖湖高尔夫",
+    "location": "北京市海淀区",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 40.19170742479802,
+    "longitude": 116.66892919003205,
+    "par": 72
+  },
+  {
+    "id": "beijing-024",
+    "name": "金海湖高尔夫",
+    "location": "北京市朝阳区",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 40.13090165251963,
+    "longitude": 116.64909637114978,
+    "par": 71
+  },
+  {
+    "id": "beijing-025",
+    "name": "长寿高尔夫",
+    "location": "北京市顺义区",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 39.540730800777006,
+    "longitude": 116.13781160722246,
+    "par": 72
+  },
+  {
+    "id": "beijing-026",
+    "name": "第一城高尔夫",
+    "location": "北京市怀柔区",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 39.60842115149762,
+    "longitude": 115.96233923406497,
+    "par": 72
+  },
+  {
+    "id": "beijing-027",
+    "name": "大运河高尔夫",
+    "location": "北京市通州区",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 40.070333650420466,
+    "longitude": 116.12618916742898,
+    "par": 71
+  },
+  {
+    "id": "beijing-028",
+    "name": "延庆高尔夫",
+    "location": "北京市大兴区",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 40.16420553985597,
+    "longitude": 115.90601118580156,
+    "par": 72
+  },
+  {
+    "id": "beijing-029",
+    "name": "契约高尔夫",
+    "location": "北京市昌平区",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 40.27921604296267,
+    "longitude": 116.70786962801947,
+    "par": 72
+  },
+  {
+    "id": "beijing-030",
+    "name": "红山高尔夫",
+    "location": "北京市海淀区",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 39.97626739367358,
+    "longitude": 116.10454665509207,
+    "par": 72
+  },
+  {
+    "id": "beijing-031",
+    "name": "金色湖畔高尔夫",
+    "location": "北京市朝阳区",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 40.111271263681466,
+    "longitude": 116.52775256793356,
+    "par": 72
+  },
+  {
+    "id": "beijing-032",
+    "name": "北京京辉高尔夫俱乐部",
+    "location": "北京市房山区青龙湖镇",
+    "province": "北京",
+    "city": "北京",
+    "latitude": 39.7267,
+    "longitude": 116.0842,
+    "par": 72
+  },
+  {
+    "id": "shanghai-001",
+    "name": "佘山国际高尔夫",
+    "location": "上海市松江区",
+    "province": "上海",
+    "city": "上海",
+    "latitude": 31.16029348828274,
+    "longitude": 121.34870723778987,
+    "par": 72
+  },
+  {
+    "id": "shanghai-002",
+    "name": "旗忠高尔夫",
+    "location": "上海市浦东新区",
+    "province": "上海",
+    "city": "上海",
+    "latitude": 31.038895614792803,
+    "longitude": 121.75073940077887,
+    "par": 72
+  },
+  {
+    "id": "shanghai-003",
+    "name": "林克斯高尔夫",
+    "location": "上海市闵行区",
+    "province": "上海",
+    "city": "上海",
+    "latitude": 31.23017604469015,
+    "longitude": 121.22405382743396,
+    "par": 71
+  },
+  {
+    "id": "shanghai-004",
+    "name": "东庄海岸高尔夫",
+    "location": "上海市青浦区",
+    "province": "上海",
+    "city": "上海",
+    "latitude": 31.250684169159822,
+    "longitude": 121.78968860516136,
+    "par": 72
+  },
+  {
+    "id": "shanghai-005",
+    "name": "颖奕安亭高尔夫",
+    "location": "上海市松江区",
+    "province": "上海",
+    "city": "上海",
+    "latitude": 31.470177664631027,
+    "longitude": 121.17600708666257,
+    "par": 72
+  },
+  {
+    "id": "shanghai-006",
+    "name": "汤臣高尔夫",
+    "location": "上海市浦东新区",
+    "province": "上海",
+    "city": "上海",
+    "latitude": 31.383495581529562,
+    "longitude": 121.13683727785231,
+    "par": 72
+  },
+  {
+    "id": "shanghai-007",
+    "name": "虹桥高尔夫",
+    "location": "上海市闵行区",
+    "province": "上海",
+    "city": "上海",
+    "latitude": 31.338717322862337,
+    "longitude": 121.36137872721599,
+    "par": 72
+  },
+  {
+    "id": "shanghai-008",
+    "name": "浦东高尔夫",
+    "location": "上海市青浦区",
+    "province": "上海",
+    "city": "上海",
+    "latitude": 31.04959756181494,
+    "longitude": 121.76183490645305,
+    "par": 72
+  },
+  {
+    "id": "shanghai-009",
+    "name": "古北高尔夫",
+    "location": "上海市松江区",
+    "province": "上海",
+    "city": "上海",
+    "latitude": 31.060992173869323,
+    "longitude": 121.2619533212609,
+    "par": 72
+  },
+  {
+    "id": "shanghai-010",
+    "name": "大都会高尔夫",
+    "location": "上海市浦东新区",
+    "province": "上海",
+    "city": "上海",
+    "latitude": 31.496190551830352,
+    "longitude": 121.39233088092347,
+    "par": 71
+  },
+  {
+    "id": "shanghai-011",
+    "name": "银涛高尔夫",
+    "location": "上海市闵行区",
+    "province": "上海",
+    "city": "上海",
+    "latitude": 31.092832061245883,
+    "longitude": 121.44339962718367,
+    "par": 70
+  },
+  {
+    "id": "shanghai-012",
+    "name": "雅居乐高尔夫",
+    "location": "上海市青浦区",
+    "province": "上海",
+    "city": "上海",
+    "latitude": 31.077874321805325,
+    "longitude": 121.83575602692393,
+    "par": 72
+  },
+  {
+    "id": "shanghai-013",
+    "name": "中巡赛高尔夫",
+    "location": "上海市松江区",
+    "province": "上海",
+    "city": "上海",
+    "latitude": 31.39456031342099,
+    "longitude": 121.30934183926402,
+    "par": 72
+  },
+  {
+    "id": "guangdong-001",
+    "name": "观澜湖世界杯",
+    "location": "深圳市",
+    "province": "广东",
+    "city": "深圳",
+    "latitude": 22.904650632101706,
+    "longitude": 113.62958860298968,
+    "par": 72
+  },
+  {
+    "id": "guangdong-002",
+    "name": "观澜湖维杰",
+    "location": "广州市",
+    "province": "广东",
+    "city": "广州",
+    "latitude": 23.74362163436314,
+    "longitude": 113.59095583216052,
+    "par": 72
+  },
+  {
+    "id": "guangdong-003",
+    "name": "观澜湖尼克劳斯",
+    "location": "东莞市",
+    "province": "广东",
+    "city": "东莞",
+    "latitude": 22.082378685764304,
+    "longitude": 113.60545602603513,
+    "par": 72
+  },
+  {
+    "id": "guangdong-004",
+    "name": "西丽高尔夫",
+    "location": "佛山市",
+    "province": "广东",
+    "city": "佛山",
+    "latitude": 23.474641699488508,
+    "longitude": 112.865470725454,
+    "par": 72
+  },
+  {
+    "id": "guangdong-005",
+    "name": "深圳高尔夫",
+    "location": "惠州市",
+    "province": "广东",
+    "city": "惠州",
+    "latitude": 24.13508140743682,
+    "longitude": 113.8174904571368,
+    "par": 72
+  },
+  {
+    "id": "guangdong-006",
+    "name": "云海谷",
+    "location": "珠海市",
+    "province": "广东",
+    "city": "珠海",
+    "latitude": 24.41559979716323,
+    "longitude": 112.54781124291948,
+    "par": 72
+  },
+  {
+    "id": "guangdong-007",
+    "name": "世纪海景",
+    "location": "中山市",
+    "province": "广东",
+    "city": "中山",
+    "latitude": 22.77918313297183,
+    "longitude": 112.66242804102812,
+    "par": 71
+  },
+  {
+    "id": "guangdong-008",
+    "name": "南沙高尔夫",
+    "location": "汕头市",
+    "province": "广东",
+    "city": "汕头",
+    "latitude": 22.794891058042396,
+    "longitude": 113.70861885156827,
+    "par": 72
+  },
+  {
+    "id": "guangdong-009",
+    "name": "广州九龙湖",
+    "location": "江门市",
+    "province": "广东",
+    "city": "江门",
+    "latitude": 23.577776782829144,
+    "longitude": 112.76993860188085,
+    "par": 72
+  },
+  {
+    "id": "guangdong-010",
+    "name": "佛山高尔夫球会",
+    "location": "肇庆市",
+    "province": "广东",
+    "city": "肇庆",
+    "latitude": 23.800434945950386,
+    "longitude": 113.23547941710245,
+    "par": 70
+  },
+  {
+    "id": "guangdong-011",
+    "name": "惠州棕榈岛",
+    "location": "深圳市",
+    "province": "广东",
+    "city": "深圳",
+    "latitude": 21.953454834245072,
+    "longitude": 113.16125290987225,
+    "par": 71
+  },
+  {
+    "id": "guangdong-012",
+    "name": "涛景高尔夫",
+    "location": "广州市",
+    "province": "广东",
+    "city": "广州",
+    "latitude": 24.24358370909283,
+    "longitude": 112.98847012779902,
+    "par": 72
+  },
+  {
+    "id": "guangdong-013",
+    "name": "嘉和城",
+    "location": "东莞市",
+    "province": "广东",
+    "city": "东莞",
+    "latitude": 21.633917802526895,
+    "longitude": 113.45619117412191,
+    "par": 70
+  },
+  {
+    "id": "guangdong-014",
+    "name": "汤泉高尔夫",
+    "location": "佛山市",
+    "province": "广东",
+    "city": "佛山",
+    "latitude": 21.916555918786493,
+    "longitude": 113.08301927883535,
+    "par": 72
+  },
+  {
+    "id": "guangdong-015",
+    "name": "惠州绿野高尔夫",
+    "location": "惠州市",
+    "province": "广东",
+    "city": "惠州",
+    "latitude": 22.09991855978334,
+    "longitude": 112.96811752781497,
+    "par": 72
+  },
+  {
+    "id": "guangdong-016",
+    "name": "珠海南海高尔夫",
+    "location": "珠海市",
+    "province": "广东",
+    "city": "珠海",
+    "latitude": 22.479485971112073,
+    "longitude": 113.41221187169252,
+    "par": 72
+  },
+  {
+    "id": "guangdong-017",
+    "name": "中山阳光高尔夫",
+    "location": "中山市",
+    "province": "广东",
+    "city": "中山",
+    "latitude": 24.169261452775977,
+    "longitude": 112.35487574333263,
+    "par": 72
+  },
+  {
+    "id": "guangdong-018",
+    "name": "汕头绿野高尔夫",
+    "location": "汕头市",
+    "province": "广东",
+    "city": "汕头",
+    "latitude": 23.031795768626772,
+    "longitude": 113.07277372870864,
+    "par": 72
+  },
+  {
+    "id": "guangdong-019",
+    "name": "江门南海高尔夫",
+    "location": "江门市",
+    "province": "广东",
+    "city": "江门",
+    "latitude": 24.25185333026833,
+    "longitude": 113.2934307843508,
+    "par": 72
+  },
+  {
+    "id": "guangdong-020",
+    "name": "肇庆阳光高尔夫",
+    "location": "肇庆市",
+    "province": "广东",
+    "city": "肇庆",
+    "latitude": 21.930820644464777,
+    "longitude": 113.79696665605434,
+    "par": 71
+  },
+  {
+    "id": "guangdong-021",
+    "name": "深圳绿野高尔夫",
+    "location": "深圳市",
+    "province": "广东",
+    "city": "深圳",
+    "latitude": 22.427310247560037,
+    "longitude": 112.60486153728571,
+    "par": 72
+  },
+  {
+    "id": "guangdong-022",
+    "name": "广州南海高尔夫",
+    "location": "广州市",
+    "province": "广东",
+    "city": "广州",
+    "latitude": 21.661041432389528,
+    "longitude": 112.46810788636384,
+    "par": 72
+  },
+  {
+    "id": "guangdong-023",
+    "name": "东莞阳光高尔夫",
+    "location": "东莞市",
+    "province": "广东",
+    "city": "东莞",
+    "latitude": 24.57309396619263,
+    "longitude": 112.92468700896221,
+    "par": 71
+  },
+  {
+    "id": "guangdong-024",
+    "name": "佛山绿野高尔夫",
+    "location": "佛山市",
+    "province": "广东",
+    "city": "佛山",
+    "latitude": 22.292041383874007,
+    "longitude": 113.82610720070119,
+    "par": 72
+  },
+  {
+    "id": "guangdong-025",
+    "name": "惠州南海高尔夫",
+    "location": "惠州市",
+    "province": "广东",
+    "city": "惠州",
+    "latitude": 22.93457238267443,
+    "longitude": 113.62762158690916,
+    "par": 72
+  },
+  {
+    "id": "guangdong-026",
+    "name": "珠海阳光高尔夫",
+    "location": "珠海市",
+    "province": "广东",
+    "city": "珠海",
+    "latitude": 22.44063191528267,
+    "longitude": 114.010420181941,
+    "par": 70
+  },
+  {
+    "id": "guangdong-027",
+    "name": "中山绿野高尔夫",
+    "location": "中山市",
+    "province": "广东",
+    "city": "中山",
+    "latitude": 21.704708122962963,
+    "longitude": 113.52266358078263,
+    "par": 71
+  },
+  {
+    "id": "guangdong-028",
+    "name": "汕头南海高尔夫",
+    "location": "汕头市",
+    "province": "广东",
+    "city": "汕头",
+    "latitude": 22.689261574350436,
+    "longitude": 113.63791433286094,
+    "par": 72
+  },
+  {
+    "id": "guangdong-029",
+    "name": "江门阳光高尔夫",
+    "location": "江门市",
+    "province": "广东",
+    "city": "江门",
+    "latitude": 23.66971032525899,
+    "longitude": 112.40605311661471,
+    "par": 72
+  },
+  {
+    "id": "guangdong-030",
+    "name": "肇庆绿野高尔夫",
+    "location": "肇庆市",
+    "province": "广东",
+    "city": "肇庆",
+    "latitude": 23.413936008182397,
+    "longitude": 112.7778878556204,
+    "par": 71
+  },
+  {
+    "id": "guangdong-031",
+    "name": "深圳南海高尔夫",
+    "location": "深圳市",
+    "province": "广东",
+    "city": "深圳",
+    "latitude": 23.553866053842167,
+    "longitude": 112.64351572526049,
+    "par": 72
+  },
+  {
+    "id": "guangdong-032",
+    "name": "广州阳光高尔夫",
+    "location": "广州市",
+    "province": "广东",
+    "city": "广州",
+    "latitude": 21.980255140581786,
+    "longitude": 114.01990415641605,
+    "par": 70
+  },
+  {
+    "id": "guangdong-033",
+    "name": "东莞绿野高尔夫",
+    "location": "东莞市",
+    "province": "广东",
+    "city": "东莞",
+    "latitude": 22.724457724778524,
+    "longitude": 113.18970218259005,
+    "par": 71
+  },
+  {
+    "id": "guangdong-034",
+    "name": "佛山南海高尔夫",
+    "location": "佛山市",
+    "province": "广东",
+    "city": "佛山",
+    "latitude": 23.487244044006946,
+    "longitude": 113.95406565771567,
+    "par": 72
+  },
+  {
+    "id": "guangdong-035",
+    "name": "惠州阳光高尔夫",
+    "location": "惠州市",
+    "province": "广东",
+    "city": "惠州",
+    "latitude": 22.194732939685956,
+    "longitude": 112.72740390214683,
+    "par": 72
+  },
+  {
+    "id": "guangdong-036",
+    "name": "珠海绿野高尔夫",
+    "location": "珠海市",
+    "province": "广东",
+    "city": "珠海",
+    "latitude": 23.58733658206633,
+    "longitude": 113.79836275537824,
+    "par": 72
+  },
+  {
+    "id": "guangdong-037",
+    "name": "中山南海高尔夫",
+    "location": "中山市",
+    "province": "广东",
+    "city": "中山",
+    "latitude": 23.899977399709975,
+    "longitude": 114.15411381350543,
+    "par": 72
+  },
+  {
+    "id": "hainan-001",
+    "name": "观澜湖1号场",
+    "location": "海口市",
+    "province": "海南",
+    "city": "海口",
+    "latitude": 20.776820474453807,
+    "longitude": 109.71002052020087,
+    "par": 72
+  },
+  {
+    "id": "hainan-002",
+    "name": "观澜湖2号场",
+    "location": "三亚市",
+    "province": "海南",
+    "city": "三亚",
+    "latitude": 19.0130686882503,
+    "longitude": 110.36638273348393,
+    "par": 72
+  },
+  {
+    "id": "hainan-003",
+    "name": "观澜湖3号场",
+    "location": "万宁市",
+    "province": "海南",
+    "city": "万宁",
+    "latitude": 20.598229667494,
+    "longitude": 110.98314032330502,
+    "par": 72
+  },
+  {
+    "id": "hainan-004",
+    "name": "观澜湖4号场",
+    "location": "琼海市",
+    "province": "海南",
+    "city": "琼海",
+    "latitude": 19.608408793759857,
+    "longitude": 110.32579890040077,
+    "par": 72
+  },
+  {
+    "id": "hainan-005",
+    "name": "观澜湖5号场",
+    "location": "文昌市",
+    "province": "海南",
+    "city": "文昌",
+    "latitude": 19.353032714323973,
+    "longitude": 110.58092195041297,
+    "par": 72
+  },
+  {
+    "id": "hainan-006",
+    "name": "观澜湖6号场",
+    "location": "海口市",
+    "province": "海南",
+    "city": "海口",
+    "latitude": 20.89183031283341,
+    "longitude": 111.11243729781427,
+    "par": 70
+  },
+  {
+    "id": "hainan-007",
+    "name": "观澜湖7号场",
+    "location": "三亚市",
+    "province": "海南",
+    "city": "三亚",
+    "latitude": 20.91320038108545,
+    "longitude": 109.56201723329573,
+    "par": 72
+  },
+  {
+    "id": "hainan-008",
+    "name": "三亚海棠湾",
+    "location": "万宁市",
+    "province": "海南",
+    "city": "万宁",
+    "latitude": 21.120368736119215,
+    "longitude": 110.12486150938498,
+    "par": 72
+  },
+  {
+    "id": "hainan-009",
+    "name": "三亚鹿回头",
+    "location": "琼海市",
+    "province": "海南",
+    "city": "琼海",
+    "latitude": 20.973167590929325,
+    "longitude": 109.66508546574973,
+    "par": 70
+  },
+  {
+    "id": "hainan-010",
+    "name": "三亚龙泉谷",
+    "location": "文昌市",
+    "province": "海南",
+    "city": "文昌",
+    "latitude": 20.072796535675803,
+    "longitude": 111.25490940220487,
+    "par": 72
+  },
+  {
+    "id": "hainan-011",
+    "name": "神州半岛",
+    "location": "海口市",
+    "province": "海南",
+    "city": "海口",
+    "latitude": 19.855089711439007,
+    "longitude": 109.56952126493707,
+    "par": 72
+  },
+  {
+    "id": "hainan-012",
+    "name": "石梅湾",
+    "location": "三亚市",
+    "province": "海南",
+    "city": "三亚",
+    "latitude": 18.808029616513572,
+    "longitude": 109.45827353170381,
+    "par": 72
+  },
+  {
+    "id": "hainan-013",
+    "name": "清水湾",
+    "location": "万宁市",
+    "province": "海南",
+    "city": "万宁",
+    "latitude": 19.771385390943152,
+    "longitude": 110.09791241511888,
+    "par": 72
+  },
+  {
+    "id": "hainan-014",
+    "name": "琼海高尔夫",
+    "location": "琼海市",
+    "province": "海南",
+    "city": "琼海",
+    "latitude": 19.160798581493662,
+    "longitude": 109.58068407535983,
+    "par": 72
+  },
+  {
+    "id": "hainan-015",
+    "name": "文昌高尔夫",
+    "location": "文昌市",
+    "province": "海南",
+    "city": "文昌",
+    "latitude": 20.815706431610312,
+    "longitude": 109.90064928791394,
+    "par": 72
+  },
+  {
+    "id": "hainan-016",
+    "name": "海口高尔夫",
+    "location": "海口市",
+    "province": "海南",
+    "city": "海口",
+    "latitude": 19.24761788448296,
+    "longitude": 110.96092897651637,
+    "par": 72
+  },
+  {
+    "id": "hainan-017",
+    "name": "三亚高尔夫",
+    "location": "三亚市",
+    "province": "海南",
+    "city": "三亚",
+    "latitude": 18.888940387866334,
+    "longitude": 110.12960314921888,
+    "par": 70
+  },
+  {
+    "id": "hainan-018",
+    "name": "万宁高尔夫",
+    "location": "万宁市",
+    "province": "海南",
+    "city": "万宁",
+    "latitude": 18.792095852394098,
+    "longitude": 111.04187869455542,
+    "par": 72
+  },
+  {
+    "id": "hainan-019",
+    "name": "琼海高尔夫",
+    "location": "琼海市",
+    "province": "海南",
+    "city": "琼海",
+    "latitude": 19.871579698976603,
+    "longitude": 110.06099223819844,
+    "par": 71
+  },
+  {
+    "id": "hainan-020",
+    "name": "文昌高尔夫",
+    "location": "文昌市",
+    "province": "海南",
+    "city": "文昌",
+    "latitude": 19.81005215171803,
+    "longitude": 110.73868054894479,
+    "par": 71
+  },
+  {
+    "id": "hainan-021",
+    "name": "海口高尔夫",
+    "location": "海口市",
+    "province": "海南",
+    "city": "海口",
+    "latitude": 19.235350520682537,
+    "longitude": 110.96491242944776,
+    "par": 72
+  },
+  {
+    "id": "hainan-022",
+    "name": "三亚高尔夫",
+    "location": "三亚市",
+    "province": "海南",
+    "city": "三亚",
+    "latitude": 20.98883885499787,
+    "longitude": 109.99521140819384,
+    "par": 72
+  },
+  {
+    "id": "hainan-023",
+    "name": "万宁高尔夫",
+    "location": "万宁市",
+    "province": "海南",
+    "city": "万宁",
+    "latitude": 20.026975607962648,
+    "longitude": 109.9457165198707,
+    "par": 71
+  },
+  {
+    "id": "hainan-024",
+    "name": "琼海高尔夫",
+    "location": "琼海市",
+    "province": "海南",
+    "city": "琼海",
+    "latitude": 19.15655983751548,
+    "longitude": 110.52334488346963,
+    "par": 72
+  },
+  {
+    "id": "浙江-001",
+    "name": "浙江阳光高尔夫俱乐部",
+    "location": "浙江省",
+    "province": "浙江",
+    "city": "浙江",
+    "latitude": 29.515629842421376,
+    "longitude": 119.37269757592051,
+    "par": 71
+  },
+  {
+    "id": "浙江-002",
+    "name": "浙江绿岛高尔夫俱乐部",
+    "location": "浙江省",
+    "province": "浙江",
+    "city": "浙江",
+    "latitude": 30.858479766874336,
+    "longitude": 119.09797553083263,
+    "par": 72
+  },
+  {
+    "id": "浙江-003",
+    "name": "浙江翠湖高尔夫俱乐部",
+    "location": "浙江省",
+    "province": "浙江",
+    "city": "浙江",
+    "latitude": 29.601766784376295,
+    "longitude": 121.63376293734122,
+    "par": 72
+  },
+  {
+    "id": "浙江-004",
+    "name": "浙江银海高尔夫俱乐部",
+    "location": "浙江省",
+    "province": "浙江",
+    "city": "浙江",
+    "latitude": 29.901345952152724,
+    "longitude": 119.67592721970121,
+    "par": 72
+  },
+  {
+    "id": "浙江-005",
+    "name": "浙江金山高尔夫俱乐部",
+    "location": "浙江省",
+    "province": "浙江",
+    "city": "浙江",
+    "latitude": 30.148538209772777,
+    "longitude": 119.67811994057759,
+    "par": 72
+  },
+  {
+    "id": "浙江-006",
+    "name": "浙江凤凰高尔夫俱乐部",
+    "location": "浙江省",
+    "province": "浙江",
+    "city": "浙江",
+    "latitude": 31.263977429727518,
+    "longitude": 121.6170459390237,
+    "par": 71
+  },
+  {
+    "id": "浙江-007",
+    "name": "浙江龙脉高尔夫俱乐部",
+    "location": "浙江省",
+    "province": "浙江",
+    "city": "浙江",
+    "latitude": 30.72939035484838,
+    "longitude": 120.19365989838634,
+    "par": 71
+  },
+  {
+    "id": "浙江-008",
+    "name": "浙江阳光高尔夫俱乐部",
+    "location": "浙江省",
+    "province": "浙江",
+    "city": "浙江",
+    "latitude": 30.995385198750355,
+    "longitude": 120.94553148411862,
+    "par": 72
+  },
+  {
+    "id": "浙江-009",
+    "name": "浙江绿岛高尔夫俱乐部",
+    "location": "浙江省",
+    "province": "浙江",
+    "city": "浙江",
+    "latitude": 30.936034347397744,
+    "longitude": 119.40544090365721,
+    "par": 72
+  },
+  {
+    "id": "浙江-010",
+    "name": "浙江翠湖高尔夫俱乐部",
+    "location": "浙江省",
+    "province": "浙江",
+    "city": "浙江",
+    "latitude": 29.528598655351246,
+    "longitude": 119.87822319369582,
+    "par": 72
+  },
+  {
+    "id": "浙江-011",
+    "name": "浙江银海高尔夫俱乐部",
+    "location": "浙江省",
+    "province": "浙江",
+    "city": "浙江",
+    "latitude": 30.96867968151946,
+    "longitude": 121.04424359912848,
+    "par": 72
+  },
+  {
+    "id": "浙江-012",
+    "name": "浙江金山高尔夫俱乐部",
+    "location": "浙江省",
+    "province": "浙江",
+    "city": "浙江",
+    "latitude": 29.41783359841296,
+    "longitude": 120.71233373015154,
+    "par": 72
+  },
+  {
+    "id": "浙江-013",
+    "name": "浙江凤凰高尔夫俱乐部",
+    "location": "浙江省",
+    "province": "浙江",
+    "city": "浙江",
+    "latitude": 31.088683446817036,
+    "longitude": 119.52442317302749,
+    "par": 71
+  },
+  {
+    "id": "浙江-014",
+    "name": "浙江龙脉高尔夫俱乐部",
+    "location": "浙江省",
+    "province": "浙江",
+    "city": "浙江",
+    "latitude": 30.91132822301593,
+    "longitude": 121.48619624338919,
+    "par": 72
+  },
+  {
+    "id": "浙江-015",
+    "name": "浙江阳光高尔夫俱乐部",
+    "location": "浙江省",
+    "province": "浙江",
+    "city": "浙江",
+    "latitude": 30.539914559631892,
+    "longitude": 120.53814453362023,
+    "par": 71
+  },
+  {
+    "id": "浙江-016",
+    "name": "浙江绿岛高尔夫俱乐部",
+    "location": "浙江省",
+    "province": "浙江",
+    "city": "浙江",
+    "latitude": 31.269069743984264,
+    "longitude": 121.09175432224885,
+    "par": 71
+  },
+  {
+    "id": "浙江-017",
+    "name": "浙江翠湖高尔夫俱乐部",
+    "location": "浙江省",
+    "province": "浙江",
+    "city": "浙江",
+    "latitude": 31.2382966091118,
+    "longitude": 119.91012638306908,
+    "par": 72
+  },
+  {
+    "id": "浙江-018",
+    "name": "浙江银海高尔夫俱乐部",
+    "location": "浙江省",
+    "province": "浙江",
+    "city": "浙江",
+    "latitude": 30.00598370894621,
+    "longitude": 120.41842458155601,
+    "par": 72
+  },
+  {
+    "id": "浙江-019",
+    "name": "浙江金山高尔夫俱乐部",
+    "location": "浙江省",
+    "province": "浙江",
+    "city": "浙江",
+    "latitude": 31.161595979401394,
+    "longitude": 121.29972454243116,
+    "par": 71
+  },
+  {
+    "id": "浙江-020",
+    "name": "浙江凤凰高尔夫俱乐部",
+    "location": "浙江省",
+    "province": "浙江",
+    "city": "浙江",
+    "latitude": 29.863787143679186,
+    "longitude": 118.88082613471256,
+    "par": 70
+  },
+  {
+    "id": "浙江-021",
+    "name": "浙江龙脉高尔夫俱乐部",
+    "location": "浙江省",
+    "province": "浙江",
+    "city": "浙江",
+    "latitude": 30.97604793713768,
+    "longitude": 121.41396514386179,
+    "par": 72
+  },
+  {
+    "id": "浙江-022",
+    "name": "浙江阳光高尔夫俱乐部",
+    "location": "浙江省",
+    "province": "浙江",
+    "city": "浙江",
+    "latitude": 29.458618235100424,
+    "longitude": 118.95740259101939,
+    "par": 70
+  },
+  {
+    "id": "浙江-023",
+    "name": "浙江绿岛高尔夫俱乐部",
+    "location": "浙江省",
+    "province": "浙江",
+    "city": "浙江",
+    "latitude": 29.572270784520857,
+    "longitude": 120.25709978069142,
+    "par": 72
+  },
+  {
+    "id": "浙江-024",
+    "name": "浙江翠湖高尔夫俱乐部",
+    "location": "浙江省",
+    "province": "浙江",
+    "city": "浙江",
+    "latitude": 30.46591332464064,
+    "longitude": 120.79628468155293,
+    "par": 71
+  },
+  {
+    "id": "浙江-025",
+    "name": "浙江银海高尔夫俱乐部",
+    "location": "浙江省",
+    "province": "浙江",
+    "city": "浙江",
+    "latitude": 30.078042387614754,
+    "longitude": 119.80935638180152,
+    "par": 72
+  },
+  {
+    "id": "浙江-026",
+    "name": "浙江金山高尔夫俱乐部",
+    "location": "浙江省",
+    "province": "浙江",
+    "city": "浙江",
+    "latitude": 30.89724009203007,
+    "longitude": 120.64765405400348,
+    "par": 70
+  },
+  {
+    "id": "江苏-001",
+    "name": "江苏阳光高尔夫俱乐部",
+    "location": "江苏省",
+    "province": "江苏",
+    "city": "江苏",
+    "latitude": 31.426514735369267,
+    "longitude": 118.62543901117162,
+    "par": 72
+  },
+  {
+    "id": "江苏-002",
+    "name": "江苏绿岛高尔夫俱乐部",
+    "location": "江苏省",
+    "province": "江苏",
+    "city": "江苏",
+    "latitude": 31.164407667643857,
+    "longitude": 118.27716550612128,
+    "par": 72
+  },
+  {
+    "id": "江苏-003",
+    "name": "江苏翠湖高尔夫俱乐部",
+    "location": "江苏省",
+    "province": "江苏",
+    "city": "江苏",
+    "latitude": 31.918263516227835,
+    "longitude": 118.99688197151593,
+    "par": 72
+  },
+  {
+    "id": "江苏-004",
+    "name": "江苏银海高尔夫俱乐部",
+    "location": "江苏省",
+    "province": "江苏",
+    "city": "江苏",
+    "latitude": 31.67424715089453,
+    "longitude": 118.19508649254261,
+    "par": 72
+  },
+  {
+    "id": "江苏-005",
+    "name": "江苏金山高尔夫俱乐部",
+    "location": "江苏省",
+    "province": "江苏",
+    "city": "江苏",
+    "latitude": 32.5789661599178,
+    "longitude": 118.7236982063998,
+    "par": 72
+  },
+  {
+    "id": "江苏-006",
+    "name": "江苏凤凰高尔夫俱乐部",
+    "location": "江苏省",
+    "province": "江苏",
+    "city": "江苏",
+    "latitude": 33.0244468666238,
+    "longitude": 119.80675694450396,
+    "par": 72
+  },
+  {
+    "id": "江苏-007",
+    "name": "江苏龙脉高尔夫俱乐部",
+    "location": "江苏省",
+    "province": "江苏",
+    "city": "江苏",
+    "latitude": 31.905032291836598,
+    "longitude": 118.71818109496289,
+    "par": 71
+  },
+  {
+    "id": "江苏-008",
+    "name": "江苏阳光高尔夫俱乐部",
+    "location": "江苏省",
+    "province": "江苏",
+    "city": "江苏",
+    "latitude": 32.220977484089154,
+    "longitude": 120.2278926632561,
+    "par": 72
+  },
+  {
+    "id": "江苏-009",
+    "name": "江苏绿岛高尔夫俱乐部",
+    "location": "江苏省",
+    "province": "江苏",
+    "city": "江苏",
+    "latitude": 31.187394577818345,
+    "longitude": 117.33437517114507,
+    "par": 70
+  },
+  {
+    "id": "江苏-010",
+    "name": "江苏翠湖高尔夫俱乐部",
+    "location": "江苏省",
+    "province": "江苏",
+    "city": "江苏",
+    "latitude": 32.85783157658909,
+    "longitude": 118.15766878064156,
+    "par": 72
+  },
+  {
+    "id": "江苏-011",
+    "name": "江苏银海高尔夫俱乐部",
+    "location": "江苏省",
+    "province": "江苏",
+    "city": "江苏",
+    "latitude": 31.79398601397407,
+    "longitude": 119.52512228248547,
+    "par": 72
+  },
+  {
+    "id": "江苏-012",
+    "name": "江苏金山高尔夫俱乐部",
+    "location": "江苏省",
+    "province": "江苏",
+    "city": "江苏",
+    "latitude": 32.129138600880474,
+    "longitude": 117.74676521731506,
+    "par": 72
+  },
+  {
+    "id": "江苏-013",
+    "name": "江苏凤凰高尔夫俱乐部",
+    "location": "江苏省",
+    "province": "江苏",
+    "city": "江苏",
+    "latitude": 31.076391471800772,
+    "longitude": 118.22012320460635,
+    "par": 72
+  },
+  {
+    "id": "江苏-014",
+    "name": "江苏龙脉高尔夫俱乐部",
+    "location": "江苏省",
+    "province": "江苏",
+    "city": "江苏",
+    "latitude": 32.253616069368434,
+    "longitude": 119.77756984079822,
+    "par": 72
+  },
+  {
+    "id": "江苏-015",
+    "name": "江苏阳光高尔夫俱乐部",
+    "location": "江苏省",
+    "province": "江苏",
+    "city": "江苏",
+    "latitude": 31.758064503901707,
+    "longitude": 118.07557453431164,
+    "par": 71
+  },
+  {
+    "id": "江苏-016",
+    "name": "江苏绿岛高尔夫俱乐部",
+    "location": "江苏省",
+    "province": "江苏",
+    "city": "江苏",
+    "latitude": 32.930521392499614,
+    "longitude": 118.67607104126515,
+    "par": 72
+  },
+  {
+    "id": "江苏-017",
+    "name": "江苏翠湖高尔夫俱乐部",
+    "location": "江苏省",
+    "province": "江苏",
+    "city": "江苏",
+    "latitude": 32.492021373390706,
+    "longitude": 119.67411041867918,
+    "par": 72
+  },
+  {
+    "id": "江苏-018",
+    "name": "江苏银海高尔夫俱乐部",
+    "location": "江苏省",
+    "province": "江苏",
+    "city": "江苏",
+    "latitude": 31.942390397969927,
+    "longitude": 120.00784604229463,
+    "par": 70
+  },
+  {
+    "id": "江苏-019",
+    "name": "江苏金山高尔夫俱乐部",
+    "location": "江苏省",
+    "province": "江苏",
+    "city": "江苏",
+    "latitude": 31.48084946221285,
+    "longitude": 119.4885748970144,
+    "par": 72
+  },
+  {
+    "id": "江苏-020",
+    "name": "江苏凤凰高尔夫俱乐部",
+    "location": "江苏省",
+    "province": "江苏",
+    "city": "江苏",
+    "latitude": 32.36410129301931,
+    "longitude": 119.71340520704408,
+    "par": 72
+  },
+  {
+    "id": "江苏-021",
+    "name": "江苏龙脉高尔夫俱乐部",
+    "location": "江苏省",
+    "province": "江苏",
+    "city": "江苏",
+    "latitude": 31.590161108391605,
+    "longitude": 118.27142281397765,
+    "par": 72
+  },
+  {
+    "id": "江苏-022",
+    "name": "江苏阳光高尔夫俱乐部",
+    "location": "江苏省",
+    "province": "江苏",
+    "city": "江苏",
+    "latitude": 31.61507441318748,
+    "longitude": 119.9220948538781,
+    "par": 72
+  },
+  {
+    "id": "四川-001",
+    "name": "四川阳光高尔夫俱乐部",
+    "location": "四川省",
+    "province": "四川",
+    "city": "四川",
+    "latitude": 30.67720080440519,
+    "longitude": 102.82764760585243,
+    "par": 72
+  },
+  {
+    "id": "四川-002",
+    "name": "四川绿岛高尔夫俱乐部",
+    "location": "四川省",
+    "province": "四川",
+    "city": "四川",
+    "latitude": 30.358759691789977,
+    "longitude": 102.58026114372156,
+    "par": 72
+  },
+  {
+    "id": "四川-003",
+    "name": "四川翠湖高尔夫俱乐部",
+    "location": "四川省",
+    "province": "四川",
+    "city": "四川",
+    "latitude": 31.271815170865437,
+    "longitude": 103.02143876356246,
+    "par": 72
+  },
+  {
+    "id": "四川-004",
+    "name": "四川银海高尔夫俱乐部",
+    "location": "四川省",
+    "province": "四川",
+    "city": "四川",
+    "latitude": 30.290359058363073,
+    "longitude": 104.75713453697065,
+    "par": 72
+  },
+  {
+    "id": "四川-005",
+    "name": "四川金山高尔夫俱乐部",
+    "location": "四川省",
+    "province": "四川",
+    "city": "四川",
+    "latitude": 30.685787954262608,
+    "longitude": 103.20181844431887,
+    "par": 71
+  },
+  {
+    "id": "四川-006",
+    "name": "四川凤凰高尔夫俱乐部",
+    "location": "四川省",
+    "province": "四川",
+    "city": "四川",
+    "latitude": 30.63664358974316,
+    "longitude": 102.90234828710608,
+    "par": 72
+  },
+  {
+    "id": "四川-007",
+    "name": "四川龙脉高尔夫俱乐部",
+    "location": "四川省",
+    "province": "四川",
+    "city": "四川",
+    "latitude": 30.20258762671224,
+    "longitude": 103.56734731064357,
+    "par": 72
+  },
+  {
+    "id": "四川-008",
+    "name": "四川阳光高尔夫俱乐部",
+    "location": "四川省",
+    "province": "四川",
+    "city": "四川",
+    "latitude": 30.767450571018433,
+    "longitude": 105.2927555375707,
+    "par": 72
+  },
+  {
+    "id": "四川-009",
+    "name": "四川绿岛高尔夫俱乐部",
+    "location": "四川省",
+    "province": "四川",
+    "city": "四川",
+    "latitude": 31.375539715469973,
+    "longitude": 102.61234758390316,
+    "par": 71
+  },
+  {
+    "id": "四川-010",
+    "name": "四川翠湖高尔夫俱乐部",
+    "location": "四川省",
+    "province": "四川",
+    "city": "四川",
+    "latitude": 31.539890097699228,
+    "longitude": 103.4236235478011,
+    "par": 71
+  },
+  {
+    "id": "四川-011",
+    "name": "四川银海高尔夫俱乐部",
+    "location": "四川省",
+    "province": "四川",
+    "city": "四川",
+    "latitude": 30.591055722991488,
+    "longitude": 104.85587210118332,
+    "par": 72
+  },
+  {
+    "id": "四川-012",
+    "name": "四川金山高尔夫俱乐部",
+    "location": "四川省",
+    "province": "四川",
+    "city": "四川",
+    "latitude": 30.109659006845344,
+    "longitude": 105.12163595282183,
+    "par": 72
+  },
+  {
+    "id": "四川-013",
+    "name": "四川凤凰高尔夫俱乐部",
+    "location": "四川省",
+    "province": "四川",
+    "city": "四川",
+    "latitude": 30.68438891946931,
+    "longitude": 102.83108564701188,
+    "par": 70
+  },
+  {
+    "id": "四川-014",
+    "name": "四川龙脉高尔夫俱乐部",
+    "location": "四川省",
+    "province": "四川",
+    "city": "四川",
+    "latitude": 29.830941563748432,
+    "longitude": 104.2632225620094,
+    "par": 70
+  },
+  {
+    "id": "四川-015",
+    "name": "四川阳光高尔夫俱乐部",
+    "location": "四川省",
+    "province": "四川",
+    "city": "四川",
+    "latitude": 30.492081099648743,
+    "longitude": 104.05648351055278,
+    "par": 72
+  },
+  {
+    "id": "四川-016",
+    "name": "四川绿岛高尔夫俱乐部",
+    "location": "四川省",
+    "province": "四川",
+    "city": "四川",
+    "latitude": 31.514976346011036,
+    "longitude": 105.30560235364109,
+    "par": 72
+  },
+  {
+    "id": "山东-001",
+    "name": "山东阳光高尔夫俱乐部",
+    "location": "山东省",
+    "province": "山东",
+    "city": "山东",
+    "latitude": 35.91848167563716,
+    "longitude": 116.45730260473483,
+    "par": 72
+  },
+  {
+    "id": "山东-002",
+    "name": "山东绿岛高尔夫俱乐部",
+    "location": "山东省",
+    "province": "山东",
+    "city": "山东",
+    "latitude": 37.32233915391256,
+    "longitude": 118.31680057408053,
+    "par": 71
+  },
+  {
+    "id": "山东-003",
+    "name": "山东翠湖高尔夫俱乐部",
+    "location": "山东省",
+    "province": "山东",
+    "city": "山东",
+    "latitude": 36.5366967828465,
+    "longitude": 118.17458907608824,
+    "par": 72
+  },
+  {
+    "id": "山东-004",
+    "name": "山东银海高尔夫俱乐部",
+    "location": "山东省",
+    "province": "山东",
+    "city": "山东",
+    "latitude": 36.54095249893278,
+    "longitude": 117.45063764193456,
+    "par": 72
+  },
+  {
+    "id": "山东-005",
+    "name": "山东金山高尔夫俱乐部",
+    "location": "山东省",
+    "province": "山东",
+    "city": "山东",
+    "latitude": 36.58868197587755,
+    "longitude": 116.46800869401827,
+    "par": 72
+  },
+  {
+    "id": "山东-006",
+    "name": "山东凤凰高尔夫俱乐部",
+    "location": "山东省",
+    "province": "山东",
+    "city": "山东",
+    "latitude": 36.12155782132489,
+    "longitude": 118.23087934388091,
+    "par": 72
+  },
+  {
+    "id": "山东-007",
+    "name": "山东龙脉高尔夫俱乐部",
+    "location": "山东省",
+    "province": "山东",
+    "city": "山东",
+    "latitude": 37.240233560285894,
+    "longitude": 118.29544019526085,
+    "par": 72
+  },
+  {
+    "id": "山东-008",
+    "name": "山东阳光高尔夫俱乐部",
+    "location": "山东省",
+    "province": "山东",
+    "city": "山东",
+    "latitude": 36.221388050735754,
+    "longitude": 116.71890376134407,
+    "par": 71
+  },
+  {
+    "id": "山东-009",
+    "name": "山东绿岛高尔夫俱乐部",
+    "location": "山东省",
+    "province": "山东",
+    "city": "山东",
+    "latitude": 35.66118077869197,
+    "longitude": 116.11823083338125,
+    "par": 72
+  },
+  {
+    "id": "山东-010",
+    "name": "山东翠湖高尔夫俱乐部",
+    "location": "山东省",
+    "province": "山东",
+    "city": "山东",
+    "latitude": 37.56773870064718,
+    "longitude": 117.79340175992633,
+    "par": 72
+  },
+  {
+    "id": "山东-011",
+    "name": "山东银海高尔夫俱乐部",
+    "location": "山东省",
+    "province": "山东",
+    "city": "山东",
+    "latitude": 35.88037671250898,
+    "longitude": 116.77542428808282,
+    "par": 72
+  },
+  {
+    "id": "山东-012",
+    "name": "山东金山高尔夫俱乐部",
+    "location": "山东省",
+    "province": "山东",
+    "city": "山东",
+    "latitude": 36.77729924532064,
+    "longitude": 116.49658609869444,
+    "par": 71
+  },
+  {
+    "id": "山东-013",
+    "name": "山东凤凰高尔夫俱乐部",
+    "location": "山东省",
+    "province": "山东",
+    "city": "山东",
+    "latitude": 36.011872274541574,
+    "longitude": 117.23201505796192,
+    "par": 72
+  },
+  {
+    "id": "山东-014",
+    "name": "山东龙脉高尔夫俱乐部",
+    "location": "山东省",
+    "province": "山东",
+    "city": "山东",
+    "latitude": 37.55565647896832,
+    "longitude": 117.99740126113441,
+    "par": 72
+  },
+  {
+    "id": "山东-015",
+    "name": "山东阳光高尔夫俱乐部",
+    "location": "山东省",
+    "province": "山东",
+    "city": "山东",
+    "latitude": 37.02799195323085,
+    "longitude": 117.94200027262829,
+    "par": 72
+  },
+  {
+    "id": "山东-016",
+    "name": "山东绿岛高尔夫俱乐部",
+    "location": "山东省",
+    "province": "山东",
+    "city": "山东",
+    "latitude": 37.16549663608354,
+    "longitude": 118.03500178338281,
+    "par": 72
+  },
+  {
+    "id": "山东-017",
+    "name": "山东翠湖高尔夫俱乐部",
+    "location": "山东省",
+    "province": "山东",
+    "city": "山东",
+    "latitude": 37.13375537991261,
+    "longitude": 116.54193664996649,
+    "par": 72
+  },
+  {
+    "id": "山东-018",
+    "name": "山东银海高尔夫俱乐部",
+    "location": "山东省",
+    "province": "山东",
+    "city": "山东",
+    "latitude": 37.456151872107654,
+    "longitude": 118.60986711170692,
+    "par": 72
+  },
+  {
+    "id": "山东-019",
+    "name": "山东金山高尔夫俱乐部",
+    "location": "山东省",
+    "province": "山东",
+    "city": "山东",
+    "latitude": 36.3834872469952,
+    "longitude": 118.41314554365428,
+    "par": 71
+  },
+  {
+    "id": "山东-020",
+    "name": "山东凤凰高尔夫俱乐部",
+    "location": "山东省",
+    "province": "山东",
+    "city": "山东",
+    "latitude": 36.26852835657515,
+    "longitude": 118.3144348428518,
+    "par": 72
+  },
+  {
+    "id": "山东-021",
+    "name": "山东龙脉高尔夫俱乐部",
+    "location": "山东省",
+    "province": "山东",
+    "city": "山东",
+    "latitude": 37.4812998554153,
+    "longitude": 117.84157457491185,
+    "par": 72
+  },
+  {
+    "id": "云南-001",
+    "name": "云南阳光高尔夫俱乐部",
+    "location": "云南省",
+    "province": "云南",
+    "city": "云南",
+    "latitude": 25.911599508758723,
+    "longitude": 102.01396461845546,
+    "par": 72
+  },
+  {
+    "id": "云南-002",
+    "name": "云南绿岛高尔夫俱乐部",
+    "location": "云南省",
+    "province": "云南",
+    "city": "云南",
+    "latitude": 24.908947154718405,
+    "longitude": 102.35685344714216,
+    "par": 72
+  },
+  {
+    "id": "云南-003",
+    "name": "云南翠湖高尔夫俱乐部",
+    "location": "云南省",
+    "province": "云南",
+    "city": "云南",
+    "latitude": 25.738931941281646,
+    "longitude": 101.45470934427894,
+    "par": 72
+  },
+  {
+    "id": "云南-004",
+    "name": "云南银海高尔夫俱乐部",
+    "location": "云南省",
+    "province": "云南",
+    "city": "云南",
+    "latitude": 24.881753919681685,
+    "longitude": 104.15620767258311,
+    "par": 72
+  },
+  {
+    "id": "云南-005",
+    "name": "云南金山高尔夫俱乐部",
+    "location": "云南省",
+    "province": "云南",
+    "city": "云南",
+    "latitude": 25.11151517621818,
+    "longitude": 101.6475260636891,
+    "par": 72
+  },
+  {
+    "id": "云南-006",
+    "name": "云南凤凰高尔夫俱乐部",
+    "location": "云南省",
+    "province": "云南",
+    "city": "云南",
+    "latitude": 25.371035957886683,
+    "longitude": 101.9964970837869,
+    "par": 72
+  },
+  {
+    "id": "云南-007",
+    "name": "云南龙脉高尔夫俱乐部",
+    "location": "云南省",
+    "province": "云南",
+    "city": "云南",
+    "latitude": 24.720346137943498,
+    "longitude": 101.5840498230062,
+    "par": 72
+  },
+  {
+    "id": "云南-008",
+    "name": "云南阳光高尔夫俱乐部",
+    "location": "云南省",
+    "province": "云南",
+    "city": "云南",
+    "latitude": 24.22201112156025,
+    "longitude": 101.2580445819689,
+    "par": 72
+  },
+  {
+    "id": "云南-009",
+    "name": "云南绿岛高尔夫俱乐部",
+    "location": "云南省",
+    "province": "云南",
+    "city": "云南",
+    "latitude": 25.964397565295485,
+    "longitude": 102.79898892409773,
+    "par": 72
+  },
+  {
+    "id": "云南-010",
+    "name": "云南翠湖高尔夫俱乐部",
+    "location": "云南省",
+    "province": "云南",
+    "city": "云南",
+    "latitude": 26.037404605654512,
+    "longitude": 103.35341931298011,
+    "par": 72
+  },
+  {
+    "id": "云南-011",
+    "name": "云南银海高尔夫俱乐部",
+    "location": "云南省",
+    "province": "云南",
+    "city": "云南",
+    "latitude": 25.079432575587244,
+    "longitude": 101.78987255731671,
+    "par": 72
+  },
+  {
+    "id": "云南-012",
+    "name": "云南金山高尔夫俱乐部",
+    "location": "云南省",
+    "province": "云南",
+    "city": "云南",
+    "latitude": 24.134358620673243,
+    "longitude": 103.7350197792375,
+    "par": 71
+  },
+  {
+    "id": "云南-013",
+    "name": "云南凤凰高尔夫俱乐部",
+    "location": "云南省",
+    "province": "云南",
+    "city": "云南",
+    "latitude": 24.57720269059978,
+    "longitude": 102.47744214484023,
+    "par": 72
+  },
+  {
+    "id": "云南-014",
+    "name": "云南龙脉高尔夫俱乐部",
+    "location": "云南省",
+    "province": "云南",
+    "city": "云南",
+    "latitude": 24.379181068929775,
+    "longitude": 101.68939841209017,
+    "par": 72
+  },
+  {
+    "id": "云南-015",
+    "name": "云南阳光高尔夫俱乐部",
+    "location": "云南省",
+    "province": "云南",
+    "city": "云南",
+    "latitude": 24.340419027117992,
+    "longitude": 102.88629572042045,
+    "par": 72
+  },
+  {
+    "id": "云南-016",
+    "name": "云南绿岛高尔夫俱乐部",
+    "location": "云南省",
+    "province": "云南",
+    "city": "云南",
+    "latitude": 25.107936199875407,
+    "longitude": 102.50099218028305,
+    "par": 72
+  },
+  {
+    "id": "福建-001",
+    "name": "福建阳光高尔夫俱乐部",
+    "location": "福建省",
+    "province": "福建",
+    "city": "福建",
+    "latitude": 26.09087689384365,
+    "longitude": 118.197392803568,
+    "par": 72
+  },
+  {
+    "id": "福建-002",
+    "name": "福建绿岛高尔夫俱乐部",
+    "location": "福建省",
+    "province": "福建",
+    "city": "福建",
+    "latitude": 25.331663535645465,
+    "longitude": 120.16611894928306,
+    "par": 71
+  },
+  {
+    "id": "福建-003",
+    "name": "福建翠湖高尔夫俱乐部",
+    "location": "福建省",
+    "province": "福建",
+    "city": "福建",
+    "latitude": 26.532240985005817,
+    "longitude": 119.70709200986607,
+    "par": 71
+  },
+  {
+    "id": "福建-004",
+    "name": "福建银海高尔夫俱乐部",
+    "location": "福建省",
+    "province": "福建",
+    "city": "福建",
+    "latitude": 26.427213835410885,
+    "longitude": 118.08262624715822,
+    "par": 70
+  },
+  {
+    "id": "福建-005",
+    "name": "福建金山高尔夫俱乐部",
+    "location": "福建省",
+    "province": "福建",
+    "city": "福建",
+    "latitude": 26.089842957729097,
+    "longitude": 120.21503686776659,
+    "par": 72
+  },
+  {
+    "id": "福建-006",
+    "name": "福建凤凰高尔夫俱乐部",
+    "location": "福建省",
+    "province": "福建",
+    "city": "福建",
+    "latitude": 25.614401013736455,
+    "longitude": 120.78206745227925,
+    "par": 72
+  },
+  {
+    "id": "福建-007",
+    "name": "福建龙脉高尔夫俱乐部",
+    "location": "福建省",
+    "province": "福建",
+    "city": "福建",
+    "latitude": 26.20306812731016,
+    "longitude": 120.53308450883664,
+    "par": 72
+  },
+  {
+    "id": "福建-008",
+    "name": "福建阳光高尔夫俱乐部",
+    "location": "福建省",
+    "province": "福建",
+    "city": "福建",
+    "latitude": 26.847432629561055,
+    "longitude": 120.19717890160484,
+    "par": 72
+  },
+  {
+    "id": "福建-009",
+    "name": "福建绿岛高尔夫俱乐部",
+    "location": "福建省",
+    "province": "福建",
+    "city": "福建",
+    "latitude": 25.598354521224667,
+    "longitude": 120.28920698223614,
+    "par": 71
+  },
+  {
+    "id": "福建-010",
+    "name": "福建翠湖高尔夫俱乐部",
+    "location": "福建省",
+    "province": "福建",
+    "city": "福建",
+    "latitude": 26.186457924824506,
+    "longitude": 118.03138730947018,
+    "par": 72
+  },
+  {
+    "id": "福建-011",
+    "name": "福建银海高尔夫俱乐部",
+    "location": "福建省",
+    "province": "福建",
+    "city": "福建",
+    "latitude": 26.42562578650663,
+    "longitude": 118.70449286481083,
+    "par": 71
+  },
+  {
+    "id": "福建-012",
+    "name": "福建金山高尔夫俱乐部",
+    "location": "福建省",
+    "province": "福建",
+    "city": "福建",
+    "latitude": 26.73524540919651,
+    "longitude": 120.20525699000915,
+    "par": 72
+  },
+  {
+    "id": "福建-013",
+    "name": "福建凤凰高尔夫俱乐部",
+    "location": "福建省",
+    "province": "福建",
+    "city": "福建",
+    "latitude": 25.958449630216677,
+    "longitude": 119.15371467923069,
+    "par": 72
+  },
+  {
+    "id": "福建-014",
+    "name": "福建龙脉高尔夫俱乐部",
+    "location": "福建省",
+    "province": "福建",
+    "city": "福建",
+    "latitude": 26.585524437831744,
+    "longitude": 118.97418012858193,
+    "par": 72
+  },
+  {
+    "id": "福建-015",
+    "name": "福建阳光高尔夫俱乐部",
+    "location": "福建省",
+    "province": "福建",
+    "city": "福建",
+    "latitude": 25.662285977924626,
+    "longitude": 119.4741234846875,
+    "par": 72
+  },
+  {
+    "id": "福建-016",
+    "name": "福建绿岛高尔夫俱乐部",
+    "location": "福建省",
+    "province": "福建",
+    "city": "福建",
+    "latitude": 26.294018732805412,
+    "longitude": 118.93773460613534,
+    "par": 72
+  },
+  {
+    "id": "福建-017",
+    "name": "福建翠湖高尔夫俱乐部",
+    "location": "福建省",
+    "province": "福建",
+    "city": "福建",
+    "latitude": 26.94345736213354,
+    "longitude": 118.37263577272228,
+    "par": 72
+  },
+  {
+    "id": "辽宁-001",
+    "name": "辽宁阳光高尔夫俱乐部",
+    "location": "辽宁省",
+    "province": "辽宁",
+    "city": "辽宁",
+    "latitude": 42.09943120849712,
+    "longitude": 124.56309947187712,
+    "par": 72
+  },
+  {
+    "id": "辽宁-002",
+    "name": "辽宁绿岛高尔夫俱乐部",
+    "location": "辽宁省",
+    "province": "辽宁",
+    "city": "辽宁",
+    "latitude": 42.25468317488276,
+    "longitude": 122.03751945287391,
+    "par": 72
+  },
+  {
+    "id": "辽宁-003",
+    "name": "辽宁翠湖高尔夫俱乐部",
+    "location": "辽宁省",
+    "province": "辽宁",
+    "city": "辽宁",
+    "latitude": 42.23080712091901,
+    "longitude": 122.14781079307615,
+    "par": 71
+  },
+  {
+    "id": "辽宁-004",
+    "name": "辽宁银海高尔夫俱乐部",
+    "location": "辽宁省",
+    "province": "辽宁",
+    "city": "辽宁",
+    "latitude": 42.10174946603504,
+    "longitude": 122.09154241346722,
+    "par": 70
+  },
+  {
+    "id": "辽宁-005",
+    "name": "辽宁金山高尔夫俱乐部",
+    "location": "辽宁省",
+    "province": "辽宁",
+    "city": "辽宁",
+    "latitude": 41.13768002761559,
+    "longitude": 124.71569498675109,
+    "par": 72
+  },
+  {
+    "id": "辽宁-006",
+    "name": "辽宁凤凰高尔夫俱乐部",
+    "location": "辽宁省",
+    "province": "辽宁",
+    "city": "辽宁",
+    "latitude": 41.87529424988788,
+    "longitude": 123.26968181839008,
+    "par": 72
+  },
+  {
+    "id": "辽宁-007",
+    "name": "辽宁龙脉高尔夫俱乐部",
+    "location": "辽宁省",
+    "province": "辽宁",
+    "city": "辽宁",
+    "latitude": 42.22613416580964,
+    "longitude": 123.47362350724713,
+    "par": 72
+  },
+  {
+    "id": "辽宁-008",
+    "name": "辽宁阳光高尔夫俱乐部",
+    "location": "辽宁省",
+    "province": "辽宁",
+    "city": "辽宁",
+    "latitude": 42.77932642925356,
+    "longitude": 122.27803734948678,
+    "par": 72
+  },
+  {
+    "id": "辽宁-009",
+    "name": "辽宁绿岛高尔夫俱乐部",
+    "location": "辽宁省",
+    "province": "辽宁",
+    "city": "辽宁",
+    "latitude": 41.31800008171374,
+    "longitude": 123.11505490299193,
+    "par": 72
+  },
+  {
+    "id": "辽宁-010",
+    "name": "辽宁翠湖高尔夫俱乐部",
+    "location": "辽宁省",
+    "province": "辽宁",
+    "city": "辽宁",
+    "latitude": 41.22390409955142,
+    "longitude": 122.3525504560803,
+    "par": 72
+  },
+  {
+    "id": "辽宁-011",
+    "name": "辽宁银海高尔夫俱乐部",
+    "location": "辽宁省",
+    "province": "辽宁",
+    "city": "辽宁",
+    "latitude": 41.28455093846755,
+    "longitude": 122.09694682113256,
+    "par": 72
+  },
+  {
+    "id": "辽宁-012",
+    "name": "辽宁金山高尔夫俱乐部",
+    "location": "辽宁省",
+    "province": "辽宁",
+    "city": "辽宁",
+    "latitude": 41.49694035844696,
+    "longitude": 123.81939111068014,
+    "par": 72
+  },
+  {
+    "id": "辽宁-013",
+    "name": "辽宁凤凰高尔夫俱乐部",
+    "location": "辽宁省",
+    "province": "辽宁",
+    "city": "辽宁",
+    "latitude": 41.902185336172344,
+    "longitude": 122.90722364450085,
+    "par": 72
+  },
+  {
+    "id": "辽宁-014",
+    "name": "辽宁龙脉高尔夫俱乐部",
+    "location": "辽宁省",
+    "province": "辽宁",
+    "city": "辽宁",
+    "latitude": 42.00525066659838,
+    "longitude": 122.4221030122111,
+    "par": 72
+  },
+  {
+    "id": "辽宁-015",
+    "name": "辽宁阳光高尔夫俱乐部",
+    "location": "辽宁省",
+    "province": "辽宁",
+    "city": "辽宁",
+    "latitude": 42.60857837900126,
+    "longitude": 123.23862398367048,
+    "par": 72
+  },
+  {
+    "id": "天津-001",
+    "name": "天津阳光高尔夫俱乐部",
+    "location": "天津省",
+    "province": "天津",
+    "city": "天津",
+    "latitude": 38.95882182734521,
+    "longitude": 116.95305665916837,
+    "par": 72
+  },
+  {
+    "id": "天津-002",
+    "name": "天津绿岛高尔夫俱乐部",
+    "location": "天津省",
+    "province": "天津",
+    "city": "天津",
+    "latitude": 39.41010017065028,
+    "longitude": 115.96532261028263,
+    "par": 72
+  },
+  {
+    "id": "天津-003",
+    "name": "天津翠湖高尔夫俱乐部",
+    "location": "天津省",
+    "province": "天津",
+    "city": "天津",
+    "latitude": 38.23776569780629,
+    "longitude": 117.53152006578402,
+    "par": 71
+  },
+  {
+    "id": "天津-004",
+    "name": "天津银海高尔夫俱乐部",
+    "location": "天津省",
+    "province": "天津",
+    "city": "天津",
+    "latitude": 38.34179447444871,
+    "longitude": 117.46130185353314,
+    "par": 72
+  },
+  {
+    "id": "天津-005",
+    "name": "天津金山高尔夫俱乐部",
+    "location": "天津省",
+    "province": "天津",
+    "city": "天津",
+    "latitude": 39.461212939314095,
+    "longitude": 118.57079794365293,
+    "par": 72
+  },
+  {
+    "id": "河北-001",
+    "name": "河北阳光高尔夫俱乐部",
+    "location": "河北省",
+    "province": "河北",
+    "city": "河北",
+    "latitude": 38.77270271298977,
+    "longitude": 114.10222935322774,
+    "par": 72
+  },
+  {
+    "id": "河北-002",
+    "name": "河北绿岛高尔夫俱乐部",
+    "location": "河北省",
+    "province": "河北",
+    "city": "河北",
+    "latitude": 37.64811569375268,
+    "longitude": 115.26184263612429,
+    "par": 70
+  },
+  {
+    "id": "河北-003",
+    "name": "河北翠湖高尔夫俱乐部",
+    "location": "河北省",
+    "province": "河北",
+    "city": "河北",
+    "latitude": 38.99873933784943,
+    "longitude": 114.80247459838628,
+    "par": 72
+  },
+  {
+    "id": "河北-004",
+    "name": "河北银海高尔夫俱乐部",
+    "location": "河北省",
+    "province": "河北",
+    "city": "河北",
+    "latitude": 37.93318486433934,
+    "longitude": 114.80851015127921,
+    "par": 72
+  },
+  {
+    "id": "河北-005",
+    "name": "河北金山高尔夫俱乐部",
+    "location": "河北省",
+    "province": "河北",
+    "city": "河北",
+    "latitude": 37.300111324429984,
+    "longitude": 115.43440459852819,
+    "par": 72
+  },
+  {
+    "id": "河北-006",
+    "name": "河北凤凰高尔夫俱乐部",
+    "location": "河北省",
+    "province": "河北",
+    "city": "河北",
+    "latitude": 38.14307631810757,
+    "longitude": 114.29580406887267,
+    "par": 72
+  },
+  {
+    "id": "河北-007",
+    "name": "河北龙脉高尔夫俱乐部",
+    "location": "河北省",
+    "province": "河北",
+    "city": "河北",
+    "latitude": 38.40362571265056,
+    "longitude": 115.59243890750463,
+    "par": 70
+  },
+  {
+    "id": "河北-008",
+    "name": "河北阳光高尔夫俱乐部",
+    "location": "河北省",
+    "province": "河北",
+    "city": "河北",
+    "latitude": 37.87574880872045,
+    "longitude": 114.67666707749532,
+    "par": 72
+  },
+  {
+    "id": "河北-009",
+    "name": "河北绿岛高尔夫俱乐部",
+    "location": "河北省",
+    "province": "河北",
+    "city": "河北",
+    "latitude": 37.53157223041107,
+    "longitude": 115.51275961988962,
+    "par": 70
+  },
+  {
+    "id": "河北-010",
+    "name": "河北翠湖高尔夫俱乐部",
+    "location": "河北省",
+    "province": "河北",
+    "city": "河北",
+    "latitude": 37.46815102230994,
+    "longitude": 114.41548949667752,
+    "par": 72
+  },
+  {
+    "id": "河北-011",
+    "name": "河北银海高尔夫俱乐部",
+    "location": "河北省",
+    "province": "河北",
+    "city": "河北",
+    "latitude": 37.470435831458566,
+    "longitude": 114.16374368944717,
+    "par": 72
+  },
+  {
+    "id": "河南-001",
+    "name": "河南阳光高尔夫俱乐部",
+    "location": "河南省",
+    "province": "河南",
+    "city": "河南",
+    "latitude": 34.22692114644421,
+    "longitude": 112.73174568047202,
+    "par": 71
+  },
+  {
+    "id": "河南-002",
+    "name": "河南绿岛高尔夫俱乐部",
+    "location": "河南省",
+    "province": "河南",
+    "city": "河南",
+    "latitude": 34.49747542688953,
+    "longitude": 112.47974719694794,
+    "par": 71
+  },
+  {
+    "id": "河南-003",
+    "name": "河南翠湖高尔夫俱乐部",
+    "location": "河南省",
+    "province": "河南",
+    "city": "河南",
+    "latitude": 35.68367289539978,
+    "longitude": 115.10424230828819,
+    "par": 72
+  },
+  {
+    "id": "河南-004",
+    "name": "河南银海高尔夫俱乐部",
+    "location": "河南省",
+    "province": "河南",
+    "city": "河南",
+    "latitude": 34.571641826476124,
+    "longitude": 114.43686328019986,
+    "par": 72
+  },
+  {
+    "id": "河南-005",
+    "name": "河南金山高尔夫俱乐部",
+    "location": "河南省",
+    "province": "河南",
+    "city": "河南",
+    "latitude": 35.742081902305024,
+    "longitude": 114.7435195628284,
+    "par": 72
+  },
+  {
+    "id": "河南-006",
+    "name": "河南凤凰高尔夫俱乐部",
+    "location": "河南省",
+    "province": "河南",
+    "city": "河南",
+    "latitude": 34.77426577071581,
+    "longitude": 114.24037511594207,
+    "par": 71
+  },
+  {
+    "id": "河南-007",
+    "name": "河南龙脉高尔夫俱乐部",
+    "location": "河南省",
+    "province": "河南",
+    "city": "河南",
+    "latitude": 34.40477463566821,
+    "longitude": 113.77951195915598,
+    "par": 72
+  },
+  {
+    "id": "河南-008",
+    "name": "河南阳光高尔夫俱乐部",
+    "location": "河南省",
+    "province": "河南",
+    "city": "河南",
+    "latitude": 34.686841703060246,
+    "longitude": 113.24642523995543,
+    "par": 72
+  },
+  {
+    "id": "河南-009",
+    "name": "河南绿岛高尔夫俱乐部",
+    "location": "河南省",
+    "province": "河南",
+    "city": "河南",
+    "latitude": 34.13906132652296,
+    "longitude": 112.16184230150384,
+    "par": 70
+  },
+  {
+    "id": "河南-010",
+    "name": "河南翠湖高尔夫俱乐部",
+    "location": "河南省",
+    "province": "河南",
+    "city": "河南",
+    "latitude": 34.5479443647618,
+    "longitude": 113.27635447430109,
+    "par": 72
+  },
+  {
+    "id": "河南-011",
+    "name": "河南银海高尔夫俱乐部",
+    "location": "河南省",
+    "province": "河南",
+    "city": "河南",
+    "latitude": 35.148604990266975,
+    "longitude": 113.2801297601715,
+    "par": 72
+  },
+  {
+    "id": "河南-012",
+    "name": "河南金山高尔夫俱乐部",
+    "location": "河南省",
+    "province": "河南",
+    "city": "河南",
+    "latitude": 35.37259592470576,
+    "longitude": 112.99681136303761,
+    "par": 71
+  },
+  {
+    "id": "湖北-001",
+    "name": "湖北阳光高尔夫俱乐部",
+    "location": "湖北省",
+    "province": "湖北",
+    "city": "湖北",
+    "latitude": 29.743704118656208,
+    "longitude": 115.00230001075641,
+    "par": 72
+  },
+  {
+    "id": "湖北-002",
+    "name": "湖北绿岛高尔夫俱乐部",
+    "location": "湖北省",
+    "province": "湖北",
+    "city": "湖北",
+    "latitude": 30.95235569975858,
+    "longitude": 114.89091178931325,
+    "par": 72
+  },
+  {
+    "id": "湖北-003",
+    "name": "湖北翠湖高尔夫俱乐部",
+    "location": "湖北省",
+    "province": "湖北",
+    "city": "湖北",
+    "latitude": 29.750512129081137,
+    "longitude": 113.87115308275574,
+    "par": 72
+  },
+  {
+    "id": "湖北-004",
+    "name": "湖北银海高尔夫俱乐部",
+    "location": "湖北省",
+    "province": "湖北",
+    "city": "湖北",
+    "latitude": 30.424778364772276,
+    "longitude": 113.00775699407991,
+    "par": 71
+  },
+  {
+    "id": "湖北-005",
+    "name": "湖北金山高尔夫俱乐部",
+    "location": "湖北省",
+    "province": "湖北",
+    "city": "湖北",
+    "latitude": 30.172316097405254,
+    "longitude": 115.48554117533854,
+    "par": 70
+  },
+  {
+    "id": "湖北-006",
+    "name": "湖北凤凰高尔夫俱乐部",
+    "location": "湖北省",
+    "province": "湖北",
+    "city": "湖北",
+    "latitude": 31.062343208980213,
+    "longitude": 115.11116224712258,
+    "par": 72
+  },
+  {
+    "id": "湖北-007",
+    "name": "湖北龙脉高尔夫俱乐部",
+    "location": "湖北省",
+    "province": "湖北",
+    "city": "湖北",
+    "latitude": 31.04919346346203,
+    "longitude": 114.71662377956109,
+    "par": 72
+  },
+  {
+    "id": "湖北-008",
+    "name": "湖北阳光高尔夫俱乐部",
+    "location": "湖北省",
+    "province": "湖北",
+    "city": "湖北",
+    "latitude": 30.093249032016235,
+    "longitude": 113.89305493717269,
+    "par": 72
+  },
+  {
+    "id": "湖北-009",
+    "name": "湖北绿岛高尔夫俱乐部",
+    "location": "湖北省",
+    "province": "湖北",
+    "city": "湖北",
+    "latitude": 30.689290751666654,
+    "longitude": 115.15305956189198,
+    "par": 72
+  },
+  {
+    "id": "湖北-010",
+    "name": "湖北翠湖高尔夫俱乐部",
+    "location": "湖北省",
+    "province": "湖北",
+    "city": "湖北",
+    "latitude": 30.428885209607103,
+    "longitude": 114.98095951270714,
+    "par": 72
+  },
+  {
+    "id": "湖北-011",
+    "name": "湖北银海高尔夫俱乐部",
+    "location": "湖北省",
+    "province": "湖北",
+    "city": "湖北",
+    "latitude": 29.669789739656412,
+    "longitude": 113.53350065421975,
+    "par": 72
+  },
+  {
+    "id": "湖北-012",
+    "name": "湖北金山高尔夫俱乐部",
+    "location": "湖北省",
+    "province": "湖北",
+    "city": "湖北",
+    "latitude": 31.544127103043476,
+    "longitude": 114.99939398925875,
+    "par": 72
+  },
+  {
+    "id": "湖北-013",
+    "name": "湖北凤凰高尔夫俱乐部",
+    "location": "湖北省",
+    "province": "湖北",
+    "city": "湖北",
+    "latitude": 30.773795402323174,
+    "longitude": 114.11017123025009,
+    "par": 71
+  },
+  {
+    "id": "湖南-001",
+    "name": "湖南阳光高尔夫俱乐部",
+    "location": "湖南省",
+    "province": "湖南",
+    "city": "湖南",
+    "latitude": 27.767254080029627,
+    "longitude": 111.93558219062393,
+    "par": 72
+  },
+  {
+    "id": "湖南-002",
+    "name": "湖南绿岛高尔夫俱乐部",
+    "location": "湖南省",
+    "province": "湖南",
+    "city": "湖南",
+    "latitude": 27.922992035435296,
+    "longitude": 113.00273773301697,
+    "par": 72
+  },
+  {
+    "id": "湖南-003",
+    "name": "湖南翠湖高尔夫俱乐部",
+    "location": "湖南省",
+    "province": "湖南",
+    "city": "湖南",
+    "latitude": 28.354415477449542,
+    "longitude": 113.91597738176816,
+    "par": 72
+  },
+  {
+    "id": "湖南-004",
+    "name": "湖南银海高尔夫俱乐部",
+    "location": "湖南省",
+    "province": "湖南",
+    "city": "湖南",
+    "latitude": 28.76047057558145,
+    "longitude": 113.20963946848858,
+    "par": 72
+  },
+  {
+    "id": "湖南-005",
+    "name": "湖南金山高尔夫俱乐部",
+    "location": "湖南省",
+    "province": "湖南",
+    "city": "湖南",
+    "latitude": 29.10800601054562,
+    "longitude": 112.2210051318881,
+    "par": 72
+  },
+  {
+    "id": "湖南-006",
+    "name": "湖南凤凰高尔夫俱乐部",
+    "location": "湖南省",
+    "province": "湖南",
+    "city": "湖南",
+    "latitude": 27.39319704542217,
+    "longitude": 113.1404421229046,
+    "par": 72
+  },
+  {
+    "id": "湖南-007",
+    "name": "湖南龙脉高尔夫俱乐部",
+    "location": "湖南省",
+    "province": "湖南",
+    "city": "湖南",
+    "latitude": 29.07582881726219,
+    "longitude": 112.42177676061819,
+    "par": 72
+  },
+  {
+    "id": "湖南-008",
+    "name": "湖南阳光高尔夫俱乐部",
+    "location": "湖南省",
+    "province": "湖南",
+    "city": "湖南",
+    "latitude": 28.084836499738994,
+    "longitude": 112.39381878623792,
+    "par": 72
+  },
+  {
+    "id": "湖南-009",
+    "name": "湖南绿岛高尔夫俱乐部",
+    "location": "湖南省",
+    "province": "湖南",
+    "city": "湖南",
+    "latitude": 28.409982467578146,
+    "longitude": 111.57573928856746,
+    "par": 70
+  },
+  {
+    "id": "湖南-010",
+    "name": "湖南翠湖高尔夫俱乐部",
+    "location": "湖南省",
+    "province": "湖南",
+    "city": "湖南",
+    "latitude": 29.047986775593564,
+    "longitude": 113.97033386598751,
+    "par": 72
+  },
+  {
+    "id": "湖南-011",
+    "name": "湖南银海高尔夫俱乐部",
+    "location": "湖南省",
+    "province": "湖南",
+    "city": "湖南",
+    "latitude": 28.08752702256351,
+    "longitude": 113.20101808078574,
+    "par": 72
+  },
+  {
+    "id": "湖南-012",
+    "name": "湖南金山高尔夫俱乐部",
+    "location": "湖南省",
+    "province": "湖南",
+    "city": "湖南",
+    "latitude": 27.609610179398118,
+    "longitude": 111.53212757268894,
+    "par": 72
+  },
+  {
+    "id": "湖南-013",
+    "name": "湖南凤凰高尔夫俱乐部",
+    "location": "湖南省",
+    "province": "湖南",
+    "city": "湖南",
+    "latitude": 29.207681358200805,
+    "longitude": 112.5622703701845,
+    "par": 70
+  },
+  {
+    "id": "湖南-014",
+    "name": "湖南龙脉高尔夫俱乐部",
+    "location": "湖南省",
+    "province": "湖南",
+    "city": "湖南",
+    "latitude": 28.65051748760768,
+    "longitude": 111.5979309827955,
+    "par": 72
+  },
+  {
+    "id": "陕西-001",
+    "name": "陕西阳光高尔夫俱乐部",
+    "location": "陕西省",
+    "province": "陕西",
+    "city": "陕西",
+    "latitude": 34.56646729701047,
+    "longitude": 109.95756476733193,
+    "par": 72
+  },
+  {
+    "id": "陕西-002",
+    "name": "陕西绿岛高尔夫俱乐部",
+    "location": "陕西省",
+    "province": "陕西",
+    "city": "陕西",
+    "latitude": 35.24144642453288,
+    "longitude": 109.75239284269989,
+    "par": 72
+  },
+  {
+    "id": "陕西-003",
+    "name": "陕西翠湖高尔夫俱乐部",
+    "location": "陕西省",
+    "province": "陕西",
+    "city": "陕西",
+    "latitude": 34.46968001888596,
+    "longitude": 108.20513446507204,
+    "par": 71
+  },
+  {
+    "id": "陕西-004",
+    "name": "陕西银海高尔夫俱乐部",
+    "location": "陕西省",
+    "province": "陕西",
+    "city": "陕西",
+    "latitude": 35.14293999646583,
+    "longitude": 109.00479329095413,
+    "par": 72
+  },
+  {
+    "id": "陕西-005",
+    "name": "陕西金山高尔夫俱乐部",
+    "location": "陕西省",
+    "province": "陕西",
+    "city": "陕西",
+    "latitude": 34.430894252724855,
+    "longitude": 110.1421002417258,
+    "par": 72
+  },
+  {
+    "id": "陕西-006",
+    "name": "陕西凤凰高尔夫俱乐部",
+    "location": "陕西省",
+    "province": "陕西",
+    "city": "陕西",
+    "latitude": 35.02722860020836,
+    "longitude": 108.94320164949995,
+    "par": 72
+  },
+  {
+    "id": "陕西-007",
+    "name": "陕西龙脉高尔夫俱乐部",
+    "location": "陕西省",
+    "province": "陕西",
+    "city": "陕西",
+    "latitude": 33.77381608620005,
+    "longitude": 109.40898616357678,
+    "par": 71
+  },
+  {
+    "id": "陕西-008",
+    "name": "陕西阳光高尔夫俱乐部",
+    "location": "陕西省",
+    "province": "陕西",
+    "city": "陕西",
+    "latitude": 34.71349795594639,
+    "longitude": 108.94956352675779,
+    "par": 72
+  },
+  {
+    "id": "陕西-009",
+    "name": "陕西绿岛高尔夫俱乐部",
+    "location": "陕西省",
+    "province": "陕西",
+    "city": "陕西",
+    "latitude": 33.54983759046379,
+    "longitude": 108.17736953525318,
+    "par": 72
+  },
+  {
+    "id": "陕西-010",
+    "name": "陕西翠湖高尔夫俱乐部",
+    "location": "陕西省",
+    "province": "陕西",
+    "city": "陕西",
+    "latitude": 34.645105348809466,
+    "longitude": 109.58278121106855,
+    "par": 72
+  },
+  {
+    "id": "陕西-011",
+    "name": "陕西银海高尔夫俱乐部",
+    "location": "陕西省",
+    "province": "陕西",
+    "city": "陕西",
+    "latitude": 34.42811437669299,
+    "longitude": 107.59181192963229,
+    "par": 72
+  },
+  {
+    "id": "重庆-001",
+    "name": "重庆阳光高尔夫俱乐部",
+    "location": "重庆省",
+    "province": "重庆",
+    "city": "重庆",
+    "latitude": 30.51989279134541,
+    "longitude": 105.17831955640591,
+    "par": 72
+  },
+  {
+    "id": "重庆-002",
+    "name": "重庆绿岛高尔夫俱乐部",
+    "location": "重庆省",
+    "province": "重庆",
+    "city": "重庆",
+    "latitude": 29.166798731603425,
+    "longitude": 107.21966853071275,
+    "par": 72
+  },
+  {
+    "id": "重庆-003",
+    "name": "重庆翠湖高尔夫俱乐部",
+    "location": "重庆省",
+    "province": "重庆",
+    "city": "重庆",
+    "latitude": 29.865268610688382,
+    "longitude": 106.14608349962401,
+    "par": 72
+  },
+  {
+    "id": "重庆-004",
+    "name": "重庆银海高尔夫俱乐部",
+    "location": "重庆省",
+    "province": "重庆",
+    "city": "重庆",
+    "latitude": 28.659413680331845,
+    "longitude": 105.28177512095583,
+    "par": 72
+  },
+  {
+    "id": "重庆-005",
+    "name": "重庆金山高尔夫俱乐部",
+    "location": "重庆省",
+    "province": "重庆",
+    "city": "重庆",
+    "latitude": 29.341037838383244,
+    "longitude": 105.35655278813077,
+    "par": 71
+  },
+  {
+    "id": "重庆-006",
+    "name": "重庆凤凰高尔夫俱乐部",
+    "location": "重庆省",
+    "province": "重庆",
+    "city": "重庆",
+    "latitude": 29.99396480063815,
+    "longitude": 107.67434329671076,
+    "par": 71
+  },
+  {
+    "id": "重庆-007",
+    "name": "重庆龙脉高尔夫俱乐部",
+    "location": "重庆省",
+    "province": "重庆",
+    "city": "重庆",
+    "latitude": 30.056470692384224,
+    "longitude": 105.88213825383635,
+    "par": 71
+  },
+  {
+    "id": "广西-001",
+    "name": "广西阳光高尔夫俱乐部",
+    "location": "广西省",
+    "province": "广西",
+    "city": "广西",
+    "latitude": 23.758536550584655,
+    "longitude": 109.3826940599113,
+    "par": 71
+  },
+  {
+    "id": "广西-002",
+    "name": "广西绿岛高尔夫俱乐部",
+    "location": "广西省",
+    "province": "广西",
+    "city": "广西",
+    "latitude": 23.670921618289782,
+    "longitude": 108.57637137488697,
+    "par": 72
+  },
+  {
+    "id": "广西-003",
+    "name": "广西翠湖高尔夫俱乐部",
+    "location": "广西省",
+    "province": "广西",
+    "city": "广西",
+    "latitude": 23.380065466145428,
+    "longitude": 108.7666898108872,
+    "par": 72
+  },
+  {
+    "id": "广西-004",
+    "name": "广西银海高尔夫俱乐部",
+    "location": "广西省",
+    "province": "广西",
+    "city": "广西",
+    "latitude": 22.135571589236235,
+    "longitude": 109.49709748299675,
+    "par": 71
+  },
+  {
+    "id": "广西-005",
+    "name": "广西金山高尔夫俱乐部",
+    "location": "广西省",
+    "province": "广西",
+    "city": "广西",
+    "latitude": 23.56434862352164,
+    "longitude": 107.44904873099958,
+    "par": 72
+  },
+  {
+    "id": "广西-006",
+    "name": "广西凤凰高尔夫俱乐部",
+    "location": "广西省",
+    "province": "广西",
+    "city": "广西",
+    "latitude": 23.437303967798456,
+    "longitude": 109.4440609469271,
+    "par": 72
+  },
+  {
+    "id": "广西-007",
+    "name": "广西龙脉高尔夫俱乐部",
+    "location": "广西省",
+    "province": "广西",
+    "city": "广西",
+    "latitude": 22.855292007124568,
+    "longitude": 108.16966932941214,
+    "par": 72
+  },
+  {
+    "id": "广西-008",
+    "name": "广西阳光高尔夫俱乐部",
+    "location": "广西省",
+    "province": "广西",
+    "city": "广西",
+    "latitude": 23.431365647520533,
+    "longitude": 108.21927414152907,
+    "par": 72
+  },
+  {
+    "id": "广西-009",
+    "name": "广西绿岛高尔夫俱乐部",
+    "location": "广西省",
+    "province": "广西",
+    "city": "广西",
+    "latitude": 22.802322783205835,
+    "longitude": 109.80842947408915,
+    "par": 70
+  },
+  {
+    "id": "广西-010",
+    "name": "广西翠湖高尔夫俱乐部",
+    "location": "广西省",
+    "province": "广西",
+    "city": "广西",
+    "latitude": 22.307052249396502,
+    "longitude": 109.26536177977947,
+    "par": 71
+  },
+  {
+    "id": "广西-011",
+    "name": "广西银海高尔夫俱乐部",
+    "location": "广西省",
+    "province": "广西",
+    "city": "广西",
+    "latitude": 22.09431781728262,
+    "longitude": 109.54034139473349,
+    "par": 72
+  },
+  {
+    "id": "贵州-001",
+    "name": "贵州阳光高尔夫俱乐部",
+    "location": "贵州省",
+    "province": "贵州",
+    "city": "贵州",
+    "latitude": 26.053292361493988,
+    "longitude": 107.8257075058504,
+    "par": 72
+  },
+  {
+    "id": "贵州-002",
+    "name": "贵州绿岛高尔夫俱乐部",
+    "location": "贵州省",
+    "province": "贵州",
+    "city": "贵州",
+    "latitude": 26.506044855368565,
+    "longitude": 106.51147491715551,
+    "par": 72
+  },
+  {
+    "id": "贵州-003",
+    "name": "贵州翠湖高尔夫俱乐部",
+    "location": "贵州省",
+    "province": "贵州",
+    "city": "贵州",
+    "latitude": 26.329245330948837,
+    "longitude": 108.10014608513511,
+    "par": 71
+  },
+  {
+    "id": "安徽-001",
+    "name": "安徽阳光高尔夫俱乐部",
+    "location": "安徽省",
+    "province": "安徽",
+    "city": "安徽",
+    "latitude": 32.35504854175122,
+    "longitude": 116.79398519846733,
+    "par": 70
+  },
+  {
+    "id": "安徽-002",
+    "name": "安徽绿岛高尔夫俱乐部",
+    "location": "安徽省",
+    "province": "安徽",
+    "city": "安徽",
+    "latitude": 32.384470106137094,
+    "longitude": 116.85008367868758,
+    "par": 72
+  },
+  {
+    "id": "安徽-003",
+    "name": "安徽翠湖高尔夫俱乐部",
+    "location": "安徽省",
+    "province": "安徽",
+    "city": "安徽",
+    "latitude": 31.77174704113477,
+    "longitude": 116.33372662161537,
+    "par": 72
+  },
+  {
+    "id": "安徽-004",
+    "name": "安徽银海高尔夫俱乐部",
+    "location": "安徽省",
+    "province": "安徽",
+    "city": "安徽",
+    "latitude": 32.35970125384695,
+    "longitude": 117.54935736627542,
+    "par": 71
+  },
+  {
+    "id": "安徽-005",
+    "name": "安徽金山高尔夫俱乐部",
+    "location": "安徽省",
+    "province": "安徽",
+    "city": "安徽",
+    "latitude": 32.74601372620318,
+    "longitude": 118.03695771180298,
+    "par": 72
+  },
+  {
+    "id": "安徽-006",
+    "name": "安徽凤凰高尔夫俱乐部",
+    "location": "安徽省",
+    "province": "安徽",
+    "city": "安徽",
+    "latitude": 31.57290322929834,
+    "longitude": 116.0397706629715,
+    "par": 72
+  },
+  {
+    "id": "安徽-007",
+    "name": "安徽龙脉高尔夫俱乐部",
+    "location": "安徽省",
+    "province": "安徽",
+    "city": "安徽",
+    "latitude": 31.073488309250635,
+    "longitude": 117.44493449543641,
+    "par": 71
+  },
+  {
+    "id": "安徽-008",
+    "name": "安徽阳光高尔夫俱乐部",
+    "location": "安徽省",
+    "province": "安徽",
+    "city": "安徽",
+    "latitude": 31.239409745813685,
+    "longitude": 115.93197749092431,
+    "par": 71
+  },
+  {
+    "id": "安徽-009",
+    "name": "安徽绿岛高尔夫俱乐部",
+    "location": "安徽省",
+    "province": "安徽",
+    "city": "安徽",
+    "latitude": 30.944270426965524,
+    "longitude": 116.52688699805253,
+    "par": 72
+  },
+  {
+    "id": "安徽-010",
+    "name": "安徽翠湖高尔夫俱乐部",
+    "location": "安徽省",
+    "province": "安徽",
+    "city": "安徽",
+    "latitude": 32.5882557969859,
+    "longitude": 116.70192877093136,
+    "par": 72
+  },
+  {
+    "id": "安徽-011",
+    "name": "安徽银海高尔夫俱乐部",
+    "location": "安徽省",
+    "province": "安徽",
+    "city": "安徽",
+    "latitude": 32.769460051452164,
+    "longitude": 116.5218291612162,
+    "par": 72
+  },
+  {
+    "id": "安徽-012",
+    "name": "安徽金山高尔夫俱乐部",
+    "location": "安徽省",
+    "province": "安徽",
+    "city": "安徽",
+    "latitude": 30.916386954658634,
+    "longitude": 117.20239006951215,
+    "par": 72
+  },
+  {
+    "id": "安徽-013",
+    "name": "安徽凤凰高尔夫俱乐部",
+    "location": "安徽省",
+    "province": "安徽",
+    "city": "安徽",
+    "latitude": 31.606210457705295,
+    "longitude": 117.454553432392,
+    "par": 72
+  },
+  {
+    "id": "江西-001",
+    "name": "江西阳光高尔夫俱乐部",
+    "location": "江西省",
+    "province": "江西",
+    "city": "江西",
+    "latitude": 28.52839997236338,
+    "longitude": 115.52308945597974,
+    "par": 71
+  },
+  {
+    "id": "江西-002",
+    "name": "江西绿岛高尔夫俱乐部",
+    "location": "江西省",
+    "province": "江西",
+    "city": "江西",
+    "latitude": 29.423662914244936,
+    "longitude": 114.7501750753375,
+    "par": 72
+  },
+  {
+    "id": "江西-003",
+    "name": "江西翠湖高尔夫俱乐部",
+    "location": "江西省",
+    "province": "江西",
+    "city": "江西",
+    "latitude": 29.073170056139897,
+    "longitude": 116.09227817287002,
+    "par": 70
+  },
+  {
+    "id": "江西-004",
+    "name": "江西银海高尔夫俱乐部",
+    "location": "江西省",
+    "province": "江西",
+    "city": "江西",
+    "latitude": 28.155157854712527,
+    "longitude": 115.10563289975887,
+    "par": 72
+  },
+  {
+    "id": "江西-005",
+    "name": "江西金山高尔夫俱乐部",
+    "location": "江西省",
+    "province": "江西",
+    "city": "江西",
+    "latitude": 28.935037559952285,
+    "longitude": 116.68724003070419,
+    "par": 71
+  },
+  {
+    "id": "江西-006",
+    "name": "江西凤凰高尔夫俱乐部",
+    "location": "江西省",
+    "province": "江西",
+    "city": "江西",
+    "latitude": 29.107204863251976,
+    "longitude": 115.07936877172163,
+    "par": 72
+  },
+  {
+    "id": "江西-007",
+    "name": "江西龙脉高尔夫俱乐部",
+    "location": "江西省",
+    "province": "江西",
+    "city": "江西",
+    "latitude": 27.819456488280053,
+    "longitude": 116.47034012677246,
+    "par": 72
+  },
+  {
+    "id": "江西-008",
+    "name": "江西阳光高尔夫俱乐部",
+    "location": "江西省",
+    "province": "江西",
+    "city": "江西",
+    "latitude": 28.088224989815302,
+    "longitude": 116.68198715081392,
+    "par": 72
+  },
+  {
+    "id": "江西-009",
+    "name": "江西绿岛高尔夫俱乐部",
+    "location": "江西省",
+    "province": "江西",
+    "city": "江西",
+    "latitude": 28.227766891636815,
+    "longitude": 114.52392024456596,
+    "par": 72
+  },
+  {
+    "id": "江西-010",
+    "name": "江西翠湖高尔夫俱乐部",
+    "location": "江西省",
+    "province": "江西",
+    "city": "江西",
+    "latitude": 28.761697212763046,
+    "longitude": 114.99375996966891,
+    "par": 70
+  },
+  {
+    "id": "江西-011",
+    "name": "江西银海高尔夫俱乐部",
+    "location": "江西省",
+    "province": "江西",
+    "city": "江西",
+    "latitude": 29.251183083039955,
+    "longitude": 115.67062409535468,
+    "par": 72
+  },
+  {
+    "id": "山西-001",
+    "name": "山西阳光高尔夫俱乐部",
+    "location": "山西省",
+    "province": "山西",
+    "city": "山西",
+    "latitude": 37.777067622995986,
+    "longitude": 114.01105342093348,
+    "par": 70
+  },
+  {
+    "id": "山西-002",
+    "name": "山西绿岛高尔夫俱乐部",
+    "location": "山西省",
+    "province": "山西",
+    "city": "山西",
+    "latitude": 37.82517585494902,
+    "longitude": 113.00944984681459,
+    "par": 72
+  },
+  {
+    "id": "山西-003",
+    "name": "山西翠湖高尔夫俱乐部",
+    "location": "山西省",
+    "province": "山西",
+    "city": "山西",
+    "latitude": 36.93341372971434,
+    "longitude": 112.26774194776294,
+    "par": 72
+  },
+  {
+    "id": "山西-004",
+    "name": "山西银海高尔夫俱乐部",
+    "location": "山西省",
+    "province": "山西",
+    "city": "山西",
+    "latitude": 37.23886762461675,
+    "longitude": 111.78992597634398,
+    "par": 70
+  },
+  {
+    "id": "吉林-001",
+    "name": "吉林阳光高尔夫俱乐部",
+    "location": "吉林省",
+    "province": "吉林",
+    "city": "吉林",
+    "latitude": 44.80204236356721,
+    "longitude": 124.72856978829073,
+    "par": 70
+  },
+  {
+    "id": "吉林-002",
+    "name": "吉林绿岛高尔夫俱乐部",
+    "location": "吉林省",
+    "province": "吉林",
+    "city": "吉林",
+    "latitude": 43.99103377161326,
+    "longitude": 126.06703089106267,
+    "par": 70
+  },
+  {
+    "id": "吉林-003",
+    "name": "吉林翠湖高尔夫俱乐部",
+    "location": "吉林省",
+    "province": "吉林",
+    "city": "吉林",
+    "latitude": 42.94264994247019,
+    "longitude": 126.70496197592952,
+    "par": 71
+  },
+  {
+    "id": "黑龙江-001",
+    "name": "黑龙江阳光高尔夫俱乐部",
+    "location": "黑龙江省",
+    "province": "黑龙江",
+    "city": "黑龙江",
+    "latitude": 46.3234087322262,
+    "longitude": 125.92162845249423,
+    "par": 72
+  },
+  {
+    "id": "黑龙江-002",
+    "name": "黑龙江绿岛高尔夫俱乐部",
+    "location": "黑龙江省",
+    "province": "黑龙江",
+    "city": "黑龙江",
+    "latitude": 46.318451429558316,
+    "longitude": 128.00337771242667,
+    "par": 72
+  },
+  {
+    "id": "黑龙江-003",
+    "name": "黑龙江翠湖高尔夫俱乐部",
+    "location": "黑龙江省",
+    "province": "黑龙江",
+    "city": "黑龙江",
+    "latitude": 45.8040454560883,
+    "longitude": 126.73787663183826,
+    "par": 72
+  },
+  {
+    "id": "黑龙江-004",
+    "name": "黑龙江银海高尔夫俱乐部",
+    "location": "黑龙江省",
+    "province": "黑龙江",
+    "city": "黑龙江",
+    "latitude": 44.960976044707415,
+    "longitude": 127.54473396158414,
+    "par": 72
+  },
+  {
+    "id": "甘肃-001",
+    "name": "甘肃阳光高尔夫俱乐部",
+    "location": "甘肃省",
+    "province": "甘肃",
+    "city": "甘肃",
+    "latitude": 36.100335179597344,
+    "longitude": 104.72010938856346,
+    "par": 72
+  },
+  {
+    "id": "甘肃-002",
+    "name": "甘肃绿岛高尔夫俱乐部",
+    "location": "甘肃省",
+    "province": "甘肃",
+    "city": "甘肃",
+    "latitude": 37.01069241719969,
+    "longitude": 104.53545352446336,
+    "par": 72
+  },
+  {
+    "id": "甘肃-003",
+    "name": "甘肃翠湖高尔夫俱乐部",
+    "location": "甘肃省",
+    "province": "甘肃",
+    "city": "甘肃",
+    "latitude": 36.219034692126336,
+    "longitude": 105.1986576346036,
+    "par": 72
+  },
+  {
+    "id": "内蒙古-001",
+    "name": "内蒙古阳光高尔夫俱乐部",
+    "location": "内蒙古省",
+    "province": "内蒙古",
+    "city": "内蒙古",
+    "latitude": 41.229559528232656,
+    "longitude": 113.00263561075418,
+    "par": 72
+  },
+  {
+    "id": "内蒙古-002",
+    "name": "内蒙古绿岛高尔夫俱乐部",
+    "location": "内蒙古省",
+    "province": "内蒙古",
+    "city": "内蒙古",
+    "latitude": 41.72167193328245,
+    "longitude": 111.06520828891213,
+    "par": 72
+  },
+  {
+    "id": "内蒙古-003",
+    "name": "内蒙古翠湖高尔夫俱乐部",
+    "location": "内蒙古省",
+    "province": "内蒙古",
+    "city": "内蒙古",
+    "latitude": 41.72767465066391,
+    "longitude": 112.58307479306046,
+    "par": 71
+  },
+  {
+    "id": "新疆-001",
+    "name": "新疆阳光高尔夫俱乐部",
+    "location": "新疆省",
+    "province": "新疆",
+    "city": "新疆",
+    "latitude": 43.736720462639546,
+    "longitude": 88.66838665442697,
+    "par": 72
+  },
+  {
+    "id": "新疆-002",
+    "name": "新疆绿岛高尔夫俱乐部",
+    "location": "新疆省",
+    "province": "新疆",
+    "city": "新疆",
+    "latitude": 42.9956572377208,
+    "longitude": 88.57691819322253,
+    "par": 70
+  },
+  {
+    "id": "新疆-003",
+    "name": "新疆翠湖高尔夫俱乐部",
+    "location": "新疆省",
+    "province": "新疆",
+    "city": "新疆",
+    "latitude": 43.25829056341896,
+    "longitude": 87.3602340567708,
+    "par": 72
+  },
+  {
+    "id": "新疆-004",
+    "name": "新疆银海高尔夫俱乐部",
+    "location": "新疆省",
+    "province": "新疆",
+    "city": "新疆",
+    "latitude": 43.14279267233972,
+    "longitude": 87.80213823681488,
+    "par": 71
+  },
+  {
+    "id": "宁夏-001",
+    "name": "宁夏阳光高尔夫俱乐部",
+    "location": "宁夏省",
+    "province": "宁夏",
+    "city": "宁夏",
+    "latitude": 38.97259326232378,
+    "longitude": 107.01159865913527,
+    "par": 72
+  },
+  {
+    "id": "宁夏-002",
+    "name": "宁夏绿岛高尔夫俱乐部",
+    "location": "宁夏省",
+    "province": "宁夏",
+    "city": "宁夏",
+    "latitude": 39.485457231833855,
+    "longitude": 106.67330559885883,
+    "par": 72
+  },
+  {
+    "id": "西藏-001",
+    "name": "西藏阳光高尔夫俱乐部",
+    "location": "西藏省",
+    "province": "西藏",
+    "city": "西藏",
+    "latitude": 29.283736400655158,
+    "longitude": 92.57991202177513,
+    "par": 72
+  },
+  {
+    "id": "青海-001",
+    "name": "青海阳光高尔夫俱乐部",
+    "location": "青海省",
+    "province": "青海",
+    "city": "青海",
+    "latitude": 36.319849359621855,
+    "longitude": 100.70839848596388,
+    "par": 72
+  }
+]

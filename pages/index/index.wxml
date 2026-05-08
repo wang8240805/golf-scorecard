@@ -1,0 +1,168 @@
+<view class="container">
+  <!-- 骨架屏 - 首屏加载时显示 -->
+  <view class="skeleton-wrapper" wx:if="{{pageLoading}}">
+    <view class="skeleton-card">
+      <view class="skeleton-title"></view>
+      <view class="skeleton-row">
+        <view class="skeleton-text skeleton-text-lg"></view>
+        <view class="skeleton-text skeleton-text-sm"></view>
+      </view>
+    </view>
+    <view class="skeleton-card">
+      <view class="skeleton-title"></view>
+      <view class="skeleton-grid">
+        <view class="skeleton-box"></view>
+        <view class="skeleton-box"></view>
+      </view>
+    </view>
+    <view class="skeleton-card">
+      <view class="skeleton-title"></view>
+      <view class="skeleton-list">
+        <view class="skeleton-item"></view>
+        <view class="skeleton-item"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 实际内容 - 加载完成后显示 -->
+  <block wx:if="{{!pageLoading}}">
+  <!-- 进行中的比赛 -->
+  <view class="card ongoing-game-card" wx:if="{{ongoingGame}}" bindtap="goToScorecard">
+    <view class="ongoing-header">
+      <view class="ongoing-badge">
+        <text class="ongoing-dot"></text>
+        <text class="ongoing-text">进行中</text>
+      </view>
+      <text class="ongoing-hole">第 {{ongoingGame.currentHole}}/{{ongoingGame.totalHoles}} 洞</text>
+    </view>
+    <text class="ongoing-course">{{ongoingGame.courseName}}</text>
+    <view class="ongoing-my-score">
+      <view class="score-row">
+        <view class="score-item">
+          <text class="my-score-label">已打杆数</text>
+          <view class="my-score-content">
+            <text class="my-to-par {{ongoingGame.myScore.toPar < 0 ? 'under' : ongoingGame.myScore.toPar > 0 ? 'over' : ''}}">{{ongoingGame.myScore.toPar > 0 ? '+' : ''}}{{ongoingGame.myScore.toPar}}</text>
+            <text class="my-total">{{ongoingGame.myScore.totalScore}}杆</text>
+          </view>
+        </view>
+        <view class="score-divider"></view>
+        <view class="score-item">
+          <text class="my-score-label">预估成绩</text>
+          <view class="my-score-content">
+            <text class="my-estimated">{{ongoingGame.myScore.estimatedScore}}<text class="estimated-unit">杆</text></text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 个人数据概览 -->
+  <view class="card stats-overview-card" wx:if="{{userStats.totalGames > 0}}" bindtap="goToStatsAnalysis">
+    <view class="stats-header">
+      <text class="section-title">我的数据</text>
+      <text class="stats-arrow">›</text>
+    </view>
+    <view class="stats-grid">
+      <view class="stat-box">
+        <text class="stat-num">{{userStats.totalGames}}</text>
+        <text class="stat-label">总场次</text>
+      </view>
+      <view class="stat-box highlight">
+        <text class="stat-num">{{userStats.bestScore}}</text>
+        <text class="stat-label">个人最佳</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 最近比赛 -->
+  <view class="card" wx:if="{{recentGames.length > 0}}">
+    <view class="section-title flex-between">
+      <text>最近比赛</text>
+      <text class="text-small text-primary" bindtap="goToHistory">查看全部</text>
+    </view>
+    <view class="recent-game-list">
+      <view class="recent-game-item" wx:for="{{recentGames}}" wx:key="id" bindtap="viewGame" data-gameid="{{item.id}}">
+        <view class="game-info">
+          <text class="game-name">{{item.courseName || '未知球场'}}</text>
+          <text class="game-date">{{item.date || ''}}</text>
+        </view>
+        <view class="game-right">
+          <text class="game-score">{{item.myScore || '-'}}杆</text>
+          <text class="game-arrow">›</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 快速开始卡片 - 当没有进行中比赛时显示 -->
+  <view class="card start-card" wx:if="{{!hasOngoingGame}}">
+    <view class="start-content">
+      <view class="start-info">
+        <text class="start-title">准备就绪</text>
+        <text class="start-subtitle" wx:if="{{courseCount === 0}}">正在加载球场数据...完成即可开始</text>
+        <text class="start-subtitle" wx:if="{{courseCount > 0}}">已有 {{courseCount}} 个全国球场，选择球场添加球员即可开始记分</text>
+      </view>
+      <button class="btn btn-primary start-btn" bindtap="startNewGame">开始新比赛</button>
+    </view>
+  </view>
+
+  <!-- 底部功能区 -->
+  <view class="footer-actions">
+    <view class="footer-btn" catchtap="goToFeedback">
+      <text class="footer-icon">💬</text>
+      <text class="footer-text">意见反馈</text>
+    </view>
+  </view>
+
+  <!-- 进行中的比赛详情弹窗 -->
+  <view class="modal {{showOngoingDetail && ongoingDetail ? 'show' : ''}}" wx:if="{{showOngoingDetail && ongoingDetail}}" bindtap="hideOngoingDetail">
+    <view class="modal-content" catchtap="preventHide">
+      <view class="modal-header">
+        <text class="modal-title">{{ongoingDetail.courseName}}</text>
+        <text class="modal-close" bindtap="hideOngoingDetail">×</text>
+      </view>
+      <view class="modal-body">
+        <view class="detail-progress">
+          <text class="detail-label">比赛进度</text>
+          <text class="detail-value">第 {{ongoingDetail.currentHole}}/{{ongoingDetail.totalHoles}} 洞</text>
+        </view>
+        <view class="detail-section">
+          <text class="detail-label">当前成绩</text>
+          <view class="detail-scores">
+            <view class="detail-score-row" wx:for="{{ongoingDetail.playerScores}}" wx:key="name">
+              <view class="player-info-row">
+                <text class="player-name">{{item.name}}</text>
+                <text class="player-status {{item.toPar < 0 ? 'under' : item.toPar > 0 ? 'over' : ''}}">{{item.toPar > 0 ? '+' : ''}}{{item.toPar}}</text>
+              </view>
+              <text class="player-total">{{item.totalScore}}杆</text>
+            </view>
+          </view>
+        </view>
+        <button class="btn btn-primary continue-btn" bindtap="continueGameFromModal">继续比赛</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 我的数据详情弹窗 -->
+  <view class="modal {{showStatsDetail ? 'show' : ''}}" wx:if="{{showStatsDetail}}" bindtap="hideStatsDetail">
+    <view class="modal-content" catchtap="preventHide">
+      <view class="modal-header">
+        <text class="modal-title">数据统计</text>
+        <text class="modal-close" bindtap="hideStatsDetail">×</text>
+      </view>
+      <view class="modal-body">
+        <view class="stats-detail-grid">
+          <view class="stats-detail-item">
+            <text class="stats-detail-num">{{userStats.totalGames}}</text>
+            <text class="stats-detail-label">总场次</text>
+          </view>
+          <view class="stats-detail-item">
+            <text class="stats-detail-num">{{userStats.bestScore}}</text>
+            <text class="stats-detail-label">最佳成绩</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</block>
+</view>

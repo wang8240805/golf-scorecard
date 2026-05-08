@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+miniprogram_npm/
+unpackage/
+
+# Git
+.git/
+
+# IDE
+.vscode/
+.idea/
+
+# Build
+build/
+dist/
+
+# Cache
+*.log
+npm-debug.log*

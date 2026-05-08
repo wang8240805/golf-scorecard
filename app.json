@@ -1,0 +1,85 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/scorecard/scorecard",
+    "pages/profile/profile",
+    "pages/new-game/step2-players/step2-players"
+  ],
+  "subPackages": [
+    {
+      "root": "package-courses",
+      "pages": [
+        "pages/courses/courses",
+        "pages/all-courses/all-courses",
+        "pages/new-game/step1-course/step1-course"
+      ]
+    },
+    {
+      "root": "package-game",
+      "pages": [
+        "pages/statistics/statistics",
+        "pages/history/history",
+        "pages/game-report/game-report",
+        "pages/players/players",
+        "pages/stats-analysis/stats-analysis"
+      ]
+    },
+    {
+      "root": "package-user",
+      "pages": [
+        "pages/settings/settings",
+        "pages/feedback/feedback",
+        "pages/webview/webview"
+      ]
+    }
+  ],
+  "preloadRule": {
+    "pages/index/index": {
+      "network": "all",
+      "packages": ["package-courses"]
+    },
+    "pages/profile/profile": {
+      "network": "all",
+      "packages": ["package-courses"]
+    }
+  },
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#2c8f4e",
+    "navigationBarTitleText": "WinPAR",
+    "navigationBarTextStyle": "white"
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "获取您的位置以推荐附近球场"
+    }
+  },
+  "requiredPrivateInfos": [
+    "getLocation"
+  ],
+  "tabBar": {
+    "custom": true,
+    "color": "#999999",
+    "selectedColor": "#2c8f4e",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents",
+  "sitemapLocation": "sitemap.json",
+  "usingComponents": {},
+  "privacy": {
+    "privacyContractName": "WinPAR高尔夫记分卡隐私政策",
+    "privacyUrl": ""
+  }
+}

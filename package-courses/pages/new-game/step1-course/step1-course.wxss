@@ -1,0 +1,855 @@
+/* 页面容器 */
+.page-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #f5f5f5;
+}
+
+/* 步骤指示器 */
+.step-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24rpx 40rpx;
+  background: #ffffff;
+  flex-shrink: 0;
+}
+
+.step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.step-dot {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  background: #e0e0e0;
+  color: #999;
+  font-size: 22rpx;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step-item.active .step-dot {
+  background: #2c8f4e;
+  color: #fff;
+  border: 4rpx solid #fff;
+  box-shadow: 0 0 0 4rpx rgba(44, 143, 78, 0.2);
+}
+
+.step-text {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 8rpx;
+}
+
+.step-item.active .step-text {
+  color: #2c8f4e;
+  font-weight: 600;
+}
+
+.step-line {
+  flex: 1;
+  height: 4rpx;
+  background: #e0e0e0;
+  margin: 0 12rpx 32rpx;
+  max-width: 100rpx;
+}
+
+/* 球场卡片 */
+.course-hero-card {
+  flex: 1;
+  position: relative;
+  margin: 16rpx 24rpx;
+  border-radius: 24rpx;
+  overflow: hidden;
+  background: linear-gradient(145deg, #2c8f4e 0%, #1a5c34 100%);
+  box-shadow: 0 8rpx 32rpx rgba(44, 143, 78, 0.25);
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0.35;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 100%);
+  z-index: 2;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+  padding: 24rpx;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* 顶部信息栏 */
+.hero-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.header-left {
+  flex: 1;
+}
+
+.recommended-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.95);
+  color: #2c8f4e;
+  font-size: 24rpx;
+  font-weight: 600;
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+}
+
+.hero-distance {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 8rpx 16rpx;
+  border-radius: 16rpx;
+}
+
+.distance-value {
+  font-size: 24rpx;
+  font-weight: 700;
+  color: #2c8f4e;
+}
+
+/* 球场名称行 */
+.hero-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+
+.title-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.hero-course-name {
+  display: block;
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6rpx;
+  text-shadow: 0 2rpx 8rpx rgba(0,0,0,0.2);
+}
+
+.hero-course-location {
+  display: block;
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.btn-other-courses {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 12rpx 20rpx;
+  border-radius: 20rpx;
+  margin-left: 16rpx;
+  flex-shrink: 0;
+}
+
+.btn-other-courses .btn-text {
+  font-size: 24rpx;
+  color: #2c8f4e;
+  font-weight: 600;
+}
+
+/* 统计信息 */
+.hero-stats {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12rpx;
+  padding: 16rpx 24rpx;
+  margin-bottom: 24rpx;
+  width: fit-content;
+}
+
+.stat-item {
+  display: flex;
+  align-items: baseline;
+  gap: 4rpx;
+}
+
+.stat-value {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #2c8f4e;
+}
+
+.stat-label {
+  font-size: 22rpx;
+  color: #666;
+}
+
+.stat-divider {
+  width: 2rpx;
+  height: 28rpx;
+  background: #e0e0e0;
+  margin: 0 20rpx;
+}
+
+/* 18洞表格区域 */
+.holes-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.holes-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12rpx;
+}
+
+.holes-title {
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+}
+
+.btn-ocr {
+  background: rgba(255, 255, 255, 0.25);
+  padding: 10rpx 18rpx;
+  border-radius: 16rpx;
+}
+
+.btn-ocr .btn-text {
+  font-size: 24rpx;
+  color: #fff;
+}
+
+/* 18洞表格 */
+.holes-table {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.holes-row {
+  display: flex;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.holes-row:last-child {
+  border-bottom: none;
+}
+
+.holes-header {
+  background: linear-gradient(135deg, #2c8f4e 0%, #1a5c34 100%);
+}
+
+.hole-label {
+  width: 80rpx;
+  text-align: center;
+  font-size: 24rpx;
+  font-weight: 600;
+  padding: 14rpx 0;
+}
+
+.holes-header .hole-label {
+  color: #fff;
+}
+
+.holes-row:not(.holes-header) .hole-label {
+  color: #666;
+  background: #f8f9fa;
+}
+
+.hole-num {
+  flex: 1;
+  text-align: center;
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #fff;
+  padding: 14rpx 0;
+}
+
+.hole-par {
+  flex: 1;
+  text-align: center;
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #2c8f4e;
+  padding: 14rpx 0;
+}
+
+/* 加载状态 */
+.location-loading {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 16rpx 24rpx;
+  background: #fff;
+  border-radius: 24rpx;
+}
+
+.loading-text {
+  font-size: 28rpx;
+  color: #999;
+  margin-bottom: 16rpx;
+}
+
+.loading-hint {
+  font-size: 24rpx;
+  color: #aaa;
+  margin-bottom: 32rpx;
+}
+
+.btn-default-location {
+  background: #2c8f4e;
+  color: #fff;
+  font-size: 26rpx;
+  padding: 16rpx 32rpx;
+  border-radius: 40rpx;
+  line-height: 1;
+}
+
+.location-loading {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 16rpx 24rpx;
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 40rpx;
+}
+
+/* 底部按钮 */
+.action-bar-fixed {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20rpx 32rpx calc(20rpx + env(safe-area-inset-bottom));
+  background: #ffffff;
+  box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.06);
+  z-index: 100;
+}
+
+.btn-primary-large {
+  width: 100%;
+  height: 88rpx;
+  line-height: 88rpx;
+  background: linear-gradient(135deg, #2c8f4e 0%, #1a5c34 100%);
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: 600;
+  border-radius: 44rpx;
+  border: none;
+  text-align: center;
+  white-space: nowrap;
+  padding: 0;
+}
+
+/* OCR校对弹窗 - 全新设计 */
+.ocr-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 200;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.ocr-modal.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.ocr-modal-content {
+  background: #ffffff;
+  border-radius: 32rpx 32rpx 0 0;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.ocr-modal.show .ocr-modal-content {
+  transform: translateY(0);
+}
+
+.ocr-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  flex-shrink: 0;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.ocr-modal-title {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.ocr-source-tag {
+  font-size: 22rpx;
+  color: #2c8f4e;
+  background: rgba(44, 143, 78, 0.1);
+  padding: 6rpx 14rpx;
+  border-radius: 20rpx;
+}
+
+.ocr-modal-close {
+  width: 56rpx;
+  height: 56rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5;
+  border-radius: 50%;
+}
+
+.close-icon {
+  font-size: 36rpx;
+  color: #666;
+  line-height: 1;
+}
+
+/* 图片预览 */
+.ocr-preview-section {
+  position: relative;
+  margin: 16rpx 16rpx 12rpx;
+  border-radius: 16rpx;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.ocr-preview-thumb {
+  width: 100%;
+  height: 180rpx;
+  background: #f5f5f5;
+}
+
+.preview-overlay {
+  position: absolute;
+  right: 16rpx;
+  bottom: 16rpx;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+}
+
+.preview-hint {
+  font-size: 22rpx;
+  color: #fff;
+}
+
+/* 表格滚动区域 - 支持水平+垂直滚动 */
+.ocr-table-scroll {
+  flex: 1;
+  overflow: hidden;
+  padding: 0 16rpx;
+  /* 允许水平+垂直滚动 */
+  -webkit-overflow-scrolling: touch;
+}
+
+.ocr-table-container {
+  padding-bottom: 20rpx;
+  /* 表格占满整屏宽度，不需要水平滚动 */
+  width: 100%;
+}
+
+/* 表格需要水平滚动 */
+.ocr-table {
+  min-width: 100%;
+  width: fit-content;
+}
+
+.ocr-table-section {
+  margin-bottom: 12rpx;
+}
+
+.section-title {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #666;
+  margin-bottom: 6rpx;
+  padding-left: 8rpx;
+}
+
+.ocr-table {
+  background: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+  border: 1rpx solid #e8e8e8;
+  padding: 0 8rpx;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.table-row {
+  display: grid;
+  grid-template-columns: 15% repeat(9, 9.444%);
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.table-row:last-child {
+  border-bottom: none;
+}
+
+.table-row.header-row {
+  background: linear-gradient(135deg, #2c8f4e 0%, #1a5c34 100%);
+}
+
+.table-row.total-row {
+  background: #f8f9fa;
+}
+
+.table-cell {
+  padding: 12rpx 2rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: #333;
+}
+
+.header-row .table-cell {
+  color: #fff;
+  font-weight: 600;
+  font-size: 24rpx;
+}
+
+.label-cell {
+  background: #f8f9fa;
+  font-weight: 600;
+  font-size: 24rpx;
+  color: #666;
+}
+
+.header-row .label-cell {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.table-cell.original {
+  color: #999;
+}
+
+.table-cell.new {
+  font-weight: 700;
+  color: #2c8f4e;
+}
+
+.table-cell.new.diff {
+  color: #ff4d4f;
+  background: rgba(255, 77, 79, 0.08);
+}
+
+.table-cell.new.editable {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.table-cell.new.editable:active {
+  background: rgba(44, 143, 78, 0.2);
+  transform: scale(0.95);
+}
+
+.total-row .table-cell {
+  font-size: 24rpx;
+}
+
+.total-row .total-label {
+  color: #666;
+}
+
+.total-row .total-value {
+  font-weight: 700;
+  color: #2c8f4e;
+  font-size: 28rpx;
+}
+
+/* 总计卡片 */
+.ocr-total-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f0f7f2 0%, #e8f4eb 100%);
+  border-radius: 16rpx;
+  padding: 16rpx;
+  margin-top: 8rpx;
+}
+
+.total-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 24rpx;
+}
+
+.total-item .total-label {
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 8rpx;
+}
+
+.total-item .total-number {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #333;
+}
+
+.total-item .total-number.highlight {
+  color: #2c8f4e;
+}
+
+.total-divider {
+  width: 1rpx;
+  height: 48rpx;
+  background: #d0d0d0;
+}
+
+/* 提示信息 */
+.ocr-tips {
+  margin-top: 12rpx;
+  margin-bottom: 12rpx;
+  padding: 12rpx;
+  background: #fff9e6;
+  border-radius: 12rpx;
+  border: 1rpx solid #ffe58f;
+}
+
+.tip-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+}
+
+.tip-icon {
+  font-size: 28rpx;
+}
+
+.tip-text {
+  font-size: 24rpx;
+  color: #ad8b00;
+}
+
+/* 底部按钮 */
+.ocr-modal-footer {
+  display: flex;
+  gap: 16rpx;
+  padding: 16rpx 24rpx calc(16rpx + env(safe-area-inset-bottom));
+  background: #fff;
+  border-top: 1rpx solid #f0f0f0;
+  flex-shrink: 0;
+}
+
+.ocr-modal-footer button {
+  flex: 1;
+  height: 88rpx;
+  line-height: 88rpx;
+  border-radius: 44rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.ocr-btn-primary {
+  background: linear-gradient(135deg, #2c8f4e 0%, #1a5c34 100%);
+  color: #fff;
+  flex: 2;
+}
+
+.ocr-btn-secondary {
+  background: #f5f5f5;
+  color: #666;
+  flex: 1;
+}
+
+/* 缺少标准杆数据提示 */
+.holes-missing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40rpx 20rpx;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16rpx;
+}
+
+.missing-icon {
+  font-size: 60rpx;
+  margin-bottom: 16rpx;
+}
+
+.missing-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.missing-desc {
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 24rpx;
+}
+
+.btn-ocr-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  background: linear-gradient(135deg, #2c8f4e, #1a6b38);
+  color: #fff;
+  font-size: 30rpx;
+  padding: 20rpx 48rpx;
+  border-radius: 48rpx;
+  border: none;
+}
+
+.btn-ocr-primary .btn-icon {
+  font-size: 36rpx;
+}
+
+.btn-ocr-primary::after {
+  border: none;
+}
+
+/* 修改PAR值弹窗 */
+.edit-par-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 300;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+}
+
+.edit-par-modal.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.edit-par-content {
+  background: #fff;
+  border-radius: 24rpx;
+  width: 80%;
+  max-width: 560rpx;
+  overflow: hidden;
+  transform: scale(0.9);
+  transition: transform 0.2s ease;
+}
+
+.edit-par-modal.show .edit-par-content {
+  transform: scale(1);
+}
+
+.edit-par-header {
+  padding: 24rpx;
+  text-align: center;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.edit-par-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.edit-par-options {
+  display: flex;
+  padding: 24rpx 24rpx 32rpx;
+  gap: 16rpx;
+}
+
+.par-option {
+  flex: 1;
+  padding: 32rpx 16rpx;
+  border: 2rpx solid #e8e8e8;
+  border-radius: 16rpx;
+  text-align: center;
+  transition: all 0.2s ease;
+  background: #fafafa;
+}
+
+.par-option.active {
+  border-color: #2c8f4e;
+  background: rgba(44, 143, 78, 0.08);
+}
+
+.par-option:active {
+  transform: scale(0.95);
+}
+
+.par-option .par-number {
+  display: block;
+  font-size: 48rpx;
+  font-weight: 700;
+  color: #333;
+  line-height: 1;
+  margin-bottom: 8rpx;
+}
+
+.par-option.active .par-number {
+  color: #2c8f4e;
+}
+
+.par-option .par-label {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.par-option.active .par-label {
+  color: #2c8f4e;
+}

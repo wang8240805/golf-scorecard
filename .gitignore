@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+miniprogram_npm/
+unpackage/
+
+# Git
+.git/
+
+# IDE
+.vscode/
+.idea/
+
+# Build
+build/
+dist/
+
+# Cache
+*.log
+npm-debug.log*
+
+# Claude
+.claude/
+node_modules
+
+# Deployment credentials - DO NOT COMMIT
+auto-deploy.js
+deploy-function.js
+get-logs.js
+get-save-logs.js

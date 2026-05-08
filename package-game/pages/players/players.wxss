@@ -1,0 +1,495 @@
+/* 页面容器 */
+.container {
+  padding: 20rpx;
+  padding-bottom: 40rpx;
+}
+
+/* 统计卡片 */
+.stats-card {
+  padding: 30rpx 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.stats-grid {
+  display: flex;
+  justify-content: space-around;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-value {
+  font-size: 48rpx;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 8rpx;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+}
+
+/* 球员列表 */
+.section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.text-small {
+  font-size: 26rpx;
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+.player-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.player-item {
+  display: flex;
+  align-items: center;
+  padding: 24rpx;
+  background: var(--bg-gray);
+  border-radius: 12rpx;
+}
+
+.player-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+
+.player-avatar text {
+  color: white;
+  font-size: 32rpx;
+  font-weight: 600;
+}
+
+.player-info {
+  flex: 1;
+}
+
+.player-header {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin-bottom: 8rpx;
+}
+
+.player-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.player-tag {
+  font-size: 20rpx;
+  color: var(--primary);
+  background: rgba(44, 143, 78, 0.1);
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+}
+
+.player-stats {
+  display: flex;
+  gap: 20rpx;
+  margin-bottom: 8rpx;
+}
+
+.stat-item-small {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+}
+
+.play-count {
+  font-size: 22rpx;
+  color: var(--text-light);
+}
+
+.player-actions {
+  display: flex;
+  gap: 16rpx;
+}
+
+.action-icon {
+  width: 48rpx;
+  height: 48rpx;
+  position: relative;
+}
+
+/* 编辑图标 */
+.icon-edit::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 24rpx;
+  height: 24rpx;
+  border: 3rpx solid var(--text-secondary);
+  border-radius: 4rpx;
+}
+
+.icon-edit::after {
+  content: "";
+  position: absolute;
+  top: 8rpx;
+  right: 8rpx;
+  width: 8rpx;
+  height: 8rpx;
+  border-top: 3rpx solid var(--text-secondary);
+  border-right: 3rpx solid var(--text-secondary);
+}
+
+/* 删除图标 */
+.icon-delete::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 24rpx;
+  height: 4rpx;
+  background: #e53935;
+  border-radius: 2rpx;
+}
+
+/* 空状态 */
+.empty-card {
+  padding: 60rpx 40rpx;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.empty-icon {
+  width: 120rpx;
+  height: 120rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(44, 143, 78, 0.1);
+  border-radius: 50%;
+  margin-bottom: 30rpx;
+}
+
+.icon-users-large {
+  position: relative;
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.icon-users-large::before {
+  content: "";
+  position: absolute;
+  top: 8rpx;
+  left: 18rpx;
+  width: 16rpx;
+  height: 16rpx;
+  border: 4rpx solid var(--primary);
+  border-radius: 50%;
+  background: transparent;
+}
+
+.icon-users-large::after {
+  content: "";
+  position: absolute;
+  bottom: 6rpx;
+  left: 8rpx;
+  width: 36rpx;
+  height: 18rpx;
+  border: 4rpx solid var(--primary);
+  border-bottom: none;
+  border-radius: 18rpx 18rpx 0 0;
+  background: transparent;
+}
+
+.empty-text {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12rpx;
+}
+
+.empty-subtext {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+  margin-bottom: 40rpx;
+}
+
+/* 弹窗样式 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+  z-index: 1000;
+}
+
+.modal.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 40rpx 40rpx 0 0;
+  width: 100%;
+  max-height: 70vh;
+  padding: 40rpx 30rpx calc(40rpx + env(safe-area-inset-bottom));
+  transform: translateY(100%);
+  transition: all 0.3s;
+}
+
+.modal.show .modal-content {
+  transform: translateY(0);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.modal-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.modal-close {
+  font-size: 48rpx;
+  color: var(--text-light);
+  line-height: 1;
+}
+
+.modal-body {
+  max-height: 40vh;
+  overflow-y: auto;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 30rpx;
+}
+
+.modal-footer .btn {
+  flex: 1;
+}
+
+/* 输入框样式 */
+.input-group {
+  margin-bottom: 24rpx;
+}
+
+.input-label {
+  display: block;
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  margin-bottom: 12rpx;
+}
+
+.input {
+  width: 100%;
+  height: 80rpx;
+  padding: 0 24rpx;
+  background: var(--bg-gray);
+  border-radius: 12rpx;
+  font-size: 30rpx;
+  box-sizing: border-box;
+}
+
+/* 颜色选择器 */
+.color-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+}
+
+.color-option {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  border: 4rpx solid transparent;
+  box-sizing: border-box;
+}
+
+.color-option.selected {
+  border-color: var(--text-primary);
+  transform: scale(1.1);
+}
+
+/* 复选框 */
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 16rpx 0;
+}
+
+.checkbox {
+  width: 40rpx;
+  height: 40rpx;
+  border: 3rpx solid var(--text-secondary);
+  border-radius: 8rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkbox.checked {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.checkbox-inner {
+  width: 20rpx;
+  height: 12rpx;
+  border-left: 4rpx solid white;
+  border-bottom: 4rpx solid white;
+  transform: rotate(-45deg) translate(2rpx, -2rpx);
+}
+
+.checkbox-label {
+  font-size: 30rpx;
+  color: var(--text-primary);
+}
+
+/* 统计详情 */
+.stats-player-header {
+  display: flex;
+  justify-content: center;
+  padding: 20rpx 0 40rpx;
+}
+
+.stats-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stats-avatar text {
+  color: white;
+  font-size: 48rpx;
+  font-weight: 600;
+}
+
+.stats-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24rpx;
+  margin-bottom: 40rpx;
+}
+
+.stats-detail-item {
+  background: var(--bg-gray);
+  border-radius: 16rpx;
+  padding: 30rpx;
+  text-align: center;
+}
+
+.stats-detail-value {
+  font-size: 44rpx;
+  font-weight: 700;
+  color: var(--primary);
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.stats-detail-label {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+}
+
+/* 最近比赛 */
+.recent-games {
+  border-top: 1rpx solid var(--border);
+  padding-top: 30rpx;
+}
+
+.recent-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 20rpx;
+  display: block;
+}
+
+.recent-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.recent-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx;
+  background: var(--bg-gray);
+  border-radius: 12rpx;
+}
+
+.recent-info {
+  flex: 1;
+}
+
+.recent-course {
+  display: block;
+  font-size: 30rpx;
+  color: var(--text-primary);
+  margin-bottom: 8rpx;
+}
+
+.recent-date {
+  font-size: 24rpx;
+  color: var(--text-light);
+}
+
+.recent-score {
+  font-size: 36rpx;
+  font-weight: 700;
+}
+
+.recent-score.good {
+  color: var(--primary);
+}
+
+.recent-score.normal {
+  color: var(--text-primary);
+}

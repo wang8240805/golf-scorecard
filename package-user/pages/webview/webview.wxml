@@ -1,0 +1,11 @@
+<view class="page-container">
+  <!-- 本地内容展示 -->
+  <scroll-view wx:if="{{useLocal}}" class="local-content" scroll-y>
+    <view class="content-box">
+      <text class="content-text">{{content}}</text>
+    </view>
+  </scroll-view>
+
+  <!-- 网页展示 -->
+  <web-view wx:else src="{{url}}"></web-view>
+</view>

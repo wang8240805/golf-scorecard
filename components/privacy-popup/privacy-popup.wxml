@@ -1,0 +1,16 @@
+<!-- 隐私保护指引弹窗 -->
+<view class="privacy-popup" wx:if="{{showPrivacy}}">
+  <view class="privacy-mask"></view>
+  <view class="privacy-content">
+    <view class="privacy-header">
+      <text class="privacy-title">用户隐私保护提示</text>
+    </view>
+    <view class="privacy-body">
+      <text class="privacy-text">感谢您使用WinPAR高尔夫记分卡。在使用头像、昵称等功能前，我们需要获取您的同意。</text>
+    </view>
+    <view class="privacy-footer">
+      <button class="btn-reject" bindtap="handleDisagree">拒绝</button>
+      <button class="btn-agree" id="agree-btn" open-type="agreePrivacyAuthorization" bindagreeprivacyauthorization="handleAgree">同意</button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,175 @@
+<view class="container">
+  <!-- 总览卡片 -->
+  <view class="card overview-card" wx:if="{{stats.totalGames > 0}}">
+    <view class="overview-title">数据总览</view>
+    <view class="overview-grid">
+      <view class="overview-item">
+        <text class="overview-value">{{stats.totalGames}}</text>
+        <text class="overview-label">总场次</text>
+      </view>
+      <view class="overview-item">
+        <text class="overview-value">{{stats.avgScore}}</text>
+        <text class="overview-label">平均杆</text>
+      </view>
+      <view class="overview-item">
+        <text class="overview-value">{{stats.bestScore}}</text>
+        <text class="overview-label">最佳成绩</text>
+      </view>
+      <view class="overview-item">
+        <text class="overview-value">{{stats.handicap}}</text>
+        <text class="overview-label">差点指数</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 成绩分布 -->
+  <view class="card" wx:if="{{stats.totalGames > 0}}">
+    <view class="section-title">成绩分布</view>
+    <view class="score-distribution">
+      <view class="dist-item">
+        <view class="dist-bar">
+          <view class="dist-fill eagle" style="width: {{stats.distribution.eaglePct}}%"></view>
+        </view>
+        <view class="dist-info">
+          <text class="dist-label">老鹰球</text>
+          <text class="dist-value">{{stats.distribution.eagles}} ({{stats.distribution.eaglePct}}%)</text>
+        </view>
+      </view>
+      <view class="dist-item">
+        <view class="dist-bar">
+          <view class="dist-fill birdie" style="width: {{stats.distribution.birdiePct}}%"></view>
+        </view>
+        <view class="dist-info">
+          <text class="dist-label">小鸟球</text>
+          <text class="dist-value">{{stats.distribution.birdies}} ({{stats.distribution.birdiePct}}%)</text>
+        </view>
+      </view>
+      <view class="dist-item">
+        <view class="dist-bar">
+          <view class="dist-fill par" style="width: {{stats.distribution.parPct}}%"></view>
+        </view>
+        <view class="dist-info">
+          <text class="dist-label">标准杆</text>
+          <text class="dist-value">{{stats.distribution.pars}} ({{stats.distribution.parPct}}%)</text>
+        </view>
+      </view>
+      <view class="dist-item">
+        <view class="dist-bar">
+          <view class="dist-fill bogey" style="width: {{stats.distribution.bogeyPct}}%"></view>
+        </view>
+        <view class="dist-info">
+          <text class="dist-label">柏忌</text>
+          <text class="dist-value">{{stats.distribution.bogeys}} ({{stats.distribution.bogeyPct}}%)</text>
+        </view>
+      </view>
+      <view class="dist-item">
+        <view class="dist-bar">
+          <view class="dist-fill double" style="width: {{stats.distribution.doublePct}}%"></view>
+        </view>
+        <view class="dist-info">
+          <text class="dist-label">双柏忌+</text>
+          <text class="dist-value">{{stats.distribution.doubles}} ({{stats.distribution.doublePct}}%)</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 短杆数据 -->
+  <view class="card" wx:if="{{stats.totalGames > 0}}">
+    <view class="section-title">短杆表现</view>
+    <view class="short-game-grid">
+      <view class="short-game-item">
+        <view class="short-game-icon">⛳</view>
+        <view class="short-game-info">
+          <text class="short-game-value">{{stats.shortGame.puttsPerHole}}</text>
+          <text class="short-game-label">平均推杆/洞</text>
+        </view>
+      </view>
+      <view class="short-game-item">
+        <view class="short-game-icon">🎯</view>
+        <view class="short-game-info">
+          <text class="short-game-value">{{stats.shortGame.girPct}}%</text>
+          <text class="short-game-label">标准杆上果岭率</text>
+        </view>
+      </view>
+      <view class="short-game-item">
+        <view class="short-game-icon">🏖️</view>
+        <view class="short-game-info">
+          <text class="short-game-value">{{stats.shortGame.scramblePct}}%</text>
+          <text class="short-game-label">救球成功率</text>
+        </view>
+      </view>
+      <view class="short-game-item">
+        <view class="short-game-icon">💥</view>
+        <view class="short-game-info">
+          <text class="short-game-value">{{stats.shortGame.sandSaves}}%</text>
+          <text class="short-game-label">沙坑救球率</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 开球数据 -->
+  <view class="card" wx:if="{{stats.totalGames > 0}}">
+    <view class="section-title">开球表现</view>
+    <view class="driving-stats">
+      <view class="driving-item">
+        <view class="driving-header">
+          <text class="driving-label">开球上球道率</text>
+          <text class="driving-value">{{stats.driving.firPct}}%</text>
+        </view>
+        <view class="progress-bar">
+          <view class="progress-fill" style="width: {{stats.driving.firPct}}%"></view>
+        </view>
+        <text class="driving-desc">Tour平均 60%</text>
+      </view>
+      <view class="driving-item">
+        <view class="driving-header">
+          <text class="driving-label">平均推杆数</text>
+          <text class="driving-value">{{stats.shortGame.puttsPerHole}}</text>
+        </view>
+        <view class="progress-bar">
+          <view class="progress-fill" style="width: {{(stats.shortGame.puttsPerHole/5)*100}}%"></view>
+        </view>
+        <text class="driving-desc">Tour平均 1.75</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 趋势分析 -->
+  <view class="card" wx:if="{{stats.recentTrend.length > 0}}">
+    <view class="section-title">近期趋势（最近10场）</view>
+    <view class="trend-chart">
+      <view class="trend-item" wx:for="{{stats.recentTrend}}" wx:key="index">
+        <view class="trend-bar-wrapper">
+          <view class="trend-bar {{item.toPar <= 0 ? 'good' : 'bad'}}" style="height: {{item.height}}%"></view>
+        </view>
+        <text class="trend-score">{{item.toParDisplay}}</text>
+        <text class="trend-date">{{item.date}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 改进建议 -->
+  <view class="card suggestions-card" wx:if="{{stats.suggestions.length > 0}}">
+    <view class="section-title">改进建议</view>
+    <view class="suggestion-list">
+      <view class="suggestion-item" wx:for="{{stats.suggestions}}" wx:key="index">
+        <view class="suggestion-icon">💡</view>
+        <text class="suggestion-text">{{item}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="card empty-card" wx:if="{{stats.totalGames === 0}}">
+    <view class="empty-state">
+      <view class="empty-icon">
+        <view class="icon-stats"></view>
+      </view>
+      <text class="empty-text">暂无数据</text>
+      <text class="empty-subtext">完成更多比赛后查看详细分析</text>
+      <button class="btn btn-primary" bindtap="goToScorecard">开始新比赛</button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,9 @@
+{
+  "name": "ocr-scorecard",
+  "version": "1.0.0",
+  "description": "OCR识别高尔夫记分卡，调用腾讯混元多模态AI直接识别图片",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "^3.0.0"
+  }
+}

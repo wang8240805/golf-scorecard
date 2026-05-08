@@ -1,0 +1,239 @@
+/**app.wxss**/
+/* Vant 图标字体 - 本地加载避免网络问题 */
+@font-face {
+  font-family: 'vant-icon';
+  src: url('/assets/fonts/vant-icon.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@import './miniprogram_npm/weui-miniprogram/weui-wxss/dist/style/weui.wxss';
+
+page {
+  --weui-BG-0: #f5f5f5;
+  --weui-BG-1: #ffffff;
+  --weui-BG-2: #f5f5f5;
+  --weui-BG-3: #eeeeee;
+  --weui-BG-4: rgba(0, 0, 0, 0.5);
+  --weui-BG-ACTIVITY: rgba(255, 232, 194, 0.65);
+  --weui-BG-OVERLAY: rgba(0, 0, 0, 0.7);
+  --weui-TEXT-0: #000000;
+  --weui-TEXT-1: #333333;
+  --weui-TEXT-2: #666666;
+  --weui-TEXT-3: #999999;
+  --weui-TEXT-4: #cccccc;
+  --weui-TEXT-5: #ffffff;
+  --weui-TEXT-ACTIVE: #108ee9;
+  --weui-TEXT-GREEN: #09bb07;
+  --weui-TEXT-LINK: #108ee9;
+  --weui-TEXT-RED: #f43530;
+  --weui-LINE: rgba(0, 0, 0, 0.1);
+  --weui-ICON: #999999;
+  --weui-BRAND: #07c160;
+  --primary: #2c8f4e;
+  --primary-light: #4caf50;
+  --primary-dark: #1b5e20;
+  --accent: #ff9800;
+  --danger: #f44336;
+  --bg-gray: #f5f5f5;
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --text-light: #999999;
+  --border: #e0e0e0;
+  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+  padding: 20rpx;
+  padding-bottom: calc(180rpx + env(safe-area-inset-bottom)); /* 为TabBar和安全区域留出足够空间 */
+  background-color: var(--bg-gray);
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.card {
+  background: white;
+  border-radius: 12rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: var(--card-shadow);
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24rpx 40rpx;
+  border-radius: 8rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+  border: none;
+  line-height: 1;
+  box-sizing: border-box;
+}
+
+/* 重置微信按钮默认样式 */
+button.btn {
+  line-height: 1 !important;
+}
+
+button.btn text {
+  line-height: 1;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+}
+
+.btn-primary:active {
+  background-color: var(--primary-dark);
+}
+
+.btn-secondary {
+  background-color: white;
+  color: var(--primary);
+  border: 2rpx solid var(--primary);
+}
+
+.btn-danger {
+  background-color: var(--danger);
+  color: white;
+}
+
+.btn-accent {
+  background-color: var(--accent);
+  color: white;
+}
+
+.btn-sm {
+  padding: 16rpx 24rpx;
+  font-size: 28rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 20rpx;
+  display: flex;
+  align-items: center;
+}
+
+.section-title::before {
+  content: '';
+  width: 6rpx;
+  height: 32rpx;
+  background-color: var(--primary);
+  margin-right: 16rpx;
+  border-radius: 3rpx;
+}
+
+.input-group {
+  margin-bottom: 20rpx;
+}
+
+.input-label {
+  display: block;
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  margin-bottom: 12rpx;
+}
+
+.input {
+  width: 100%;
+  height: 80rpx;
+  padding: 0 24rpx;
+  border: 2rpx solid var(--border);
+  border-radius: 8rpx;
+  font-size: 30rpx;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  border-color: var(--primary);
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+.text-danger {
+  color: var(--danger);
+}
+
+.text-accent {
+  color: var(--accent);
+}
+
+.text-small {
+  font-size: 24rpx;
+}
+
+.text-large {
+  font-size: 36rpx;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  font-weight: 500;
+}
+
+.badge-primary {
+  background-color: var(--primary);
+  color: white;
+}
+
+.badge-par {
+  background-color: var(--primary-light);
+  color: white;
+}
+
+.badge-birdie {
+  background-color: #2196f3;
+  color: white;
+}
+
+.badge-eagle {
+  background-color: #9c27b0;
+  color: white;
+}
+
+.badge-bogey {
+  background-color: #ff9800;
+  color: white;
+}
+
+.badge-double {
+  background-color: #f44336;
+  color: white;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 40rpx;
+  color: var(--text-light);
+}
+
+.empty-state text {
+  margin-top: 20rpx;
+  font-size: 28rpx;
+}

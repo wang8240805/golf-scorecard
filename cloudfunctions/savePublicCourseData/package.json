@@ -1,0 +1,9 @@
+{
+  "name": "savePublicCourseData",
+  "version": "1.0.0",
+  "description": "保存用户贡献的公开球场PAR数据",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "^3.0.0"
+  }
+}

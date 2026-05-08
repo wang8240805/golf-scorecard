@@ -1,0 +1,9 @@
+{
+  "name": "userAction",
+  "version": "1.0.0",
+  "description": "用户操作（登录/更新信息）",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

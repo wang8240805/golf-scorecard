@@ -1,0 +1,143 @@
+<view class="container">
+  <!-- 统计卡片 -->
+  <view class="card stats-card">
+    <view class="stats-grid">
+      <view class="stat-item">
+        <text class="stat-value">{{players.length}}</text>
+        <text class="stat-label">常打球友</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{totalGames}}</text>
+        <text class="stat-label">总场次</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 球员列表 -->
+  <view class="card" wx:if="{{players.length > 0}}">
+    <view class="section-title flex-between">
+      <text>球员列表</text>
+      <text class="text-small text-primary" bindtap="addPlayer">添加球员</text>
+    </view>
+    <view class="player-list">
+      <view class="player-item" wx:for="{{players}}" wx:key="id">
+        <view class="player-avatar" style="background: {{item.color}}">
+          <text>{{item.name.charAt(0)}}</text>
+        </view>
+        <view class="player-info" bindtap="viewPlayerStats" data-player="{{item}}">
+          <view class="player-header">
+            <text class="player-name">{{item.name}}</text>
+            <view class="player-tag" wx:if="{{item.isMe}}">我</view>
+          </view>
+          <view class="player-stats">
+            <text class="stat-item-small">平均杆：{{item.avgScore || '-'}}</text>
+            <text class="stat-item-small">最佳：{{item.bestScore || '-'}}</text>
+          </view>
+          <text class="play-count">一起打过 {{item.playCount || 0}} 次</text>
+        </view>
+        <view class="player-actions">
+          <view class="action-icon icon-edit" bindtap="editPlayer" data-player="{{item}}"></view>
+          <view class="action-icon icon-delete" wx:if="{{!item.isMe}}" bindtap="deletePlayer" data-player="{{item}}"></view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="card empty-card" wx:if="{{players.length === 0}}">
+    <view class="empty-state">
+      <view class="empty-icon">
+        <view class="icon-svg icon-users-large"></view>
+      </view>
+      <text class="empty-text">还没有添加球员</text>
+      <text class="empty-subtext">添加常一起打球的小伙伴</text>
+      <button class="btn btn-primary" bindtap="addPlayer">添加球员</button>
+    </view>
+  </view>
+
+  <!-- 添加/编辑球员弹窗 -->
+  <view class="modal {{showModal ? 'show' : ''}}" wx:if="{{showModal}}" bindtap="closeModal">
+    <view class="modal-content" catchtap="preventHide">
+      <view class="modal-header">
+        <text class="modal-title">{{editingPlayer ? '编辑球员' : '添加球员'}}</text>
+        <text class="modal-close" bindtap="closeModal">×</text>
+      </view>
+      <view class="modal-body">
+        <view class="input-group">
+          <text class="input-label">姓名</text>
+          <input class="input" placeholder="输入球员姓名" value="{{formData.name}}" bindinput="onNameInput" maxlength="10" />
+        </view>
+        <view class="input-group">
+          <text class="input-label">选择颜色</text>
+          <view class="color-picker">
+            <view class="color-option {{formData.color === item ? 'selected' : ''}}"
+                  wx:for="{{colors}}"
+                  wx:key="*this"
+                  style="background: {{item}}"
+                  bindtap="selectColor"
+                  data-color="{{item}}"></view>
+          </view>
+        </view>
+        <view class="input-group" wx:if="{{!editingPlayer}}">
+          <view class="checkbox-group" bindtap="toggleIsMe">
+            <view class="checkbox {{formData.isMe ? 'checked' : ''}}">
+              <view class="checkbox-inner" wx:if="{{formData.isMe}}"></view>
+            </view>
+            <text class="checkbox-label">这是我本人</text>
+          </view>
+        </view>
+      </view>
+      <view class="modal-footer">
+        <button class="btn btn-secondary" bindtap="closeModal">取消</button>
+        <button class="btn btn-primary" bindtap="savePlayer">保存</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 球员统计弹窗 -->
+  <view class="modal {{showStatsModal ? 'show' : ''}}" wx:if="{{showStatsModal}}" bindtap="closeStatsModal">
+    <view class="modal-content" catchtap="preventHide">
+      <view class="modal-header">
+        <text class="modal-title">{{statsPlayer.name}}</text>
+        <text class="modal-close" bindtap="closeStatsModal">×</text>
+      </view>
+      <scroll-view class="modal-body" scroll-y>
+        <view class="stats-player-header">
+          <view class="stats-avatar" style="background: {{statsPlayer.color}}">
+            <text>{{statsPlayer.name.charAt(0)}}</text>
+          </view>
+        </view>
+        <view class="stats-detail-grid">
+          <view class="stats-detail-item">
+            <text class="stats-detail-value">{{statsPlayer.playCount || 0}}</text>
+            <text class="stats-detail-label">一起打球</text>
+          </view>
+          <view class="stats-detail-item">
+            <text class="stats-detail-value">{{statsPlayer.avgScore || '-'}}</text>
+            <text class="stats-detail-label">平均杆</text>
+          </view>
+          <view class="stats-detail-item">
+            <text class="stats-detail-value">{{statsPlayer.bestScore || '-'}}</text>
+            <text class="stats-detail-label">最佳成绩</text>
+          </view>
+          <view class="stats-detail-item">
+            <text class="stats-detail-value">{{statsPlayer.winCount || 0}}</text>
+            <text class="stats-detail-label">获胜次数</text>
+          </view>
+        </view>
+        <view class="recent-games" wx:if="{{statsPlayer.recentGames.length > 0}}">
+          <view class="recent-title">最近比赛</view>
+          <view class="recent-list">
+            <view class="recent-item" wx:for="{{statsPlayer.recentGames}}" wx:key="id">
+              <view class="recent-info">
+                <text class="recent-course">{{item.courseName}}</text>
+                <text class="recent-date">{{item.date}}</text>
+              </view>
+              <text class="recent-score {{item.scoreClass}}">{{item.score}}杆</text>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</view>

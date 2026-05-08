@@ -1,0 +1,253 @@
+<view class="page-container">
+  <!-- 步骤指示器 -->
+  <view class="step-indicator">
+    <view class="step-item active">
+      <view class="step-dot">1</view>
+      <text class="step-text">球场</text>
+    </view>
+    <view class="step-line"></view>
+    <view class="step-item">
+      <view class="step-dot">2</view>
+      <text class="step-text">球员</text>
+    </view>
+  </view>
+
+  <!-- 球场大卡片 -->
+  <view class="course-hero-card" wx:if="{{recommendedCourse}}">
+    <image class="hero-bg-image" src="{{recommendedCourse.imageUrl || '/images/default-course.jpg'}}" mode="aspectFill"></image>
+    <view class="hero-overlay"></view>
+
+    <view class="hero-content">
+      <!-- 顶部信息栏 -->
+      <view class="hero-header">
+        <view class="header-left">
+          <view class="recommended-badge">推荐球场</view>
+        </view>
+        <view class="hero-distance" wx:if="{{recommendedCourse.distanceFormatted}}">
+          <text class="distance-value">{{recommendedCourse.distanceFormatted}}</text>
+        </view>
+      </view>
+
+      <!-- 球场名称区域 -->
+      <view class="hero-title-row">
+        <view class="title-main">
+          <text class="hero-course-name">{{recommendedCourse.name}}</text>
+          <text class="hero-course-location">{{recommendedCourse.location}}</text>
+        </view>
+        <view class="btn-other-courses" bindtap="goToAllCourses">
+          <text class="btn-text">🏌️ 其他球场</text>
+        </view>
+      </view>
+
+      <!-- 统计信息 -->
+      <view class="hero-stats">
+        <view class="stat-item">
+          <text class="stat-value">18</text>
+          <text class="stat-label">洞</text>
+        </view>
+        <view class="stat-divider"></view>
+        <view class="stat-item">
+          <text class="stat-value">{{recommendedCourse.totalPar || recommendedCourse.par || 72}}</text>
+          <text class="stat-label">标准杆</text>
+        </view>
+      </view>
+
+      <!-- 标准杆数据区域 - 根据 holes 是否存在显示不同内容 -->
+      <view class="holes-section">
+        <!-- 有 holes 数据时显示表格 -->
+        <block wx:if="{{recommendedCourse.holes && recommendedCourse.holes.length > 0}}">
+          <view class="holes-header-row">
+            <text class="holes-title">标准杆分布</text>
+            <view class="btn-ocr" bindtap="startOcrVerify">
+              <text class="btn-text">📷 拍卡校准</text>
+            </view>
+          </view>
+          <view class="holes-table">
+            <view class="holes-row holes-header">
+              <text class="hole-label">洞</text>
+              <text class="hole-num" wx:for="{{recommendedCourse.holes}}" wx:key="hole" wx:if="{{item.hole <= 9}}">{{item.hole}}</text>
+            </view>
+            <view class="holes-row">
+              <text class="hole-par" wx:for="{{recommendedCourse.holes}}" wx:key="hole" wx:if="{{item.hole <= 9}}">{{item.par}}</text>
+            </view>
+            <view class="holes-row holes-header">
+              <text class="hole-label">洞</text>
+              <text class="hole-num" wx:for="{{recommendedCourse.holes}}" wx:key="hole" wx:if="{{item.hole > 9}}">{{item.hole}}</text>
+            </view>
+            <view class="holes-row">
+              <text class="hole-par" wx:for="{{recommendedCourse.holes}}" wx:key="hole" wx:if="{{item.hole > 9}}">{{item.par}}</text>
+            </view>
+          </view>
+        </block>
+
+        <!-- 无 holes 数据时显示提示 -->
+        <block wx:else>
+          <view class="holes-missing">
+            <view class="missing-icon">⛳</view>
+            <text class="missing-title">缺少标准杆数据</text>
+            <text class="missing-desc">请拍摄记分卡获取每洞标准杆信息</text>
+            <button class="btn-ocr-primary" bindtap="startOcrVerify">
+              <text class="btn-icon">📷</text>
+              <text>拍照识别</text>
+            </button>
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载状态 - 区分数据加载和位置获取 -->
+  <view class="location-loading" wx:if="{{!recommendedCourse && coursesLoaded}}">
+    <text class="loading-text">等待位置授权...</text>
+    <text class="loading-hint">请允许位置权限以获取附近球场推荐</text>
+    <button class="btn-default-location" bindtap="useDefaultLocation">使用默认位置</button>
+  </view>
+
+  <view class="location-loading" wx:if="{{!coursesLoaded}}">
+    <text class="loading-text">正在加载球场数据...</text>
+  </view>
+
+  <!-- 底部下一步按钮 -->
+  <view class="action-bar-fixed">
+    <button class="btn-primary-large" bindtap="goNext">下一步</button>
+  </view>
+
+  <!-- OCR校对弹窗 -->
+  <view class="ocr-modal {{showOcrVerifyModal ? 'show' : ''}}" wx:if="{{showOcrVerifyModal}}" bindtap="hideOcrVerifyModal">
+    <view class="ocr-modal-content" catchtap="preventHide">
+      <!-- 头部 -->
+      <view class="ocr-modal-header">
+        <view class="header-left">
+          <text class="ocr-modal-title">识别结果校对</text>
+          <text class="ocr-source-tag" wx:if="{{ocrSource}}">{{ocrSource}}</text>
+        </view>
+        <view class="ocr-modal-close" bindtap="hideOcrVerifyModal">
+          <text class="close-icon">×</text>
+        </view>
+      </view>
+
+      <!-- 识别图片预览 -->
+      <view class="ocr-preview-section" wx:if="{{ocrImagePath}}" bindtap="previewOcrImage">
+        <image class="ocr-preview-thumb" src="{{ocrImagePath}}" mode="aspectFill"></image>
+        <view class="preview-overlay">
+          <text class="preview-hint">点击放大</text>
+        </view>
+      </view>
+
+      <!-- 对比表格 - 支持水平滚动 -->
+      <scroll-view class="ocr-table-scroll" scroll-y scroll-x>
+        <view class="ocr-table-container">
+          <!-- 前九洞 -->
+          <view class="ocr-table-section">
+            <view class="section-title">前九洞</view>
+            <view class="ocr-table">
+              <view class="table-row header-row">
+                <view class="table-cell label-cell">洞号</view>
+                <view class="table-cell" wx:for="{{[1,2,3,4,5,6,7,8,9]}}" wx:key="*this">{{item}}</view>
+              </view>
+              <view class="table-row">
+                <view class="table-cell label-cell new">Par</view>
+                <view class="table-cell new editable"
+                      bindtap="editPar"
+                      data-index="{{item-1}}"
+                      wx:for="{{[1,2,3,4,5,6,7,8,9]}}" wx:key="*this"
+                      wx:if="{{ocrHoles[item-1]}}">
+                  {{ocrHoles[item-1].par || '-'}}
+                </view>
+              </view>
+              <view class="table-row total-row">
+                <view class="table-cell label-cell">小计</view>
+                <view class="table-cell" style="grid-column: span 9; text-align: right; padding-right: 20rpx;">
+                  <text class="total-label">前9洞标准杆：</text>
+                  <text class="total-value">{{frontNinePar}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+
+          <!-- 后九洞 -->
+          <view class="ocr-table-section" wx:if="{{ocrHoles.length > 9}}">
+            <view class="section-title">后九洞</view>
+            <view class="ocr-table">
+              <view class="table-row header-row">
+                <view class="table-cell label-cell">洞号</view>
+                <view class="table-cell" wx:for="{{[10,11,12,13,14,15,16,17,18]}}" wx:key="*this">{{item}}</view>
+              </view>
+              <view class="table-row">
+                <view class="table-cell label-cell new">Par</view>
+                <view class="table-cell new editable"
+                      bindtap="editPar"
+                      data-index="{{item-1}}"
+                      wx:for="{{[10,11,12,13,14,15,16,17,18]}}" wx:key="*this"
+                      wx:if="{{ocrHoles[item-1]}}">
+                  {{ocrHoles[item-1].par || '-'}}
+                </view>
+              </view>
+              <view class="table-row total-row">
+                <view class="table-cell label-cell">小计</view>
+                <view class="table-cell" style="grid-column: span 9; text-align: right; padding-right: 20rpx;">
+                  <text class="total-label">后9洞标准杆：</text>
+                  <text class="total-value">{{backNinePar}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+
+          <!-- 总计 -->
+          <view class="ocr-total-card">
+            <view class="total-item">
+              <text class="total-label">识别洞数</text>
+              <text class="total-number">{{ocrHoles.length}}</text>
+            </view>
+            <view class="total-divider"></view>
+            <view class="total-item">
+              <text class="total-label">总标准杆</text>
+              <text class="total-number highlight">{{ocrTotalPar}}</text>
+            </view>
+          </view>
+
+          <!-- 提示信息 -->
+          <view class="ocr-tips">
+            <view class="tip-item">
+              <text class="tip-icon">✅</text>
+              <text class="tip-text">AI识别完成，请确认数据</text>
+            </view>
+            <view class="tip-item">
+              <text class="tip-icon">👆</text>
+              <text class="tip-text">点击PAR值可修改错误</text>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+
+      <!-- 底部按钮 -->
+      <view class="ocr-modal-footer">
+        <button class="ocr-btn-secondary" bindtap="hideOcrVerifyModal">取消</button>
+        <button class="ocr-btn-primary" bindtap="confirmReplaceData">确认使用识别数据</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 修改PAR值弹窗 -->
+  <view class="edit-par-modal {{showEditParModal ? 'show' : ''}}" wx:if="{{showEditParModal}}" bindtap="hideEditParModal">
+    <view class="edit-par-content" catchtap="preventHide">
+      <view class="edit-par-header">
+        <text class="edit-par-title">修改洞 {{editingIndex + 1}} PAR值</text>
+      </view>
+      <view class="edit-par-options">
+        <view class="par-option {{currentPar === 3 ? 'active' : ''}}" bindtap="confirmSelectPar" data-par="3">
+          <text class="par-number">3</text>
+          <text class="par-label">三杆洞</text>
+        </view>
+        <view class="par-option {{currentPar === 4 ? 'active' : ''}}" bindtap="confirmSelectPar" data-par="4">
+          <text class="par-number">4</text>
+          <text class="par-label">四杆洞</text>
+        </view>
+        <view class="par-option {{currentPar === 5 ? 'active' : ''}}" bindtap="confirmSelectPar" data-par="5">
+          <text class="par-number">5</text>
+          <text class="par-label">五杆洞</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

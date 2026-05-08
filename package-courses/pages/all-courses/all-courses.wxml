@@ -1,0 +1,106 @@
+<view class="container">
+  <!-- 搜索框 -->
+  <view class="card search-card">
+    <view class="search-box">
+      <text class="search-icon">🔍</text>
+      <input
+        class="search-input"
+        type="text"
+        placeholder="搜索{{userCity}}的球场"
+        value="{{searchKeyword}}"
+        bindinput="onSearchInput"
+      />
+      <text class="clear-icon" wx:if="{{searchKeyword}}" bindtap="clearSearch">×</text>
+    </view>
+  </view>
+
+  <!-- 工具栏 -->
+  <view class="card toolbar-card">
+    <view class="toolbar-actions">
+      <button class="toolbar-btn {{showFavoritesOnly ? 'active' : ''}}" bindtap="toggleFavoritesOnly">
+        {{showFavoritesOnly ? '显示全部' : '仅看收藏'}}
+      </button>
+      <button class="toolbar-btn" bindtap="toggleSortBy">
+        排序: {{sortBy === 'playCount' ? '按次数' : sortBy === 'name' ? '按名称' : '按距离'}}
+      </button>
+    </view>
+  </view>
+
+  <!-- 球场列表 -->
+  <view class="card" wx:if="{{filteredCourses.length > 0}}">
+    <view class="section-title flex-between">
+      <text wx:if="{{searchKeyword}}">搜索结果 ({{filteredCourses.length}})</text>
+      <text wx:elif="{{showFavoritesOnly}}">我的收藏 ({{filteredCourses.length}})</text>
+      <text wx:else>全部球场 ({{filteredCourses.length}})</text>
+    </view>
+    <view class="course-list">
+      <view class="course-item" wx:for="{{filteredCourses}}" wx:key="id">
+        <view class="course-info" bindtap="viewCourseDetail" data-course="{{item}}">
+          <view class="course-header">
+            <text class="course-name">{{item.name}}</text>
+            <view class="course-tag favorite-tag" wx:if="{{item.isFavorite}}">已收藏</view>
+          </view>
+          <text class="course-detail">{{item.holes ? item.holes.length : 18}}洞 · 标准杆{{item.totalPar || 72}}</text>
+          <view class="course-meta">
+            <text class="course-location" wx:if="{{item.location}}">{{item.location}}</text>
+            <text class="play-count" wx:if="{{item.playCount > 0}}">打过 {{item.playCount}} 次</text>
+            <text class="play-count new-course" wx:if="{{item.playCount === 0}}">未打过</text>
+          </view>
+        </view>
+        <view class="course-actions">
+          <view class="action-icon favorite-icon" bindtap="toggleFavorite" data-course-id="{{item.id}}">
+            {{item.isFavorite ? '❤️' : '🤍'}}
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="card empty-card" wx:if="{{filteredCourses.length === 0}}">
+    <view class="empty-state">
+      <view class="empty-icon">⛳</view>
+      <text class="empty-text">{{searchKeyword ? '没有找到匹配的球场' : showFavoritesOnly ? '还没有收藏任何球场' : '暂无球场数据'}}</text>
+    </view>
+  </view>
+
+  <!-- 球场详情弹窗 -->
+  <view class="modal {{showDetailModal ? 'show' : ''}}" wx:if="{{showDetailModal}}" bindtap="closeDetailModal">
+    <view class="modal-content" catchtap="preventHide">
+      <view class="modal-header">
+        <text class="modal-title">{{detailCourse.name}}</text>
+        <text class="modal-close" bindtap="closeDetailModal">×</text>
+      </view>
+      <scroll-view class="modal-body" scroll-y>
+        <view class="detail-stats">
+          <view class="detail-stat">
+            <text class="detail-value">{{detailCourse.holes.length}}</text>
+            <text class="detail-label">球洞数</text>
+          </view>
+          <view class="detail-stat">
+            <text class="detail-value">{{detailCourse.totalPar}}</text>
+            <text class="detail-label">标准杆</text>
+          </view>
+        </view>
+        <view class="holes-detail">
+          <view class="holes-header">
+            <text class="holes-title">球洞明细</text>
+          </view>
+          <view class="holes-table">
+            <view class="holes-row holes-header-row">
+              <text class="hole-cell">洞</text>
+              <text class="hole-cell">标准杆</text>
+            </view>
+            <view class="holes-row" wx:for="{{detailCourse.holes}}" wx:key="hole">
+              <text class="hole-cell">{{item.hole}}</text>
+              <text class="hole-cell">{{item.par}}</text>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+      <view class="modal-footer" wx:if="{{fromNewGame}}">
+        <button class="btn btn-primary btn-block" bindtap="selectCourseAndBack">选择此球场</button>
+      </view>
+    </view>
+  </view>
+</view>

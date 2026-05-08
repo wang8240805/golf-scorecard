@@ -1,0 +1,13 @@
+{
+  "envId": "cloudbase-3g7ya74db1a5f864",
+  "functions": [
+    {
+      "name": "ocr-scorecard",
+      "runtime": "Nodejs16.13",
+      "handler": "index.main",
+      "memorySize": 256,
+      "timeout": 60
+    }
+  ],
+  "version": "2.0"
+}

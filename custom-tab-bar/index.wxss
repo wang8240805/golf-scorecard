@@ -1,0 +1,380 @@
+.tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+  background: #ffffff;
+  border-top: 1rpx solid #e5e5e5;
+  z-index: 100;
+  /* 确保凸出部分能响应点击 */
+  overflow: visible;
+}
+
+.tab-bar-item {
+  position: relative;
+  flex: 1;
+  height: 100rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  z-index: 1;
+}
+
+.tab-bar-item:active {
+  opacity: 0.7;
+}
+
+.tab-icon {
+  width: 48rpx;
+  height: 48rpx;
+  margin-bottom: 4rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 首页图标 - 线性风格 */
+.icon-home {
+  position: relative;
+  width: 40rpx;
+  height: 36rpx;
+}
+
+.icon-home::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32rpx;
+  height: 24rpx;
+  border: 4rpx solid #999999;
+  border-top: none;
+  border-radius: 0 0 4rpx 4rpx;
+  background: transparent;
+  box-sizing: border-box;
+}
+
+.icon-home::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 20rpx solid transparent;
+  border-right: 20rpx solid transparent;
+  border-bottom: 16rpx solid #999999;
+}
+
+.tab-bar-item.active .icon-home::before {
+  border-color: #2c8f4e;
+}
+
+.tab-bar-item.active .icon-home::after {
+  border-bottom-color: #2c8f4e;
+}
+
+/* 我的图标 - 线性风格 */
+.icon-user {
+  position: relative;
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.icon-user::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16rpx;
+  height: 16rpx;
+  border: 4rpx solid #999999;
+  border-radius: 50%;
+  background: transparent;
+  box-sizing: border-box;
+}
+
+.icon-user::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32rpx;
+  height: 16rpx;
+  border: 4rpx solid #999999;
+  border-bottom: none;
+  border-radius: 16rpx 16rpx 0 0;
+  background: transparent;
+  box-sizing: border-box;
+}
+
+.tab-bar-item.active .icon-user::before,
+.tab-bar-item.active .icon-user::after {
+  border-color: #2c8f4e;
+}
+
+/* 球场图标 - 旗帜样式 */
+.icon-course {
+  position: relative;
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.icon-course::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4rpx;
+  height: 36rpx;
+  background: #999999;
+  border-radius: 2rpx;
+}
+
+.icon-course::after {
+  content: "";
+  position: absolute;
+  top: 4rpx;
+  left: 50%;
+  width: 20rpx;
+  height: 16rpx;
+  background: #999999;
+  border-radius: 0 2rpx 2rpx 0;
+  clip-path: polygon(0 0, 100% 25%, 100% 75%, 0 100%);
+}
+
+.tab-bar-item.active .icon-course::before {
+  background: #2c8f4e;
+}
+
+.tab-bar-item.active .icon-course::after {
+  background: #2c8f4e;
+}
+
+/* 记录图标 - 列表样式 */
+.icon-record {
+  position: relative;
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.icon-record::before {
+  content: "";
+  position: absolute;
+  top: 4rpx;
+  left: 0;
+  width: 40rpx;
+  height: 4rpx;
+  background: #999999;
+  border-radius: 2rpx;
+  box-shadow: 0 12rpx 0 #999999, 0 24rpx 0 #999999;
+}
+
+.tab-bar-item.active .icon-record::before {
+  background: #2c8f4e;
+  box-shadow: 0 12rpx 0 #2c8f4e, 0 24rpx 0 #2c8f4e;
+}
+
+/* 数据图标 - 图表样式 */
+.icon-stats {
+  position: relative;
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.icon-stats::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 2rpx;
+  width: 10rpx;
+  height: 20rpx;
+  background: #999999;
+  border-radius: 2rpx 2rpx 0 0;
+}
+
+.icon-stats::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 16rpx;
+  width: 10rpx;
+  height: 32rpx;
+  background: #999999;
+  border-radius: 2rpx 2rpx 0 0;
+  box-shadow: 14rpx 0 0 #999999;
+}
+
+.tab-bar-item.active .icon-stats::before,
+.tab-bar-item.active .icon-stats::after {
+  background: #2c8f4e;
+}
+
+.tab-bar-item.active .icon-stats::after {
+  box-shadow: 14rpx 0 0 #2c8f4e;
+}
+
+/* 记录图标 - 列表样式 */
+.icon-record {
+  position: relative;
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.icon-record::before {
+  content: "";
+  position: absolute;
+  top: 4rpx;
+  left: 0;
+  width: 40rpx;
+  height: 4rpx;
+  background: #999999;
+  border-radius: 2rpx;
+  box-shadow: 0 12rpx 0 #999999, 0 24rpx 0 #999999;
+}
+
+.tab-bar-item.active .icon-record::before {
+  background: #2c8f4e;
+  box-shadow: 0 12rpx 0 #2c8f4e, 0 24rpx 0 #2c8f4e;
+}
+
+/* 数据图标 - 图表样式 */
+.icon-stats {
+  position: relative;
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.icon-stats::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 2rpx;
+  width: 10rpx;
+  height: 20rpx;
+  background: #999999;
+  border-radius: 2rpx 2rpx 0 0;
+}
+
+.icon-stats::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 16rpx;
+  width: 10rpx;
+  height: 32rpx;
+  background: #999999;
+  border-radius: 2rpx 2rpx 0 0;
+  box-shadow: 14rpx 0 0 #999999;
+}
+
+.tab-bar-item.active .icon-stats::before,
+.tab-bar-item.active .icon-stats::after {
+  background: #2c8f4e;
+}
+
+.tab-bar-item.active .icon-stats::after {
+  box-shadow: 14rpx 0 0 #2c8f4e;
+}
+
+.tab-text {
+  font-size: 24rpx;
+  color: #999999;
+  line-height: 1;
+  font-weight: 400;
+}
+
+.tab-bar-item.active .tab-text {
+  color: #2c8f4e;
+  font-weight: 500;
+}
+
+/* 中央凸起大按钮 - 独立于flex布局 */
+.center-btn-wrapper {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -20rpx;
+  width: 120rpx;
+  height: 120rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  /* 确保能响应点击 */
+  pointer-events: auto;
+}
+
+.center-btn {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2c8f4e 0%, #1b5e20 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 16rpx rgba(44, 143, 78, 0.4);
+  position: relative;
+}
+
+.center-btn-inner {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: inset -2rpx -2rpx 4rpx rgba(0,0,0,0.08), inset 2rpx 2rpx 4rpx rgba(255,255,255,0.9);
+}
+
+/* 高尔夫球凹痕 */
+.golf-dimples {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.dimple {
+  position: absolute;
+  width: 6rpx;
+  height: 6rpx;
+  background: rgba(0,0,0,0.1);
+  border-radius: 50%;
+}
+
+.d1 { top: 22%; left: 28%; }
+.d2 { top: 38%; left: 62%; }
+.d3 { top: 58%; left: 24%; }
+.d4 { top: 52%; left: 72%; }
+
+.center-btn-text-golf {
+  font-size: 28rpx;
+  color: #1b5e20;
+  font-weight: 700;
+  font-style: italic;
+  z-index: 10;
+}
+
+/* 点击效果 */
+.center-btn:active {
+  transform: scale(0.95);
+}

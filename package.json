@@ -1,0 +1,22 @@
+{
+  "name": "winpar-golf-scorecard",
+  "version": "1.0.0",
+  "description": "WinPAR 高尔夫记分卡微信小程序",
+  "main": "app.js",
+  "scripts": {
+    "deploy": "node auto-deploy.js",
+    "deploy:watch": "node auto-deploy.js --watch",
+    "deploy:all": "node auto-deploy.js --all"
+  },
+  "keywords": [
+    "golf",
+    "miniprogram",
+    "scorecard"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@vant/weapp": "^1.11.7",
+    "weui-miniprogram": "^1.2.4"
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "description": "WinPAR - 高尔夫智能记分卡",
+  "packOptions": {
+    "ignore": [
+      {
+        "value": "data-fetcher",
+        "type": "folder"
+      },
+      {
+        "value": "everything-claude-code",
+        "type": "folder"
+      },
+      {
+        "value": "node_modules",
+        "type": "folder"
+      },
+      {
+        "value": "private.key",
+        "type": "file"
+      },
+      {
+        "value": ".claudeignore",
+        "type": "file"
+      },
+      {
+        "value": "CLAUDE.md",
+        "type": "file"
+      },
+      {
+        "value": "package.json",
+        "type": "file"
+      },
+      {
+        "value": "package-lock.json",
+        "type": "file"
+      },
+      {
+        "value": "exportToOcrPlugin.js",
+        "type": "file"
+      },
+      {
+        "value": "mock-data.js",
+        "type": "file"
+      },
+      {
+        "value": "test-event.json",
+        "type": "file"
+      },
+      {
+        "value": "data/test-game.js",
+        "type": "file"
+      },
+      {
+        "value": "get-logs.js",
+        "type": "file"
+      },
+      {
+        "value": "get-save-logs.js",
+        "type": "file"
+      },
+      {
+        "value": "deploy-function.js",
+        "type": "file"
+      },
+      {
+        "value": "setup-hunyuan-permission.js",
+        "type": "file"
+      },
+      {
+        "value": "auto-deploy.js",
+        "type": "file"
+      }
+    ],
+    "include": []
+  },
+  "setting": {
+    "bundle": false,
+    "userConfirmedBundleSwitch": false,
+    "urlCheck": true,
+    "scopeDataCheck": false,
+    "coverView": true,
+    "es6": true,
+    "postcss": true,
+    "compileHotReLoad": false,
+    "lazyloadPlaceholderEnable": false,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "autoAudits": false,
+    "newFeature": false,
+    "uglifyFileName": false,
+    "uploadWithSourceMap": false,
+    "useIsolateContext": true,
+    "nodeModules": false,
+    "enhance": true,
+    "useMultiFrameRuntime": false,
+    "useApiHook": false,
+    "useApiHostProcess": false,
+    "showShadowRootInWxmlPanel": true,
+    "packNpmManually": false,
+    "enableEngineNative": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true,
+    "showES6CompileOption": false,
+    "compileWorklet": false,
+    "minifyWXML": true,
+    "localPlugins": false,
+    "disableUseStrict": false,
+    "useCompilerPlugins": false,
+    "condition": false,
+    "swc": false,
+    "disableSWC": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    }
+  },
+  "compileType": "miniprogram",
+  "libVersion": "3.14.3",
+  "appid": "wx89e0c07e1e728a41",
+  "projectname": "golf-scorecard",
+  "condition": {},
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
+  },
+  "plugins": {
+    "ocr-plugin": {
+      "version": "2.0.1",
+      "provider": "wxe567a849ff4f3f53"
+    }
+  },
+  "simulatorPluginLibVersion": {},
+  "cloudfunctionRoot": "cloudfunctions/",
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate/"
+}

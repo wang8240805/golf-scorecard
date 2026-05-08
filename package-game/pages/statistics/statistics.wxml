@@ -1,0 +1,74 @@
+<view class="container">
+  <view class="empty-state" wx:if="{{!hasData}}">
+    <text>暂无比赛数据</text>
+    <text style="font-size: 26rpx; margin-top: 16rpx;">完成至少1场比赛后查看技术统计</text>
+  </view>
+
+  <block wx:if="{{hasData}}">
+    <!-- 总体概览 -->
+    <view class="card overview-card">
+      <view class="overview-header">
+        <text class="section-title">我的技术统计</text>
+        <text class="overview-subtitle">共 {{totalStats.games}} 场 · {{totalStats.rounds}} 轮 · {{totalStats.holes}} 洞</text>
+      </view>
+      <view class="overview-grid">
+        <view class="overview-item">
+          <text class="overview-value {{totalStats.avgScoreClass}}">{{totalStats.avgScore}}</text>
+          <text class="overview-label">平均杆数</text>
+        </view>
+        <view class="overview-item">
+          <text class="overview-value {{totalStats.avgToParClass}}">{{totalStats.avgToPar}}</text>
+          <text class="overview-label">平均+/-</text>
+        </view>
+        <view class="overview-item">
+          <text class="overview-value">{{totalStats.bestScore}}</text>
+          <text class="overview-label">最佳成绩</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 成绩分布 -->
+    <view class="card">
+      <view class="section-title">成绩分布</view>
+      <view class="distribution-bar">
+        <view class="dist-segment eagle" style="width: {{scoreDistribution.eaglePct}}%" wx:if="{{scoreDistribution.eagles > 0}}">
+          <text wx:if="{{scoreDistribution.eaglePct >= 10}}">{{scoreDistribution.eagles}}</text>
+        </view>
+        <view class="dist-segment birdie" style="width: {{scoreDistribution.birdiePct}}%" wx:if="{{scoreDistribution.birdies > 0}}">
+          <text wx:if="{{scoreDistribution.birdiePct >= 10}}">{{scoreDistribution.birdies}}</text>
+        </view>
+        <view class="dist-segment par" style="width: {{scoreDistribution.parPct}}%" wx:if="{{scoreDistribution.pars > 0}}">
+          <text wx:if="{{scoreDistribution.parPct >= 10}}">{{scoreDistribution.pars}}</text>
+        </view>
+        <view class="dist-segment bogey" style="width: {{scoreDistribution.bogeyPct}}%" wx:if="{{scoreDistribution.bogeys > 0}}">
+          <text wx:if="{{scoreDistribution.bogeyPct >= 10}}">{{scoreDistribution.bogeys}}</text>
+        </view>
+        <view class="dist-segment double" style="width: {{scoreDistribution.doublePct}}%" wx:if="{{scoreDistribution.doubleBogeys + scoreDistribution.others > 0}}">
+          <text wx:if="{{scoreDistribution.doublePct >= 10}}">{{scoreDistribution.doubleBogeys + scoreDistribution.others}}</text>
+        </view>
+      </view>
+      <view class="distribution-legend">
+        <view class="legend-item">
+          <view class="legend-color eagle"></view>
+          <text>老鹰 {{scoreDistribution.eagles}}</text>
+        </view>
+        <view class="legend-item">
+          <view class="legend-color birdie"></view>
+          <text>小鸟 {{scoreDistribution.birdies}}</text>
+        </view>
+        <view class="legend-item">
+          <view class="legend-color par"></view>
+          <text>平标准 {{scoreDistribution.pars}}</text>
+        </view>
+        <view class="legend-item">
+          <view class="legend-color bogey"></view>
+          <text>柏忌 {{scoreDistribution.bogeys}}</text>
+        </view>
+        <view class="legend-item">
+          <view class="legend-color double"></view>
+          <text>双柏忌+ {{scoreDistribution.doubleBogeys + scoreDistribution.others}}</text>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>

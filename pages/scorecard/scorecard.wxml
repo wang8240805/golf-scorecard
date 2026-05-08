@@ -1,0 +1,397 @@
+<view class="page-container">
+  <!-- 没有比赛时显示 -->
+  <view class="empty-state" wx:if="{{!currentGame}}">
+    <text>暂无进行中的比赛</text>
+    <text style="font-size: 26rpx; margin-top: 16rpx;">点击下方GO按钮开始新比赛</text>
+  </view>
+
+  <block wx:if="{{currentGame}}">
+    <!-- 可滚动内容区域 -->
+    <view class="content-area">
+    <!-- 球场信息 -->
+    <view class="card header-card">
+      <view class="course-header-row">
+        <view class="course-info-left">
+          <text class="section-title">{{currentGame.courseName}}</text>
+          <text class="text-small text-secondary">{{currentDate}}</text>
+        </view>
+        <view class="hole-nav">
+          <view class="nav-btn {{currentHole === 1 ? 'disabled' : ''}}" bindtap="prevHole">←</view>
+          <view class="hole-number">{{currentHole}}</view>
+          <view class="nav-btn {{currentHole === totalHoles ? 'disabled' : ''}}" bindtap="nextHole">→</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 待确认成绩提示 -->
+    <view class="pending-confirmation-banner" wx:if="{{pendingCount > 0}}" bindtap="showPendingConfirmations">
+      <view class="pending-icon">⏳</view>
+      <text class="pending-text">有 {{pendingCount}} 项成绩待确认</text>
+      <text class="pending-action">点击查看 →</text>
+    </view>
+
+    <!-- 球员成绩录入 - 横向排列 -->
+    <view class="card score-input-card">
+      <view class="section-header">
+        <text class="section-title">成绩录入</text>
+        <view class="header-actions">
+          <button class="add-player-btn" bindtap="showQrCodeModal">
+            <text class="add-player-icon">+</text>
+            <text class="add-player-text">加人</text>
+          </button>
+        </view>
+      </view>
+      <view class="players-horizontal">
+        <view class="player-input-item" wx:for="{{currentGame.players}}" wx:key="id" bindtap="showScoreInput" data-player="{{item.id}}">
+          <view class="player-avatar-wrap">
+            <image class="player-avatar-lg" src="{{item.avatarUrl || item.avatar || ''}}" wx:if="{{item.avatarUrl || item.avatar}}"></image>
+            <view class="player-avatar-lg avatar-placeholder" style="background: {{item.color || colors[index % colors.length]}}" wx:else>{{item.name[0]}}</view>
+            <view class="score-badge-lg {{getScoreClass(item.id)}}" wx:if="{{getScore(item.id)}}">
+              {{getScore(item.id)}}
+            </view>
+          </view>
+          <text class="player-name-lg">{{item.name}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 记分卡 - 行列转置 -->
+    <view class="card">
+      <view class="section-header">
+        <view class="section-title">记分卡</view>
+        <view class="scorecard-actions">
+          <view class="btn-ocr-scorecard" bindtap="startOcrVerify">
+            <text>📷</text>
+            <text>拍计分卡</text>
+          </view>
+          <button class="finish-game-btn" bindtap="finishGame">完成比赛</button>
+        </view>
+      </view>
+      <scroll-view class="score-grid-scroll" scroll-x="true" scroll-left="{{scrollLeft}}">
+        <view class="score-grid transposed">
+          <!-- 表头行：洞号 -->
+          <view class="grid-row header">
+            <view class="grid-cell label-cell">洞/球员</view>
+            <view class="grid-cell player-cell" wx:for="{{currentGame.players}}" wx:key="id">
+              <view class="player-mini-wrapper">
+                <image class="player-mini" src="{{item.avatarUrl || ''}}" wx:if="{{item.avatarUrl}}"></image>
+                <view class="player-mini" style="background: {{item.color}}" wx:else>{{item.name[0]}}</view>
+                <text class="player-mini-name">{{item.name}}</text>
+              </view>
+            </view>
+          </view>
+          <!-- 总杆数行（显示当前进度和差点） -->
+          <view class="grid-row total-row">
+            <view class="grid-cell label-cell">杆数</view>
+            <view class="grid-cell total-cell" wx:for="{{playerTotalList}}" wx:key="id">
+              <view class="total-display">
+                <text class="total-main">{{item.total}}</text>
+                <text class="total-diff {{item.class}}">{{item.diff}}</text>
+              </view>
+            </view>
+          </view>
+          <!-- 每个洞一行 -->
+          <view class="grid-row {{currentHole === item.hole ? 'current-row' : ''}}" wx:for="{{scoreGridData}}" wx:for-item="item" wx:key="hole">
+            <view class="grid-cell label-cell hole-label" bindtap="jumpToHole" data-hole="{{item.hole}}">
+              <text class="hole-num">{{item.hole}}</text>
+              <text class="hole-par">Par{{item.par}}</text>
+            </view>
+            <view
+              class="grid-cell {{score.class}}"
+              wx:for="{{item.scores}}"
+              wx:for-item="score"
+              wx:key="playerId"
+              bindtap="showScoreInput"
+              data-player="{{score.playerId}}"
+              data-hole="{{item.hole}}"
+            >
+              <text class="score-to-par {{score.class}}">{{score.display}}</text>
+              <view class="pending-indicator" wx:if="{{!score.confirmed}}">⏳</view>
+            </view>
+          </view>
+          <!-- 右侧留白，确保最后一列完整显示 -->
+          <view class="grid-row">
+            <view class="grid-cell" style="width: 30rpx; border: none; min-width: 30rpx;"></view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+
+  </block>
+
+  <!-- 成绩录入弹窗 -->
+  <view class="score-modal {{editingScore.playerId ? 'show' : ''}}" wx:if="{{editingScore.playerId}}" bindtap="hideScoreInput">
+    <view class="score-modal-content apple-style" catchtap="preventHide">
+      <view class="score-modal-header">
+        <text class="score-modal-title">{{editingScore.playerName}} - 第{{currentHole}}洞 Par{{currentHoleData.par}}</text>
+        <text class="score-modal-close" bindtap="hideScoreInput">×</text>
+      </view>
+      <view class="score-modal-body">
+        <!-- 成绩选择区 - 简化为 Par-1 到 Double Par -->
+        <view class="score-selector-simple">
+          <text class="selector-label">选择成绩</text>
+          <scroll-view class="score-options-scroll" scroll-x>
+            <view class="score-options">
+              <view
+                class="score-option {{editingScore.strokes === item ? 'selected' : ''}} {{item < currentHoleData.par ? 'birdie' : ''}} {{item === currentHoleData.par ? 'par' : ''}} {{item > currentHoleData.par ? 'bogey' : ''}}"
+                wx:for="{{[1,2,3,4,5,6,7,8,9,10]}}"
+                wx:if="{{item <= currentHoleData.par * 2 && (item > 1 || currentHoleData.par <= 3)}}"
+                wx:key="*this"
+                bindtap="setStrokesQuick"
+                data-value="{{item}}"
+              >
+                <text class="score-value">{{item}}</text>
+                <text class="score-tag" wx:if="{{item === currentHoleData.par - 1}}">小鸟</text>
+                <text class="score-tag" wx:if="{{item === currentHoleData.par}}">标准</text>
+                <text class="score-tag" wx:if="{{item === currentHoleData.par + 1}}">柏忌</text>
+                <text class="score-tag" wx:if="{{item < currentHoleData.par - 1}}">老鹰</text>
+                <text class="score-tag" wx:if="{{item > currentHoleData.par + 1 && item <= currentHoleData.par + 2}}">双柏忌</text>
+                <text class="score-tag" wx:if="{{item > currentHoleData.par + 2}}">+{{item - currentHoleData.par}}</text>
+              </view>
+            </view>
+          </scroll-view>
+          <!-- 自定义输入框 -->
+          <view class="custom-input-wrapper" wx:if="{{editingScore.showCustomInput}}">
+            <text class="custom-input-label">输入杆数</text>
+            <input
+              class="custom-input"
+              type="number"
+              value="{{editingScore.strokes}}"
+              bindinput="onCustomStrokesInput"
+              placeholder="{{currentHoleData.par}}"
+              focus="{{editingScore.showCustomInput}}"
+            />
+          </view>
+        </view>
+
+        <!-- 推杆数 -->
+        <view class="simple-putts">
+          <text class="simple-label">推杆</text>
+          <view class="simple-putts-options">
+            <view
+              class="simple-putt-btn {{editingScore.putts === item ? 'selected' : ''}}"
+              wx:for="{{[0,1,2,3,4]}}"
+              wx:key="*this"
+              bindtap="setPutts"
+              data-value="{{item}}"
+            >
+              {{item}}
+            </view>
+          </view>
+        </view>
+
+        <button class="btn btn-primary confirm-btn simple-confirm" bindtap="confirmScore">确定</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- OCR校对结果弹窗 -->
+  <view class="modal {{showOcrVerifyModal ? 'show' : ''}}" wx:if="{{showOcrVerifyModal}}" bindtap="hideOcrVerifyModal">
+    <view class="modal-content large-modal" catchtap="preventHide">
+      <view class="modal-header">
+        <text class="modal-title">识别结果校对</text>
+        <text class="modal-close" bindtap="hideOcrVerifyModal">×</text>
+      </view>
+      <scroll-view class="modal-body" scroll-y>
+        <view class="ocr-compare-vertical">
+          <view class="compare-row">
+            <text class="compare-title">原有数据</text>
+            <view class="holes-grid compact">
+              <block wx:for="{{originalHoles}}" wx:key="id">
+                <view class="hole-card-mini {{item.par != ocrHoles[item.id-1].par ? 'diff' : ''}}">
+                  <text class="hole-num-mini">{{item.id}}</text>
+                  <text class="hole-par-mini">{{item.par}}</text>
+                </view>
+              </block>
+            </view>
+            <text class="compare-total">总标准杆：{{originalTotalPar}}</text>
+          </view>
+          <view class="compare-row">
+            <text class="compare-title">拍照识别</text>
+            <view class="holes-grid compact">
+              <block wx:for="{{ocrHoles}}" wx:key="id">
+                <view class="hole-card-mini {{item.par != originalHoles[item.id-1].par ? 'diff' : ''}}">
+                  <text class="hole-num-mini">{{item.id}}</text>
+                  <text class="hole-par-mini">{{item.par}}</text>
+                </view>
+              </block>
+            </view>
+            <text class="compare-total">总标准杆：{{ocrTotalPar}}</text>
+          </view>
+        </view>
+        <view class="compare-note warning" wx:if="{{hasDiff}}">
+          <text class="note-text">⚠️ 检测到标准杆差异，确认后将替换原有数据</text>
+        </view>
+        <view class="compare-note success" wx:if="{{!hasDiff}}">
+          <text class="note-text">✅ 数据一致，无需替换</text>
+        </view>
+        <view class="ocr-compare-scores" wx:if="{{hasScoreDiff}}">
+          <text class="compare-title-score">已记录成绩差异</text>
+          <text class="note-text">⚠️ 检测到已录入成绩差异，确认后将覆盖现有成绩</text>
+        </view>
+      </scroll-view>
+      <view class="modal-footer">
+        <button class="btn btn-secondary" bindtap="hideOcrVerifyModal">取消</button>
+        <button class="btn btn-primary" bindtap="confirmReplaceData" disabled="{{!hasDiff && !hasScoreDiff}}">确认替换</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 邀请球友弹窗 -->
+  <view class="qrcode-modal" wx:if="{{showQrCode}}" bindtap="hideQrCodeModal">
+    <view class="qrcode-content" catchtap="preventHide">
+      <view class="qrcode-header">
+        <text class="qrcode-title">邀请球友加入</text>
+        <text class="qrcode-close" bindtap="hideQrCodeModal">×</text>
+      </view>
+      <view class="qrcode-body">
+        <button class="qrcode-share-btn" open-type="share">
+          <text class="btn-icon">👥</text>
+          <text>分享给微信好友</text>
+        </button>
+        <view class="divider" wx:if="{{qrcodeUrl}}">
+          <view class="divider-line"></view>
+          <text class="divider-text">或</text>
+          <view class="divider-line"></view>
+        </view>
+        <view class="qrcode-wrapper" wx:if="{{qrcodeUrl}}">
+          <view class="qrcode-tips">让球友微信扫码加入</view>
+          <image class="qrcode-image" src="{{qrcodeUrl}}" mode="aspectFit"></image>
+          <view class="qrcode-tips">无需加好友，扫码即入</view>
+        </view>
+        <view class="divider">
+          <view class="divider-line"></view>
+          <text class="divider-text">或</text>
+          <view class="divider-line"></view>
+        </view>
+        <view class="manual-add">
+          <input class="manual-input" placeholder="输入姓名" value="{{manualPlayerName}}" bindinput="onManualNameInput" />
+          <button class="manual-add-btn" bindtap="addManualPlayer">添加</button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 待确认成绩弹窗 -->
+  <view class="modal {{showPendingModal ? 'show' : ''}}" wx:if="{{showPendingModal}}" bindtap="hidePendingModal">
+    <view class="modal-content pending-modal" catchtap="preventHide">
+      <view class="modal-header">
+        <text class="modal-title">待确认成绩</text>
+        <text class="modal-close" bindtap="hidePendingModal">×</text>
+      </view>
+      <scroll-view class="modal-body" scroll-y>
+        <view class="pending-list">
+          <view class="pending-item" wx:for="{{pendingConfirmations}}" wx:key="hole">
+            <view class="pending-item-info">
+              <text class="pending-hole">第{{item.hole}}洞</text>
+              <text class="pending-strokes">{{item.strokes}}杆</text>
+              <text class="pending-modifier">由 {{item.modifiedByName}} 修改</text>
+            </view>
+            <view class="pending-item-actions">
+              <button class="pending-btn confirm" catchtap="confirmPendingScore" data-hole="{{item.hole}}">确认</button>
+              <button class="pending-btn reject" catchtap="rejectPendingScore" data-hole="{{item.hole}}">拒绝</button>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+      <view class="modal-footer">
+        <text class="pending-tips">确认后将生效，拒绝后将恢复原成绩</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- Canvas 用于生成海报 -->
+  <canvas type="2d" id="posterCanvas" class="poster-canvas"></canvas>
+
+  <!-- Par数据缺失引导弹窗 -->
+  <view class="modal {{showParInputGuide ? 'show' : ''}}" wx:if="{{showParInputGuide}}" bindtap="hideParDataGuide">
+    <view class="modal-content par-guide-modal" catchtap="preventHide">
+      <view class="modal-header">
+        <text class="modal-title">需要标准杆数据</text>
+      </view>
+      <view class="modal-body">
+        <view class="par-guide-icon">⛳</view>
+        <text class="par-guide-desc">当前球场缺少每洞标准杆数据，请选择获取方式：</text>
+        <view class="par-guide-options">
+          <button class="par-guide-btn primary" bindtap="selectParDataSource" data-source="ocr">
+            <text class="btn-icon">📷</text>
+            <text>拍照识别</text>
+            <text class="btn-desc">拍摄记分卡自动识别</text>
+          </button>
+          <button class="par-guide-btn" bindtap="selectParDataSource" data-source="manual">
+            <text class="btn-icon">✏️</text>
+            <text>手动输入</text>
+            <text class="btn-desc">逐洞输入标准杆</text>
+          </button>
+          <button class="par-guide-btn secondary" bindtap="selectParDataSource" data-source="skip">
+            <text class="btn-icon">⚡</text>
+            <text>使用默认值</text>
+            <text class="btn-desc">全部Par 4（共72杆）</text>
+          </button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 手动输入Par弹窗 -->
+  <view class="modal {{showParInputModal ? 'show' : ''}}" wx:if="{{showParInputModal}}" bindtap="hideParInputModal">
+    <view class="modal-content par-input-modal" catchtap="preventHide">
+      <view class="modal-header">
+        <text class="modal-title">校准标准杆</text>
+        <text class="modal-close" bindtap="hideParInputModal">×</text>
+      </view>
+      <view class="modal-body">
+        <!-- 说明文字 - 告诉用户用途 -->
+        <view class="par-desc">
+          <text class="par-desc-text">📝 如果球场实际标准杆与原始数据不符，可以在此手动修正</text>
+        </view>
+
+        <!-- 进度显示 (仅全洞输入模式显示) -->
+        <view class="par-progress" wx:if="{{tempHoles.length > 0}}">
+          <text class="par-progress-text">已输入 {{parInputProgress}}/18 洞</text>
+          <view class="par-progress-bar">
+            <view class="par-progress-fill" style="width: {{parInputProgress / 18 * 100}}%"></view>
+          </view>
+        </view>
+
+        <!-- 当前洞号 -->
+        <view class="par-current-hole">
+          <text class="par-hole-label">第</text>
+          <text class="par-hole-number">{{parInputHole}}</text>
+          <text class="par-hole-label">洞</text>
+        </view>
+
+        <!-- Par值选择 -->
+        <view class="par-value-selector">
+          <text class="par-value-label">标准杆</text>
+          <view class="par-value-options">
+            <view class="par-value-btn {{parInputValue === 3 ? 'selected' : ''}}" bindtap="selectParValue" data-par="3">
+              <text class="par-value-num">3</text>
+              <text class="par-value-tag">短洞</text>
+            </view>
+            <view class="par-value-btn {{parInputValue === 4 ? 'selected' : ''}}" bindtap="selectParValue" data-par="4">
+              <text class="par-value-num">4</text>
+              <text class="par-value-tag">中洞</text>
+            </view>
+            <view class="par-value-btn {{parInputValue === 5 ? 'selected' : ''}}" bindtap="selectParValue" data-par="5">
+              <text class="par-value-num">5</text>
+              <text class="par-value-tag">长洞</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 洞号快捷跳转 (仅全洞输入模式显示) -->
+        <view class="par-hole-grid" wx:if="{{tempHoles.length > 0}}">
+          <view class="par-hole-item {{parInputHole === item ? 'current' : ''}} {{tempHoles[item-1].par > 0 ? 'filled' : ''}}"
+                wx:for="{{[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]}}"
+                wx:key="*this"
+                bindtap="jumpToParInputHole"
+                data-hole="{{item}}">
+            {{item}}
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

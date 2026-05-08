@@ -1,0 +1,123 @@
+<view class="container">
+  <!-- 当前城市 -->
+  <view class="city-header flex-between">
+    <view>
+      <text class="city-name">{{userCity || '定位中...'}}</text>
+      <text class="city-count">共 {{courses.length}} 个球场</text>
+    </view>
+    <button class="ocr-btn" bindtap="openOcrScanner">📷 识别计分卡</button>
+  </view>
+
+
+  <!-- 球场列表 -->
+  <view class="card" wx:if="{{filteredCourses.length > 0}}">
+    <view class="section-title flex-between">
+      <text>我的球场 ({{filteredCourses.length}})</text>
+    </view>
+    <view class="course-list">
+      <view class="course-item" wx:for="{{filteredCourses}}" wx:key="id">
+        <view class="course-info" bindtap="viewCourseDetail" data-course="{{item}}">
+          <view class="course-header">
+            <text class="course-name">{{item.name}}</text>
+            <view class="course-tag favorite-tag" wx:if="{{item.isFavorite}}">已收藏</view>
+          </view>
+          <text class="course-detail">{{item.holes ? item.holes.length : 18}}洞 · 标准杆{{item.totalPar || 72}}</text>
+          <view class="course-meta">
+            <text class="course-location" wx:if="{{item.location}}">{{item.location}}</text>
+            <text class="play-count" wx:if="{{item.playCount > 0}}">打过 {{item.playCount}} 次</text>
+            <text class="play-count new-course" wx:if="{{item.playCount === 0}}">未打过</text>
+          </view>
+        </view>
+        <view class="course-actions">
+          <view class="action-icon favorite-icon {{item.isFavorite ? 'active' : ''}}" bindtap="toggleFavorite" data-course-id="{{item.id}}">
+            <text class="heart-icon">♥</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 其他球场按钮 -->
+    <view class="other-courses-btn" bindtap="goToAllCourses">
+      <text>查看全部球场 ➔</text>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="card empty-card" wx:if="{{filteredCourses.length === 0}}">
+    <view class="empty-state">
+      <view class="empty-icon">⛳</view>
+      <text class="empty-text">暂无收藏或附近球场</text>
+    </view>
+  </view>
+
+  <!-- 球场详情弹窗 -->
+  <view class="modal {{showDetailModal ? 'show' : ''}}" wx:if="{{showDetailModal}}" bindtap="closeDetailModal">
+    <view class="modal-content" catchtap="preventHide">
+      <view class="modal-header">
+        <text class="modal-title">{{detailCourse.name}}</text>
+        <text class="modal-close" bindtap="closeDetailModal">×</text>
+      </view>
+      <scroll-view class="modal-body" scroll-y>
+        <view class="detail-stats">
+          <view class="detail-stat">
+            <text class="detail-value">{{detailCourse.holes.length}}</text>
+            <text class="detail-label">球洞数</text>
+          </view>
+          <view class="detail-stat">
+            <text class="detail-value">{{detailCourse.totalPar}}</text>
+            <text class="detail-label">标准杆</text>
+          </view>
+        </view>
+        <view class="holes-detail">
+          <view class="holes-header">
+            <text class="holes-title">球洞明细</text>
+          </view>
+          <view class="holes-table">
+            <view class="holes-row holes-header-row">
+              <text class="hole-cell">洞</text>
+              <text class="hole-cell">标准杆</text>
+            </view>
+            <view class="holes-row" wx:for="{{detailCourse.holes}}" wx:key="hole">
+              <text class="hole-cell">{{item.hole}}</text>
+              <text class="hole-cell">{{item.par}}</text>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+
+  <!-- OCR识别结果弹窗 -->
+  <view class="modal {{showOcrResult ? 'show' : ''}}" wx:if="{{showOcrResult}}" bindtap="closeOcrModal">
+    <view class="modal-content" catchtap="preventHide">
+      <view class="modal-header">
+        <text class="modal-title">识别结果</text>
+        <text class="modal-close" bindtap="closeOcrModal">×</text>
+      </view>
+      <scroll-view class="modal-body" scroll-y>
+        <view class="form-item">
+          <text class="form-label">球场名称</text>
+          <input class="form-input" value="{{recognizedCourse.name}}" placeholder="请输入球场名称" bindinput="e => setData({ 'recognizedCourse.name': e.detail.value })" />
+        </view>
+        <view class="form-item">
+          <text class="form-label">标准杆总数</text>
+          <text class="form-value">{{recognizedCourse.par || 0}}杆</text>
+        </view>
+        <view class="holes-preview">
+          <text class="form-label">洞数据（共{{recognizedCourse.holes.length}}洞）</text>
+          <view class="holes-grid">
+            <view class="hole-item" wx:for="{{recognizedCourse.holes}}" wx:key="hole">
+              <text class="hole-num">Hole {{item.hole}}</text>
+              <text class="hole-par">Par {{item.par}}</text>
+              <text class="hole-dist">{{item.distance}}码</text>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+      <view class="modal-footer">
+        <button class="btn btn-secondary" bindtap="closeOcrModal">取消</button>
+        <button class="btn btn-primary" bindtap="confirmRecognizedCourse">确认添加</button>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "openapi": []
+  },
+  "environment": {
+    "DB_COLLECTION_NAME": "games"
+  }
+}

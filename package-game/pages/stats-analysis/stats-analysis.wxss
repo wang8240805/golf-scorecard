@@ -1,0 +1,335 @@
+/* 页面容器 */
+.container {
+  padding: 20rpx;
+  padding-bottom: 40rpx;
+}
+
+/* 总览卡片 */
+.overview-card {
+  background: linear-gradient(135deg, var(--primary) 0%, #1b5e20 100%);
+  color: white;
+  padding: 40rpx 30rpx;
+}
+
+.overview-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  margin-bottom: 30rpx;
+  opacity: 0.9;
+}
+
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20rpx;
+}
+
+.overview-item {
+  text-align: center;
+}
+
+.overview-value {
+  display: block;
+  font-size: 44rpx;
+  font-weight: 700;
+  margin-bottom: 8rpx;
+}
+
+.overview-label {
+  font-size: 24rpx;
+  opacity: 0.8;
+}
+
+/* 章节标题 */
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 24rpx;
+}
+
+/* 成绩分布 */
+.score-distribution {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.dist-item {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.dist-bar {
+  width: 200rpx;
+  height: 24rpx;
+  background: #f0f0f0;
+  border-radius: 12rpx;
+  overflow: hidden;
+}
+
+.dist-fill {
+  height: 100%;
+  border-radius: 12rpx;
+}
+
+.dist-fill.eagle { background: #ff6b6b; }
+.dist-fill.birdie { background: var(--primary); }
+.dist-fill.par { background: #3498db; }
+.dist-fill.bogey { background: #f39c12; }
+.dist-fill.double { background: #e74c3c; }
+
+.dist-info {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dist-label {
+  font-size: 28rpx;
+  color: var(--text-primary);
+}
+
+.dist-value {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+}
+
+/* 短杆数据 */
+.short-game-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20rpx;
+}
+
+.short-game-item {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 24rpx;
+  background: var(--bg-gray);
+  border-radius: 16rpx;
+}
+
+.short-game-icon {
+  font-size: 48rpx;
+}
+
+.short-game-info {
+  flex: 1;
+}
+
+.short-game-value {
+  display: block;
+  font-size: 40rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4rpx;
+}
+
+.short-game-label {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+}
+
+/* 开球数据 */
+.driving-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 30rpx;
+}
+
+.driving-item {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.driving-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.driving-label {
+  font-size: 28rpx;
+  color: var(--text-primary);
+}
+
+.driving-value {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.progress-bar {
+  height: 16rpx;
+  background: #f0f0f0;
+  border-radius: 8rpx;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary) 0%, #4caf50 100%);
+  border-radius: 8rpx;
+  transition: width 0.5s ease;
+}
+
+.driving-desc {
+  font-size: 24rpx;
+  color: var(--text-light);
+}
+
+/* 趋势图表 */
+.trend-chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 280rpx;
+  padding: 20rpx 0;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+.trend-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.trend-bar-wrapper {
+  width: 40rpx;
+  height: 160rpx;
+  display: flex;
+  align-items: flex-end;
+  background: #f8f9fa;
+  border-radius: 8rpx 8rpx 0 0;
+  overflow: hidden;
+}
+
+.trend-bar {
+  width: 100%;
+  border-radius: 8rpx 8rpx 0 0;
+  min-height: 20rpx;
+}
+
+.trend-bar.good {
+  background: var(--primary);
+}
+
+.trend-bar.bad {
+  background: #e74c3c;
+}
+
+.trend-score {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.trend-date {
+  font-size: 20rpx;
+  color: var(--text-light);
+  transform: rotate(-45deg);
+  white-space: nowrap;
+}
+
+/* 改进建议 */
+.suggestions-card {
+  background: linear-gradient(135deg, #fff8e1 0%, #fff3e0 100%);
+}
+
+.suggestion-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.suggestion-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16rpx;
+  padding: 20rpx;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 12rpx;
+}
+
+.suggestion-icon {
+  font-size: 36rpx;
+}
+
+.suggestion-text {
+  flex: 1;
+  font-size: 28rpx;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* 空状态 */
+.empty-card {
+  padding: 80rpx 40rpx;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.empty-icon {
+  width: 140rpx;
+  height: 140rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(44, 143, 78, 0.1);
+  border-radius: 50%;
+  margin-bottom: 30rpx;
+}
+
+.icon-stats {
+  position: relative;
+  width: 70rpx;
+  height: 70rpx;
+}
+
+.icon-stats::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 8rpx;
+  width: 16rpx;
+  height: 40rpx;
+  background: var(--primary);
+  border-radius: 4rpx 4rpx 0 0;
+}
+
+.icon-stats::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 32rpx;
+  width: 16rpx;
+  height: 60rpx;
+  background: var(--primary);
+  border-radius: 4rpx 4rpx 0 0;
+  box-shadow: 24rpx 0 0 var(--primary);
+}
+
+.empty-text {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12rpx;
+}
+
+.empty-subtext {
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  margin-bottom: 40rpx;
+}

@@ -1,0 +1,325 @@
+const app = getApp()
+const { calculateDistance } = require('../../../utils/geo-utils.js')
+const ALL_COURSES = require('../../../data/courses-accurate.js')
+
+// 开发模式开关
+const DEV_MODE = false
+
+Page({
+  data: {
+    courses: [],
+    filteredCourses: [],
+    favoriteCourseIds: [],
+    searchKeyword: '',
+    showFavoritesOnly: false,
+    sortBy: 'playCount', // 'playCount' | 'name' | 'distance'
+    showDetailModal: false,
+    detailCourse: { holes: [] },
+    userCity: '', // 用户所在城市
+    userLocation: null,
+    fromNewGame: false // 是否从创建比赛页面进入
+  },
+
+  onLoad(options) {
+    wx.setNavigationBarTitle({ title: '全部球场' })
+    // 标记是否从创建比赛页面进入
+    this.setData({
+      fromNewGame: options && options.from === 'new-game',
+      favoriteCourseIds: []
+    }, () => {
+      this.loadUserData()
+      this.loadCoursesLocal()
+      this.getUserLocation()
+    })
+  },
+
+  onShow() {
+    this.loadUserData()
+    // 本地数据已经加载过，不需要重新加载
+    if (this.data.courses.length === 0) {
+      this.loadCoursesLocal()
+    }
+  },
+
+  // 从本地加载全部球场数据
+  loadCoursesLocal: function() {
+    var self = this
+    var courses = ALL_COURSES || []
+
+    // 预处理
+    courses = courses.map(function(course) {
+      var newCourse = {}
+      for (var key in course) {
+        newCourse[key] = course[key]
+      }
+      if (!newCourse.holesVerified) {
+        newCourse.holes = null
+        newCourse.holesVerified = false
+      }
+      return newCourse
+    })
+
+    // 合并用户自定义球场
+    var localAllCourses = wx.getStorageSync('courses') || []
+    var customCourses = localAllCourses.filter(function(c) {
+      return c.isCustom
+    })
+    customCourses.forEach(function(custom) {
+      var exists = courses.find(function(c) { return c.id === custom.id })
+      if (!exists) {
+        courses.push(custom)
+      }
+    })
+
+    // 保存到缓存
+    wx.setStorageSync('courses', courses)
+    this.setData({ courses: courses })
+    this.processAndDisplayCourses()
+  },
+
+  // 获取用户位置
+  getUserLocation() {
+    // 开发模式：使用模拟位置
+    if (DEV_MODE) {
+      this.setData({
+        userLocation: { latitude: 39.90, longitude: 116.40 }
+      }, () => {
+        this.processAndDisplayCourses()
+      })
+      return
+    }
+
+    wx.getLocation({
+      type: 'gcj02',
+      success: (res) => {
+        const location = {
+          latitude: res.latitude,
+          longitude: res.longitude
+        }
+        this.setData({ userLocation: location })
+
+        // 使用逆地理编码获取城市名称
+        this.getCityFromLocation(location)
+      },
+      fail: () => {
+        // 获取位置失败，继续处理显示
+        this.processAndDisplayCourses()
+      }
+    })
+  },
+
+  // 根据坐标获取城市（简化版，使用内置数据匹配）
+  getCityFromLocation: function(location) {
+    var self = this
+    // 从本地缓存拿所有球场数据
+    var allCourses = wx.getStorageSync('courses') || []
+
+    // 找到最近的球场，以其城市为准
+    var nearestCourse = null
+    var minDistance = Infinity
+
+    allCourses.forEach(function(course) {
+      var distance = calculateDistance(
+        location.latitude, location.longitude,
+        course.latitude, course.longitude
+      )
+      if (distance < minDistance) {
+        minDistance = distance
+        nearestCourse = course
+      }
+    })
+
+    var userCity = nearestCourse ? nearestCourse.province : '北京'
+    this.setData({ userCity: userCity }, function() {
+      self.processAndDisplayCourses()
+    })
+  },
+
+  // 加载用户数据
+  loadUserData: function() {
+    var favoriteIds = wx.getStorageSync('favoriteCourseIds') || []
+    this.setData({ favoriteCourseIds: favoriteIds })
+  },
+
+  // 处理并显示球场数据（统计、筛选、排序）
+  processAndDisplayCourses: function() {
+    var allCourses = wx.getStorageSync('courses') || []
+    var games = wx.getStorageSync('games') || []
+    var favoriteCourseIds = this.data.favoriteCourseIds
+    var self = this
+
+    // 确保 favoriteCourseIds 是数组
+    var safeFavoriteIds = Array.isArray(favoriteCourseIds) ? favoriteCourseIds : []
+
+    // 统计每个球场的打球次数
+    var playCountMap = {}
+    games.forEach(function(game) {
+      if (game.courseId) {
+        playCountMap[game.courseId] = (playCountMap[game.courseId] || 0) + 1
+      }
+    })
+
+    // 计算总距离并添加打球次数和收藏状态
+    var coursesWithStats = allCourses.map(function(course) {
+      var newCourse = {}
+      for (var key in course) {
+        newCourse[key] = course[key]
+      }
+      // 如果已有 holes 数据（用户验证过），保留它
+      // 如果没有 holes，totalPar 会是 0，显示为空
+      var totalPar = 0
+      var totalDistance = 0
+      if (course.holes && Array.isArray(course.holes)) {
+        totalPar = course.holes.reduce(function(sum, h) { return sum + (h.par || 0) }, 0)
+        totalDistance = course.holes.reduce(function(sum, h) { return sum + (h.distance || 0) }, 0)
+      }
+      newCourse.totalPar = totalPar
+      newCourse.totalDistance = totalDistance
+      newCourse.playCount = playCountMap[course.id] || 0
+      newCourse.isFavorite = course.id ? safeFavoriteIds.indexOf(course.id) >= 0 : false
+      newCourse.isCustom = course.id ? (!course.id.startsWith('china-') && !course.id.startsWith('scraped-')) : false
+      // 即使没有 holes 数据也显示，让用户可以选择
+      return newCourse
+    })
+
+    this.setData({ courses: coursesWithStats }, function() {
+      self.applyFilters()
+    })
+  },
+
+  // 搜索输入
+  onSearchInput(e) {
+    this.setData({ searchKeyword: e.detail.value }, () => {
+      this.applyFilters()
+    })
+  },
+
+  // 清除搜索
+  clearSearch() {
+    this.setData({ searchKeyword: '' }, () => {
+      this.applyFilters()
+    })
+  },
+
+  // 切换只显示收藏
+  toggleFavoritesOnly() {
+    this.setData({ showFavoritesOnly: !this.data.showFavoritesOnly }, () => {
+      this.applyFilters()
+    })
+  },
+
+  // 切换排序方式
+  toggleSortBy() {
+    const sortOptions = ['playCount', 'name', 'distance']
+    const currentIndex = sortOptions.indexOf(this.data.sortBy)
+    const nextSortBy = sortOptions[(currentIndex + 1) % sortOptions.length]
+    this.setData({ sortBy: nextSortBy }, () => {
+      this.applyFilters()
+    })
+  },
+
+  // 应用筛选和排序
+  applyFilters() {
+    const { courses, searchKeyword, showFavoritesOnly, sortBy } = this.data
+
+    // 确保 courses 是数组
+    if (!Array.isArray(courses)) {
+      this.setData({ filteredCourses: [] })
+      return
+    }
+
+    let result = [...courses]
+
+    // 1. 按收藏筛选
+    if (showFavoritesOnly) {
+      result = result.filter(c => c.isFavorite)
+    }
+
+    // 2. 按搜索关键词筛选
+    if (searchKeyword.trim()) {
+      const keyword = searchKeyword.toLowerCase()
+      result = result.filter(c =>
+        c.name.toLowerCase().includes(keyword) ||
+        (c.location && c.location.toLowerCase().includes(keyword)) ||
+        (c.city && c.city.toLowerCase().includes(keyword))
+      )
+    }
+
+    // 3. 排序
+    switch (sortBy) {
+      case 'playCount':
+        result.sort((a, b) => b.playCount - a.playCount)
+        break
+      case 'name':
+        result.sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'))
+        break
+      case 'distance':
+        result.sort((a, b) => (b.totalDistance || 0) - (a.totalDistance || 0))
+        break
+    }
+
+    this.setData({ filteredCourses: result })
+  },
+
+  // 切换收藏状态
+  toggleFavorite(e) {
+    const courseId = e.currentTarget.dataset.courseId
+    let favoriteIds = this.data.favoriteCourseIds || []
+
+    if (favoriteIds.includes(courseId)) {
+      // 取消收藏
+      favoriteIds = favoriteIds.filter(id => id !== courseId)
+      wx.showToast({ title: '已取消收藏', icon: 'success' })
+    } else {
+      // 添加收藏
+      favoriteIds.push(courseId)
+      wx.showToast({ title: '收藏成功', icon: 'success' })
+    }
+
+    // 保存到本地存储
+    wx.setStorageSync('favoriteCourseIds', favoriteIds)
+    this.setData({ favoriteCourseIds: favoriteIds }, () => {
+      this.loadCourses()
+    })
+  },
+
+  // 查看球场详情
+  viewCourseDetail(e) {
+    const course = e.currentTarget.dataset.course
+    this.setData({
+      showDetailModal: true,
+      detailCourse: course
+    })
+  },
+
+  // 关闭详情弹窗
+  closeDetailModal() {
+    this.setData({ showDetailModal: false })
+  },
+
+  // 选择此球场并返回（从创建比赛页面进入时）
+  selectCourseAndBack() {
+    const course = this.data.detailCourse
+    if (!course || !course.id) {
+      wx.showToast({ title: '球场数据无效', icon: 'none' })
+      return
+    }
+
+    // 保存选中的球场ID
+    wx.setStorageSync('currentCourseId', course.id)
+
+    // 保存选中的球场完整数据供创建比赛页面使用
+    wx.setStorageSync('selectedCourseForNewGame', course)
+
+    // 返回上一页
+    wx.navigateBack({
+      success: () => {
+        console.log('已选择球场并返回:', course.name)
+      }
+    })
+  },
+
+  preventHide() {
+    // 阻止冒泡
+  }
+})

@@ -1,0 +1,660 @@
+/* 页面容器 */
+.container {
+  padding: 20rpx;
+  padding-bottom: 120rpx; /* 增加底部内边距，修复显示不全 */
+}
+
+/* 城市头部 */
+.city-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx 30rpx;
+  margin-bottom: 20rpx;
+  background: linear-gradient(135deg, #2c8f4e 0%, #1b5e20 100%);
+  border-radius: 16rpx;
+}
+
+.city-name {
+  font-size: 48rpx;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 8rpx;
+  display: block;
+}
+
+.city-count {
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.8);
+  display: block;
+}
+
+/* OCR识别按钮 */
+.ocr-btn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1rpx solid rgba(255, 255, 255, 0.3);
+  border-radius: 40rpx;
+  padding: 16rpx 24rpx;
+  font-size: 26rpx;
+  line-height: 1;
+  text-align: center;
+}
+.ocr-btn::after {
+  border: none;
+}
+
+
+/* 球场列表 */
+.section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.text-small {
+  font-size: 26rpx;
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+.course-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.course-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx;
+  background: var(--bg-gray);
+  border-radius: 12rpx;
+}
+
+.course-info {
+  flex: 1;
+}
+
+.course-header {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin-bottom: 8rpx;
+}
+
+.course-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.course-tag {
+  font-size: 20rpx;
+  color: var(--primary);
+  background: rgba(44, 143, 78, 0.1);
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+}
+
+.course-tag.favorite-tag {
+  color: #e53935;
+  background: rgba(229, 57, 53, 0.1);
+}
+
+/* 工具栏样式 */
+.toolbar-card {
+  padding: 20rpx 24rpx;
+  margin-bottom: 20rpx;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: var(--bg-gray);
+  border-radius: 12rpx;
+  padding: 16rpx 20rpx;
+  margin-bottom: 16rpx;
+}
+
+.search-icon {
+  font-size: 28rpx;
+  margin-right: 12rpx;
+}
+
+.search-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: var(--text-primary);
+}
+
+.clear-icon {
+  font-size: 32rpx;
+  color: var(--text-secondary);
+  padding: 0 8rpx;
+}
+
+.toolbar-actions {
+  display: flex;
+  gap: 16rpx;
+}
+
+.toolbar-btn {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 14rpx 20rpx;
+  background: var(--bg-gray);
+  border-radius: 8rpx;
+  transition: all 0.2s;
+}
+
+.toolbar-btn.active {
+  background: rgba(44, 143, 78, 0.15);
+}
+
+.btn-icon {
+  font-size: 28rpx;
+}
+
+.btn-text {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+}
+
+.toolbar-btn.active .btn-text {
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.course-detail {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.course-meta {
+  display: flex;
+  gap: 20rpx;
+}
+
+.course-location {
+  font-size: 22rpx;
+  color: var(--text-light);
+}
+
+.play-count {
+  font-size: 22rpx;
+  color: var(--primary);
+}
+
+.play-count.new-course {
+  color: var(--text-light);
+  font-style: italic;
+}
+
+.favorite-icon {
+  font-size: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16rpx;
+  margin: -16rpx;
+}
+
+.course-actions {
+  display: flex;
+  gap: 20rpx;
+}
+
+.action-icon {
+  width: 48rpx;
+  height: 48rpx;
+  position: relative;
+}
+
+/* 编辑图标 */
+.icon-edit::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 24rpx;
+  height: 24rpx;
+  border: 3rpx solid var(--text-secondary);
+  border-radius: 4rpx;
+}
+
+/* 删除编辑相关图标的样式 */
+.icon-edit,
+.icon-delete,
+.icon-flag-large,
+.icon-flag-large::before,
+.icon-flag-large::after {
+  display: none;
+}
+
+/* 空状态 */
+.empty-card {
+  padding: 80rpx 40rpx;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 30rpx;
+}
+
+.empty-text {
+  font-size: 30rpx;
+  color: var(--text-secondary);
+}
+
+.empty-subtext {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+  margin-bottom: 40rpx;
+}
+
+/* 弹窗样式 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+  z-index: 1000;
+}
+
+.modal.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 40rpx 40rpx 0 0;
+  width: 100%;
+  max-height: 80vh;
+  padding: 40rpx 30rpx calc(40rpx + env(safe-area-inset-bottom));
+  transform: translateY(100%);
+  transition: all 0.3s;
+}
+
+.modal.show .modal-content {
+  transform: translateY(0);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.modal-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.modal-close {
+  font-size: 48rpx;
+  color: var(--text-light);
+  line-height: 1;
+}
+
+.modal-body {
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 30rpx;
+}
+
+.modal-footer .btn {
+  flex: 1;
+}
+
+/* 输入框样式 */
+.input-group {
+  margin-bottom: 24rpx;
+}
+
+.input-label {
+  display: block;
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  margin-bottom: 12rpx;
+}
+
+.input {
+  width: 100%;
+  height: 80rpx;
+  padding: 0 24rpx;
+  background: var(--bg-gray);
+  border-radius: 12rpx;
+  font-size: 30rpx;
+  box-sizing: border-box;
+}
+
+/* 球洞设置 */
+.holes-section {
+  margin-top: 30rpx;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.section-label {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.section-action {
+  font-size: 26rpx;
+  color: var(--primary);
+}
+
+.hole-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.hole-input-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 16rpx;
+  background: var(--bg-gray);
+  border-radius: 12rpx;
+}
+
+.hole-num {
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary);
+  color: white;
+  border-radius: 50%;
+  font-size: 24rpx;
+  font-weight: 600;
+}
+
+.hole-fields {
+  flex: 1;
+  display: flex;
+  gap: 20rpx;
+}
+
+.hole-field {
+  flex: 1;
+}
+
+.field-label {
+  display: block;
+  font-size: 22rpx;
+  color: var(--text-light);
+  margin-bottom: 8rpx;
+}
+
+.field-picker {
+  width: 100%;
+  height: 64rpx;
+  line-height: 64rpx;
+  text-align: center;
+  background: white;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  color: var(--text-primary);
+}
+
+.field-input {
+  width: 100%;
+  height: 64rpx;
+  padding: 0 16rpx;
+  background: white;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* 详情弹窗 */
+.detail-stats {
+  display: flex;
+  justify-content: space-around;
+  padding: 30rpx 0;
+  margin-bottom: 30rpx;
+  border-bottom: 1rpx solid var(--border);
+}
+
+.detail-stat {
+  text-align: center;
+}
+
+.detail-value {
+  font-size: 44rpx;
+  font-weight: 700;
+  color: var(--primary);
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.detail-label {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+}
+
+.holes-detail {
+  padding: 20rpx 0;
+}
+
+.holes-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 20rpx;
+  display: block;
+}
+
+.holes-table {
+  background: var(--bg-gray);
+  border-radius: 12rpx;
+  overflow: hidden;
+}
+
+.holes-row {
+  display: flex;
+  padding: 20rpx;
+  border-bottom: 1rpx solid var(--border);
+}
+
+.holes-row:last-child {
+  border-bottom: none;
+}
+
+.holes-header-row {
+  background: rgba(44, 143, 78, 0.1);
+}
+
+.hole-cell {
+  flex: 1;
+  text-align: center;
+  font-size: 28rpx;
+  color: var(--text-primary);
+}
+
+/* OCR识别结果样式 */
+.form-item {
+  margin-bottom: 30rpx;
+}
+.form-label {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 12rpx;
+}
+.form-input {
+  width: 100%;
+  padding: 20rpx;
+  border: 1rpx solid var(--border-color);
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  background: var(--bg-light);
+  box-sizing: border-box;
+}
+.form-value {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--primary);
+}
+.holes-preview {
+  margin-top: 20rpx;
+}
+.holes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16rpx;
+  margin-top: 16rpx;
+}
+.hole-item {
+  padding: 20rpx 16rpx;
+  background: var(--bg-light);
+  border-radius: 8rpx;
+  text-align: center;
+  font-size: 24rpx;
+}
+.hole-item .hole-num {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 4rpx;
+  width: auto;
+  height: auto;
+  background: transparent;
+  color: var(--text-primary);
+  border-radius: 0;
+}
+.hole-par {
+  display: block;
+  color: var(--primary);
+  margin-bottom: 2rpx;
+}
+.hole-dist {
+  display: block;
+  color: var(--text-secondary);
+  font-size: 22rpx;
+}
+.modal-footer {
+  display: flex;
+  gap: 20rpx;
+  padding: 20rpx 30rpx 30rpx;
+  border-top: 1rpx solid var(--border);
+}
+.btn {
+  flex: 1;
+  padding: 24rpx;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  border: none;
+}
+.btn-secondary {
+  background: var(--bg-light);
+  color: var(--text-secondary);
+}
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+.btn::after {
+  border: none;
+}
+
+/* 其他球场按钮 */
+.other-courses-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24rpx;
+  margin-top: 20rpx;
+  background: linear-gradient(135deg, #2c8f4e 0%, #1b5e20 100%);
+  color: white;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+/* 收藏图标样式 */
+.course-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+}
+.action-icon {
+  font-size: 36rpx;
+  padding: 8rpx;
+}
+.favorite-icon {
+  width: 68rpx;
+  height: 68rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #f5f5f5;
+  border: 2rpx solid #e0e0e0;
+  transition: all 0.2s ease;
+}
+.favorite-icon.active {
+  background: rgba(229, 57, 53, 0.12);
+  border-color: rgba(229, 57, 53, 0.3);
+}
+.heart-icon {
+  font-size: 32rpx;
+  color: #bbb;
+  transition: all 0.2s ease;
+}
+.favorite-icon.active .heart-icon {
+  color: #e53935;
+  transform: scale(1.1);
+}
+
+.holes-header-row .hole-cell {
+  font-weight: 600;
+  color: var(--primary);
+}

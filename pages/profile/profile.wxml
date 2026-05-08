@@ -1,0 +1,79 @@
+<view class="container">
+  <!-- 用户信息卡片 - 使用官方最新头像昵称填写能力 -->
+  <view class="user-card">
+    <!-- 完全按照官方文档示例 -->
+    <button class="avatar-wrapper" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+      <image class="user-avatar-image" src="{{avatarUrl}}" mode="aspectFill"></image>
+    </button>
+    <view class="user-info">
+      <text class="user-name" wx:if="{{userInfo.nickName}}">{{userInfo.nickName}}</text>
+      <input type="nickname" id="nickname-input" class="nickname-input" bindinput="onNickNameInput" placeholder="点击输入你的昵称" focus="{{nicknameFocus}}" wx:if="{{!userInfo.nickName}}"/>
+      <text class="user-level" wx:if="{{level}}">{{level.name}}</text>
+    </view>
+  </view>
+
+  <!-- 数据统计概览 -->
+  <view class="card stats-card">
+    <view class="stats-grid">
+      <view class="stat-item">
+        <text class="stat-value">{{stats.games || 0}}</text>
+        <text class="stat-label">总场次</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{stats.holes || 0}}</text>
+        <text class="stat-label">总洞数</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{stats.avgScore || '-'}}</text>
+        <text class="stat-label">平均杆</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{stats.bestScore || '-'}}</text>
+        <text class="stat-label">最佳成绩</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 快捷功能区 -->
+  <view class="card menu-card">
+    <view class="menu-title">我的记录</view>
+    <view class="menu-grid">
+      <view class="menu-item" bindtap="goToHistory">
+        <view class="menu-icon">
+          <view class="icon-svg icon-list"></view>
+        </view>
+        <text class="menu-text">比赛记录</text>
+      </view>
+      <view class="menu-item" bindtap="goToStatistics">
+        <view class="menu-icon">
+          <view class="icon-svg icon-bar-chart"></view>
+        </view>
+        <text class="menu-text">数据统计</text>
+      </view>
+      <view class="menu-item" bindtap="goToCourses">
+        <view class="menu-icon">
+          <view class="icon-svg icon-flag"></view>
+        </view>
+        <text class="menu-text">我的球场</text>
+      </view>
+      <view class="menu-item" bindtap="goToPlayers">
+        <view class="menu-icon">
+          <view class="icon-svg icon-users"></view>
+        </view>
+        <text class="menu-text">常打球友</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 设置列表 - 使用Vant cells -->
+  <view class="card setting-card">
+    <view class="setting-title">设置与服务</view>
+    <van-cell-group>
+      <van-cell title="设置" is-link bindtap="goToSettings"></van-cell>
+      <van-cell title="意见反馈" is-link bindtap="goToFeedback"></van-cell>
+      <van-cell title="关于" value="v{{version}}" is-link bindtap="goToAbout"></van-cell>
+      <van-cell title="登出" is-link bindtap="logout" wx:if="{{userInfo}}"></van-cell>
+    </van-cell-group>
+  </view>
+
+</view>

@@ -1,0 +1,249 @@
+<view class="container">
+  <view class="header">
+    <view class="header-center">
+      <text class="title">比赛分析报告</text>
+      <text class="subtitle">AI 智能洞察</text>
+    </view>
+  </view>
+
+  <!-- 当前球员选择器 -->
+  <view class="player-selector-card" wx:if="{{game && game.players.length > 1}}" bindtap="showPlayerSelector">
+    <view class="player-info">
+      <view class="player-avatar" style="background: {{currentPlayer.color}}">
+        <text class="player-initial">{{currentPlayer.name[0]}}</text>
+      </view>
+      <view class="player-detail">
+        <text class="player-name">{{currentPlayer.name}}</text>
+        <text class="player-score">{{currentPlayer.total}}杆 {{currentPlayer.toPar > 0 ? '+' : ''}}{{currentPlayer.toPar}}</text>
+      </view>
+    </view>
+    <text class="switch-text">切换球员 ></text>
+  </view>
+
+  <!-- 一句话总结 -->
+  <view class="summary-card">
+    <text class="summary-text">{{oneLineSummary}}</text>
+  </view>
+
+  <!-- 数据概览 -->
+  <view class="card stats-card" wx:if="{{report.summary}}">
+    <view class="stats-grid">
+      <view class="stat-item">
+        <text class="stat-value">{{report.summary.bestScore}}</text>
+        <text class="stat-label">最佳成绩</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value {{report.summary.toPar > 0 ? 'over' : report.summary.toPar < 0 ? 'under' : ''}}">
+          {{report.summary.toPar > 0 ? '+' : ''}}{{report.summary.toPar}}
+        </text>
+        <text class="stat-label">距标准杆</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{report.summary.completionRate}}%</text>
+        <text class="stat-label">完成度</text>
+      </view>
+    </view>
+  </view>
+
+
+  <!-- 亮点 -->
+  <view class="card highlights-card" wx:if="{{report.highlights.length > 0}}">
+    <text class="section-title">✨ 亮点时刻</text>
+    <view class="highlight-list">
+      <view class="highlight-item" wx:for="{{report.highlights}}" wx:key="index">
+        <text class="highlight-title">{{item.title}}</text>
+        <text class="highlight-content">{{item.content}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 弱点分析 -->
+  <view class="card weakness-card" wx:if="{{report.weaknesses.length > 0}}">
+    <text class="section-title">📊 改进空间</text>
+    <view class="weakness-list">
+      <view class="weakness-item" wx:for="{{report.weaknesses}}" wx:key="index">
+        <text class="weakness-title">{{item.title}}</text>
+        <text class="weakness-content">{{item.content}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 历史对比 -->
+  <view class="card comparison-card" wx:if="{{report.comparisons.trend}}">
+    <text class="section-title">📈 进步趋势</text>
+    <view class="comparison-content">
+      <view class="comparison-stat">
+        <text class="comparison-label">历史平均</text>
+        <text class="comparison-value">{{report.comparisons.historyAvg}}</text>
+      </view>
+      <view class="comparison-arrow">{{report.comparisons.trend === 'improved' ? '↓' : report.comparisons.trend === 'declined' ? '↑' : '→'}}</view>
+      <view class="comparison-stat">
+        <text class="comparison-label">本轮平均</text>
+        <text class="comparison-value current">{{report.comparisons.currentAvg}}</text>
+      </view>
+    </view>
+    <text class="comparison-text" wx:if="{{report.comparisons.trend === 'improved'}}">
+      🎉 恭喜！比历史平均低{{report.comparisons.diff}}杆，状态火热！
+    </text>
+    <text class="comparison-text" wx:if="{{report.comparisons.trend === 'declined'}}">
+      💪 别灰心，下次继续加油！
+    </text>
+    <text class="comparison-text" wx:if="{{report.comparisons.trend === 'stable'}}">
+      ✅ 发挥稳定，保持住！
+    </text>
+  </view>
+
+  <!-- AI 建议 -->
+  <view class="card suggestions-card" wx:if="{{report.suggestions.length > 0}}">
+    <text class="section-title">🎯 AI 训练建议</text>
+    <view class="suggestion-list">
+      <view class="suggestion-item" wx:for="{{report.suggestions}}" wx:key="index">
+        <text class="suggestion-text">{{item}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 分享海报按钮 -->
+  <view class="action-bar">
+    <button wx:if="{{!posterImageUrl}}" class="btn btn-primary share-btn" bindtap="showPosterOptions">
+      <text class="btn-icon">📸</text>
+      <text>生成分享海报</text>
+    </button>
+    <button wx:if="{{posterImageUrl}}" class="btn btn-primary share-btn" bindtap="showPosterPreview">
+      <text class="btn-icon">📷</text>
+      <text>查看海报</text>
+    </button>
+  </view>
+
+  <!-- 球员选择弹窗 -->
+  <view class="poster-modal {{showPlayerSelector ? 'show' : ''}}" wx:if="{{showPlayerSelector}}" bindtap="hidePlayerSelector">
+    <view class="poster-modal-content" catchtap="preventHide">
+      <view class="poster-modal-header">
+        <text class="poster-modal-title">选择查看球员</text>
+        <text class="poster-modal-close" bindtap="hidePlayerSelector">×</text>
+      </view>
+      <view class="poster-modal-body">
+        <view class="style-option {{currentPlayer.id === item.id ? 'selected' : ''}}"
+              wx:for="{{game.players}}"
+              wx:key="id"
+              bindtap="selectPlayer"
+              data-player-id="{{item.id}}">
+          <view class="player-option-content">
+            <view class="player-avatar-small" style="background: {{item.color}}">
+              <text class="player-initial">{{item.name[0]}}</text>
+            </view>
+            <view class="player-option-info">
+              <text class="style-name">{{item.name}}</text>
+              <text class="style-desc">{{item.total}}杆 {{item.toPar > 0 ? '+' : ''}}{{item.toPar}}</text>
+            </view>
+          </view>
+          <text class="style-check" wx:if="{{currentPlayer.id === item.id}}">✓</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 海报样式选择弹窗 - 简化版，只选模板 -->
+  <view class="poster-modal {{showPosterModal ? 'show' : ''}}" wx:if="{{showPosterModal}}" bindtap="hidePosterModal">
+    <view class="poster-modal-content" catchtap="preventHide">
+      <view class="poster-modal-header">
+        <text class="poster-modal-title">选择海报风格</text>
+        <text class="poster-modal-close" bindtap="hidePosterModal">×</text>
+      </view>
+      <view class="poster-modal-body">
+        <text class="section-subtitle">海报模板（点击预览效果）</text>
+
+        <!-- 职业选手风格 -->
+        <view class="style-option {{posterStyle === 'pro' ? 'selected' : ''}}" bindtap="selectPosterStyle" data-style="pro">
+          <view class="style-preview-thumbnail">
+            <view class="thumb-pro">
+              <text class="thumb-icon">🏆</text>
+              <text class="thumb-title">87</text>
+            </view>
+          </view>
+          <view class="style-info">
+            <text class="style-name">职业选手</text>
+            <text class="style-desc">深色背景 · 金色点缀 · 专业数据</text>
+          </view>
+          <text class="style-check" wx:if="{{posterStyle === 'pro'}}">✓</text>
+        </view>
+
+        <!-- 清新简约风格 -->
+        <view class="style-option {{posterStyle === 'minimal' ? 'selected' : ''}}" bindtap="selectPosterStyle" data-style="minimal">
+          <view class="style-preview-thumbnail">
+            <view class="thumb-minimal">
+              <text class="thumb-icon">🌿</text>
+              <text class="thumb-title">87</text>
+            </view>
+          </view>
+          <view class="style-info">
+            <text class="style-name">清新简约</text>
+            <text class="style-desc">绿色主题 · 白色卡片 · 清新自然</text>
+          </view>
+          <text class="style-check" wx:if="{{posterStyle === 'minimal'}}">✓</text>
+        </view>
+
+        <!-- 趣味漫画风格 -->
+        <view class="style-option {{posterStyle === 'fun' ? 'selected' : ''}}" bindtap="selectPosterStyle" data-style="fun">
+          <view class="style-preview-thumbnail">
+            <view class="thumb-fun">
+              <text class="thumb-icon">🎨</text>
+              <text class="thumb-title">87</text>
+            </view>
+          </view>
+          <view class="style-info">
+            <text class="style-name">趣味漫画</text>
+            <text class="style-desc">彩色渐变 · 活泼风格 · 趣味标签</text>
+          </view>
+          <text class="style-check" wx:if="{{posterStyle === 'fun'}}">✓</text>
+        </view>
+
+        <!-- 上传自定义背景 -->
+        <view class="section-divider"></view>
+        <text class="section-subtitle">自定义背景</text>
+        <view class="custom-bg-upload" bindtap="selectCustomBg">
+          <view class="upload-area {{customBgUrl ? 'has-image' : ''}}">
+            <block wx:if="{{!customBgUrl}}">
+              <text class="upload-icon">📷</text>
+              <text class="upload-text">点击上传自定义背景图</text>
+              <text class="upload-tip">支持 JPG、PNG 格式</text>
+            </block>
+            <block wx:else>
+              <image class="upload-preview" src="{{customBgUrl}}" mode="aspectFill"></image>
+              <view class="upload-overlay">
+                <text class="reupload-text">更换背景图</text>
+              </view>
+            </block>
+          </view>
+        </view>
+        <view wx:if="{{customBgUrl}}" class="use-custom-bg-option">
+          <view class="checkbox-item" bindtap="toggleUseCustomBg">
+            <view class="checkbox {{posterBgType === 'custom' ? 'checked' : ''}}">
+              <text wx:if="{{posterBgType === 'custom'}}">✓</text>
+            </view>
+            <text class="checkbox-label">使用自定义背景生成海报</text>
+          </view>
+        </view>
+      </view>
+      <button class="btn btn-primary generate-btn" bindtap="generatePoster">生成海报</button>
+    </view>
+  </view>
+
+  <!-- 海报预览弹窗 -->
+  <view class="poster-modal {{showPosterPreview ? 'show' : ''}}" wx:if="{{showPosterPreview}}" bindtap="hidePosterPreview">
+    <view class="poster-preview-content-wide">
+      <scroll-view class="poster-config-panel" scroll-y>
+        <image class="poster-image-large" src="{{posterImageUrl}}" mode="widthFix" bindtap="previewPosterImage"></image>
+
+        <view class="poster-actions-vertical">
+          <button class="btn btn-primary btn-large" bindtap="savePoster">保存到相册</button>
+          <button class="btn btn-secondary" bindtap="goBackHome">返回主页</button>
+        </view>
+        <view class="bottom-spacer"></view>
+      </scroll-view>
+    </view>
+  </view>
+
+  <!-- Canvas 用于生成海报 -->
+  <canvas type="2d" id="posterCanvas" class="poster-canvas"></canvas>
+</view>

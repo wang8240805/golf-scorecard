@@ -1,0 +1,118 @@
+<view class="container">
+  <view class="empty-state" wx:if="{{games.length === 0}}">
+    <text>暂无比赛记录</text>
+    <text style="font-size: 26rpx; margin-top: 16rpx;">完成一场比赛后将在这里显示</text>
+  </view>
+
+  <block wx:if="{{games.length > 0}}">
+    <!-- 统计概览 -->
+    <view class="card overview-card">
+      <view class="overview-grid">
+        <view class="overview-item">
+          <text class="overview-value">{{games.length}}</text>
+          <text class="overview-label">总场次</text>
+        </view>
+        <view class="overview-item">
+          <text class="overview-value">{{totalPlayers}}</text>
+          <text class="overview-label">球员数</text>
+        </view>
+        <view class="overview-item">
+          <text class="overview-value">{{avgScore || '-'}}</text>
+          <text class="overview-label">平均杆</text>
+        </view>
+        <view class="overview-item">
+          <text class="overview-value">{{bestScore || '-'}}</text>
+          <text class="overview-label">最佳</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 历史比赛列表 -->
+    <view class="card">
+      <view class="section-title">比赛记录</view>
+      <view class="game-list">
+        <view class="game-card" wx:for="{{games}}" wx:key="id">
+          <view class="game-header" bindtap="toggleExpand" data-index="{{index}}">
+            <view class="game-main">
+              <text class="game-course">{{item.courseName}}</text>
+              <view class="game-meta">
+                <text class="game-date">{{item.date}}</text>
+                <text class="game-players">{{item.players.length}}人</text>
+              </view>
+            </view>
+            <view class="game-status">
+              <text class="badge {{item.completed ? 'badge-primary' : 'badge-warning'}}">
+                {{item.completed ? '已完成' : '进行中'}}
+              </text>
+              <text class="expand-icon {{item.expanded ? 'expanded' : ''}}">›</text>
+            </view>
+          </view>
+
+          <view class="game-detail" wx:if="{{item.expanded}}">
+            <!-- 球员成绩 -->
+            <view class="detail-section">
+              <view class="section-label">成绩</view>
+              <view class="detail-players">
+                <view class="detail-player" wx:for="{{item.playerResults}}" wx:for-item="result" wx:key="playerId">
+                  <view class="detail-player-info">
+                    <view class="player-avatar-sm" style="background: {{result.color}}">
+                      {{result.name[0]}}
+                    </view>
+                    <text class="detail-player-name">{{result.name}}</text>
+                  </view>
+                  <view class="detail-player-score">
+                    <text class="detail-total">{{result.total}}</text>
+                    <text class="detail-to-par {{result.toParClass}}">{{result.toParDisplay}}</text>
+                  </view>
+                </view>
+              </view>
+            </view>
+
+            <!-- 洞数统计 -->
+            <view class="detail-section" wx:if="{{item.completed}}">
+              <view class="section-label">统计</view>
+              <view class="detail-stats">
+                <view class="detail-stat">
+                  <text class="stat-num">{{item.stats.eagles}}</text>
+                  <text class="stat-desc">老鹰</text>
+                </view>
+                <view class="detail-stat">
+                  <text class="stat-num">{{item.stats.birdies}}</text>
+                  <text class="stat-desc">小鸟</text>
+                </view>
+                <view class="detail-stat">
+                  <text class="stat-num">{{item.stats.pars}}</text>
+                  <text class="stat-desc">标准</text>
+                </view>
+                <view class="detail-stat">
+                  <text class="stat-num">{{item.stats.bogeys}}</text>
+                  <text class="stat-desc">柏忌</text>
+                </view>
+              </view>
+            </view>
+
+            <!-- 操作按钮 -->
+            <view class="detail-actions">
+              <block wx:if="{{!item.completed}}">
+                <button class="btn btn-primary btn-sm" bindtap="continueGame" data-game="{{item}}">
+                  继续比赛
+                </button>
+              </block>
+              <button class="btn btn-secondary btn-sm" bindtap="viewDetail" data-game="{{item}}">
+                查看详情
+              </button>
+              <button class="btn btn-danger btn-sm" bindtap="deleteGame" data-game="{{item}}">
+                删除
+              </button>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 加载更多 -->
+    <view class="load-more" wx:if="{{hasMore}}">
+      <text bindtap="loadMore">加载更多</text>
+    </view>
+  </block>
+</view>

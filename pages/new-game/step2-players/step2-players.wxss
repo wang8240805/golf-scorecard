@@ -1,0 +1,974 @@
+/* 页面容器 */
+.page-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* 可滚动内容区域 */
+.content-area {
+  flex: 1;
+  overflow-y: auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 底部留白 - 为TabBar和安全区域留出足够空间 */
+.bottom-spacer {
+  height: calc(200rpx + env(safe-area-inset-bottom));
+}
+
+/* 步骤指示器 */
+.step-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30rpx 40rpx;
+  background: #ffffff;
+  flex-shrink: 0;
+}
+
+.step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.step-dot {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  background: #e0e0e0;
+  color: #999;
+  font-size: 24rpx;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  box-sizing: border-box;
+}
+
+.step-item.completed .step-dot {
+  background: #2c8f4e;
+  color: #fff;
+}
+
+.step-item.active .step-dot {
+  background: #2c8f4e;
+  color: #fff;
+  border: 4rpx solid #fff;
+  box-shadow: 0 0 0 4rpx rgba(44, 143, 78, 0.2);
+}
+
+.step-text {
+  font-size: 26rpx;
+  color: #999;
+  margin-top: 12rpx;
+  transition: all 0.3s;
+}
+
+.step-item.completed .step-text {
+  color: #2c8f4e;
+  font-weight: 500;
+}
+
+.step-item.active .step-text {
+  color: #2c8f4e;
+  font-weight: 600;
+}
+
+.step-line {
+  flex: 1;
+  height: 4rpx;
+  background: #e0e0e0;
+  margin: 0 16rpx;
+  margin-bottom: 36rpx;
+  max-width: 120rpx;
+  border-radius: 2rpx;
+  overflow: hidden;
+}
+
+.step-line.active {
+  background: linear-gradient(90deg, #2c8f4e 50%, #e0e0e0 50%);
+}
+
+/* 球场卡片 */
+.course-card {
+  background: linear-gradient(135deg, #2c8f4e 0%, #1e6b3a 100%);
+  color: white;
+}
+
+.course-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+
+.course-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  flex: 1;
+}
+
+.course-location {
+  font-size: 24rpx;
+  opacity: 0.9;
+}
+
+/* 球员列表 - weui cells 中使用 */
+.player-avatar-container {
+  width: 72rpx;
+  height: 72rpx;
+  flex-shrink: 0;
+}
+
+.player-avatar-image {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+}
+
+.player-avatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 32rpx;
+  font-weight: 600;
+}
+
+.player-info {
+  flex: 1;
+  padding-left: 20rpx;
+}
+
+.player-name {
+  display: block;
+  font-size: 32rpx;
+  color: #333;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.player-source {
+  font-size: 24rpx;
+  color: #999;
+  line-height: 1.4;
+}
+
+/* 添加球员按钮 */
+.add-player-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10rpx 16rpx !important;
+  margin-left: auto !important;
+  margin-right: 0 !important;
+  background: #2c8f4e !important;
+  border-radius: 32rpx;
+  border: none !important;
+  width: auto !important;
+  min-width: 0 !important;
+  height: auto !important;
+  line-height: 1.2 !important;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.add-player-btn::after {
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.add-player-btn .btn-text {
+  font-size: 26rpx;
+  color: white;
+  font-weight: 500;
+  line-height: 1.2;
+  padding: 0;
+  margin: 0;
+}
+
+/* 未授权授权框 */
+.auth-box {
+  margin-top: 16rpx;
+  margin-bottom: 8rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+  padding: 12rpx 16rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+}
+
+.auth-row {
+  display: flex;
+  gap: 16rpx;
+  align-items: center;
+}
+
+/* 头像选择按钮 */
+.avatar-btn {
+  flex: 1;
+  padding: 16rpx 20rpx;
+  background: #2c8f4e;
+  color: #fff !important;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  border: none !important;
+  line-height: 1.4;
+  width: auto;
+  min-width: 0;
+  text-align: center;
+}
+
+.avatar-btn::after {
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* 昵称输入框 */
+.nickname-input {
+  flex: 1;
+  padding: 16rpx 20rpx;
+  background: #fff;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  color: #333;
+  border: 2rpx solid #e0e0e0;
+  line-height: 1.4;
+}
+
+.auth-hint {
+  font-size: 22rpx;
+  color: #999;
+  text-align: center;
+}
+
+/* 快速添加表单 */
+.quick-add-form {
+  display: flex;
+  gap: 16rpx;
+  align-items: center;
+}
+
+.quick-input {
+  flex: 1;
+  height: 80rpx;
+  padding: 0 24rpx;
+  border: 2rpx solid #e0e0e0;
+  border-radius: 8rpx;
+  font-size: 30rpx;
+  box-sizing: border-box;
+}
+
+.quick-add-btn {
+  width: 140rpx;
+  height: 80rpx;
+  padding: 0;
+  font-size: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 分享提示 */
+.share-tip {
+  padding: 20rpx 0;
+}
+
+/* 底部操作栏（固定）- 紧贴底部 */
+.action-bar-fixed {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20rpx 30rpx calc(30rpx + env(safe-area-inset-bottom));
+  background: #ffffff;
+  box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.08);
+  z-index: 100;
+}
+
+.action-row {
+  display: flex;
+  gap: 20rpx;
+}
+
+.btn-flex {
+  flex: 1;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.btn-secondary {
+  background: #f5f5f5;
+  color: #666;
+}
+
+.btn-primary.disabled,
+.btn-primary:disabled {
+  background: #ccc;
+  color: #fff;
+  cursor: not-allowed;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60rpx 40rpx;
+  color: #999;
+}
+
+/* Vant 球员单元格布局 */
+.player-cell {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+/* 删除图标 */
+.delete-icon {
+  font-size: 32rpx;
+  color: #ccc;
+  padding: 8rpx 10rpx;
+  line-height: 1;
+}
+
+/* 比赛信息卡 */
+.game-info-card {
+  margin: 16rpx 24rpx;
+  padding: 20rpx 24rpx;
+  background: linear-gradient(135deg, #2c8f4e 0%, #1e6b3a 100%);
+  border-radius: 16rpx;
+  color: #fff;
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.course-info {
+  flex: 1;
+}
+
+.course-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  display: block;
+}
+
+.course-location {
+  font-size: 24rpx;
+  opacity: 0.85;
+  margin-top: 8rpx;
+  display: block;
+}
+
+.game-badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+}
+
+.game-id-row {
+  margin-top: 16rpx;
+  padding-top: 16rpx;
+  border-top: 1rpx solid rgba(255, 255, 255, 0.2);
+  font-size: 24rpx;
+}
+
+.game-id-label {
+  opacity: 0.7;
+}
+
+.game-id-value {
+  font-family: monospace;
+  margin-left: 8rpx;
+}
+
+/* 球员区域 */
+.players-section {
+  margin: 20rpx 24rpx;
+  background: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.section-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 24rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  line-height: 1;
+}
+
+.section-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.section-right {
+  display: flex;
+  align-items: center;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  line-height: 1;
+}
+
+.player-count {
+  font-size: 24rpx;
+  color: #999;
+  line-height: 1;
+}
+
+/* 小标题邀请按钮 */
+.invite-btn-sm {
+  background: linear-gradient(135deg, #2c8f4e 0%, #1e6b3a 100%);
+  color: #fff;
+  font-size: 24rpx;
+  font-weight: 500;
+  padding: 18rpx 18rpx;
+  border-radius: 44rpx;
+  border: none;
+  line-height: 1.2;
+  min-height: 0;
+  height: auto;
+  width: auto;
+  white-space: nowrap;
+  box-shadow: 0 4rpx 12rpx rgba(44, 143, 78, 0.35);
+  transition: all 0.2s ease;
+}
+
+.invite-btn-sm::after {
+  border: none;
+}
+
+.invite-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  background: linear-gradient(135deg, #2c8f4e 0%, #1e6b3a 100%);
+  color: #fff;
+  font-size: 28rpx;
+  font-weight: 500;
+  padding: 16rpx 28rpx;
+  border-radius: 40rpx;
+  border: none;
+  box-shadow: 0 4rpx 12rpx rgba(44, 143, 78, 0.3);
+  margin: 0;
+  line-height: 1;
+  min-height: 0;
+  height: auto;
+  width: auto;
+}
+
+.invite-btn::after {
+  border: none;
+}
+
+.invite-icon {
+  font-size: 32rpx;
+}
+
+.invite-text {
+  font-size: 28rpx;
+}
+
+/* 加载中 */
+.loading-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60rpx;
+}
+
+.loading-text {
+  font-size: 28rpx;
+  color: #999;
+}
+
+/* 球员列表 */
+.players-list {
+  padding: 12rpx 24rpx;
+}
+
+.player-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.player-item:last-child {
+  border-bottom: none;
+}
+
+.player-avatar {
+  position: relative;
+  width: 80rpx;
+  height: 80rpx;
+  flex-shrink: 0;
+}
+
+.avatar-img {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+}
+
+.avatar-placeholder {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: 600;
+}
+
+.creator-badge {
+  position: absolute;
+  bottom: -4rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ff9800;
+  color: #fff;
+  font-size: 18rpx;
+  padding: 2rpx 12rpx;
+  border-radius: 8rpx;
+  white-space: nowrap;
+}
+
+.player-info {
+  flex: 1;
+  margin-left: 20rpx;
+}
+
+.player-status {
+  font-size: 24rpx;
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+}
+
+.player-status.ready {
+  background: #e8f5e9;
+  color: #2c8f4e;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60rpx 40rpx;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 16rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+}
+
+/* 提示卡 */
+.tips-card {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin: 0 24rpx 120rpx;
+  padding: 16rpx 20rpx;
+  background: #fff8e1;
+  border-radius: 12rpx;
+}
+
+.tips-icon {
+  font-size: 32rpx;
+}
+
+.tips-text {
+  font-size: 26rpx;
+  color: #f57c00;
+}
+
+/* 底部按钮 */
+.btn-back {
+  flex: 1;
+  background: #f5f5f5;
+  color: #666;
+  font-size: 30rpx;
+  padding: 24rpx 0;
+  border-radius: 12rpx;
+  border: none;
+}
+
+.btn-back::after {
+  border: none;
+}
+
+.btn-start {
+  flex: 2;
+  background: #2c8f4e;
+  color: #fff;
+  font-size: 30rpx;
+  padding: 24rpx 0;
+  border-radius: 12rpx;
+  border: none;
+}
+
+.btn-start::after {
+  border: none;
+}
+
+.btn-start:disabled {
+  background: #ccc;
+}
+
+/* 授权弹窗 */
+.auth-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.auth-content {
+  width: 600rpx;
+  background: #fff;
+  border-radius: 24rpx;
+  overflow: hidden;
+}
+
+.auth-header {
+  padding: 40rpx 32rpx 24rpx;
+  text-align: center;
+}
+
+.auth-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333;
+  display: block;
+}
+
+.auth-subtitle {
+  font-size: 26rpx;
+  color: #999;
+  margin-top: 12rpx;
+  display: block;
+}
+
+.auth-body {
+  padding: 24rpx 32rpx;
+}
+
+.avatar-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 32rpx;
+}
+
+.avatar-picker {
+  background: transparent;
+  padding: 0;
+  border: none;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-picker::after {
+  border: none;
+}
+
+.preview-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  display: block;
+}
+
+.avatar-placeholder-large {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: #f5f5f5;
+  border: 2rpx dashed #ccc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.plus-icon {
+  font-size: 48rpx;
+  color: #999;
+  line-height: 1;
+}
+
+.avatar-hint {
+  font-size: 20rpx;
+  color: #999;
+  margin-top: 8rpx;
+}
+
+.nickname-row {
+  display: flex;
+}
+
+.nickname-row .nickname-input {
+  width: 100%;
+  height: 88rpx;
+  background: #f8f8f8;
+  border: 2rpx solid #e0e0e0;
+  border-radius: 12rpx;
+  padding: 0 24rpx;
+  font-size: 30rpx;
+  box-sizing: border-box;
+}
+
+.auth-footer {
+  padding: 24rpx 32rpx 40rpx;
+}
+
+.btn-confirm {
+  width: 100%;
+  background: #2c8f4e;
+  color: #fff;
+  font-size: 32rpx;
+  padding: 24rpx 0;
+  border-radius: 12rpx;
+  border: none;
+}
+
+.btn-confirm::after {
+  border: none;
+}
+
+/* 邀请操作区 - 直接展示 */
+.invite-section {
+  margin: 16rpx 24rpx 20rpx;
+  padding: 20rpx;
+  background: #fff;
+  border-radius: 16rpx;
+}
+
+.invite-actions {
+  margin-bottom: 12rpx;
+}
+
+.share-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #2c8f4e 0%, #1e6b3a 100%);
+  color: #fff;
+  font-size: 30rpx;
+  font-weight: 500;
+  padding: 24rpx 0;
+  border-radius: 16rpx;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+}
+
+.share-btn::after {
+  border: none;
+}
+
+.manual-add-row {
+  display: flex;
+  gap: 16rpx;
+  margin-top: 16rpx;
+}
+
+.manual-input {
+  flex: 1;
+  height: 88rpx;
+  padding: 0 20rpx;
+  border: 2rpx solid #e0e0e0;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  line-height: 88rpx;
+  box-sizing: border-box;
+}
+
+.manual-add-btn {
+  padding: 0 24rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  background: #2c8f4e;
+  color: #fff;
+  font-size: 28rpx;
+  border-radius: 12rpx;
+  border: none;
+  white-space: nowrap;
+}
+
+.manual-add-btn::after {
+  border: none;
+}
+
+/* 二维码按钮 */
+.qrcode-btn {
+  width: 100%;
+  background: #fff;
+  border: 2rpx solid #2c8f4e;
+  color: #2c8f4e;
+  font-size: 30rpx;
+  font-weight: 500;
+  padding: 24rpx 0;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+}
+
+.qrcode-btn::after {
+  border: none;
+}
+
+/* 二维码弹窗 */
+.qrcode-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.qrcode-content {
+  width: 560rpx;
+  background: #fff;
+  border-radius: 24rpx;
+  overflow: hidden;
+}
+
+.qrcode-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.qrcode-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.qrcode-close {
+  font-size: 48rpx;
+  color: #999;
+  line-height: 1;
+}
+
+.qrcode-body {
+  padding: 32rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.qrcode-tips {
+  font-size: 26rpx;
+  color: #666;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.qrcode-image {
+  width: 400rpx;
+  height: 400rpx;
+  margin: 24rpx 0;
+  background: #f5f5f5;
+  border-radius: 12rpx;
+}
+
+.qrcode-body .qrcode-tips:last-child {
+  color: #2c8f4e;
+  font-weight: 500;
+}
+
+/* 页面直接展示二维码区域 */
+.qrcode-section {
+  margin: 12rpx 24rpx 16rpx;
+  padding: 16rpx 20rpx;
+  background: #fff;
+  border-radius: 16rpx;
+  text-align: center;
+}
+
+.qrcode-header {
+  margin-bottom: 12rpx;
+}
+
+.qrcode-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.qrcode-tip {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 4rpx;
+}
+
+.qrcode-big {
+  width: 320rpx;
+  height: 320rpx;
+  margin: 12rpx auto;
+  background: #f5f5f5;
+  border-radius: 12rpx;
+}
+
+.qrcode-footer {
+  margin-top: 4rpx;
+}
+
+.qrcode-desc {
+  font-size: 24rpx;
+  color: #2c8f4e;
+  font-weight: 500;
+}

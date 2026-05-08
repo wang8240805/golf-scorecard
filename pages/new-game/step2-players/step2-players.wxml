@@ -1,0 +1,139 @@
+<view class="page-container">
+  <!-- 步骤指示器 - 固定在顶部不滚动 -->
+  <view class="step-indicator">
+    <view class="step-item completed">
+      <view class="step-dot">✓</view>
+      <text class="step-text">球场</text>
+    </view>
+    <view class="step-line active"></view>
+    <view class="step-item active">
+      <view class="step-dot">2</view>
+      <text class="step-text">球员</text>
+    </view>
+  </view>
+
+  <!-- 可滚动内容区域 -->
+  <view class="content-area">
+    <!-- 比赛信息卡 -->
+    <view class="game-info-card" wx:if="{{currentCourse}}">
+      <view class="game-header">
+        <view class="course-info">
+          <text class="course-name">{{currentCourse.name}}</text>
+          <text class="course-location">{{currentCourse.location}}</text>
+        </view>
+        <view class="game-badge">{{currentCourse.holes.length}}洞</view>
+      </view>
+    </view>
+
+    <!-- 参赛选手列表 -->
+    <view class="players-section">
+      <view class="section-header">
+        <view class="section-left">
+          <text class="section-title">参赛选手</text>
+          <text class="player-count">{{players.length}}/{{maxPlayers}}人</text>
+        </view>
+        <view class="section-right" wx:if="{{isCreator}}">
+          <button class="invite-btn-sm" open-type="share">
+            <text>👥 分享邀请</text>
+          </button>
+        </view>
+      </view>
+
+      <!-- 加载中 -->
+      <view class="loading-state" wx:if="{{isLoading}}">
+        <text class="loading-text">正在准备比赛...</text>
+      </view>
+
+      <!-- 球员列表 -->
+      <view class="players-list" wx:if="{{!isLoading && players.length > 0}}">
+        <view class="player-item" wx:for="{{players}}" wx:key="id">
+          <view class="player-avatar">
+            <image wx:if="{{item.avatar}}" src="{{item.avatar}}" mode="aspectFill" class="avatar-img"></image>
+            <view wx:else class="avatar-placeholder" style="background: {{colors[index % colors.length]}}">
+              {{item.name[0]}}
+            </view>
+            <view class="creator-badge" wx:if="{{item.isCreator}}">房主</view>
+          </view>
+          <view class="player-info">
+            <text class="player-name">{{item.name}}</text>
+          </view>
+          <view class="player-status ready">已就绪</view>
+        </view>
+      </view>
+
+      <!-- 空状态 -->
+      <view class="empty-state" wx:if="{{!isLoading && players.length === 0}}">
+        <text class="empty-icon">🏌️</text>
+        <text class="empty-text">等待球员加入...</text>
+      </view>
+
+      <!-- 手动添加行 -->
+      <view class="manual-add-row" wx:if="{{isCreator}}">
+        <input class="manual-input" placeholder="手动添加：输入姓名" value="{{manualPlayerName}}" bindinput="onManualNameInput" />
+        <button class="manual-add-btn" bindtap="addManualPlayer">添加</button>
+      </view>
+    </view>
+
+    <!-- 邀请二维码区域 - 直接展示给面对面扫码 -->
+    <view class="qrcode-section" wx:if="{{isCreator && qrcodeUrl}}">
+      <view class="qrcode-header">
+        <text class="qrcode-title">面对面扫码加入</text>
+        <text class="qrcode-tip">同场球友直接扫码</text>
+      </view>
+      <image class="qrcode-big" src="{{qrcodeUrl}}" mode="aspectFit"></image>
+      <view class="qrcode-footer">
+        <text class="qrcode-desc">无需加好友，扫码即入 · 最多{{maxPlayers}}人</text>
+      </view>
+    </view>
+
+    <!-- 提示信息 -->
+    <view class="tips-card" wx:if="{{isCreator && !qrcodeUrl}}">
+      <text class="tips-icon">💡</text>
+      <text class="tips-text">生成二维码中，请稍候...</text>
+    </view>
+
+    <!-- 底部留白 - 给固定操作栏留出空间 -->
+    <view class="bottom-spacer"></view>
+  </view>
+
+  <!-- 底部操作栏 - 固定在底部 -->
+  <view class="action-bar-fixed">
+    <view class="action-row">
+      <button class="btn-back" bindtap="goBack">返回</button>
+      <button class="btn-start" bindtap="startGame" disabled="{{players.length === 0}}">
+        开始比赛
+      </button>
+    </view>
+  </view>
+
+  <!-- 授权弹窗 -->
+  <view class="auth-modal" wx:if="{{showAuth}}" catchtouchmove="preventTouchMove">
+    <view class="auth-content">
+      <view class="auth-header">
+        <text class="auth-title">加入比赛</text>
+        <text class="auth-subtitle">设置你在比赛中的身份</text>
+      </view>
+      <view class="auth-body">
+        <view class="avatar-row">
+          <button class="avatar-picker" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+            <image wx:if="{{tempAvatar}}" src="{{tempAvatar}}" class="preview-avatar"></image>
+            <view wx:else class="avatar-placeholder-large">
+              <text class="plus-icon">📷</text>
+              <text class="avatar-hint">点击选择头像</text>
+            </view>
+          </button>
+        </view>
+        <view class="nickname-row">
+          <input type="nickname" class="nickname-input" placeholder="点击填写昵称" bindblur="onNickNameInput" bindinput="onNickNameInput" value="{{tempNickName}}"/>
+        </view>
+      </view>
+      <view class="auth-footer">
+        <button class="btn-confirm" bindtap="confirmAuth">{{tempNickName ? '加入比赛' : '请先填写昵称'}}</button>
+      </view>
+    </view>
+  </view>
+
+</view>
+
+<!-- 隐私协议弹窗 -->
+<privacy-popup />

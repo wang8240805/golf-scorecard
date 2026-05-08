@@ -1,0 +1,11 @@
+<view class="modal {{show ? 'show' : ''}}" wx:if="{{show}}" bindtap="onOverlayTap">
+  <view class="modal-content" catchtap="preventHide">
+    <view class="modal-header">
+      <text class="modal-title">{{title}}</text>
+      <text class="modal-close" wx:if="{{showClose}}" bindtap="onCloseTap">×</text>
+    </view>
+    <view class="modal-body">
+      <slot></slot>
+    </view>
+  </view>
+</view>

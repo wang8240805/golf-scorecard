@@ -1,0 +1,30 @@
+<view class="tab-bar">
+  <view class="tab-bar-bg"></view>
+
+  <!-- 首页 -->
+  <view class="tab-bar-item {{selected === 0 ? 'active' : ''}}" data-index="0" bindtap="switchTab">
+    <view class="tab-icon icon-home"></view>
+    <text class="tab-text">首页</text>
+  </view>
+
+  <!-- 中央记分按钮 -->
+  <view class="center-btn-wrapper" bindtap="startNewGame">
+    <view class="center-btn" catchtap="onCenterBtnTap">
+      <view class="center-btn-inner golf-ball">
+        <view class="golf-dimples">
+          <view class="dimple d1"></view>
+          <view class="dimple d2"></view>
+          <view class="dimple d3"></view>
+          <view class="dimple d4"></view>
+        </view>
+        <text class="center-btn-text-golf">GO</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 我的 -->
+  <view class="tab-bar-item {{selected === 1 ? 'active' : ''}}" data-index="1" bindtap="switchTab">
+    <view class="tab-icon icon-user"></view>
+    <text class="tab-text">我的</text>
+  </view>
+</view>

@@ -1,0 +1,100 @@
+<view class="container">
+  <!-- 通用设置 -->
+  <view class="card">
+    <view class="section-title">通用设置</view>
+    <view class="setting-list">
+      <view class="setting-item" bindtap="selectDefaultTee">
+        <text class="setting-label">默认发球台</text>
+        <view class="setting-value">
+          <text class="setting-text">{{defaultTee}}</text>
+          <text class="setting-arrow">›</text>
+        </view>
+      </view>
+      <view class="setting-item">
+        <text class="setting-label">自动锁屏</text>
+        <switch class="setting-switch" checked="{{autoLock}}" bindchange="toggleAutoLock" />
+      </view>
+      <view class="setting-item" bindtap="selectDefaultPlayer">
+        <text class="setting-label">默认记分员</text>
+        <view class="setting-value">
+          <text class="setting-text">{{defaultPlayer}}</text>
+          <text class="setting-arrow">›</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 记分设置 -->
+  <view class="card">
+    <view class="section-title">记分设置</view>
+    <view class="setting-list">
+      <view class="setting-item">
+        <text class="setting-label">语音播报</text>
+        <switch class="setting-switch" checked="{{voiceBroadcast}}" bindchange="toggleVoiceBroadcast" />
+      </view>
+      <view class="setting-item">
+        <text class="setting-label">震动反馈</text>
+        <switch class="setting-switch" checked="{{vibration}}" bindchange="toggleVibration" />
+      </view>
+      <view class="setting-item">
+        <text class="setting-label">自动完成确认</text>
+        <switch class="setting-switch" checked="{{autoCompleteConfirm}}" bindchange="toggleAutoCompleteConfirm" />
+      </view>
+      <view class="setting-item">
+        <text class="setting-label">默认显示比洞赛</text>
+        <switch class="setting-switch" checked="{{defaultMatchPlay}}" bindchange="toggleDefaultMatchPlay" />
+      </view>
+    </view>
+  </view>
+
+  <!-- 数据管理 -->
+  <view class="card">
+    <view class="section-title">数据管理</view>
+    <view class="setting-list">
+      <view class="setting-item" bindtap="clearHistory">
+        <text class="setting-label">清除历史比赛记录</text>
+        <view class="setting-value">
+          <text class="setting-text">{{gameCount}} 场</text>
+          <text class="setting-arrow">›</text>
+        </view>
+      </view>
+      <view class="setting-item" bindtap="exportData">
+        <text class="setting-label">备份数据</text>
+        <text class="setting-arrow">›</text>
+      </view>
+      <view class="setting-item" bindtap="importData">
+        <text class="setting-label">恢复数据</text>
+        <text class="setting-arrow">›</text>
+      </view>
+      <view class="setting-item" bindtap="clearAllData">
+        <text class="setting-label text-danger">清除所有数据</text>
+        <text class="setting-arrow">›</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 关于 -->
+  <view class="card">
+    <view class="section-title">关于</view>
+    <view class="about-content">
+      <text class="app-name">WinPAR</text>
+      <text class="app-version">版本 1.0.0</text>
+      <text class="app-desc">高尔夫智能记分工具，支持多人比赛、AI分析报告和专业技术统计。</text>
+    </view>
+    <view class="setting-list">
+      <view class="setting-item" bindtap="goToUserAgreement">
+        <text class="setting-label">用户协议</text>
+        <text class="setting-arrow">›</text>
+      </view>
+      <view class="setting-item" bindtap="goToPrivacyPolicy">
+        <text class="setting-label">隐私政策</text>
+        <text class="setting-arrow">›</text>
+      </view>
+      <view class="setting-item" bindtap="goToFeedback">
+        <text class="setting-label">意见反馈</text>
+        <text class="setting-arrow">›</text>
+      </view>
+    </view>
+  </view>
+
+</view>

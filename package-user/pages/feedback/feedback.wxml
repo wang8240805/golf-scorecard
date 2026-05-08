@@ -1,0 +1,34 @@
+<view class="container">
+  <view class="card">
+    <view class="section-title">意见反馈</view>
+    <view class="feedback-desc">
+      <text class="desc-text">您的建议是我们进步的动力！无论是功能建议、使用问题还是想说的话，都欢迎告诉我们。</text>
+    </view>
+
+    <view class="form-group">
+      <text class="form-label">反馈内容</text>
+      <textarea class="feedback-textarea" placeholder="说说你的想法..." maxlength="500" bindinput="onContentInput" value="{{content}}"></textarea>
+      <view class="input-footer">
+        <text class="char-count">{{content.length}}/500</text>
+      </view>
+    </view>
+
+    <view class="form-group">
+      <text class="form-label">联系方式（选填）</text>
+      <view class="contact-wrapper">
+        <input class="form-input" placeholder="点击右侧按钮获取微信/手机号" bindinput="onContactInput" value="{{contact}}" />
+        <button class="get-contact-btn" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">获取</button>
+      </view>
+      <text class="contact-hint">点击按钮授权后自动填入，无需手动输入</text>
+    </view>
+
+    <button class="btn btn-primary submit-btn" bindtap="submitFeedback" disabled="{{!content}}">提交反馈</button>
+  </view>
+
+  <!-- 感谢提示 -->
+  <view class="thank-you" wx:if="{{showThanks}}">
+    <text class="thanks-icon">🙏</text>
+    <text class="thanks-text">感谢您的反馈！</text>
+    <text class="thanks-subtext">我们会认真阅读每一条建议</text>
+  </view>
+</view>

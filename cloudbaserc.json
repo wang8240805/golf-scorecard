@@ -1,0 +1,38 @@
+{
+  "envId": "cloudbase-3g7ya74db1a5f864",
+  "functions": [
+    {
+      "name": "ocr-scorecard",
+      "runtime": "Nodejs16.13",
+      "handler": "index.main",
+      "memorySize": 256,
+      "timeout": 60,
+      "root": "cloudfunctions/ocr-scorecard"
+    },
+    {
+      "name": "code2session",
+      "runtime": "Nodejs16.13",
+      "handler": "index.main",
+      "memorySize": 256,
+      "timeout": 10,
+      "root": "cloudfunctions/code2session"
+    },
+    {
+      "name": "gameAction",
+      "runtime": "Nodejs16.13",
+      "handler": "index.main",
+      "memorySize": 256,
+      "timeout": 30,
+      "root": "cloudfunctions/gameAction"
+    },
+    {
+      "name": "savePublicCourseData",
+      "runtime": "Nodejs16.13",
+      "handler": "index.main",
+      "memorySize": 256,
+      "timeout": 10,
+      "root": "cloudfunctions/savePublicCourseData"
+    }
+  ],
+  "version": "2.0"
+}

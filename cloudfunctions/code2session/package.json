@@ -1,0 +1,10 @@
+
+{
+  "name": "code2session",
+  "version": "1.0.0",
+  "description": "换取微信openid",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}
