@@ -43,6 +43,13 @@ Page({
   loadCoursesLocal: function() {
     var self = this
     var courses = ALL_COURSES || []
+    var localCourses = wx.getStorageSync('courses') || []
+    var localMap = {}
+    localCourses.forEach(function(course) {
+      if (course && course.id) {
+        localMap[course.id] = course
+      }
+    })
 
     // 预处理：确保格式正确，标记holes为null需要云端匹配
     courses = courses.map(function(course) {
@@ -57,8 +64,29 @@ Page({
       return newCourse
     })
 
+    // 合并本地动态数据，避免覆盖用户已校对/贡献的数据
+    var mergedCourses = courses.map(function(course) {
+      var localCourse = localMap[course.id]
+      if (!localCourse) {
+        return course
+      }
+      return {
+        ...course,
+        ...localCourse
+      }
+    })
+
+    // 保留仅存在于本地的自定义球场
+    localCourses.forEach(function(course) {
+      if (!course || !course.id) return
+      var exists = mergedCourses.find(function(c) { return c.id === course.id })
+      if (!exists && course.isCustom) {
+        mergedCourses.push(course)
+      }
+    })
+
     // 保存到缓存
-    wx.setStorageSync('courses', courses)
+    wx.setStorageSync('courses', mergedCourses)
     wx.setStorageSync('coursesInitialized', true)
     wx.setStorageSync('coursesDataVersion', 'local-v1')
     this.setData({ coursesLoaded: true })

@@ -130,7 +130,20 @@ App({
       }
 
       const db = this.cloud.database()
+      const _ = db.command
+      const userInfo = wx.getStorageSync('userInfo') || {}
+      const openid = userInfo.openid
+
+      if (!openid) {
+        resolve(0)
+        return
+      }
+
       db.collection('games')
+        .where(_.or([
+          { _openid: _.eq(openid) },
+          { "players.openid": _.eq(openid) }
+        ]))
         .orderBy('endTime', 'asc')
         .get()
         .then(res => {

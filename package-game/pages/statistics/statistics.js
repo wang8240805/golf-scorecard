@@ -32,7 +32,7 @@ Page({
       // 旧格式：game.scores对象
       else if (g.scores && g.scores[player.id]) {
         const scores = g.scores[player.id]
-        const validCount = Object.values(scores).filter(v => v > 0).length
+        const validCount = Object.values(scores).filter(v => this.getStrokesValue(v) > 0).length
         return validCount >= 18
       }
       // 兼容有statistics字段的情况
@@ -73,15 +73,15 @@ Page({
       const playerId = this.getCurrentPlayerId(game)
       if (!playerId) return
 
-      const stats = game.statistics?.[playerId]
-      if (!stats) return
+      const summary = this.getGamePlayerSummary(game, playerId)
+      if (!summary || summary.holesPlayed <= 0) return
 
-      totalHoles += stats.holesPlayed || 18
-      totalScore += stats.totalScore
-      totalToPar += stats.toPar
-      if (stats.totalScore < bestScore) {
-        bestScore = stats.totalScore
-        bestScoreToPar = stats.toPar
+      totalHoles += summary.holesPlayed
+      totalScore += summary.totalScore
+      totalToPar += summary.toPar
+      if (summary.totalScore < bestScore) {
+        bestScore = summary.totalScore
+        bestScoreToPar = summary.toPar
       }
     })
 
@@ -123,15 +123,16 @@ Page({
 
     games.forEach(game => {
       const playerId = this.getCurrentPlayerId(game)
-      if (!playerId || !game.scores || !game.scores[playerId]) return
+      if (!playerId || !game.scores || !game.scores[playerId] || !Array.isArray(game.holes)) return
 
       const scores = game.scores[playerId]
-      // 简化逻辑：默认par为4，不依赖球场数据
-      Object.values(scores).forEach(score => {
-        if (!score) return
+      game.holes.forEach(hole => {
+        if (!hole || !hole.hole || !hole.par) return
+        const strokes = this.getStrokesValue(scores[hole.hole])
+        if (strokes <= 0) return
 
         totalHoles++
-        const diff = score - 4 // 默认标准杆为4
+        const diff = strokes - hole.par
 
         if (diff <= -2) eagles++
         else if (diff === -1) birdies++
@@ -177,5 +178,50 @@ Page({
     if (!game.players || game.players.length === 0) return null
     // 默认取第一个玩家作为当前用户，后续可以优化为用户选择
     return game.players[0].id
+  },
+
+  getStrokesValue(score) {
+    if (!score) return 0
+    if (typeof score === 'object') {
+      return parseInt(score.strokes) || 0
+    }
+    return parseInt(score) || 0
+  },
+
+  getGamePlayerSummary(game, playerId) {
+    if (!game || !playerId) return null
+
+    if (game.statistics && game.statistics[playerId]) {
+      const stats = game.statistics[playerId]
+      return {
+        holesPlayed: stats.holesPlayed || 0,
+        totalScore: stats.totalScore || 0,
+        toPar: stats.toPar || 0
+      }
+    }
+
+    if (!Array.isArray(game.holes) || !game.scores || !game.scores[playerId]) {
+      return null
+    }
+
+    let holesPlayed = 0
+    let totalScore = 0
+    let toPar = 0
+    const scores = game.scores[playerId]
+    game.holes.forEach(hole => {
+      if (!hole || !hole.hole || !hole.par) return
+      const strokes = this.getStrokesValue(scores[hole.hole])
+      if (strokes > 0) {
+        holesPlayed++
+        totalScore += strokes
+        toPar += (strokes - hole.par)
+      }
+    })
+
+    return {
+      holesPlayed,
+      totalScore,
+      toPar
+    }
   }
 })

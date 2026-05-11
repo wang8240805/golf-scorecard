@@ -43,6 +43,13 @@ Page({
   loadCoursesLocal: function() {
     var self = this
     var courses = ALL_COURSES || []
+    var localAllCourses = wx.getStorageSync('courses') || []
+    var localMap = {}
+    localAllCourses.forEach(function(course) {
+      if (course && course.id) {
+        localMap[course.id] = course
+      }
+    })
 
     // 预处理
     courses = courses.map(function(course) {
@@ -57,21 +64,30 @@ Page({
       return newCourse
     })
 
-    // 合并用户自定义球场
-    var localAllCourses = wx.getStorageSync('courses') || []
-    var customCourses = localAllCourses.filter(function(c) {
-      return c.isCustom
+    // 合并本地动态数据，避免覆盖用户已校对/贡献的数据
+    var mergedCourses = courses.map(function(course) {
+      var localCourse = localMap[course.id]
+      if (!localCourse) {
+        return course
+      }
+      return {
+        ...course,
+        ...localCourse
+      }
     })
-    customCourses.forEach(function(custom) {
-      var exists = courses.find(function(c) { return c.id === custom.id })
-      if (!exists) {
-        courses.push(custom)
+
+    // 保留仅存在于本地的自定义球场
+    localAllCourses.forEach(function(course) {
+      if (!course || !course.id) return
+      var exists = mergedCourses.find(function(c) { return c.id === course.id })
+      if (!exists && course.isCustom) {
+        mergedCourses.push(course)
       }
     })
 
     // 保存到缓存
-    wx.setStorageSync('courses', courses)
-    this.setData({ courses: courses })
+    wx.setStorageSync('courses', mergedCourses)
+    this.setData({ courses: mergedCourses })
   },
 
   // 获取用户位置

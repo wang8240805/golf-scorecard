@@ -63,7 +63,7 @@ Page({
     return games.slice(0, this.data.pageSize).map(game => {
       // 兼容老数据：使用 timestamp，如果没有则使用 endTime，如果都没有使用当前时间
       const timestamp = game.timestamp || game.endTime || Date.now()
-      const date = new Date(timestamp)
+      let date = new Date(timestamp)
       // 防御性检查：如果日期无效，使用当前日期
       if (isNaN(date.getTime())) {
         date = new Date()

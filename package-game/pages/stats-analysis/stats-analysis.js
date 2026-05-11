@@ -79,7 +79,10 @@ Page({
       const playerPutts = game.putts?.[player.id] || {}
 
       // 计算总杆数
-      const gameTotalScore = Object.values(playerScores).reduce((sum, s) => sum + (s || 0), 0)
+      const gameTotalScore = Object.values(playerScores).reduce((sum, s) => {
+        const strokes = this.getStrokesValue(s)
+        return sum + (strokes > 0 ? strokes : 0)
+      }, 0)
       if (gameTotalScore > 0) {
         scores.push(gameTotalScore)
         totalScore += gameTotalScore
@@ -88,7 +91,7 @@ Page({
       // 逐洞统计
       if (game.holes) {
         game.holes.forEach(hole => {
-          const score = playerScores[hole.hole]
+          const score = this.getStrokesValue(playerScores[hole.hole])
           if (score > 0) {
             totalHoles++
             const diff = score - hole.par
@@ -155,9 +158,9 @@ Page({
     const sandSaves = totalHoles > 0 ? Math.round(((distribution.pars) / totalHoles) * 40) : '-'
 
     // 最近趋势（最近10场）
-    const recentTrend = games.slice(-10).map((game, index) => {
+    const recentTrend = games.slice(-10).map((game) => {
       const player = game.players?.find(p => p.id === me.id) || game.players?.[0]
-      const toPar = player?.toPar || 0
+      const toPar = this.getGameToPar(game, player)
       // 兼容老数据：使用 timestamp，如果没有则使用 endTime，如果都没有使用当前时间
       const timestamp = game.timestamp || game.endTime || Date.now()
       let date = new Date(timestamp)
@@ -210,6 +213,34 @@ Page({
     }
     // 如果没有找到，返回第一个球员
     return games[0]?.players?.[0] || { id: 'unknown', name: '我' }
+  },
+
+  getStrokesValue(score) {
+    if (!score) return 0
+    if (typeof score === 'object') {
+      return parseInt(score.strokes) || 0
+    }
+    return parseInt(score) || 0
+  },
+
+  getGameToPar(game, player) {
+    if (!game || !player) return 0
+    if (game.statistics && game.statistics[player.id]) {
+      return game.statistics[player.id].toPar || 0
+    }
+    if (!Array.isArray(game.holes) || !game.scores || !game.scores[player.id]) {
+      return 0
+    }
+
+    var toPar = 0
+    var playerScores = game.scores[player.id]
+    game.holes.forEach(hole => {
+      var strokes = this.getStrokesValue(playerScores[hole.hole])
+      if (strokes > 0 && hole.par) {
+        toPar += (strokes - hole.par)
+      }
+    })
+    return toPar
   },
 
   generateSuggestions(stats) {

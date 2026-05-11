@@ -45,6 +45,13 @@ Page({
   loadCoursesLocal: function() {
     var self = this
     var courses = ALL_COURSES || []
+    var localAllCourses = wx.getStorageSync('courses') || []
+    var localMap = {}
+    localAllCourses.forEach(function(course) {
+      if (course && course.id) {
+        localMap[course.id] = course
+      }
+    })
 
     // 预处理
     courses = courses.map(function(course) {
@@ -59,21 +66,30 @@ Page({
       return newCourse
     })
 
-    // 合并用户自定义球场
-    var localAllCourses = wx.getStorageSync('courses') || []
-    var customCourses = localAllCourses.filter(function(c) {
-      return c.isCustom
+    // 合并本地动态数据，避免覆盖用户已校对/贡献的数据
+    var mergedCourses = courses.map(function(course) {
+      var localCourse = localMap[course.id]
+      if (!localCourse) {
+        return course
+      }
+      return {
+        ...course,
+        ...localCourse
+      }
     })
-    customCourses.forEach(function(custom) {
-      var exists = courses.find(function(c) { return c.id === custom.id })
-      if (!exists) {
-        courses.push(custom)
+
+    // 保留仅存在于本地的自定义球场
+    localAllCourses.forEach(function(course) {
+      if (!course || !course.id) return
+      var exists = mergedCourses.find(function(c) { return c.id === course.id })
+      if (!exists && course.isCustom) {
+        mergedCourses.push(course)
       }
     })
 
     // 保存到缓存
-    wx.setStorageSync('courses', courses)
-    this.setData({ courses: courses })
+    wx.setStorageSync('courses', mergedCourses)
+    this.setData({ courses: mergedCourses })
     this.processAndDisplayCourses()
   },
 
@@ -159,7 +175,7 @@ Page({
       }
     })
 
-    // 计算总距离并添加打球次数和收藏状态
+    // 计算球场统计并添加打球次数、收藏状态、地理距离
     var coursesWithStats = allCourses.map(function(course) {
       var newCourse = {}
       for (var key in course) {
@@ -175,6 +191,16 @@ Page({
       }
       newCourse.totalPar = totalPar
       newCourse.totalDistance = totalDistance
+      var geoDistance = Infinity
+      if (self.data.userLocation && course.latitude && course.longitude) {
+        geoDistance = calculateDistance(
+          self.data.userLocation.latitude,
+          self.data.userLocation.longitude,
+          course.latitude,
+          course.longitude
+        )
+      }
+      newCourse.geoDistance = geoDistance
       newCourse.playCount = playCountMap[course.id] || 0
       newCourse.isFavorite = course.id ? safeFavoriteIds.indexOf(course.id) >= 0 : false
       newCourse.isCustom = course.id ? (!course.id.startsWith('china-') && !course.id.startsWith('scraped-')) : false
@@ -254,7 +280,7 @@ Page({
         result.sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'))
         break
       case 'distance':
-        result.sort((a, b) => (b.totalDistance || 0) - (a.totalDistance || 0))
+        result.sort((a, b) => (a.geoDistance || Infinity) - (b.geoDistance || Infinity))
         break
     }
 
@@ -279,16 +305,20 @@ Page({
     // 保存到本地存储
     wx.setStorageSync('favoriteCourseIds', favoriteIds)
     this.setData({ favoriteCourseIds: favoriteIds }, () => {
-      this.loadCourses()
+      this.processAndDisplayCourses()
     })
   },
 
   // 查看球场详情
   viewCourseDetail(e) {
     const course = e.currentTarget.dataset.course
+    const safeCourse = {
+      ...course,
+      holes: Array.isArray(course.holes) ? course.holes : []
+    }
     this.setData({
       showDetailModal: true,
-      detailCourse: course
+      detailCourse: safeCourse
     })
   },
 

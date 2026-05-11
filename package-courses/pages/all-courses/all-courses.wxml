@@ -21,7 +21,7 @@
         {{showFavoritesOnly ? '显示全部' : '仅看收藏'}}
       </button>
       <button class="toolbar-btn" bindtap="toggleSortBy">
-        排序: {{sortBy === 'playCount' ? '按次数' : sortBy === 'name' ? '按名称' : '按距离'}}
+        排序: {{sortBy === 'playCount' ? '按次数' : sortBy === 'name' ? '按名称' : '离我最近'}}
       </button>
     </view>
   </view>
