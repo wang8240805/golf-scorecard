@@ -5,6 +5,7 @@ const OCRService = require('../../utils/ocr-service.js')
 const analysisReport = require('../../utils/analysis-report.js')
 const preferenceManager = require('../../utils/preference-manager.js')
 const { PLAYER_COLORS } = require('../../utils/constants.js')
+const { formatDate } = require('../../utils/date-utils.js')
 const posterGenerator = require('../../utils/poster-generator.js')
 
 Page({
@@ -263,7 +264,7 @@ Page({
       this.setData({
         currentGame,
         courses,
-        currentDate: this.formatDate(new Date())
+        currentDate: formatDate(new Date(), 'full')
       })
       this.showParDataGuide()
       return
@@ -313,11 +314,6 @@ Page({
     if (savedHole && savedHole <= holes.length) {
       this.setCurrentHole(savedHole)
     }
-  },
-
-  // 格式化日期
-  formatDate(date) {
-    return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`
   },
 
   // 检查球场是否有完整的Par数据

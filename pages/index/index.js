@@ -1,5 +1,6 @@
 const app = getApp()
 const { calculateDistance } = require('../../utils/geo-utils.js')
+const { formatDate } = require('../../utils/date-utils.js')
 const ALL_COURSES = require('../../data/courses-accurate.js')
 
 Page({
@@ -206,7 +207,7 @@ Page({
           ...game,
           id: gameId,
           courseName: game.courseName || '未知球场',
-          date: this.formatDate(timestamp),
+          date: formatDate(timestamp),
           myScore: myScore
         }
       }).filter(game => game.myScore > 0) // 过滤掉没有有效成绩的比赛
@@ -280,7 +281,7 @@ Page({
         ...game,
         id: gameId,
         courseName: game.courseName || '未知球场',
-        date: this.formatDate(timestamp),
+        date: formatDate(timestamp),
         myScore: myScore
       }
     }).filter(game => game.myScore > 0) // 过滤掉没有有效成绩的比赛
@@ -432,22 +433,6 @@ Page({
 
   preventHide(e) {
     // 阻止冒泡
-  },
-
-  formatDate(timestamp) {
-    let date
-    if (typeof timestamp === 'number') {
-      date = new Date(timestamp)
-    } else if (typeof timestamp === 'string') {
-      date = new Date(timestamp)
-    } else {
-      date = new Date()
-    }
-    // 防御性检查：如果日期无效，返回当前日期
-    if (isNaN(date.getTime())) {
-      date = new Date()
-    }
-    return `${date.getMonth() + 1}月${date.getDate()}日`
   },
 
   // 计算球场的平均杆数

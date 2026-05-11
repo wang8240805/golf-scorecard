@@ -73,6 +73,20 @@
     </view>
   </view>
 
+  <!-- 管理员功能 -->
+  <view class="card">
+    <view class="section-title">管理员功能</view>
+    <view class="setting-list">
+      <view class="setting-item" bindtap="importOfficialCourses">
+        <text class="setting-label">导入官方球场数据</text>
+        <view class="setting-value">
+          <text class="setting-text">{{courseCount}} 个</text>
+          <text class="setting-arrow">›</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
   <!-- 关于 -->
   <view class="card">
     <view class="section-title">关于</view>

@@ -1,3 +1,5 @@
+const { formatDate } = require('../../../utils/date-utils.js')
+
 Page({
   data: {
     players: [],
@@ -140,7 +142,7 @@ Page({
         return {
           id: g.id,
           courseName: g.courseName,
-          date: this.formatDate(g.timestamp),
+          date: formatDate(g.timestamp),
           score: p.totalScore,
           scoreClass: p.totalScore < avgScore ? 'good' : 'normal'
         }
@@ -313,9 +315,4 @@ Page({
     })
   },
 
-  formatDate(timestamp) {
-    if (!timestamp) return ''
-    const date = new Date(timestamp)
-    return `${date.getMonth() + 1}月${date.getDate()}日`
-  }
 })

@@ -1,6 +1,9 @@
+const { formatDate } = require('../../../utils/date-utils.js')
+
 Page({
   data: {
     gameCount: 0,
+    courseCount: 0,
     // 通用设置
     defaultTee: '蓝Tee',
     autoLock: false,
@@ -9,7 +12,9 @@ Page({
     voiceBroadcast: true,
     vibration: true,
     autoCompleteConfirm: true,
-    defaultMatchPlay: false
+    defaultMatchPlay: false,
+    // 导入状态
+    isImportingCourses: false
   },
 
   onLoad() {
@@ -24,8 +29,56 @@ Page({
 
   loadData() {
     const games = wx.getStorageSync('games') || []
+    const courses = wx.getStorageSync('courses') || []
     this.setData({
-      gameCount: games.length
+      gameCount: games.length,
+      courseCount: courses.length
+    })
+  },
+
+  // 导入官方球场数据
+  importOfficialCourses() {
+    wx.showModal({
+      title: '导入球场数据',
+      content: `将导入全国400+官方球场数据到云端数据库。\n\n当前本地已有 ${this.data.courseCount} 个球场。\n\n导入后，所有用户都可以搜索和使用这些球场。`,
+      success: (res) => {
+        if (res.confirm) {
+          this.doImportCourses()
+        }
+      }
+    })
+  },
+
+  doImportCourses() {
+    this.setData({ isImportingCourses: true })
+    wx.showLoading({ title: '导入中...' })
+
+    wx.cloud.callFunction({
+      name: 'importCourses',
+      success: (res) => {
+        wx.hideLoading()
+        this.setData({ isImportingCourses: false })
+        if (res.result && res.result.success) {
+          wx.showToast({
+            title: `成功导入 ${res.result.imported} 个球场`,
+            icon: 'success',
+            duration: 2000
+          })
+        } else {
+          wx.showToast({
+            title: res.result?.error || '导入失败',
+            icon: 'none'
+          })
+        }
+      },
+      fail: (err) => {
+        wx.hideLoading()
+        this.setData({ isImportingCourses: false })
+        wx.showToast({
+          title: '调用失败: ' + err.message,
+          icon: 'none'
+        })
+      }
     })
   },
 
@@ -137,7 +190,7 @@ Page({
   exportData() {
     const backupData = this.createBackup()
     const dataStr = JSON.stringify(backupData, null, 2)
-    const fileName = `winpar_backup_${this.formatDate(new Date())}.json`
+    const fileName = `winpar_backup_${formatDate(new Date(), 'compact')}.json`
 
     // 使用微信文件系统保存
     const fs = wx.getFileSystemManager()
@@ -270,7 +323,7 @@ Page({
 
     wx.showModal({
       title: '确认恢复数据',
-      content: `备份信息：\n比赛记录: ${gameCount}场\n球场数据: ${courseCount}个\n备份时间: ${this.formatDate(new Date(backup.backupTime))}\n\n恢复将覆盖当前数据，是否继续？`,
+      content: `备份信息：\n比赛记录: ${gameCount}场\n球场数据: ${courseCount}个\n备份时间: ${formatDate(new Date(backup.backupTime), 'full')}\n\n恢复将覆盖当前数据，是否继续？`,
       confirmColor: '#f44336',
       success: (res) => {
         if (res.confirm) {
@@ -297,14 +350,6 @@ Page({
         }
       }
     })
-  },
-
-  // 格式化日期
-  formatDate(date) {
-    const year = date.getFullYear()
-    const month = String(date.getMonth() + 1).padStart(2, '0')
-    const day = String(date.getDate()).padStart(2, '0')
-    return `${year}${month}${day}`
   },
 
   // 清除历史记录
