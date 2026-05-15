@@ -14,7 +14,8 @@ Page({
     autoCompleteConfirm: true,
     defaultMatchPlay: false,
     // 导入状态
-    isImportingCourses: false
+    isImportingCourses: false,
+    isDeveloperMode: false
   },
 
   onLoad() {
@@ -30,9 +31,11 @@ Page({
   loadData() {
     const games = wx.getStorageSync('games') || []
     const courses = wx.getStorageSync('courses') || []
+    const isDeveloperMode = wx.getStorageSync('developerMode') === true
     this.setData({
       gameCount: games.length,
-      courseCount: courses.length
+      courseCount: courses.length,
+      isDeveloperMode
     })
   },
 

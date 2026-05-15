@@ -2,13 +2,31 @@ Page({
   data: {
     content: '',
     contact: '',
-    showThanks: false
+    showThanks: false,
+    contactSource: ''
+  },
+
+  onLoad() {
+    this.fillSavedContact()
   },
 
   onShow() {
     // 设置TabBar选中状态 - 反馈页面属于"我的"模块
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
       this.getTabBar().setData({ selected: 2 })
+    }
+    this.fillSavedContact()
+  },
+
+  fillSavedContact() {
+    const userInfo = wx.getStorageSync('userInfo') || {}
+    const savedPhone = userInfo.phoneNumber || ''
+    const savedContact = savedPhone || userInfo.nickName || ''
+    if (!this.data.contact && savedContact) {
+      this.setData({
+        contact: savedContact,
+        contactSource: savedPhone ? '已使用账号手机号' : '已使用微信昵称'
+      })
     }
   },
 
@@ -26,60 +44,9 @@ Page({
     })
   },
 
-  // 获取手机号
-  getPhoneNumber(e) {
-    if (e.detail.errMsg === 'getPhoneNumber:ok') {
-      // 使用云开发解密手机号
-      if (wx.cloud) {
-        wx.showLoading({ title: '获取中...' })
-        wx.cloud.callFunction({
-          name: 'getPhoneNumber',
-          data: {
-            cloudID: e.detail.cloudID
-          },
-          success: (res) => {
-            wx.hideLoading()
-            // 解密得到手机号明文
-            if (res.result && res.result.phoneNumber) {
-              this.setData({ contact: res.result.phoneNumber })
-              wx.showToast({
-                title: '获取成功',
-                icon: 'success'
-              })
-            } else {
-              wx.showToast({
-                title: '解密失败，请手动输入',
-                icon: 'none'
-              })
-            }
-          },
-          fail: (err) => {
-            wx.hideLoading()
-            console.error('解密手机号失败', err)
-            wx.showToast({
-              title: '解密失败，请手动输入',
-              icon: 'none'
-            })
-          }
-        })
-      } else {
-        // 未开云开发，只提示
-        wx.showToast({
-          title: '已获取授权，请手动输入手机号',
-          icon: 'success'
-        })
-      }
-    } else {
-      wx.showToast({
-        title: '获取失败',
-        icon: 'none'
-      })
-    }
-  },
-
   // 提交反馈
   submitFeedback() {
-    const { content, contact } = this.data
+    const { content, contact, contactSource } = this.data
 
     if (!content || content.length < 5) {
       wx.showToast({ title: '请输入至少5个字符', icon: 'none' })
@@ -90,6 +57,7 @@ Page({
     const feedback = {
       content: content,
       contact: contact,
+      contactSource: contactSource,
       timestamp: new Date().getTime(),
       userInfo: wx.getStorageSync('userInfo') || null
     }

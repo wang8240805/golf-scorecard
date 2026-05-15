@@ -17,6 +17,17 @@ dist/
 # Cache
 *.log
 npm-debug.log*
+.DS_Store
+
+# Local env
+.env.devtools
+
+# Test artifacts
+coverage/
+reports/
+
+# Cloud function build artifacts
+cloudfunctions/*/*.zip
 
 # Claude
 .claude/

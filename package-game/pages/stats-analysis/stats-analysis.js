@@ -1,5 +1,14 @@
+const gameCompleteness = require('../../../utils/game-completeness.js')
+
 Page({
   data: {
+    unlocks: {
+      overview: { required: 1, unlocked: false },
+      trend: { required: 3, unlocked: false },
+      shortGame: { required: 5, unlocked: false },
+      driving: { required: 8, unlocked: false },
+      handicap: { required: 10, unlocked: false }
+    },
     stats: {
       totalGames: 0,
       avgScore: '-',
@@ -14,6 +23,7 @@ Page({
       },
       shortGame: {
         puttsPerHole: '-',
+        puttsProgress: 0,
         girPct: '-',
         scramblePct: '-',
         sandSaves: '-'
@@ -35,16 +45,24 @@ Page({
   },
 
   loadStats() {
-    const games = wx.getStorageSync('games') || []
+    const allGames = wx.getStorageSync('games') || []
+    const candidateGames = Array.isArray(allGames)
+      ? allGames.filter(g => g && Array.isArray(g.players) && g.players.length > 0)
+      : []
+    const games = candidateGames.filter(function(game) {
+      const player = gameCompleteness.getPlayer(game)
+      return player && gameCompleteness.isPlayerRoundComplete(game, player.id)
+    })
     if (games.length === 0) {
       this.setData({
+        unlocks: this.buildUnlocks(0),
         stats: {
           totalGames: 0,
           avgScore: '-',
           bestScore: '-',
           handicap: '-',
           distribution: { eagles: 0, eaglePct: 0, birdies: 0, birdiePct: 0, pars: 0, parPct: 0, bogeys: 0, bogeyPct: 0, doubles: 0, doublePct: 0 },
-          shortGame: { puttsPerHole: '-', girPct: '-', scramblePct: '-', sandSaves: '-' },
+          shortGame: { puttsPerHole: '-', puttsProgress: 0, girPct: '-', scramblePct: '-', sandSaves: '-' },
           driving: { firPct: '-' },
           recentTrend: [],
           suggestions: []
@@ -52,9 +70,6 @@ Page({
       })
       return
     }
-
-    // 获取当前用户信息
-    const me = this.getCurrentPlayer(games)
 
     // 计算基础统计
     let totalScore = 0
@@ -74,23 +89,32 @@ Page({
     let totalSandOpp = 0
 
     games.forEach(game => {
-      const player = game.players?.find(p => p.id === me.id) || game.players?.[0]
+      const player = gameCompleteness.getPlayer(game)
+      if (!player || !player.id) {
+        return
+      }
       const playerScores = game.scores?.[player.id] || {}
       const playerPutts = game.putts?.[player.id] || {}
 
       // 计算总杆数
-      const gameTotalScore = Object.values(playerScores).reduce((sum, s) => {
-        const strokes = this.getStrokesValue(s)
-        return sum + (strokes > 0 ? strokes : 0)
-      }, 0)
+      let gameTotalScore = 0
+      if (game.statistics && game.statistics[player.id] && game.statistics[player.id].totalScore > 0) {
+        gameTotalScore = game.statistics[player.id].totalScore
+      } else {
+        gameTotalScore = Object.values(playerScores).reduce((sum, s) => {
+          const strokes = this.getStrokesValue(s)
+          return sum + (strokes > 0 ? strokes : 0)
+        }, 0)
+      }
       if (gameTotalScore > 0) {
         scores.push(gameTotalScore)
         totalScore += gameTotalScore
       }
 
       // 逐洞统计
-      if (game.holes) {
+      if (Array.isArray(game.holes) && game.holes.length > 0) {
         game.holes.forEach(hole => {
+          if (!hole || !hole.hole || !hole.par) return
           const score = this.getStrokesValue(playerScores[hole.hole])
           if (score > 0) {
             totalHoles++
@@ -116,6 +140,15 @@ Page({
             }
           }
         })
+      } else if (game.statistics && game.statistics[player.id]) {
+        const st = game.statistics[player.id]
+        totalHoles += st.holesPlayed || 0
+        totalToPar += st.toPar || 0
+        distribution.eagles += st.eagles || 0
+        distribution.birdies += st.birdies || 0
+        distribution.pars += st.pars || 0
+        distribution.bogeys += st.bogeys || 0
+        distribution.doubles += (st.doubleBogeys || 0) + (st.others || 0)
       }
     })
 
@@ -146,6 +179,8 @@ Page({
 
     // 短杆统计
     const puttsPerHole = totalHoles > 0 ? (totalPutts / totalHoles).toFixed(2) : '-'
+    const puttsPerHoleNum = parseFloat(puttsPerHole)
+    const puttsProgress = !isNaN(puttsPerHoleNum) ? Math.max(0, Math.min(100, Math.round((puttsPerHoleNum / 5) * 100))) : 0
     const girPct = totalHoles > 0 ? Math.round((totalGIR / totalHoles) * 100) : '-'
 
     // 计算开球上球道率（简化：假设4杆洞和5杆洞，杆数<=标准杆-2为上球道）
@@ -159,7 +194,7 @@ Page({
 
     // 最近趋势（最近10场）
     const recentTrend = games.slice(-10).map((game) => {
-      const player = game.players?.find(p => p.id === me.id) || game.players?.[0]
+      const player = gameCompleteness.getPlayer(game)
       const toPar = this.getGameToPar(game, player)
       // 兼容老数据：使用 timestamp，如果没有则使用 endTime，如果都没有使用当前时间
       const timestamp = game.timestamp || game.endTime || Date.now()
@@ -186,6 +221,7 @@ Page({
     })
 
     this.setData({
+      unlocks: this.buildUnlocks(games.length),
       stats: {
         totalGames: games.length,
         avgScore,
@@ -194,6 +230,7 @@ Page({
         distribution: distributionPct,
         shortGame: {
           puttsPerHole,
+          puttsProgress,
           girPct,
           scramblePct,
           sandSaves
@@ -205,10 +242,28 @@ Page({
     })
   },
 
+  buildUnlocks(totalGames) {
+    const count = parseInt(totalGames, 10) || 0
+    const build = function(required) {
+      return {
+        required: required,
+        unlocked: count >= required,
+        remain: Math.max(0, required - count)
+      }
+    }
+    return {
+      overview: build(1),
+      trend: build(3),
+      shortGame: build(5),
+      driving: build(8),
+      handicap: build(10)
+    }
+  },
+
   getCurrentPlayer(games) {
     // 尝试找到标记为isMe的球员
     for (const game of games) {
-      const me = game.players?.find(p => p.isMe)
+      const me = game.players?.find(p => p && p.isMe)
       if (me) return me
     }
     // 如果没有找到，返回第一个球员
@@ -273,9 +328,9 @@ Page({
     return suggestions
   },
 
-  goToScorecard() {
-    wx.switchTab({
-      url: '/pages/scorecard/scorecard'
+  startNewGame() {
+    wx.navigateTo({
+      url: '/package-courses/pages/new-game/step1-course/step1-course'
     })
   }
 })

@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`step1-course page nearby-course data should match snapshot 1`] = `
+{
+  "recommendedCourse": {
+    "distanceFormatted": "140m",
+    "id": "c1",
+    "matchConfidence": {
+      "level": "high",
+      "text": "高匹配",
+    },
+    "totalDistanceFormatted": "7.0k",
+  },
+  "selectedCourseId": "c1",
+}
+`;

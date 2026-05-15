@@ -7,17 +7,63 @@
   box-sizing: border-box;
 }
 
+.empty-state {
+  flex: 1;
+  min-height: 70vh;
+  padding: 120rpx 48rpx;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.empty-scorecard-icon {
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 42rpx;
+  margin-bottom: 32rpx;
+  background:
+    linear-gradient(90deg, transparent 31%, rgba(255,255,255,0.72) 31%, rgba(255,255,255,0.72) 34%, transparent 34%, transparent 65%, rgba(255,255,255,0.72) 65%, rgba(255,255,255,0.72) 68%, transparent 68%),
+    linear-gradient(0deg, transparent 31%, rgba(255,255,255,0.72) 31%, rgba(255,255,255,0.72) 34%, transparent 34%, transparent 65%, rgba(255,255,255,0.72) 65%, rgba(255,255,255,0.72) 68%, transparent 68%),
+    linear-gradient(135deg, #2c8f4e 0%, #1b5e20 100%);
+  box-shadow: 0 18rpx 40rpx rgba(44, 143, 78, 0.22);
+}
+
+.empty-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 0;
+}
+
+.empty-subtitle {
+  font-size: 27rpx;
+  color: var(--text-secondary);
+  margin-top: 14rpx;
+  line-height: 1.5;
+}
+
+.empty-action-btn {
+  margin-top: 42rpx;
+  width: 320rpx;
+  height: 84rpx;
+  border-radius: 42rpx;
+  font-size: 30rpx;
+}
+
+.empty-action-btn::after {
+  border: none;
+}
+
 /* 可滚动内容区域 - flex自适应 */
 .content-area {
   flex: 1;
-  padding: 16rpx 16rpx 32rpx 16rpx;
+  padding: 16rpx 16rpx 20rpx;
   overflow-y: auto;
   box-sizing: border-box;
 }
 
 /* 底部留白 - 在内容区和按钮之间创建空间 */
 .bottom-spacer {
-  display: none;
+  height: 260rpx;
 }
 
 /* 底部操作栏 - sticky定位在页面底部 */
@@ -49,7 +95,7 @@
 .hole-nav {
   display: flex;
   align-items: center;
-  gap: 20rpx;
+  gap: 14rpx;
 }
 
 .header-right {
@@ -62,42 +108,110 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 18rpx;
 }
 
 .course-info-left {
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.course-info-left .section-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .scorecard-actions {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 16rpx;
+  gap: 12rpx;
+  flex-wrap: nowrap;
+}
+
+.player-card-actions {
+  gap: 10rpx;
+}
+
+/* 统一按钮体系：避免出现“又宽又瘪”的不一致样式 */
+.btn-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999rpx;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  box-sizing: border-box;
+  border: none;
+  flex-shrink: 0;
+}
+
+.btn-pill::after {
+  border: none;
+}
+
+.btn-pill:active {
+  opacity: 0.9;
+  transform: translateY(1rpx);
+}
+
+.btn-pill-xs {
+  height: 52rpx;
+  padding: 0 20rpx;
+  font-size: 24rpx;
+}
+
+.btn-pill-sm {
+  height: 60rpx;
+  padding: 0 24rpx;
+  font-size: 24rpx;
+}
+
+.btn-pill-lg {
+  height: 88rpx;
+  padding: 0 28rpx;
+  font-size: 30rpx;
 }
 
 .finish-game-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background: #f44336;
   color: #fff;
-  font-size: 26rpx;
-  padding: 16rpx 24rpx;
-  border-radius: 30rpx;
-  border: none;
+  min-width: 152rpx;
   margin: 0;
-  box-sizing: border-box;
-  line-height: 1;
 }
 
-.finish-game-btn::after {
-  border: none;
+.undo-score-btn {
+  width: 100%;
+  min-width: 0;
+  height: 78rpx;
+  font-size: 27rpx;
+  color: #28613f;
+  background: #eef7f1;
+  border: 1rpx solid #d2e8db;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.undo-score-btn.disabled {
+  color: #a7aca8;
+  background: #f4f5f4;
+  border-color: #ebeeec;
+}
+
+.action-finish-btn {
+  width: 100%;
+  min-width: 0;
+  height: 92rpx;
+  font-size: 32rpx;
 }
 
 .nav-btn {
-  width: 56rpx;
-  height: 56rpx;
+  width: 64rpx;
+  height: 64rpx;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -117,12 +231,33 @@
   color: white;
 }
 
+.hole-meter {
+  min-width: 96rpx;
+  height: 86rpx;
+  border-radius: 18rpx;
+  background: #f0f7f2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 0 1rpx #d9eadd;
+}
+
 .hole-number {
-  font-size: 48rpx;
+  font-size: 40rpx;
   font-weight: 700;
   color: var(--primary);
-  min-width: 60rpx;
+  min-width: 0;
   text-align: center;
+  line-height: 1;
+}
+
+.hole-meter-par {
+  margin-top: 6rpx;
+  font-size: 20rpx;
+  color: #557063;
+  font-weight: 600;
+  line-height: 1;
 }
 
 .hole-info {
@@ -383,6 +518,9 @@
   overflow-y: hidden;
   white-space: nowrap;
   -webkit-overflow-scrolling: touch;
+  background: #f7faf8;
+  border-radius: 14rpx;
+  box-shadow: inset 0 0 0 1rpx #e7eee9;
 }
 
 /* 表格右侧留白，确保最后一列完整显示 */
@@ -827,6 +965,13 @@
   background: #fff;
   border-radius: 16rpx;
   box-sizing: border-box;
+  box-shadow: 0 8rpx 24rpx rgba(31, 52, 38, 0.06);
+}
+
+.header-card {
+  padding: 22rpx;
+  background: linear-gradient(135deg, #ffffff 0%, #eef8f1 100%);
+  border: 1rpx solid #e5f0e8;
 }
 
 .card:last-child {
@@ -850,34 +995,42 @@
   line-height: 56rpx;
 }
 
-.add-player-btn {
+.section-title-block {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.section-title-block .section-title {
+  line-height: 1.2;
+}
+
+.section-subtitle {
+  margin-top: 6rpx;
+  font-size: 22rpx;
+  color: #748171;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.add-player-btn {
   gap: 6rpx;
-  padding: 16rpx 16rpx;
+  min-width: 120rpx;
   background: linear-gradient(135deg, #2c8f4e 0%, #1e6b3a 100%);
-  border-radius: 32rpx;
-  border: none;
   margin: 0;
-  line-height: 1;
   box-shadow: 0 3rpx 10rpx rgba(44, 143, 78, 0.3);
 }
 
-.add-player-btn::after {
-  border: none;
-}
-
 .add-player-icon {
-  font-size: 28rpx;
+  font-size: 26rpx;
   color: #fff;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .add-player-text {
-  font-size: 26rpx;
+  font-size: 24rpx;
   color: #fff;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .score-display {
@@ -933,9 +1086,10 @@
   display: table-cell;
   padding: 10rpx 12rpx;
   text-align: center;
-  border: 1rpx solid var(--border);
+  border: 1rpx solid #e6ede8;
   min-width: 44rpx;
   vertical-align: middle;
+  background: #fff;
 }
 
 .score-grid.transposed .label-cell {
@@ -950,6 +1104,37 @@
 .score-grid.transposed .grid-row.header .label-cell {
   background: var(--primary);
   color: white;
+}
+
+/* 冻结前两行：球员名行 + 杆数行 */
+.score-grid.transposed .sticky-header-row {
+  position: sticky;
+  top: 0;
+  z-index: 12;
+}
+
+.score-grid.transposed .sticky-header-row .grid-cell {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary-dark);
+}
+
+.score-grid.transposed .sticky-total-row {
+  position: sticky;
+  top: 84rpx;
+  z-index: 11;
+}
+
+.score-grid.transposed .sticky-total-row .grid-cell {
+  background: #e8f5e9;
+}
+
+.score-grid.transposed .sticky-header-row .label-cell {
+  z-index: 14;
+}
+
+.score-grid.transposed .sticky-total-row .label-cell {
+  z-index: 13;
 }
 
 .score-grid.transposed .grid-cell.hole-label {
@@ -1010,6 +1195,19 @@
   background: rgba(44, 143, 78, 0.1);
 }
 
+.score-grid.transposed .current-row .grid-cell {
+  background: #f0f8f2;
+}
+
+.score-grid.transposed .current-row .hole-label {
+  background: #2c8f4e;
+  color: #fff;
+}
+
+.score-grid.transposed .current-row .hole-par {
+  color: rgba(255, 255, 255, 0.86);
+}
+
 .score-grid.transposed .cell-content {
   display: flex;
   flex-direction: column;
@@ -1029,6 +1227,7 @@
 /* 记分格可点击 */
 .score-grid.transposed .grid-cell[bindtap] {
   cursor: pointer;
+  min-height: 72rpx;
 }
 
 .score-grid.transposed .grid-cell[bindtap]:active {
@@ -1050,6 +1249,12 @@
 .score-to-par {
   font-size: 28rpx;
   font-weight: 600;
+  display: inline-flex;
+  min-width: 52rpx;
+  min-height: 52rpx;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12rpx;
 }
 
 .to-par-under {
@@ -1125,15 +1330,34 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 30rpx 40rpx;
+  padding: 28rpx 34rpx;
   background: white;
   border-bottom: 1rpx solid #e5e5ea;
+  gap: 20rpx;
+}
+
+.score-title-stack,
+.modal-title-stack {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
 }
 
 .score-modal-title {
-  font-size: 34rpx;
+  font-size: 32rpx;
   font-weight: 600;
   color: #000;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.score-modal-subtitle,
+.modal-subtitle {
+  margin-top: 6rpx;
+  font-size: 23rpx;
+  color: #687583;
+  font-weight: 500;
 }
 
 .score-modal-close {
@@ -1141,123 +1365,198 @@
   color: #8e8e93;
   line-height: 1;
   padding: 0 10rpx;
+  flex-shrink: 0;
 }
 
 .score-modal-body {
-  padding: 40rpx;
+  padding: 28rpx 28rpx calc(34rpx + env(safe-area-inset-bottom));
   background: #f2f2f7;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   flex: 1;
 }
 
-/* 简化成绩选择器 */
-.score-selector-simple {
-  margin-bottom: 30rpx;
-}
-
-.selector-label {
-  display: block;
-  font-size: 26rpx;
-  color: #8e8e93;
-  margin-bottom: 16rpx;
-}
-
-.score-options-scroll {
-  width: 100%;
-}
-
-.score-options {
+.entry-mode-switch {
   display: flex;
-  gap: 12rpx;
-  overflow-x: auto;
-  padding-bottom: 10rpx;
+  gap: 10rpx;
+  margin-bottom: 18rpx;
 }
 
-.score-option {
-  min-width: 120rpx;
+.entry-mode-switch.compact {
+  margin-bottom: 14rpx;
+}
+
+.entry-mode-chip {
+  flex: 1;
+  min-height: 68rpx;
+  border-radius: 16rpx;
+  border: 1rpx solid #d9e4db;
+  background: #ffffff;
+  color: #51606d;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20rpx 16rpx;
-  background: white;
-  border-radius: 16rpx;
-  gap: 8rpx;
-  border: 2rpx solid transparent;
+  justify-content: center;
+  padding: 8rpx 14rpx;
+  box-sizing: border-box;
 }
 
-.score-option.selected {
-  border-color: #007aff;
-  background: #e3f2fd;
+.entry-mode-chip.active {
+  background: #2c8f4e;
+  border-color: #2c8f4e;
+  color: #ffffff;
 }
 
-.score-option.birdie.selected {
-  border-color: #2196f3;
-  background: #e3f2fd;
+.entry-mode-title {
+  font-size: 25rpx;
+  font-weight: 700;
+  line-height: 1.15;
 }
 
-.score-option.par.selected {
-  border-color: #4caf50;
-  background: #e8f5e9;
+.entry-mode-note {
+  margin-top: 4rpx;
+  font-size: 19rpx;
+  font-weight: 500;
+  line-height: 1.15;
+  opacity: 0.86;
 }
 
-.score-option.bogey.selected {
-  border-color: #ff9800;
-  background: #fff3e0;
-}
-
-.score-value {
-  font-size: 40rpx;
-  font-weight: 600;
-  color: #000;
-}
-
-.score-tag {
-  font-size: 20rpx;
-  color: #8e8e93;
-}
-
-/* 简化推杆选择 */
-.simple-putts {
-  background: white;
-  border-radius: 16rpx;
-  padding: 24rpx;
+/* 步进式录入 */
+.stepper-panel {
   margin-bottom: 30rpx;
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 28rpx 24rpx 24rpx;
+  box-shadow: inset 0 0 0 1rpx #edf2ee;
 }
 
-.simple-label {
-  display: block;
-  font-size: 26rpx;
-  color: #8e8e93;
+.stepper-row {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  margin-bottom: 24rpx;
+  gap: 12rpx;
+}
+
+.stepper-row:last-of-type {
   margin-bottom: 16rpx;
 }
 
-.simple-putts-options {
-  display: flex;
-  gap: 16rpx;
-  justify-content: space-around;
+.stepper-label {
+  min-width: 0;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #4b5563;
+  line-height: 1.2;
+  text-align: center;
 }
 
-.simple-putt-btn {
-  width: 80rpx;
-  height: 80rpx;
+.stepper-control {
+  display: flex;
+  align-items: center;
+  gap: 14rpx;
+  justify-content: center;
+  width: 100%;
+}
+
+.stepper-btn {
+  width: 86rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  border-radius: 999rpx;
+  border: 1rpx solid #d7e4db;
+  background: #fff;
+  color: #1f2937;
+  font-size: 30rpx;
+  font-weight: 700;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+  flex: 0 0 86rpx;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  line-height: 1 !important;
+}
+
+.stepper-btn::after {
+  border: none;
+}
+
+.stepper-btn.meter {
+  background: #f3f7f4;
+  border-color: #d9e6dd;
+  font-size: 40rpx;
+  font-weight: 600;
+  flex-basis: 92rpx;
+  width: 92rpx;
+}
+
+.stepper-btn.meter.plus {
+  color: #1a7f45;
+}
+
+.stepper-btn.meter.minus {
+  color: #8a4b1f;
+}
+
+.stepper-value {
+  min-width: 104rpx;
+  height: 70rpx;
+  border-radius: 14rpx;
+  background: #f4f8f5;
+  color: #111827;
+  font-size: 34rpx;
+  font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f2f2f7;
-  border-radius: 50%;
-  font-size: 32rpx;
-  font-weight: 500;
-  color: #000;
+  box-sizing: border-box;
+  padding: 0 12rpx;
 }
 
-.simple-putt-btn.selected {
-  background: #007aff;
-  color: white;
+.stepper-value.large {
+  min-width: 158rpx;
+  font-size: 52rpx;
+  height: 88rpx;
+  border-radius: 16rpx;
+  background: linear-gradient(180deg, #f6fbf7 0%, #edf7f0 100%);
 }
 
-.simple-putt-btn:active {
-  transform: scale(0.95);
+.stepper-row.score .stepper-control {
+  gap: 16rpx;
+}
+
+.stepper-row.putt {
+  margin-bottom: 18rpx;
+}
+
+.stepper-summary {
+  font-size: 24rpx;
+  color: #4c5c6a;
+  background: #f2f6f4;
+  border-radius: 12rpx;
+  padding: 14rpx 18rpx;
+}
+
+.quick-diff-controls {
+  margin-top: 14rpx;
+  gap: 12rpx;
+}
+
+.quick-diff-btn {
+  flex: 1;
+  height: 58rpx;
+  line-height: 58rpx;
+  border-radius: 999rpx;
+  border: 1rpx solid #d9e4db;
+  background: #fff;
+  color: #2f3842;
+  font-size: 26rpx;
+  font-weight: 600;
+  padding: 0;
 }
 
 /* 自定义输入框 */
@@ -1935,23 +2234,23 @@
 
 /* 拍计分卡按钮 */
 .btn-ocr-scorecard {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 6rpx;
-  padding: 16rpx 20rpx;
+  gap: 4rpx;
+  min-width: 150rpx;
   background: #2c8f4e;
-  border-radius: 30rpx;
   color: #fff;
-  flex-shrink: 0;
-  box-sizing: border-box;
 }
 
 .btn-ocr-scorecard text {
-  font-size: 24rpx;
+  font-size: 22rpx;
   font-weight: 500;
   line-height: 1;
+}
+
+.btn-batch-entry {
+  min-width: 132rpx;
+  background: #ffffff;
+  color: #2c8f4e;
+  border: 1rpx solid #2c8f4e;
 }
 
 /* ========== OCR校对弹窗样式 ========== */
@@ -1983,6 +2282,7 @@
   max-width: 100%;
   max-height: 80vh;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .large-modal {
@@ -1993,20 +2293,23 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 24rpx 16rpx;
+  padding: 24rpx 24rpx;
   border-bottom: 1rpx solid #eee;
+  gap: 18rpx;
 }
 
 .modal-title {
   font-size: 32rpx;
   font-weight: 600;
   color: #333;
+  line-height: 1.15;
 }
 
 .modal-close {
   font-size: 40rpx;
   color: #999;
   padding: 0 10rpx;
+  flex-shrink: 0;
 }
 
 .modal-body {
@@ -2053,6 +2356,132 @@
   height: auto !important;
   min-height: 0 !important;
   vertical-align: middle !important;
+}
+
+/* 批量录入弹窗 */
+.batch-entry-modal {
+  width: 94vw;
+  max-width: 720rpx;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.batch-entry-modal .modal-body {
+  flex: 1;
+  max-height: none;
+  overflow-y: auto;
+  padding: 18rpx 16rpx 14rpx;
+  -webkit-overflow-scrolling: touch;
+}
+
+.batch-entry-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12rpx;
+  padding: 4rpx 2rpx;
+}
+
+.batch-entry-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: auto;
+  min-height: 300rpx;
+  padding: 16rpx 14rpx 14rpx;
+  background: #f8faf8;
+  border: 1rpx solid #e6efe8;
+  border-radius: 12rpx;
+  box-sizing: border-box;
+  white-space: normal;
+}
+
+.batch-player {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  min-width: 0;
+  margin-bottom: 10rpx;
+  width: 100%;
+}
+
+.batch-player-main {
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+
+.batch-avatar {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.batch-avatar-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 24rpx;
+  font-weight: 700;
+}
+
+.batch-name {
+  font-size: 26rpx;
+  color: #2f3842;
+  font-weight: 600;
+  max-width: 320rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.batch-current {
+  font-size: 21rpx;
+  color: #7a8693;
+}
+
+.batch-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 9rpx;
+  width: 100%;
+}
+
+.batch-group-title {
+  font-size: 22rpx;
+  color: #5f6d79;
+  font-weight: 600;
+  margin-bottom: -4rpx;
+}
+
+.batch-stepper-control {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.batch-stepper-control.meter .stepper-btn {
+  width: 64rpx;
+  height: 56rpx;
+  line-height: 56rpx;
+  font-size: 32rpx;
+  flex-basis: 64rpx;
+}
+
+.batch-stepper-control.meter .stepper-value {
+  flex: 1;
+  min-width: 0;
+  height: 56rpx;
+  font-size: 29rpx;
+}
+
+.batch-quick-controls {
+  margin-top: -2rpx;
 }
 
 .holes-grid {
@@ -2278,12 +2707,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20rpx;
+  margin-bottom: 18rpx;
+  gap: 16rpx;
 }
 
 .header-actions {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .hole-par-hint {
@@ -2298,33 +2729,37 @@
 .players-horizontal {
   display: flex;
   justify-content: space-between;
-  gap: 12rpx;
-  padding: 16rpx 0;
+  gap: 10rpx;
+  padding: 8rpx 0 4rpx;
 }
 
 .player-input-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12rpx;
+  gap: 10rpx;
   flex: 1;
   min-width: 0;
+  padding: 12rpx 6rpx;
+  border-radius: 14rpx;
+  background: #f7faf7;
+  box-shadow: inset 0 0 0 1rpx #edf3ee;
 }
 
 .player-avatar-wrap {
   position: relative;
-  width: 100rpx;
-  height: 100rpx;
+  width: 92rpx;
+  height: 92rpx;
 }
 
 .player-avatar-lg {
-  width: 100rpx;
-  height: 100rpx;
+  width: 92rpx;
+  height: 92rpx;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 40rpx;
+  font-size: 36rpx;
   color: #fff;
   font-weight: 600;
 }
@@ -2366,10 +2801,10 @@
 }
 
 .player-name-lg {
-  font-size: 26rpx;
+  font-size: 24rpx;
   color: #333;
   text-align: center;
-  max-width: 140rpx;
+  max-width: 128rpx;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -2424,14 +2859,6 @@
   width: 100%;
   background: linear-gradient(135deg, #2c8f4e 0%, #1e6b3a 100%);
   color: #fff;
-  font-size: 30rpx;
-  font-weight: 500;
-  padding: 24rpx 0;
-  border-radius: 16rpx;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   gap: 8rpx;
 }
 
@@ -2478,18 +2905,9 @@
 }
 
 .manual-add-btn {
-  padding: 0 24rpx;
-  height: 88rpx;
-  line-height: 88rpx;
+  min-width: 110rpx;
   background: #f5f5f5;
   color: #333;
-  font-size: 28rpx;
-  border-radius: 12rpx;
-  border: none;
-}
-
-.manual-add-btn::after {
-  border: none;
 }
 
 /* ========== Par数据引导弹窗 ========== */
@@ -2522,38 +2940,54 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 24rpx 32rpx;
-  background: #f5f5f5;
-  border-radius: 16rpx;
-  border: none;
-  font-size: 30rpx;
-  color: #333;
+  justify-content: center;
+  min-height: 156rpx;
+  padding: 20rpx 24rpx;
+  background: #f7f8f9;
+  border-radius: 22rpx;
+  border: 1rpx solid #e7eaee;
+  color: #2f3842;
   position: relative;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.par-guide-btn:active {
+  opacity: 0.9;
+  transform: translateY(1rpx);
 }
 
 .par-guide-btn.primary {
-  background: linear-gradient(135deg, #2c8f4e, #1a6b38);
+  background: linear-gradient(135deg, #2c8f4e 0%, #1c6f3c 100%);
   color: #fff;
+  border-color: transparent;
 }
 
 .par-guide-btn.secondary {
   background: #fff;
-  border: 2rpx solid #e0e0e0;
+  border: 1rpx solid #e1e6ec;
 }
 
 .par-guide-btn .btn-icon {
-  font-size: 40rpx;
-  margin-bottom: 8rpx;
+  font-size: 38rpx;
+  margin-bottom: 10rpx;
+}
+
+.par-guide-btn .btn-title {
+  font-size: 31rpx;
+  font-weight: 700;
+  line-height: 1.2;
 }
 
 .par-guide-btn .btn-desc {
-  font-size: 22rpx;
-  color: #999;
-  margin-top: 4rpx;
+  font-size: 24rpx;
+  color: #6f7b88;
+  margin-top: 8rpx;
+  line-height: 1.35;
 }
 
 .par-guide-btn.primary .btn-desc {
-  color: rgba(255,255,255,0.8);
+  color: rgba(255, 255, 255, 0.86);
 }
 
 /* ========== Par输入弹窗 ========== */
@@ -2826,11 +3260,7 @@
 }
 
 .pending-btn {
-  padding: 12rpx 28rpx;
-  font-size: 26rpx;
-  border-radius: 8rpx;
-  border: none;
-  font-weight: 500;
+  min-width: 96rpx;
 }
 
 .pending-btn.confirm {

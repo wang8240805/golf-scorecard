@@ -23,10 +23,11 @@
         <view class="header-left">
           <view class="recommended-badge">推荐球场</view>
         </view>
-        <view class="hero-distance" wx:if="{{recommendedCourse.distanceFormatted}}">
-          <text class="distance-value">{{recommendedCourse.distanceFormatted}}</text>
+        <view class="hero-distance match-distance {{recommendedCourse.matchConfidence.level}}" wx:if="{{recommendedCourse.matchConfidence}}">
+          <text class="distance-value">{{recommendedCourse.matchConfidence.text}}</text>
         </view>
       </view>
+      <text class="match-hint" wx:if="{{recommendedCourse.matchConfidence && recommendedCourse.matchConfidence.level === 'low'}}">定位匹配度较低，建议点“其他球场”搜索或手动新增</text>
 
       <!-- 球场名称区域 -->
       <view class="hero-title-row">
@@ -67,17 +68,32 @@
               <text class="hole-label">洞</text>
               <text class="hole-num" wx:for="{{recommendedCourse.holes}}" wx:key="hole" wx:if="{{item.hole <= 9}}">{{item.hole}}</text>
             </view>
-            <view class="holes-row">
-              <text class="hole-par" wx:for="{{recommendedCourse.holes}}" wx:key="hole" wx:if="{{item.hole <= 9}}">{{item.par}}</text>
+            <view class="holes-row holes-par-row">
+              <text class="hole-label">Par</text>
+              <text class="hole-par editable"
+                    wx:for="{{recommendedCourse.holes}}"
+                    wx:for-index="index"
+                    wx:key="hole"
+                    wx:if="{{item.hole <= 9}}"
+                    bindtap="editCoursePar"
+                    data-index="{{index}}">{{item.par}}</text>
             </view>
             <view class="holes-row holes-header">
               <text class="hole-label">洞</text>
               <text class="hole-num" wx:for="{{recommendedCourse.holes}}" wx:key="hole" wx:if="{{item.hole > 9}}">{{item.hole}}</text>
             </view>
-            <view class="holes-row">
-              <text class="hole-par" wx:for="{{recommendedCourse.holes}}" wx:key="hole" wx:if="{{item.hole > 9}}">{{item.par}}</text>
+            <view class="holes-row holes-par-row">
+              <text class="hole-label">Par</text>
+              <text class="hole-par editable"
+                    wx:for="{{recommendedCourse.holes}}"
+                    wx:for-index="index"
+                    wx:key="hole"
+                    wx:if="{{item.hole > 9}}"
+                    bindtap="editCoursePar"
+                    data-index="{{index}}">{{item.par}}</text>
             </view>
           </view>
+          <text class="holes-edit-hint">点某个 Par 数字可手动校准该洞标准杆</text>
         </block>
 
         <!-- 无 holes 数据时显示提示 -->
@@ -109,6 +125,7 @@
 
   <!-- 底部下一步按钮 -->
   <view class="action-bar-fixed">
+    <button class="btn-temp-course" bindtap="useTemporaryCourse">先用临时 Par72 开局</button>
     <button class="btn-primary-large" bindtap="goNext">下一步</button>
   </view>
 
@@ -232,7 +249,7 @@
   <view class="edit-par-modal {{showEditParModal ? 'show' : ''}}" wx:if="{{showEditParModal}}" bindtap="hideEditParModal">
     <view class="edit-par-content" catchtap="preventHide">
       <view class="edit-par-header">
-        <text class="edit-par-title">修改洞 {{editingIndex + 1}} PAR值</text>
+        <text class="edit-par-title">修改第 {{editingHoleNumber}} 洞 Par</text>
       </view>
       <view class="edit-par-options">
         <view class="par-option {{currentPar === 3 ? 'active' : ''}}" bindtap="confirmSelectPar" data-par="3">

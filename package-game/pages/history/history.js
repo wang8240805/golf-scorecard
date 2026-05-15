@@ -1,3 +1,5 @@
+const gameCompleteness = require('../../../utils/game-completeness.js')
+
 Page({
   data: {
     games: [],
@@ -34,6 +36,12 @@ Page({
     }
   },
 
+  startNewGame() {
+    wx.navigateTo({
+      url: '/package-courses/pages/new-game/step1-course/step1-course'
+    })
+  },
+
   loadData() {
     const courses = wx.getStorageSync('courses') || []
     const currentGame = wx.getStorageSync('currentGame')
@@ -56,7 +64,7 @@ Page({
       hasMore: games.length > this.data.pageSize
     })
 
-    this.calculateOverview(games.filter(g => g.completed))
+    this.calculateOverview(gameCompleteness.filterAnalyzableGames(games))
   },
 
   formatGames(games) {
@@ -70,21 +78,87 @@ Page({
       }
       const playerResults = this.calculatePlayerResults(game)
       const stats = this.aggregateStats(game)
+      const summary = this.buildGameSummary(game)
 
       return {
         ...game,
         date: `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`,
         playerResults,
         stats,
+        myScore: summary.myScore,
+        holesPlayed: summary.holesPlayed,
+        holesTotal: summary.holesTotal,
+        toParText: summary.toParText,
+        toParClass: summary.toParClass,
+        isCompleted: summary.isCompleted,
+        statusText: summary.statusText,
+        statusClass: summary.statusClass,
+        incompleteTip: summary.incompleteTip,
         expanded: false
       }
     })
+  },
+
+  buildGameSummary(game) {
+    const player = gameCompleteness.getPlayer(game)
+    const holes = Array.isArray(game.holes) && game.holes.length > 0 ? game.holes : []
+    const holeParMap = {}
+    holes.forEach(function(hole) {
+      if (hole && hole.hole) {
+        holeParMap[Number(hole.hole)] = Number(hole.par) || 4
+      }
+    })
+
+    let totalScore = 0
+    let holesPlayed = 0
+    let playedPar = 0
+
+    if (player && game.statistics && game.statistics[player.id] && game.statistics[player.id].totalScore > 0) {
+      const stat = game.statistics[player.id]
+      totalScore = stat.totalScore || 0
+      holesPlayed = stat.holesPlayed || 0
+      playedPar = stat.totalPar || 0
+    } else if (player && game.scores && game.scores[player.id]) {
+      const scores = game.scores[player.id]
+      Object.keys(scores).forEach(function(holeKey) {
+        const strokes = gameCompleteness.getStrokesValue(scores[holeKey])
+        if (strokes <= 0) return
+        const holeNum = Number(holeKey)
+        totalScore += strokes
+        holesPlayed++
+        playedPar += holeParMap[holeNum] || 4
+      })
+    }
+
+    const isCompleted = gameCompleteness.isCompletedGame(game)
+    const holesTotal = holes.length || 18
+    const toParValue = holesPlayed > 0 ? totalScore - playedPar : 0
+    const toParText = holesPlayed > 0
+      ? (toParValue === 0 ? 'E' : (toParValue > 0 ? '+' : '') + toParValue)
+      : '-'
+
+    return {
+      myScore: totalScore > 0 ? totalScore : '-',
+      holesPlayed: holesPlayed,
+      holesTotal: holesTotal,
+      toParText: toParText,
+      toParClass: holesPlayed > 0
+        ? (toParValue < 0 ? 'under' : (toParValue > 0 ? 'over' : 'even'))
+        : 'empty',
+      isCompleted: isCompleted,
+      statusText: isCompleted ? '已完成' : '未完成',
+      statusClass: isCompleted ? 'completed' : 'incomplete',
+      incompleteTip: isCompleted ? '' : '比赛未完成，可继续录入'
+    }
   },
 
   calculatePlayerResults(game) {
     if (!game.statistics) return []
 
     return game.players.map(player => {
+      if (!gameCompleteness.isPlayerRoundComplete(game, player.id)) {
+        return null
+      }
       const stats = game.statistics[player.id]
       const total = stats?.totalScore || 0
       const toPar = stats?.toPar || 0
@@ -98,7 +172,7 @@ Page({
         toParDisplay: toPar === 0 ? 'E' : toPar > 0 ? `+${toPar}` : toPar.toString(),
         toParClass: toPar < 0 ? 'under' : toPar > 0 ? 'over' : ''
       }
-    }).sort((a, b) => a.total - b.total)
+    }).filter(Boolean).sort((a, b) => a.total - b.total)
   },
 
   aggregateStats(game) {
@@ -106,7 +180,10 @@ Page({
 
     if (!game.statistics) return stats
 
-    Object.values(game.statistics).forEach(playerStats => {
+    const validIds = gameCompleteness.getValidScorePlayerIds(game)
+    Object.keys(game.statistics).forEach(playerId => {
+      if (validIds.indexOf(playerId) < 0) return
+      const playerStats = game.statistics[playerId]
       stats.eagles += playerStats.eagles || 0
       stats.birdies += playerStats.birdies || 0
       stats.pars += playerStats.pars || 0
@@ -130,7 +207,9 @@ Page({
       game.players.forEach(p => allPlayers.add(p.id))
 
       if (game.statistics) {
-        Object.values(game.statistics).forEach(stats => {
+        const validIds = gameCompleteness.getValidScorePlayerIds(game)
+        validIds.forEach(function(playerId) {
+          const stats = game.statistics[playerId]
           if (stats.totalScore) {
             totalScores += stats.totalScore
             scoreCount++

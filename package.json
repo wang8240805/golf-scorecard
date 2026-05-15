@@ -6,7 +6,17 @@
   "scripts": {
     "deploy": "node auto-deploy.js",
     "deploy:watch": "node auto-deploy.js --watch",
-    "deploy:all": "node auto-deploy.js --all"
+    "deploy:all": "node auto-deploy.js --all",
+    "test": "node scripts/test-agent.js",
+    "test:unit": "jest --runInBand",
+    "test:coverage": "jest --runInBand --coverage",
+    "test:update-snapshots": "node scripts/test-agent.js --update-snapshots",
+    "test:watch": "jest --watch",
+    "test:e2e:devtools": "node scripts/devtools-smoke.js",
+    "test:full": "npm run test:coverage && npm run test:e2e:devtools",
+    "test:closed-loop": "node scripts/closed-loop-agent.js",
+    "test:closed-loop:ff": "node scripts/closed-loop-agent.js --fail-fast",
+    "defects:report": "node scripts/defect-report.js"
   },
   "keywords": [
     "golf",
@@ -18,5 +28,9 @@
   "dependencies": {
     "@vant/weapp": "^1.11.7",
     "weui-miniprogram": "^1.2.4"
+  },
+  "devDependencies": {
+    "jest": "^30.4.2",
+    "miniprogram-automator": "^0.12.1"
   }
 }

@@ -1,11 +1,11 @@
 <view class="container">
   <!-- 当前城市 -->
   <view class="city-header flex-between">
-    <view>
+    <view class="city-main">
       <text class="city-name">{{userCity || '定位中...'}}</text>
       <text class="city-count">共 {{courses.length}} 个球场</text>
     </view>
-    <button class="ocr-btn" bindtap="openOcrScanner">📷 识别计分卡</button>
+    <button class="ocr-btn" bindtap="openOcrScanner">拍照识别</button>
   </view>
 
 
@@ -45,8 +45,9 @@
   <!-- 空状态 -->
   <view class="card empty-card" wx:if="{{filteredCourses.length === 0}}">
     <view class="empty-state">
-      <view class="empty-icon">⛳</view>
+      <view class="empty-icon course-empty-icon"></view>
       <text class="empty-text">暂无收藏或附近球场</text>
+      <button class="empty-action" bindtap="goToAllCourses">查看全部球场</button>
     </view>
   </view>
 
@@ -97,7 +98,7 @@
       <scroll-view class="modal-body" scroll-y>
         <view class="form-item">
           <text class="form-label">球场名称</text>
-          <input class="form-input" value="{{recognizedCourse.name}}" placeholder="请输入球场名称" bindinput="e => setData({ 'recognizedCourse.name': e.detail.value })" />
+          <input class="form-input" value="{{recognizedCourse.name}}" placeholder="请输入球场名称" bindinput="onRecognizedCourseNameInput" />
         </view>
         <view class="form-item">
           <text class="form-label">标准杆总数</text>

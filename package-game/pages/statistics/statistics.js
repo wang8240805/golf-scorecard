@@ -1,3 +1,5 @@
+const gameCompleteness = require('../../../utils/game-completeness.js')
+
 Page({
   data: {
     hasData: false,
@@ -14,33 +16,18 @@ Page({
     this.calculateStatistics()
   },
 
+  startNewGame() {
+    wx.navigateTo({
+      url: '/package-courses/pages/new-game/step1-course/step1-course'
+    })
+  },
+
   calculateStatistics() {
     const games = wx.getStorageSync('games') || []
-    // 只统计已完成且打满18洞的比赛
+    // 只统计当前用户18洞完整有效成绩
     const completedGames = games.filter(g => {
-      if (!g.completed) return false
-
-      // 检查当前用户是否完成全部18洞
-      const player = g.players?.find(p => p.isMe) || g.players?.[0]
-      if (!player) return false
-
-      // 新格式：player.scores数组
-      if (player.scores && Array.isArray(player.scores)) {
-        const validScores = player.scores.filter(s => s.strokes > 0)
-        return validScores.length >= 18
-      }
-      // 旧格式：game.scores对象
-      else if (g.scores && g.scores[player.id]) {
-        const scores = g.scores[player.id]
-        const validCount = Object.values(scores).filter(v => this.getStrokesValue(v) > 0).length
-        return validCount >= 18
-      }
-      // 兼容有statistics字段的情况
-      else if (g.statistics && g.statistics[player.id]) {
-        return g.statistics[player.id].holesPlayed >= 18
-      }
-
-      return false
+      const player = gameCompleteness.getPlayer(g)
+      return player && gameCompleteness.isPlayerRoundComplete(g, player.id)
     })
 
     if (completedGames.length < 1) {
@@ -175,17 +162,12 @@ Page({
 
   // 获取当前玩家ID（取第一个玩家作为"我"）
   getCurrentPlayerId(game) {
-    if (!game.players || game.players.length === 0) return null
-    // 默认取第一个玩家作为当前用户，后续可以优化为用户选择
-    return game.players[0].id
+    const player = gameCompleteness.getPlayer(game)
+    return player ? player.id : null
   },
 
   getStrokesValue(score) {
-    if (!score) return 0
-    if (typeof score === 'object') {
-      return parseInt(score.strokes) || 0
-    }
-    return parseInt(score) || 0
+    return gameCompleteness.getStrokesValue(score)
   },
 
   getGamePlayerSummary(game, playerId) {

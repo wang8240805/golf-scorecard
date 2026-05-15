@@ -2,6 +2,9 @@ const app = getApp()
 const analysisReport = require('../../../utils/analysis-report.js')
 const posterGenerator = require('../../../utils/poster-generator.js')
 const preferenceManager = require('../../../utils/preference-manager.js')
+const gameCompleteness = require('../../../utils/game-completeness.js')
+const DEFAULT_POSTER_STYLE = 'pro'
+const DEFAULT_POSTER_BG = 'night'
 
 Page({
   data: {
@@ -19,10 +22,12 @@ Page({
     ratingLabel: '',
     showPosterModal: false,
     showPosterPreview: false,
-    posterStyle: 'pro',
+    posterStyle: DEFAULT_POSTER_STYLE,
     posterImageUrl: '',
     showPlayerSelector: false, // 球员选择弹窗
-    posterBgType: 'default', // 海报背景类型: default/course/sunset/green/custom
+    currentPlayerSummary: null,
+    reportPlayerOptions: [],
+    posterBgType: DEFAULT_POSTER_BG, // 默认高级感背景
     customBgUrl: '', // 自定义背景图URL
     hasAdvancedStats: false, // 是否有高级数据
     advancedStats: null // 高级统计数据
@@ -31,14 +36,11 @@ Page({
   onLoad(options) {
     console.log('【report】onLoad, options:', options)
 
-    // 读取用户偏好的海报风格和背景
-    const preferredStyle = preferenceManager.getPreference('posterStyle', 'pro')
-    const preferredBgType = preferenceManager.getPreference('posterBgType', 'default')
-    const customBgUrl = preferenceManager.getPreference('customBgUrl', '')
+    // 海报改为默认风格直出（不再让用户选择）
     this.setData({
-      posterStyle: preferredStyle,
-      posterBgType: preferredBgType,
-      customBgUrl: customBgUrl
+      posterStyle: DEFAULT_POSTER_STYLE,
+      posterBgType: DEFAULT_POSTER_BG,
+      customBgUrl: ''
     })
 
     // 保存gameId到data供后续使用
@@ -55,10 +57,18 @@ Page({
         console.log('【report】eventChannel收到数据:', data)
         if (data && data.game) {
           const player = data.game.players?.find(p => p.isMe) || data.game.players?.[0]
+          if (!player || !gameCompleteness.isPlayerRoundComplete(data.game, player.id)) {
+            this.handleIncompleteReport()
+            return
+          }
+          const historyGames = gameCompleteness.filterAnalyzableGames(wx.getStorageSync('games') || [])
+          const report = data.report || analysisReport.generateGameReport(data.game, historyGames, player)
           this.setData({
             game: data.game,
             currentPlayer: player,
-            report: data.report || analysisReport.generateGameReport(data.game, [], player),
+            currentPlayerSummary: this.buildPlayerSummary(data.game, player),
+            reportPlayerOptions: this.buildReportPlayerOptions(data.game),
+            report: report,
             oneLineSummary: analysisReport.generateOneLineSummary(data.game, player),
             posterImageUrl: data.posterUrl || ''
           })
@@ -118,13 +128,21 @@ Page({
       const currentPlayer = game.players?.find(p => p.isMe) || game.players?.[0] || null
       console.log('【report】当前球员:', currentPlayer?.name, 'scores:', currentPlayer?.scores?.length)
 
-      const report = analysisReport.generateGameReport(game, historyGames, currentPlayer)
+      if (!currentPlayer || !gameCompleteness.isPlayerRoundComplete(game, currentPlayer.id)) {
+        this.handleIncompleteReport()
+        return
+      }
+
+      const analyzableHistory = gameCompleteness.filterAnalyzableGames(historyGames)
+      const report = analysisReport.generateGameReport(game, analyzableHistory, currentPlayer)
       console.log('【report】生成的report:', report ? JSON.stringify(report.summary) : 'null')
       console.log('【report】oneLineSummary:', analysisReport.generateOneLineSummary(game, currentPlayer))
 
       this.setData({
         game: game,
         currentPlayer: currentPlayer,
+        currentPlayerSummary: this.buildPlayerSummary(game, currentPlayer),
+        reportPlayerOptions: this.buildReportPlayerOptions(game),
         report: report,
         oneLineSummary: analysisReport.generateOneLineSummary(game, currentPlayer)
       }, () => {
@@ -134,6 +152,22 @@ Page({
     } else {
       console.log('【report】警告：未找到任何比赛数据')
     }
+  },
+
+  handleIncompleteReport() {
+    wx.showModal({
+      title: '暂不能复盘',
+      content: '复盘和数据分析只统计18洞完整成绩。请先补齐本场18洞记录，未打满的球员不会计入有效成绩。',
+      showCancel: false,
+      confirmText: '知道了',
+      success: () => {
+        wx.navigateBack({
+          fail: () => {
+            wx.switchTab({ url: '/pages/index/index' })
+          }
+        })
+      }
+    })
   },
 
   // 显示球员选择器
@@ -154,17 +188,70 @@ Page({
 
     const player = game.players.find(p => p.id === playerId)
     if (!player) return
+    if (!gameCompleteness.isPlayerRoundComplete(game, player.id)) {
+      wx.showToast({ title: '该球员未完成18洞', icon: 'none' })
+      return
+    }
 
-    const historyGames = wx.getStorageSync('games') || []
+    const historyGames = gameCompleteness.filterAnalyzableGames(wx.getStorageSync('games') || [])
     const report = analysisReport.generateGameReport(game, historyGames, player)
 
     this.setData({
       currentPlayer: player,
+      currentPlayerSummary: this.buildPlayerSummary(game, player),
       report: report,
       oneLineSummary: analysisReport.generateOneLineSummary(game, player),
       showPlayerSelector: false
     })
     this.calculateRating()
+  },
+
+  buildPlayerSummary(game, player) {
+    if (!game || !player) {
+      return { total: '-', toPar: '-', toParClass: '', toParText: '-' }
+    }
+    const stats = game.statistics && game.statistics[player.id]
+    const total = stats && stats.totalScore > 0 ? stats.totalScore : this.calculatePlayerTotal(game, player.id)
+    const toPar = stats && stats.toPar !== undefined ? stats.toPar : this.calculatePlayerToPar(game, player.id)
+    return {
+      total: total > 0 ? total : '-',
+      toPar: toPar,
+      toParClass: toPar < 0 ? 'under' : toPar > 0 ? 'over' : '',
+      toParText: total > 0 ? (toPar === 0 ? 'E' : (toPar > 0 ? '+' : '') + toPar) : '-'
+    }
+  },
+
+  buildReportPlayerOptions(game) {
+    if (!game || !Array.isArray(game.players)) return []
+    return game.players.map(player => {
+      const summary = this.buildPlayerSummary(game, player)
+      return {
+        ...player,
+        totalDisplay: summary.total,
+        toParText: summary.toParText,
+        toParClass: summary.toParClass,
+        validRound: gameCompleteness.isPlayerRoundComplete(game, player.id)
+      }
+    })
+  },
+
+  calculatePlayerTotal(game, playerId) {
+    const scores = game && game.scores && game.scores[playerId]
+    if (!scores) return 0
+    return Object.values(scores).reduce((sum, score) => {
+      return sum + gameCompleteness.getStrokesValue(score)
+    }, 0)
+  },
+
+  calculatePlayerToPar(game, playerId) {
+    const scores = game && game.scores && game.scores[playerId]
+    const holes = game && Array.isArray(game.holes) ? game.holes : []
+    if (!scores || holes.length === 0) return 0
+    return holes.reduce((sum, hole) => {
+      const strokes = gameCompleteness.getStrokesValue(scores[hole.hole])
+      if (strokes <= 0) return sum
+      return sum + strokes - (hole.par || 4)
+    }, 0)
   },
 
   calculateRating() {
@@ -300,7 +387,8 @@ Page({
 
   // 显示海报样式选择
   showPosterOptions() {
-    this.setData({ showPosterModal: true })
+    // 简化流程：直接生成海报
+    this.generatePoster()
   },
 
   hidePosterModal() {
@@ -351,7 +439,7 @@ Page({
 
   // 生成海报
   async generatePoster() {
-    const { game, posterStyle, currentPlayer, posterBgType, customBgUrl } = this.data
+    const { game, currentPlayer } = this.data
     if (!game) {
       wx.showToast({ title: '暂无比赛数据', icon: 'none' })
       return
@@ -363,16 +451,20 @@ Page({
       wx.showToast({ title: '请选择球员', icon: 'none' })
       return
     }
+    if (!gameCompleteness.isPlayerRoundComplete(game, player.id)) {
+      wx.showToast({ title: '完成18洞后可生成海报', icon: 'none' })
+      return
+    }
 
     wx.showLoading({ title: '生成中...' })
 
     try {
       const posterUrl = await posterGenerator.generatePoster({
-        type: posterStyle,
+        type: DEFAULT_POSTER_STYLE,
         game,
         player,
-        bgType: posterBgType,
-        customBgUrl: customBgUrl,
+        bgType: DEFAULT_POSTER_BG,
+        customBgUrl: '',
         context: this
       })
 
@@ -381,10 +473,6 @@ Page({
         showPosterModal: false,
         showPosterPreview: true
       })
-
-      // 保存用户选择的海报风格
-      preferenceManager.setPreference('posterStyle', posterStyle)
-      preferenceManager.setPreference('posterBgType', posterBgType)
 
       wx.hideLoading()
     } catch (err) {
@@ -410,9 +498,9 @@ Page({
   regeneratePoster() {
     this.setData({
       showPosterPreview: false,
-      showPosterModal: true,
       posterImageUrl: ''
     })
+    this.generatePoster()
   },
 
   // 显示海报预览
@@ -420,7 +508,7 @@ Page({
     if (this.data.posterImageUrl) {
       this.setData({ showPosterPreview: true })
     } else {
-      this.showPosterOptions()
+      this.generatePoster()
     }
   },
 

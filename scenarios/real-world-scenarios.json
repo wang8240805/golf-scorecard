@@ -1,0 +1,37 @@
+[
+  {
+    "id": "RW-001",
+    "title": "18洞中途退出后恢复记分",
+    "type": "unit",
+    "command": "npm test",
+    "tags": ["scorecard", "resume", "core"]
+  },
+  {
+    "id": "RW-002",
+    "title": "附近球场推荐与排序稳定",
+    "type": "unit",
+    "command": "npm test",
+    "tags": ["course", "distance", "core"]
+  },
+  {
+    "id": "RW-003",
+    "title": "关键页面在开发者工具可启动",
+    "type": "devtools",
+    "command": "npm run test:e2e:devtools",
+    "tags": ["devtools", "smoke", "ui"]
+  },
+  {
+    "id": "RW-004",
+    "title": "云端同步文案回归",
+    "type": "unit",
+    "command": "npm test",
+    "tags": ["sync", "regression"]
+  },
+  {
+    "id": "RW-005",
+    "title": "完整用户旅程：组局-录分-完赛-统计链路",
+    "type": "unit",
+    "command": "npx jest --runInBand tests/pages/scorecard.full-flow.test.js",
+    "tags": ["scorecard", "full-flow", "core"]
+  }
+]

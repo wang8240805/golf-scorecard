@@ -1,113 +1,55 @@
-// 引入微信云开发 SDK
 const cloud = require('wx-server-sdk')
+const https = require('https')
 
-// 初始化云开发
 cloud.init()
 
-// 腾讯混元 API Key
-const hunyuanApiKey = process.env.HUNYUAN_API_KEY || '';
+const hunyuanApiKey = process.env.HUNYUAN_API_KEY || ''
 
-/**
- * 解析表格结构 - 全程AI直接识别，抛弃传统规则匹配
- */
-async function parseTableStructured(textDetections, imageBase64) {
-  const debugLog = [];
-  const log = (msg) => {
-    console.log(msg);
-    debugLog.push(msg);
-  };
+function extractJsonObject(text) {
+  if (!text) return null
+  const firstBrace = text.indexOf('{')
+  if (firstBrace < 0) return null
 
-  log(`[AI直接识别] 直接调用混元AI识别整张图片`);
-
-  // 直接调用混元AI多模态识别图片
-  try {
-    const aiResult = await fixWithAIForFullTable(imageBase64);
-    if (aiResult && aiResult.pars && Array.isArray(aiResult.pars)) {
-      // 自动修复长度：确保正好18个洞
-      let fixedPars = [...aiResult.pars];
-
-      // 如果少于18个，用默认值4补齐
-      while (fixedPars.length < 18) {
-        fixedPars.push(4);
-        log(`[AI自动修复] 缺少${18 - fixedPars.length + 1}个洞，补默认值4`);
-      }
-
-      // 如果多于18个，截断前18个
-      if (fixedPars.length > 18) {
-        fixedPars = fixedPars.slice(0, 18);
-        log(`[AI自动修复] 多出${fixedPars.length - 18}个洞，截断前18个`);
-      }
-
-      // 转换为洞格式
-      const aiHoles = fixedPars.map((par, i) => ({
-        hole: i + 1,
-        par: typeof par === 'number' ? par : 4,
-        source: 'ai'
-      }));
-      const aiTotal = aiHoles.reduce((s, h) => s + h.par, 0);
-      log(`[AI识别成功] 共${aiHoles.length}洞 总杆=${aiTotal} 结果: ${fixedPars.join(',')}`);
-      return {
-        holes: aiHoles,
-        confidence: 0.95,
-        source: 'AI直接识别图片',
-        debugInfo: {
-          log: debugLog,
-          holeCount: aiHoles.length,
-          totalPar: aiTotal,
-          aiReason: aiResult.reason
-        }
-      };
+  let depth = 0
+  let end = -1
+  for (let i = firstBrace; i < text.length; i++) {
+    if (text[i] === '{') depth++
+    if (text[i] === '}') depth--
+    if (depth === 0) {
+      end = i + 1
+      break
     }
-    log(`[AI识别失败] AI返回结果不对: ${JSON.stringify(aiResult)}`);
-    return {
-      holes: [],
-      confidence: 0,
-      source: 'AI识别失败',
-      debugInfo: {
-        log: debugLog,
-        totalPar: 0
-      }
-    };
-  } catch (err) {
-    log(`[AI调用失败] ${err.message}`);
-    return {
-      holes: [],
-      confidence: 0,
-      source: 'AI调用异常',
-      debugInfo: {
-        log: debugLog,
-        totalPar: 0
-      }
-    };
+  }
+  if (end < 0) return null
+
+  const raw = text.substring(firstBrace, end)
+    .replace(/```json\s*/g, '')
+    .replace(/```/g, '')
+
+  try {
+    return JSON.parse(raw)
+  } catch (e) {
+    return null
   }
 }
 
-/**
- * 共享函数：调用混元AI，获取JSON响应
- * 带自动重试：网络错误/5xx错误自动重试最多2次，指数退避
- * 被 fixWithAIForFullTable 和 fixWithAI 共同使用
- */
-async function callHunyuanAI(prompt, imageBase64, timeoutMs = 120000, maxRetries = 2) {
-  // 递归重试
-  async function attempt(retryCount) {
-    const https = require('https');
-    const body = {
-      model: 'hunyuan-vision',
-      messages: [{
-        role: 'user',
-        content: [
-          { type: 'text', text: prompt },
-          { type: 'image_url', image_url: { url: `data:image/jpeg;base64,${imageBase64}` } }
-        ]
-      }]
-    };
+function callHunyuanAI(prompt, imageBase64, timeoutMs = 120000, maxRetries = 2) {
+  const body = {
+    model: 'hunyuan-vision',
+    messages: [{
+      role: 'user',
+      content: [
+        { type: 'text', text: prompt },
+        { type: 'image_url', image_url: { url: `data:image/jpeg;base64,${imageBase64}` } }
+      ]
+    }]
+  }
 
-    const postData = JSON.stringify(body);
+  const postData = JSON.stringify(body)
 
+  function attempt(retryCount) {
     return new Promise((resolve, reject) => {
-      const timeout = setTimeout(() => reject(new Error('AI识别超时')), timeoutMs);
-
-      console.log(`[callHunyuanAI] 尝试 ${retryCount + 1}/${maxRetries + 1}, API Key长度: ${hunyuanApiKey.length}`);
+      const timeout = setTimeout(() => reject(new Error('AI识别超时')), timeoutMs)
 
       const req = https.request({
         hostname: 'api.hunyuan.cloud.tencent.com',
@@ -120,256 +62,340 @@ async function callHunyuanAI(prompt, imageBase64, timeoutMs = 120000, maxRetries
           'Content-Length': Buffer.byteLength(postData)
         }
       }, (res) => {
-        console.log('[callHunyuanAI] 状态码:', res.statusCode);
-
-        let data = '';
-        res.on('data', chunk => {
-          data += chunk;
-          console.log('[callHunyuanAI] 接收数据块:', chunk.length, 'bytes');
-        });
-
+        let data = ''
+        res.on('data', chunk => { data += chunk })
         res.on('end', () => {
-          clearTimeout(timeout);
-          console.log('[callHunyuanAI] 完整响应长度:', data.length);
+          clearTimeout(timeout)
 
-          // 5xx 错误重试
           if (res.statusCode >= 500 && retryCount < maxRetries) {
-            console.log(`[callHunyuanAI] 服务器错误 ${res.statusCode}, 准备重试`);
-            // 指数退避：2^retryCount * 1000 ms
-            const delay = Math.pow(2, retryCount) * 1000;
-            setTimeout(() => {
-              attempt(retryCount + 1).then(resolve).catch(reject);
-            }, delay);
-            return;
+            const delay = Math.pow(2, retryCount) * 1000
+            setTimeout(() => attempt(retryCount + 1).then(resolve).catch(reject), delay)
+            return
           }
 
           try {
-            if (!data || data.length === 0) {
-              console.error('[callHunyuanAI] 响应为空');
-              reject(new Error('API返回空响应'));
-              return;
-            }
-
-            const result = JSON.parse(data);
-
+            const result = JSON.parse(data || '{}')
             if (result.error) {
-              console.error('[callHunyuanAI] API错误:', JSON.stringify(result.error));
-              // 4xx 错误不重试（认证错误/请求错误），5xx 已经上面处理了重试
-              reject(new Error(result.error.message || result.error));
-              return;
+              reject(new Error(result.error.message || 'AI调用失败'))
+              return
             }
-
-            const content = result.choices?.[0]?.message?.content || '';
-            console.log('[callHunyuanAI] AI内容长度:', content.length);
-
-            if (!content) {
-              console.error('[callHunyuanAI] AI返回内容为空');
-              resolve(null);
-              return;
-            }
-
-            console.log('[callHunyuanAI] AI内容前500字:', content.substring(0, 500));
-
-            // 提取JSON - 改进算法：找到第一个 {，然后找匹配的 closing }，考虑括号嵌套
-            let jsonStr = '';
-            const firstBrace = content.indexOf('{');
-            if (firstBrace >= 0) {
-              let braceCount = 0;
-              let endPos = firstBrace;
-              for (let i = firstBrace; i < content.length; i++) {
-                if (content[i] === '{') braceCount++;
-                if (content[i] === '}') braceCount--;
-                if (braceCount === 0) {
-                  endPos = i + 1;
-                  break;
-                }
-              }
-              jsonStr = content.substring(firstBrace, endPos);
-            } else {
-              jsonStr = '';
-            }
-
-            if (jsonStr && jsonStr.length > 10) {
-              try {
-                // 去掉markdown代码块标记
-                jsonStr = jsonStr.replace(/```json\s*/, '').replace(/\s*```$/, '');
-                // 将未转义的换行符转义 - 匹配双引号之间的内容，转义其中的实际换行
-                jsonStr = jsonStr.replace(/"([^"\\]*(\\.[^"\\]*)*)"/g, (match, group) => {
-                  const escaped = group.replace(/\n/g, '\\n').replace(/\r/g, '\\r');
-                  return `"${escaped}"`;
-                });
-                resolve(JSON.parse(jsonStr));
-              } catch (e) {
-                console.error('[callHunyuanAI] JSON解析失败:', e.message, '提取内容:', jsonStr.substring(0, 200));
-                reject(e);
-              }
-            } else {
-              console.error('[callHunyuanAI] 未找到JSON:', content);
-              resolve(null);
-            }
+            const content = result.choices?.[0]?.message?.content || ''
+            resolve({
+              parsed: extractJsonObject(content),
+              rawContent: content
+            })
           } catch (e) {
-            console.error('[callHunyuanAI] 解析异常:', e.message);
-            reject(e);
+            reject(e)
           }
-        });
-      });
+        })
+      })
 
-      req.on('error', e => {
-        console.error('[callHunyuanAI] 请求错误:', e.message);
-        clearTimeout(timeout);
-
-        // 网络错误重试
+      req.on('error', (e) => {
+        clearTimeout(timeout)
         if (retryCount < maxRetries) {
-          console.log(`[callHunyuanAI] 网络错误，准备重试`);
-          const delay = Math.pow(2, retryCount) * 1000;
-          setTimeout(() => {
-            attempt(retryCount + 1).then(resolve).catch(reject);
-          }, delay);
+          const delay = Math.pow(2, retryCount) * 1000
+          setTimeout(() => attempt(retryCount + 1).then(resolve).catch(reject), delay)
         } else {
-          reject(e);
+          reject(e)
         }
-      });
+      })
 
-      req.write(postData);
-      req.end();
-    });
+      req.write(postData)
+      req.end()
+    })
   }
 
-  return attempt(0);
+  return attempt(0)
 }
 
-/**
- * 调用AI直接识别整张记分卡图片
- * 多模态直接看图片，比OCR+文字更直接
- */
-async function fixWithAIForFullTable(imageBase64) {
-  const prompt = `你是高尔夫记分卡识别专家，请仔细分析这张图片，提取出18洞每洞的标准杆PAR值。
-
-# 高尔夫基本知识（必须遵守）
-- 标准18洞 = 前9洞 + 后9洞
-- 前9洞总和 **必须等于 36**
-- 后9洞总和 **必须等于 36**
-- 18洞总和 **必须等于 72**
-- PAR值只能是 3、4、5 这三个数字，没有例外
-
-# 典型分布（参考）
-- 一个标准18洞通常有：4个Par3 + 10个Par4 + 4个Par5 = 72
-
-# 识别步骤（请按这个顺序思考）
-1. 先观察图片，找到记分卡的表格结构，确定哪一行/哪一列是PAR值
-2. 按洞号顺序 1 → 2 → 3 → ... → 18，逐个读取PAR值
-3. 提取完成后，计算：前9洞总和、后9洞总和、总总和
-4. 如果总和不等于 36/36/72，请重新检查并修正，直到正确
-5. 如果有个别数字看不清楚，根据总和规律推断最可能的值
-
-# 输出格式
-请严格按照JSON格式返回：
-{
-  "pars": [5,4,3,4,4,3,4,5,4,4,4,5,4,3,5,4,3,4],
-  "reason": "简述你的识别过程：表格结构是什么样的？你是如何找到每个PAR值的？如果修正过，请说明修正了哪里"
-}`;
-
-  return callHunyuanAI(prompt, imageBase64, 120000);
+function normalizeParValue(value) {
+  const n = parseInt(value)
+  if (n <= 3) return 3
+  if (n >= 5) return 5
+  return 4
 }
 
-/**
- * 调用AI直接识别整张记分卡图片（多模态）
- * AI直接看图片，比OCR+规则更可靠
- */
-async function fixWithAI(imageBase64, initialResult, validationError) {
-  const prompt = `你是高尔夫记分卡专家。初步识别结果有误，请重新分析图片并给出正确的PAR值。
-
-【原始图片】
-（图片已经附在请求中）
-
-【初步识别结果】
-${JSON.stringify(initialResult)}
-
-【识别问题】
-${validationError}
-
-# 高尔夫基本知识（必须遵守）
-- 标准18洞 = 前9洞 + 后9洞
-- 前9洞总和 **必须等于 36**
-- 后9洞总和 **必须等于 36**
-- 18洞总和 **必须等于 72**
-- PAR值只能是 3、4、5 这三个数字，没有例外
-
-# 修正步骤（请按这个顺序重新思考）
-1. 重新观察图片，找到记分卡的完整表格结构
-2. 确定哪一行/哪一列确实是PAR值（注意区分码数和PAR）
-3. 按洞号顺序 1→18 逐个重新读取PAR值
-4. 计算验证总和，必须符合 36/36/72
-5. 找出之前识别错误的地方，给出正确结果
-
-# 输出格式
-请严格按照JSON格式返回：
-{
-  "pars": [5,4,3,4,4,3,4,5,4,4,4,5,4,3,5,4,3,4],
-  "reason": "说明哪里识别错了，你是如何修正的"
-}`;
-
-  return callHunyuanAI(prompt, imageBase64, 60000);
+function normalizePars(rawPars) {
+  const pars = Array.isArray(rawPars) ? rawPars.slice(0, 18).map(normalizeParValue) : []
+  while (pars.length < 18) {
+    pars.push(4)
+  }
+  return pars
 }
 
-exports.main = async (event, context) => {
-  console.log('[OCR云函数] 收到请求');
+function extractParsFromAny(aiPayload) {
+  const parsed = aiPayload && aiPayload.parsed ? aiPayload.parsed : null
+  const rawContent = aiPayload && aiPayload.rawContent ? String(aiPayload.rawContent) : ''
 
-  // 检查API Key是否已配置
-  if (!hunyuanApiKey) {
-    console.error('[OCR] HUNYUAN_API_KEY not configured in environment variables');
-    return {
-      success: false,
-      error: 'HUNYUAN_API_KEY not configured. Please set environment variable in cloud function settings.'
-    };
+  function fromAnyValue(value) {
+    if (!value) return []
+    if (Array.isArray(value)) {
+      return value.map(normalizeParValue)
+    }
+    if (typeof value === 'object') {
+      if (Array.isArray(value.pars)) return value.pars.map(normalizeParValue)
+      if (Array.isArray(value.par)) return value.par.map(normalizeParValue)
+      if (Array.isArray(value.holes)) {
+        return value.holes.map(function(h) {
+          if (typeof h === 'object') return normalizeParValue(h.par)
+          return normalizeParValue(h)
+        })
+      }
+    }
+    return []
   }
 
-  const { fileID, imageBase64 } = event;
-  let base64Data = imageBase64;
+  let rawPars = fromAnyValue(parsed)
+  let extractedFrom = 'parsed.pars'
 
-  // 验证fileID格式（基本检查）- 只检查非空
-  if (fileID && typeof fileID === 'string' && fileID.length > 0) {
-    // 不需要太严格的正则验证，微信云存储fileID格式多样
-    // 只要不是明显的空字符串就放过
-  } else if (fileID) {
-    return { success: false, error: 'Invalid fileID format' };
+  if (rawPars.length === 0 && parsed) {
+    rawPars = fromAnyValue(parsed.par || parsed.holes || parsed.data)
+    extractedFrom = 'parsed.alt'
   }
 
-  // 验证图片大小：base64不超过15MB（约相当于原图10-12MB）
-  const MAX_SIZE = 15 * 1024 * 1024; // 15MB
-  if (base64Data && base64Data.length > MAX_SIZE) {
-    return { success: false, error: 'Image too large. Maximum size is 10MB.' };
+  // 最后兜底：从原文中提取 3/4/5（最多18个）
+  if (rawPars.length === 0 && rawContent) {
+    const matches = rawContent.match(/\b[345]\b/g) || []
+    rawPars = matches.slice(0, 18).map(function(n) { return parseInt(n, 10) })
+    extractedFrom = 'rawContent.regex'
   }
 
-  // 如果传入的是云存储fileID，先下载图片
-  if (fileID && !imageBase64) {
-    try {
-      console.log('[OCR] 下载图片:', fileID);
-      const downloadResult = await cloud.downloadFile({ fileID: fileID });
-      base64Data = downloadResult.fileContent.toString('base64');
-      console.log('[OCR] 图片下载完成, 大小:', Math.round(base64Data.length / 1024), 'KB');
-    } catch (err) {
-      console.error('[OCR] 下载图片失败:', err);
-      return { success: false, error: '下载图片失败: ' + err.message };
+  return {
+    rawPars,
+    extractedFrom,
+    rawContentPreview: rawContent ? rawContent.slice(0, 500) : ''
+  }
+}
+
+// 动态规划：把9洞修复到sum=36，代价最小
+function fixNineTo36(ninePars) {
+  const candidates = [3, 4, 5]
+  const target = 36
+  const n = 9
+  const INF = 1e9
+  const dp = Array.from({ length: n + 1 }, () => Array(target + 1).fill(INF))
+  const pick = Array.from({ length: n + 1 }, () => Array(target + 1).fill(-1))
+
+  dp[0][0] = 0
+
+  for (let i = 1; i <= n; i++) {
+    const original = ninePars[i - 1]
+    for (let s = 0; s <= target; s++) {
+      for (const c of candidates) {
+        if (s - c < 0) continue
+        const cost = dp[i - 1][s - c] + Math.abs(c - original)
+        if (cost < dp[i][s]) {
+          dp[i][s] = cost
+          pick[i][s] = c
+        }
+      }
     }
   }
 
-  // 直接使用混元AI多模态识别图片，不需要腾讯云OCR
-  // AI直接看图片提取18洞PAR值，比OCR+规则更准确
-  try {
-    console.log('[OCR] 直接使用混元AI识别整张记分卡图片');
-    // AI直接识别，textDetections传空数组
-    const result = await parseTableStructured([], base64Data);
+  if (dp[n][target] >= INF) {
+    return { pars: ninePars.slice(), changed: [] }
+  }
 
-    console.log('[OCR] 识别结果:', JSON.stringify(result));
+  const fixed = Array(n).fill(4)
+  const changed = []
+  let s = target
+  for (let i = n; i >= 1; i--) {
+    const c = pick[i][s]
+    fixed[i - 1] = c
+    if (c !== ninePars[i - 1]) {
+      changed.push(i - 1)
+    }
+    s -= c
+  }
+
+  return { pars: fixed, changed }
+}
+
+function buildHolesWithMeta(rawPars, fixedPars, changedHoleSet, defaultFilledSet) {
+  return fixedPars.map((par, idx) => {
+    const hole = idx + 1
+    const changed = changedHoleSet.has(hole)
+    const defaultFilled = defaultFilledSet.has(hole)
+
+    let confidence = 0.9
+    let source = 'ai'
+    if (changed) {
+      confidence = 0.65
+      source = 'rule_infer'
+    }
+    if (defaultFilled) {
+      confidence = 0.5
+      source = 'default_fill'
+    }
+
+    return {
+      hole,
+      par,
+      confidence,
+      source,
+      needs_review: changed || defaultFilled
+    }
+  })
+}
+
+function validateHoles(holes) {
+  if (!Array.isArray(holes) || holes.length !== 18) {
+    return { valid: false, severity: 'error', reason: '洞数不足18', changedHoles: [], reviewHoles: [] }
+  }
+
+  const frontNinePar = holes.slice(0, 9).reduce((s, h) => s + h.par, 0)
+  const backNinePar = holes.slice(9, 18).reduce((s, h) => s + h.par, 0)
+  const totalPar = frontNinePar + backNinePar
+
+  const reviewHoles = holes.filter(h => h.needs_review).map(h => h.hole)
+  const changedHoles = holes.filter(h => h.source === 'rule_infer').map(h => h.hole)
+
+  let severity = 'ok'
+  let valid = true
+  let reason = ''
+
+  if (frontNinePar !== 36 || backNinePar !== 36 || totalPar !== 72) {
+    valid = false
+    severity = 'error'
+    reason = `校验失败: 前9=${frontNinePar}, 后9=${backNinePar}, 总计=${totalPar}`
+  } else if (reviewHoles.length > 4) {
+    severity = 'warning'
+    reason = `可用但建议复核: ${reviewHoles.length}个洞位低置信度`
+  }
+
+  return { valid, severity, reason, changedHoles, reviewHoles, frontNinePar, backNinePar, totalPar }
+}
+
+function buildQuality(validation, holes) {
+  const coverageScore = holes.length === 18 ? 1 : 0
+  const consistencyScore = validation.valid ? 1 : 0
+  const lowConfidenceCount = holes.filter(h => h.confidence < 0.75).length
+  const imageQualityScore = Math.max(0.4, 1 - lowConfidenceCount / 18)
+  return {
+    imageQualityScore: Number(imageQualityScore.toFixed(2)),
+    coverageScore,
+    consistencyScore
+  }
+}
+
+async function recognizeParByAI(imageBase64, mode) {
+  const isBackNine = mode === 'back9'
+  const prompt = isBackNine
+    ? `你是高尔夫记分卡识别专家。请聚焦图片下半部分和后九洞区域，只输出后9洞PAR数组，JSON格式。\n\n要求：\n1) 输出 pars 必须为9个数字（10-18洞）。\n2) 每个数字只能是3/4/5。\n3) 严禁输出其它文字。\n4) 返回JSON: {"pars":[...],"reason":"..."}`
+    : `你是高尔夫记分卡识别专家。请只输出18洞PAR数组，JSON格式。\n\n要求：\n1) 输出 pars 必须为18个数字。\n2) 每个数字只能是3/4/5。\n3) 按洞号1到18顺序。\n4) 返回JSON: {"pars":[...],"reason":"..."}`
+  return callHunyuanAI(prompt, imageBase64, 120000)
+}
+
+exports.main = async (event) => {
+  if (!hunyuanApiKey) {
+    return {
+      success: false,
+      error: 'HUNYUAN_API_KEY not configured'
+    }
+  }
+
+  const { fileID, imageBase64 } = event
+  let base64Data = imageBase64
+
+  if (!base64Data && fileID) {
+    try {
+      const downloadResult = await cloud.downloadFile({ fileID })
+      base64Data = downloadResult.fileContent.toString('base64')
+    } catch (err) {
+      return { success: false, error: '下载图片失败: ' + err.message }
+    }
+  }
+
+  if (!base64Data) {
+    return { success: false, error: '缺少图片数据' }
+  }
+
+  try {
+    const aiResult = await recognizeParByAI(base64Data)
+    const parsedInfo = extractParsFromAny(aiResult)
+    let rawPars = parsedInfo.rawPars || []
+
+    // 后9洞二次识别：聚焦下半区语义，覆盖10-18洞识别结果
+    let backNineInfo = null
+    try {
+      const backNineResult = await recognizeParByAI(base64Data, 'back9')
+      backNineInfo = extractParsFromAny(backNineResult)
+      const backNinePars = (backNineInfo.rawPars || []).slice(0, 9).map(normalizeParValue)
+      if (backNinePars.length >= 6) {
+        if (rawPars.length < 18) {
+          while (rawPars.length < 18) rawPars.push(4)
+        }
+        for (let i = 0; i < Math.min(9, backNinePars.length); i++) {
+          rawPars[9 + i] = backNinePars[i]
+        }
+      }
+    } catch (e) {
+      // 二次识别失败不阻断主流程
+      backNineInfo = { error: e.message || 'back9 failed' }
+    }
+
+    if (rawPars.length === 0) {
+      return {
+        success: false,
+        error: 'AI未返回有效PAR数据',
+        debugInfo: {
+          extractedFrom: parsedInfo.extractedFrom,
+          rawContentPreview: parsedInfo.rawContentPreview
+        }
+      }
+    }
+
+    const normalized = normalizePars(rawPars)
+    const defaultFilledSet = new Set()
+    for (let i = rawPars.length + 1; i <= 18; i++) {
+      defaultFilledSet.add(i)
+    }
+
+    const front = normalized.slice(0, 9)
+    const back = normalized.slice(9, 18)
+
+    const fixedFront = fixNineTo36(front)
+    const fixedBack = fixNineTo36(back)
+
+    const fixedPars = fixedFront.pars.concat(fixedBack.pars)
+    const changedHoleSet = new Set()
+    fixedFront.changed.forEach(idx => changedHoleSet.add(idx + 1))
+    fixedBack.changed.forEach(idx => changedHoleSet.add(idx + 10))
+
+    const holes = buildHolesWithMeta(normalized, fixedPars, changedHoleSet, defaultFilledSet)
+    const validation = validateHoles(holes)
+    const quality = buildQuality(validation, holes)
+
+    const confidence = Number((holes.reduce((s, h) => s + h.confidence, 0) / holes.length).toFixed(2))
 
     return {
       success: true,
-      data: result
-    };
-
+      data: {
+        holes,
+        frontNinePar: validation.frontNinePar,
+        backNinePar: validation.backNinePar,
+        totalPar: validation.totalPar,
+        confidence,
+        source: 'hunyuan+rule-engine',
+        validation,
+        quality,
+        debugInfo: {
+          rawPars,
+          fixedPars,
+          aiReason: aiResult && aiResult.parsed ? (aiResult.parsed.reason || '') : '',
+          extractedFrom: parsedInfo.extractedFrom,
+          rawContentPreview: parsedInfo.rawContentPreview,
+          backNineExtractedFrom: backNineInfo && backNineInfo.extractedFrom ? backNineInfo.extractedFrom : '',
+          backNineRawPreview: backNineInfo && backNineInfo.rawContentPreview ? backNineInfo.rawContentPreview : '',
+          backNineError: backNineInfo && backNineInfo.error ? backNineInfo.error : ''
+        }
+      }
+    }
   } catch (err) {
-    console.error('[OCR] 识别异常:', err);
-    return { success: false, error: err.message };
+    console.error('[OCR] 异常:', err)
+    return {
+      success: false,
+      error: err.message || '识别失败'
+    }
   }
-};
+}

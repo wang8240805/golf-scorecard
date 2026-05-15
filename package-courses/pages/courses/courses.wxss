@@ -9,10 +9,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 20rpx;
   padding: 30rpx 30rpx;
   margin-bottom: 20rpx;
   background: linear-gradient(135deg, #2c8f4e 0%, #1b5e20 100%);
   border-radius: 16rpx;
+}
+
+.city-main {
+  flex: 1;
+  min-width: 0;
 }
 
 .city-name {
@@ -21,6 +27,9 @@
   color: #ffffff;
   margin-bottom: 8rpx;
   display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .city-count {
@@ -31,14 +40,17 @@
 
 /* OCR识别按钮 */
 .ocr-btn {
+  flex: 0 0 auto;
   background: rgba(255, 255, 255, 0.2);
   color: white;
   border: 1rpx solid rgba(255, 255, 255, 0.3);
   border-radius: 40rpx;
-  padding: 16rpx 24rpx;
+  padding: 0 24rpx;
+  height: 64rpx;
+  line-height: 64rpx;
   font-size: 26rpx;
-  line-height: 1;
   text-align: center;
+  white-space: nowrap;
 }
 .ocr-btn::after {
   border: none;
@@ -81,6 +93,7 @@
 
 .course-info {
   flex: 1;
+  min-width: 0;
 }
 
 .course-header {
@@ -91,9 +104,13 @@
 }
 
 .course-name {
+  flex: 1;
+  min-width: 0;
+  display: block;
   font-size: 32rpx;
   font-weight: 600;
   color: var(--text-primary);
+  line-height: 1.35;
 }
 
 .course-tag {
@@ -184,6 +201,7 @@
 .course-meta {
   display: flex;
   gap: 20rpx;
+  flex-wrap: wrap;
 }
 
 .course-location {
@@ -256,13 +274,37 @@
 }
 
 .empty-icon {
-  font-size: 80rpx;
   margin-bottom: 30rpx;
+}
+
+.course-empty-icon {
+  width: 130rpx;
+  height: 130rpx;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 42%, #fff 0 14rpx, transparent 15rpx),
+    linear-gradient(135deg, #2c8f4e 0%, #1b5e20 100%);
+  box-shadow: 0 16rpx 36rpx rgba(44, 143, 78, 0.18);
 }
 
 .empty-text {
   font-size: 30rpx;
   color: var(--text-secondary);
+}
+
+.empty-action {
+  margin-top: 28rpx;
+  height: 68rpx;
+  line-height: 68rpx;
+  border-radius: 34rpx;
+  padding: 0 34rpx;
+  background: #2c8f4e;
+  color: #fff;
+  font-size: 26rpx;
+}
+
+.empty-action::after {
+  border: none;
 }
 
 .empty-subtext {

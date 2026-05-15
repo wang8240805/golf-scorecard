@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`scorecard page sync-status summary should match snapshot 1`] = `
+{
+  "isCloudGame": true,
+  "syncStateText": "云端同步中",
+  "unsyncedCount": 0,
+}
+`;

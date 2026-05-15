@@ -115,7 +115,7 @@ async function getQrCode(event) {
 
 // 创建比赛
 async function createGame(event) {
-  const { courseId, courseName, player } = event
+  const { courseId, courseName, player, holeCount } = event
 
   if (!player || !player.openid) {
     return { success: false, error: '缺少用户信息' }
@@ -128,11 +128,13 @@ async function createGame(event) {
     // 这样避免创建比赛时因为权限问题失败
     let qrcodeFileId = null
 
+    const normalizedHoleCount = parseInt(holeCount, 10) === 9 ? 9 : 18
     const result = await db.collection('games').add({
       data: {
         gameId: gameId,
         courseId: courseId || '',
         courseName: courseName || '',
+        holeCount: normalizedHoleCount,
         status: 'waiting',
         players: [{
           id: 'player_' + player.openid,
@@ -293,7 +295,8 @@ async function getGame(event) {
 
 // 开始比赛
 async function startGame(event) {
-  const { gameId } = event
+  const { gameId, holeCount } = event
+  const { OPENID } = cloud.getWXContext()
 
   if (!gameId) {
     return { success: false, error: '缺少gameId' }
@@ -308,9 +311,17 @@ async function startGame(event) {
 
     const game = gameRes.data[0]
 
+    // 权限校验：只有创建者可以开始比赛
+    const isCreator = game.players && game.players.some(p => p.openid === OPENID && p.isCreator)
+    if (!isCreator) {
+      return { success: false, error: '只有房主可以开始比赛' }
+    }
+
+    const normalizedHoleCount = parseInt(holeCount, 10) === 9 ? 9 : 18
     await db.collection('games').doc(game._id).update({
       data: {
         status: 'playing',
+        holeCount: normalizedHoleCount,
         startTime: db.serverDate(),
         updateTime: db.serverDate()
       }

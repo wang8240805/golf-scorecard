@@ -172,6 +172,11 @@ Page({
   },
 
   // 处理并显示球场数据（统计、筛选、排序）
+  loadCourses: function() {
+    this.processAndDisplayCourses()
+  },
+
+  // 处理并显示球场数据（统计、筛选、排序）
   processAndDisplayCourses: function() {
     var allCourses = wx.getStorageSync('courses') || []
     var games = wx.getStorageSync('games') || []
@@ -242,7 +247,7 @@ Page({
   // 跳转到全部球场页面
   goToAllCourses() {
     wx.navigateTo({
-      url: '/pages/all-courses/all-courses'
+      url: '/package-courses/pages/all-courses/all-courses'
     })
   },
 
@@ -437,6 +442,13 @@ Page({
     course.par = course.holes.reduce((sum, h) => sum + h.par, 0)
 
     return course
+  },
+
+  // 确认识别结果
+  onRecognizedCourseNameInput(e) {
+    this.setData({
+      'recognizedCourse.name': e.detail.value
+    })
   },
 
   // 确认识别结果

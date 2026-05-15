@@ -3,6 +3,7 @@
  */
 
 const app = getApp()
+const gameCompleteness = require('./game-completeness.js')
 
 /**
  * 检查比赛是否完整完成（打满18洞）
@@ -10,26 +11,7 @@ const app = getApp()
  * @param {Object} targetPlayer - 目标球员
  */
 function isGameCompleted(game, targetPlayer) {
-  if (!game || !targetPlayer) return false
-  if (!game.completed) return false
-
-  // 新格式：player.scores数组
-  if (targetPlayer.scores && Array.isArray(targetPlayer.scores)) {
-    const validScores = targetPlayer.scores.filter(s => s.strokes > 0)
-    return validScores.length >= 18
-  }
-  // 旧格式：game.scores对象
-  else if (game.scores && game.scores[targetPlayer.id]) {
-    const scores = game.scores[targetPlayer.id]
-    const validCount = Object.values(scores).filter(v => v > 0).length
-    return validCount >= 18
-  }
-  // 兼容有statistics字段的情况
-  else if (game.statistics && game.statistics[targetPlayer.id]) {
-    return game.statistics[targetPlayer.id].holesPlayed >= 18
-  }
-
-  return false
+  return gameCompleteness.isPlayerRoundComplete(game, targetPlayer && targetPlayer.id)
 }
 
 /**
@@ -40,6 +22,7 @@ function isGameCompleted(game, targetPlayer) {
  */
 function generateGameReport(game, historyGames = [], targetPlayer = null) {
   if (!game || !game.players) return null
+  if (!gameCompleteness.isGameAnalyzable(game, targetPlayer && targetPlayer.id)) return null
 
   const report = {
     summary: {},
@@ -54,17 +37,31 @@ function generateGameReport(game, historyGames = [], targetPlayer = null) {
 
   // 支持两种数据格式：旧格式 game.scores 和 新格式 player.scores 数组
   game.players.forEach(player => {
+    if (!gameCompleteness.isPlayerRoundComplete(game, player.id)) return
+
     let validScores = []
 
     if (player.scores && Array.isArray(player.scores)) {
       // 新格式：player.scores 是数组
-      validScores = player.scores.filter(s => s.strokes > 0)
+      validScores = player.scores
+        .filter(s => gameCompleteness.getStrokesValue(s) > 0)
+        .map((s, index) => ({
+          hole: parseInt(s.hole || s.holeNum || index + 1),
+          strokes: gameCompleteness.getStrokesValue(s),
+          par: s.par || 4,
+          putts: s.putts
+        }))
     } else if (game.scores && game.scores[player.id]) {
       // 旧格式：game.scores[playerId] 是对象
       const scores = game.scores[player.id]
       validScores = Object.entries(scores)
-        .filter(([k, v]) => !isNaN(k) && v > 0)
-        .map(([k, v]) => ({ hole: parseInt(k), strokes: v, par: 4 }))
+        .filter(([k, v]) => !isNaN(k) && gameCompleteness.getStrokesValue(v) > 0)
+        .map(([k, v]) => ({
+          hole: parseInt(k),
+          strokes: gameCompleteness.getStrokesValue(v),
+          par: 4,
+          putts: v && typeof v === "object" ? v.putts : undefined
+        }))
     }
 
     if (validScores.length === 0) return report
@@ -215,26 +212,24 @@ function generateGameReport(game, historyGames = [], targetPlayer = null) {
   if (historyGames.length > 0 && targetPlayer) {
     // 获取该球员的历史成绩 - 只统计完成18洞的比赛
     const avgScores = historyGames.map(g => {
-      // 首先检查比赛是否完成且打满18洞
-      if (!g.completed) return 0
-
       // 查找历史比赛中同一球员的成绩
       const player = g.players?.find(p => p.id === targetPlayer.id || p.name === targetPlayer.name)
       if (!player) return 0
+      if (!gameCompleteness.isPlayerRoundComplete(g, player.id)) return 0
 
       // 新格式：player.scores数组
       if (player.scores && Array.isArray(player.scores)) {
-        const validScores = player.scores.filter(s => s.strokes > 0)
+        const validScores = player.scores.filter(s => gameCompleteness.getStrokesValue(s) > 0)
         if (validScores.length < 18) return 0
         if (player.total) return player.total
-        return validScores.reduce((sum, s) => sum + s.strokes, 0)
+        return validScores.reduce((sum, s) => sum + gameCompleteness.getStrokesValue(s), 0)
       }
       // 旧格式：game.scores对象
       else if (g.scores && g.scores[player.id]) {
         const scores = g.scores[player.id]
-        const validCount = Object.values(scores).filter(v => v > 0).length
+        const validCount = Object.values(scores).filter(v => gameCompleteness.getStrokesValue(v) > 0).length
         if (validCount < 18) return 0
-        return Object.values(scores).reduce((a, b) => a + b, 0)
+        return Object.values(scores).reduce((a, b) => a + gameCompleteness.getStrokesValue(b), 0)
       }
       // 兼容有statistics字段的情况
       else if (g.statistics && g.statistics[player.id]) {

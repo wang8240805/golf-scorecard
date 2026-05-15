@@ -48,7 +48,7 @@
       <view class="players-list" wx:if="{{!isLoading && players.length > 0}}">
         <view class="player-item" wx:for="{{players}}" wx:key="id">
           <view class="player-avatar">
-            <image wx:if="{{item.avatar}}" src="{{item.avatar}}" mode="aspectFill" class="avatar-img"></image>
+            <image wx:if="{{item.avatarUrl || item.avatar}}" src="{{item.avatarUrl || item.avatar}}" mode="aspectFill" class="avatar-img"></image>
             <view wx:else class="avatar-placeholder" style="background: {{colors[index % colors.length]}}">
               {{item.name[0]}}
             </view>
@@ -71,6 +71,17 @@
       <view class="manual-add-row" wx:if="{{isCreator}}">
         <input class="manual-input" placeholder="手动添加：输入姓名" value="{{manualPlayerName}}" bindinput="onManualNameInput" />
         <button class="manual-add-btn" bindtap="addManualPlayer">添加</button>
+      </view>
+    </view>
+
+    <view class="game-config-card" wx:if="{{isCreator}}">
+      <view class="config-title-row">
+        <text class="config-title">比赛洞数</text>
+        <text class="config-desc">建议日常快打用9洞，正式轮用18洞</text>
+      </view>
+      <view class="hole-count-segment">
+        <view class="hole-count-option {{holeCount === 9 ? 'active' : ''}}" bindtap="setHoleCount" data-value="9">9洞</view>
+        <view class="hole-count-option {{holeCount === 18 ? 'active' : ''}}" bindtap="setHoleCount" data-value="18">18洞</view>
       </view>
     </view>
 
@@ -100,7 +111,7 @@
   <view class="action-bar-fixed">
     <view class="action-row">
       <button class="btn-back" bindtap="goBack">返回</button>
-      <button class="btn-start" bindtap="startGame" disabled="{{players.length === 0}}">
+      <button class="btn-start" bindtap="startGame" disabled="{{players.length === 0 || !isCreator}}">
         开始比赛
       </button>
     </view>
@@ -125,6 +136,12 @@
         </view>
         <view class="nickname-row">
           <input type="nickname" class="nickname-input" placeholder="点击填写昵称" bindblur="onNickNameInput" bindinput="onNickNameInput" value="{{tempNickName}}"/>
+        </view>
+        <view class="phone-row">
+          <button class="phone-auth-btn" open-type="getPhoneNumber" bindgetphonenumber="onGetPhoneNumber">
+            {{tempPhoneMasked ? ('已授权手机号：' + tempPhoneMasked) : '一键授权手机号（推荐）'}}
+          </button>
+          <text class="phone-hint">用于与微信身份关联，便于跨设备找回数据</text>
         </view>
       </view>
       <view class="auth-footer">

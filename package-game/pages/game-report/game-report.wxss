@@ -105,6 +105,10 @@
   color: #666;
 }
 
+.style-desc.invalid {
+  color: #b26b00;
+}
+
 .switch-text {
   font-size: 26rpx;
   color: #2c8f4e;
@@ -233,7 +237,7 @@
 
 /* 深度数据分析卡片 */
 .deep-analysis-card {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #2c8f4e 0%, #1b5e20 100%);
   color: white;
 }
 
@@ -343,13 +347,13 @@
   width: 200rpx;
   height: 200rpx;
   margin: 0 auto 20rpx;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #2c8f4e 0%, #1b5e20 100%);
   border-radius: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8rpx 30rpx rgba(102, 126, 234, 0.3);
+  box-shadow: 0 8rpx 30rpx rgba(44, 143, 78, 0.28);
 }
 
 .rating-score {
@@ -524,7 +528,7 @@
   justify-content: center;
   gap: 12rpx;
   height: 88rpx;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #2c8f4e 0%, #1b5e20 100%);
   color: white;
   border-radius: 44rpx;
   font-size: 32rpx;
@@ -696,7 +700,7 @@
 }
 
 .default-bg {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #2c8f4e 0%, #1b5e20 100%);
 }
 
 .default-bg text {

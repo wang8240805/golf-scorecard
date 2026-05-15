@@ -26,6 +26,72 @@
 
   <!-- 实际内容 - 加载完成后显示 -->
   <block wx:if="{{!pageLoading}}">
+  <!-- 首屏价值主张 -->
+  <view class="card home-hero-card" wx:if="{{!hasOngoingGame && isFirstVisit}}">
+    <view class="hero-badge">WINPAR</view>
+    <text class="hero-title">一场球，从记分到复盘，一次搞定</text>
+    <text class="hero-subtitle">多人同步记分、拍照校准标准杆、赛后自动生成分析与海报</text>
+    <view class="hero-actions">
+      <button class="btn btn-primary hero-primary-btn" bindtap="startNewGame">10秒开始新比赛</button>
+    </view>
+  </view>
+
+  <!-- 新手三步 -->
+  <view class="card onboarding-card" wx:if="{{!hasOngoingGame && isFirstVisit}}">
+    <view class="section-title">第一次用？按这3步就行</view>
+    <view class="onboarding-steps">
+      <view class="home-step-item">
+        <text class="home-step-number">1</text>
+        <view class="home-step-main">
+          <text class="home-step-name">选球场</text>
+          <text class="home-step-desc">支持全国球场，拍卡可校准标准杆</text>
+        </view>
+      </view>
+      <view class="home-step-item">
+        <text class="home-step-number">2</text>
+        <view class="home-step-main">
+          <text class="home-step-name">加球友</text>
+          <text class="home-step-desc">分享加入房间，记分协作更轻松</text>
+        </view>
+      </view>
+      <view class="home-step-item">
+        <text class="home-step-number">3</text>
+        <view class="home-step-main">
+          <text class="home-step-name">开始记分</text>
+          <text class="home-step-desc">弱网可用，赛后自动生成复盘</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 核心收益 -->
+  <view class="card benefit-card" wx:if="{{!hasOngoingGame && isFirstVisit}}">
+    <view class="section-title">用 WinPAR 记分的好处</view>
+    <view class="benefit-grid">
+      <view class="benefit-item">
+        <text class="benefit-tag">省时间</text>
+        <text class="benefit-text">多人同步录入，平均每场少沟通 {{welcomeStats.avgTimeSaved}} 分钟</text>
+      </view>
+      <view class="benefit-item">
+        <text class="benefit-tag">更准确</text>
+        <text class="benefit-text">拍照识别 + 重点洞位复核，减少人工抄错</text>
+      </view>
+      <view class="benefit-item">
+        <text class="benefit-tag">有复盘</text>
+        <text class="benefit-text">总杆差、推杆、趋势一页看懂，打完就能复盘</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 最近比赛继续入口 -->
+  <view class="card quick-return-card" wx:if="{{!hasOngoingGame && latestFinishedGame}}">
+    <view class="quick-return-left">
+      <text class="quick-return-title">继续你的高尔夫成长</text>
+      <text class="quick-return-subtitle">最近比赛：{{latestFinishedGame.courseName}} · {{latestFinishedGame.date}}</text>
+    </view>
+    <button class="quick-return-btn" bindtap="quickContinueLatest">查看复盘</button>
+  </view>
+
   <!-- 进行中的比赛 -->
   <view class="card ongoing-game-card" wx:if="{{ongoingGame}}" bindtap="goToScorecard">
     <view class="ongoing-header">
@@ -36,6 +102,10 @@
       <text class="ongoing-hole">第 {{ongoingGame.currentHole}}/{{ongoingGame.totalHoles}} 洞</text>
     </view>
     <text class="ongoing-course">{{ongoingGame.courseName}}</text>
+    <view class="ongoing-meta">
+      <text class="ongoing-meta-item">已打 {{ongoingGame.myScore.holesPlayed}}/{{ongoingGame.totalHoles}} 洞</text>
+      <text class="ongoing-meta-item">我的差点 {{ongoingGame.myScore.toPar === 0 ? 'E' : (ongoingGame.myScore.toPar > 0 ? '+' : '') + ongoingGame.myScore.toPar}}</text>
+    </view>
     <view class="ongoing-my-score">
       <view class="score-row">
         <view class="score-item">
@@ -53,6 +123,40 @@
           </view>
         </view>
       </view>
+    </view>
+  </view>
+
+  <!-- 极速开局 -->
+  <view class="card quick-start-card" wx:if="{{!hasOngoingGame}}">
+    <view class="quick-start-header">
+      <view>
+        <text class="section-title quick-start-title">极速开局</text>
+        <text class="quick-start-subtitle">到球场先开局，细节可以之后补</text>
+      </view>
+    </view>
+    <view class="quick-start-grid">
+      <view class="quick-start-option primary" wx:if="{{quickStartSetup}}" bindtap="quickReuseLastSetup">
+        <text class="quick-start-kicker">{{quickStartSetup.source}}</text>
+        <text class="quick-start-name">{{quickStartSetup.courseName}}</text>
+        <text class="quick-start-meta">{{quickStartSetup.playerText}}</text>
+      </view>
+      <view class="quick-start-option" bindtap="startTempGame">
+        <text class="quick-start-kicker">找不到球场时</text>
+        <text class="quick-start-name">临时 Par72 开局</text>
+        <text class="quick-start-meta">18洞标准模板，打完再补球场</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 快速开始卡片 - 当没有进行中比赛时显示（上移） -->
+  <view class="card start-card" wx:if="{{!hasOngoingGame}}">
+    <view class="start-content">
+      <view class="start-info">
+        <text class="start-title">准备就绪</text>
+        <text class="start-subtitle" wx:if="{{courseCount === 0}}">正在加载球场数据...完成即可开始</text>
+        <text class="start-subtitle" wx:if="{{courseCount > 0}}">已有 {{courseCount}} 个全国球场，选择球场添加球员即可开始记分</text>
+      </view>
+      <button class="btn btn-primary start-btn" bindtap="startNewGame">开始新比赛</button>
     </view>
   </view>
 
@@ -75,34 +179,31 @@
   </view>
 
   <!-- 最近比赛 -->
-  <view class="card" wx:if="{{recentGames.length > 0}}">
-    <view class="section-title flex-between">
-      <text>最近比赛</text>
-      <text class="text-small text-primary" bindtap="goToHistory">查看全部</text>
+  <view class="card recent-games-card" wx:if="{{recentGames.length > 0}}">
+    <view class="recent-section-header">
+      <view class="recent-title-block">
+        <text class="section-title recent-section-title">最近比赛</text>
+        <text class="recent-section-subtitle">最近 3 场记录</text>
+      </view>
+      <text class="recent-view-all" bindtap="goToHistory">查看全部</text>
     </view>
     <view class="recent-game-list">
       <view class="recent-game-item" wx:for="{{recentGames}}" wx:key="id" bindtap="viewGame" data-gameid="{{item.id}}">
-        <view class="game-info">
-          <text class="game-name">{{item.courseName || '未知球场'}}</text>
-          <text class="game-date">{{item.date || ''}}</text>
+        <view class="recent-game-main">
+          <view class="recent-game-info">
+            <text class="recent-game-name">{{item.courseName || '未知球场'}}</text>
+            <text class="recent-game-date">{{item.date || ''}}</text>
+          </view>
+          <view class="recent-game-meta-row">
+            <text class="recent-game-meta">已打 {{item.holesPlayed || 0}}/{{item.holesTotal || 18}} 洞</text>
+            <text class="recent-game-meta recent-game-to-par {{'to-par-' + (item.toParClass || 'empty')}}">{{item.toParText || '-'}}</text>
+          </view>
         </view>
-        <view class="game-right">
-          <text class="game-score">{{item.myScore || '-'}}杆</text>
-          <text class="game-arrow">›</text>
+        <view class="recent-game-scorebox">
+          <text class="recent-game-score">{{item.myScore || '-'}}</text>
+          <text class="recent-game-score-label">杆</text>
         </view>
       </view>
-    </view>
-  </view>
-
-  <!-- 快速开始卡片 - 当没有进行中比赛时显示 -->
-  <view class="card start-card" wx:if="{{!hasOngoingGame}}">
-    <view class="start-content">
-      <view class="start-info">
-        <text class="start-title">准备就绪</text>
-        <text class="start-subtitle" wx:if="{{courseCount === 0}}">正在加载球场数据...完成即可开始</text>
-        <text class="start-subtitle" wx:if="{{courseCount > 0}}">已有 {{courseCount}} 个全国球场，选择球场添加球员即可开始记分</text>
-      </view>
-      <button class="btn btn-primary start-btn" bindtap="startNewGame">开始新比赛</button>
     </view>
   </view>
 

@@ -4,18 +4,44 @@
  * 采用现代卡片式设计、渐变背景、精致排版
  */
 
-// 球星数据库
-const GOLF_STARS = [
-  { name: '老虎·伍兹', toPar: -10, style: '霸气进攻型', reason: '你的成绩已经是职业选手水准！' },
-  { name: '罗里·麦克罗伊', toPar: -6, style: '力量爆发型', reason: '你的进攻能力出色，每一杆都充满力量！' },
-  { name: '达斯汀·约翰逊', toPar: -5, style: '全面均衡型', reason: '你的技术全面，长短杆都有不错发挥！' },
-  { name: '乔丹·斯皮思', toPar: -4, style: '智慧型', reason: '你的策略思维和短杆技术令人印象深刻！' },
-  { name: '琼·拉姆', toPar: -2, style: '激情型', reason: '你的激情和爆发力让比赛充满看点！' },
-  { name: '科林·森川', toPar: 0, style: '精准稳健型', reason: '你的基本功扎实，是球场上的稳定输出者！' },
-  { name: '维克多·霍夫兰', toPar: 2, style: '稳定进取型', reason: '你的进步空间很大，保持这个势头！' },
-  { name: '松山英树', toPar: 4, style: '沉稳专注型', reason: '你的专注和沉稳是高尔夫最好的品质！' },
-  { name: '菲尔·米克森', toPar: 8, style: '创意冒险型', reason: '你的创造力和冒险精神让比赛更有趣！' },
-  { name: '约翰·达利', toPar: 15, style: '快乐享受型', reason: '你懂得高尔夫的真谛——享受过程！' }
+// 球风模板库（基于指标匹配）
+const GOLF_ARCHETYPES = [
+  {
+    name: '斯科蒂·舍夫勒',
+    style: '全面压制型',
+    tags: ['稳定铁杆', '关键推进', '失误控制'],
+    reason: '整体数据最均衡，像舍夫勒那样用稳定性赢比赛。'
+  },
+  {
+    name: '罗里·麦克罗伊',
+    style: '火力进攻型',
+    tags: ['高抓鸟率', '进攻果岭', '节奏强势'],
+    reason: '抓鸟能力突出，比赛节奏偏进攻，具备麦克罗伊风格。'
+  },
+  {
+    name: '科林·森川',
+    style: '精准稳健型',
+    tags: ['保帕效率', '线路清晰', '稳定输出'],
+    reason: '保帕占比高、波动小，典型森川式精准稳健。'
+  },
+  {
+    name: '布鲁克斯·科普卡',
+    style: '大赛抗压型',
+    tags: ['抗压能力', '中后程稳定', '关键洞处理'],
+    reason: '关键洞失误少，后程发挥更稳，具备科普卡式抗压特征。'
+  },
+  {
+    name: '乔丹·斯皮思',
+    style: '短杆创造型',
+    tags: ['短杆手感', '救帕能力', '策略执行'],
+    reason: '短杆与救帕表现亮眼，球路选择很有斯皮思味道。'
+  },
+  {
+    name: '琼·拉姆',
+    style: '强势推进型',
+    tags: ['推进能力', '进攻效率', '硬洞不怵'],
+    reason: '硬洞表现不弱，整体推进力像拉姆。'
+  }
 ]
 
 // 精美背景图片配置 - 使用渐变模拟高质量背景
@@ -83,18 +109,20 @@ function generatePoster(options) {
 
           // 如果有自定义背景图片
           if (bgType === 'custom' && customBgUrl) {
-            loadAndDrawBackground(canvas, ctx, customBgUrl, width, height, () => {
-              drawPosterContent(ctx, type, width, height, game, player)
+            loadAndDrawBackground(canvas, ctx, customBgUrl, width, height, async () => {
+              await drawPosterContent(ctx, type, width, height, game, player, canvas)
               exportCanvas(canvas, width, height, resolve, reject)
             }, () => {
               drawBackground(ctx, bgType, width, height)
-              drawPosterContent(ctx, type, width, height, game, player)
-              exportCanvas(canvas, width, height, resolve, reject)
+              drawPosterContent(ctx, type, width, height, game, player, canvas).then(() => {
+                exportCanvas(canvas, width, height, resolve, reject)
+              }).catch(reject)
             })
           } else {
             drawBackground(ctx, bgType, width, height)
-            drawPosterContent(ctx, type, width, height, game, player)
-            exportCanvas(canvas, width, height, resolve, reject)
+            drawPosterContent(ctx, type, width, height, game, player, canvas).then(() => {
+              exportCanvas(canvas, width, height, resolve, reject)
+            }).catch(reject)
           }
         })
     }
@@ -188,15 +216,15 @@ function exportCanvas(canvas, width, height, resolve, reject) {
 }
 
 // 绘制海报内容
-function drawPosterContent(ctx, type, w, h, game, player) {
+async function drawPosterContent(ctx, type, w, h, game, player, canvas) {
   // 全局使用统一的卡片样式
-  drawModernCardStyle(ctx, w, h, game, player)
+  await drawModernCardStyle(ctx, w, h, game, player, canvas)
 }
 
 /**
  * 现代卡片风格 - 统一的高端设计
  */
-function drawModernCardStyle(ctx, w, h, game, player) {
+async function drawModernCardStyle(ctx, w, h, game, player, canvas) {
   const padding = 50
   const cardRadius = 30
 
@@ -241,17 +269,8 @@ function drawModernCardStyle(ctx, w, h, game, player) {
   ctx.font = '28px sans-serif'
   ctx.fillText(dateStr, w / 2, topCardY + 110)
 
-  // 球员头像圆形
   const avatarY = topCardY + 200
-  ctx.fillStyle = getColorByName(player.name || '球')
-  ctx.beginPath()
-  ctx.arc(w / 2, avatarY, 60, 0, Math.PI * 2)
-  ctx.fill()
-
-  // 球员名字首字
-  ctx.fillStyle = 'white'
-  ctx.font = 'bold 48px sans-serif'
-  ctx.fillText((player.name || '球')[0], w / 2, avatarY + 16)
+  await drawPlayerAvatar(ctx, canvas, player, w / 2, avatarY, 60)
 
   // 球员名字
   ctx.fillStyle = '#2C3E50'
@@ -276,10 +295,10 @@ function drawModernCardStyle(ctx, w, h, game, player) {
   ctx.shadowOffsetY = 0
 
   // 成绩数据
-  const totalStrokes = calculateTotalStrokes(game, player.id)
-  const toPar = calculateToParValue(game, player.id)
-  const holesPlayed = calculateHolesPlayed(game, player.id)
-  const birdies = countBirdies(game, player.id)
+  const roundStats = calculateRoundStats(game, player.id)
+  const totalStrokes = roundStats.totalStrokes
+  const toPar = roundStats.toPar
+  const birdies = roundStats.birdies
 
   const stats = [
     { label: '总杆数', value: totalStrokes, color: '#E74C3C' },
@@ -327,7 +346,7 @@ function drawModernCardStyle(ctx, w, h, game, player) {
   ctx.fillText('综合评分', w / 2, ratingY + 50)
 
   // 大分数
-  const ratingInfo = calculateRatingInfo(toPar)
+  const ratingInfo = calculateRatingInfo(roundStats)
   ctx.fillStyle = '#F39C12'
   ctx.font = 'bold 140px sans-serif'
   ctx.textAlign = 'center'
@@ -337,6 +356,11 @@ function drawModernCardStyle(ctx, w, h, game, player) {
   ctx.fillStyle = '#27AE60'
   ctx.font = 'bold 36px sans-serif'
   ctx.fillText(ratingInfo.label, w / 2, ratingY + 230)
+
+  // 评分依据
+  ctx.fillStyle = '#7F8C8D'
+  ctx.font = '22px sans-serif'
+  ctx.fillText('依据: 杆差40% 稳定性30% 推杆15% 抓鸟15%', w / 2, ratingY + 260)
 
   // ========== 球风匹配卡片 ==========
   const starY = ratingY + ratingH + 30
@@ -365,24 +389,29 @@ function drawModernCardStyle(ctx, w, h, game, player) {
   ctx.fillText('你的球风像', w / 2, starY + 55)
 
   // 球星名字
-  const starMatch = matchGolfStar(toPar, game, player.id)
+  const starMatch = matchGolfStar(roundStats)
   ctx.fillStyle = 'white'
-  ctx.font = 'bold 48px sans-serif'
+  ctx.font = 'bold 44px sans-serif'
   ctx.fillText(`★ ${starMatch.name} ★`, w / 2, starY + 115)
 
   // 风格标签
   ctx.fillStyle = 'rgba(255,255,255,0.8)'
-  ctx.font = '28px sans-serif'
+  ctx.font = '26px sans-serif'
   ctx.fillText(starMatch.style, w / 2, starY + 155)
+
+  // 三个风格标签
+  ctx.fillStyle = 'rgba(255,255,255,0.78)'
+  ctx.font = '22px sans-serif'
+  ctx.fillText(starMatch.tags.join(' · '), w / 2, starY + 183)
 
   // 匹配原因
   ctx.fillStyle = 'rgba(255,255,255,0.7)'
   ctx.font = '24px sans-serif'
   const reason = starMatch.matchReason
-  if (reason.length > 20) {
-    ctx.fillText(reason.substring(0, 18) + '...', w / 2, starY + 190)
+  if (reason.length > 24) {
+    ctx.fillText(reason.substring(0, 22) + '...', w / 2, starY + 208)
   } else {
-    ctx.fillText(reason, w / 2, starY + 190)
+    ctx.fillText(reason, w / 2, starY + 208)
   }
 
   // ========== 底部 ==========
@@ -390,6 +419,53 @@ function drawModernCardStyle(ctx, w, h, game, player) {
   ctx.font = '24px sans-serif'
   ctx.textAlign = 'center'
   ctx.fillText('⛳ WinPAR 高尔夫智能记分', w / 2, h - 60)
+}
+
+function drawPlayerAvatar(ctx, canvas, player, x, y, radius) {
+  return new Promise((resolve) => {
+    const avatarUrl = player && (player.avatarUrl || player.avatar)
+    if (!avatarUrl || !canvas || !canvas.createImage) {
+      drawAvatarFallback(ctx, player, x, y, radius)
+      resolve()
+      return
+    }
+
+    const img = canvas.createImage()
+    img.onload = () => {
+      // 裁切为圆形头像
+      ctx.save()
+      ctx.beginPath()
+      ctx.arc(x, y, radius, 0, Math.PI * 2)
+      ctx.clip()
+      ctx.drawImage(img, x - radius, y - radius, radius * 2, radius * 2)
+      ctx.restore()
+
+      // 外圈描边
+      ctx.strokeStyle = 'rgba(255,255,255,0.9)'
+      ctx.lineWidth = 4
+      ctx.beginPath()
+      ctx.arc(x, y, radius, 0, Math.PI * 2)
+      ctx.stroke()
+      resolve()
+    }
+    img.onerror = () => {
+      drawAvatarFallback(ctx, player, x, y, radius)
+      resolve()
+    }
+    img.src = avatarUrl
+  })
+}
+
+function drawAvatarFallback(ctx, player, x, y, radius) {
+  ctx.fillStyle = getColorByName(player && player.name ? player.name : '球')
+  ctx.beginPath()
+  ctx.arc(x, y, radius, 0, Math.PI * 2)
+  ctx.fill()
+
+  ctx.fillStyle = 'white'
+  ctx.font = 'bold 48px sans-serif'
+  ctx.textAlign = 'center'
+  ctx.fillText(((player && player.name) || '球')[0], x, y + 16)
 }
 
 // 绘制圆角矩形
@@ -418,135 +494,136 @@ function getColorByName(name) {
 }
 
 // 评分计算
-function calculateRatingInfo(toPar) {
-  let score = 75
-  let label = '表现稳健'
+function clamp(v, min, max) {
+  return Math.max(min, Math.min(max, v))
+}
 
-  if (toPar <= -10) { score = 98; label = '传奇水准' }
-  else if (toPar <= -5) { score = 92; label = '卓越表现' }
-  else if (toPar <= -2) { score = 88; label = '优秀战绩' }
-  else if (toPar <= 2) { score = 82; label = '发挥出色' }
-  else if (toPar <= 5) { score = 78; label = '表现稳健' }
-  else if (toPar <= 10) { score = 72; label = '持续进步' }
-  else { score = 68; label = '享受过程' }
+// 评分计算（多指标加权）
+function calculateRatingInfo(roundStats) {
+  const toPar = roundStats.toPar
+  const holesPlayed = roundStats.holesPlayed || 18
+  const birdieRate = holesPlayed > 0 ? roundStats.birdies / holesPlayed : 0
+  const avgPutts = roundStats.avgPutts || 2.0
+  const volatility = roundStats.volatility || 2.0
+
+  // 杆差得分（40）
+  const toParScore = clamp(40 - Math.max(0, toPar) * 2 + Math.max(0, -toPar) * 1.2, 10, 40)
+  // 稳定性得分（30），标准差越低越好
+  const consistencyScore = clamp(30 - (volatility - 1.6) * 10, 8, 30)
+  // 推杆得分（15），每洞推杆越低越好
+  const puttingScore = clamp(15 - (avgPutts - 1.8) * 12, 4, 15)
+  // 抓鸟得分（15）
+  const birdieScore = clamp(15 * (birdieRate / 0.25), 0, 15)
+
+  const score = Math.round(toParScore + consistencyScore + puttingScore + birdieScore)
+
+  let label = '表现稳健'
+  if (score >= 94) label = '大师级'
+  else if (score >= 88) label = '卓越表现'
+  else if (score >= 82) label = '高质量发挥'
+  else if (score >= 74) label = '发挥稳定'
+  else if (score >= 66) label = '持续进步'
+  else label = '训练潜力大'
 
   return { score, label, toPar }
 }
 
-// 球星匹配
-function matchGolfStar(toPar, game, playerId) {
-  const player = game?.players?.find(p => p.id === playerId)
-  let closest = GOLF_STARS[GOLF_STARS.length - 1]
-  let minDiff = Math.abs(toPar - closest.toPar)
+// 球风匹配（基于指标）
+function matchGolfStar(roundStats) {
+  const holesPlayed = roundStats.holesPlayed || 18
+  const birdieRate = holesPlayed > 0 ? roundStats.birdies / holesPlayed : 0
+  const parRate = holesPlayed > 0 ? roundStats.pars / holesPlayed : 0
+  const bigMistakeRate = holesPlayed > 0 ? roundStats.doubleOrWorse / holesPlayed : 0
+  const avgPutts = roundStats.avgPutts || 2.0
+  const volatility = roundStats.volatility || 2.0
 
-  for (const star of GOLF_STARS) {
-    const diff = Math.abs(toPar - star.toPar)
-    if (diff < minDiff) {
-      minDiff = diff
-      closest = star
-    }
+  let pick = GOLF_ARCHETYPES[0]
+  if (birdieRate >= 0.2 && bigMistakeRate <= 0.2) pick = GOLF_ARCHETYPES[1]
+  else if (parRate >= 0.5 && volatility <= 1.5) pick = GOLF_ARCHETYPES[2]
+  else if (bigMistakeRate <= 0.1 && roundStats.toPar <= 3) pick = GOLF_ARCHETYPES[3]
+  else if (avgPutts <= 1.9) pick = GOLF_ARCHETYPES[4]
+  else if (roundStats.toPar <= 5 && birdieRate >= 0.12) pick = GOLF_ARCHETYPES[5]
+
+  return {
+    ...pick,
+    matchReason: pick.reason
   }
-
-  let matchReason = closest.reason
-
-  if (player && player.scores) {
-    const validScores = player.scores.filter(s => s.strokes > 0)
-    const birdies = validScores.filter(s => s.strokes < (s.par || 4)).length
-    const pars = validScores.filter(s => s.strokes === (s.par || 4)).length
-    const totalHoles = validScores.length
-
-    if (birdies >= 3) {
-      matchReason = '你的抓鸟能力突出，像' + closest.name + '一样敢于进攻！'
-    } else if (pars >= totalHoles * 0.5) {
-      matchReason = '你的保帕率很高，这正是' + closest.name + '的特点！'
-    }
-  }
-
-  return { ...closest, matchReason }
 }
 
-// 辅助函数
-function calculateToParValue(game, playerId) {
-  const player = game?.players?.find(p => p.id === playerId)
-  if (player && player.toPar !== undefined) return player.toPar
-
-  if (player && player.scores && Array.isArray(player.scores)) {
-    const validScores = player.scores.filter(s => s.strokes > 0)
-    const totalPar = validScores.reduce((sum, s) => sum + (s.par || 4), 0)
-    const totalStrokes = validScores.reduce((sum, s) => sum + s.strokes, 0)
-    return totalStrokes - totalPar
+function extractStrokes(scoreValue) {
+  if (scoreValue === null || scoreValue === undefined) return 0
+  if (typeof scoreValue === 'object') {
+    return parseInt(scoreValue.strokes) || 0
   }
+  return parseInt(scoreValue) || 0
+}
 
-  const scores = game?.scores?.[playerId] || {}
-  const holes = game?.holes || []
-  let totalPar = 0, totalStrokes = 0
-
-  Object.entries(scores).forEach(([k, v]) => {
-    const holeNum = parseInt(k)
-    if (!isNaN(holeNum) && v > 0) {
-      const holeData = holes.find(h => h.hole === holeNum)
-      if (holeData) {
-        totalPar += holeData.par || 4
-        totalStrokes += v
-      }
+function calculateRoundStats(game, playerId) {
+  const holes = (game && (game.holes || game.course?.holes)) || []
+  const holeParMap = {}
+  holes.forEach(h => {
+    if (h && h.hole !== undefined) {
+      holeParMap[parseInt(h.hole)] = parseInt(h.par) || 4
     }
   })
 
-  return totalStrokes - totalPar
-}
+  const scores = (game && game.scores && game.scores[playerId]) || {}
+  const putts = (game && game.putts && game.putts[playerId]) || {}
 
-function calculateTotalStrokes(game, playerId) {
-  if (!game || !playerId) return 0
-
-  const player = game.players?.find(p => p.id === playerId)
-  if (player && player.totalScore !== undefined) return player.totalScore
-
-  if (player && player.scores && Array.isArray(player.scores)) {
-    return player.scores.filter(s => s.strokes > 0).reduce((sum, s) => sum + s.strokes, 0)
-  }
-
-  const scores = game.scores?.[playerId] || {}
-  return Object.values(scores).reduce((a, b) => a + (typeof b === 'number' ? b : 0), 0)
-}
-
-function calculateHolesPlayed(game, playerId) {
-  if (!game || !playerId) return 0
-
-  const player = game.players?.find(p => p.id === playerId)
-  if (player && player.holesCompleted !== undefined) return player.holesCompleted
-
-  if (player && player.scores && Array.isArray(player.scores)) {
-    return player.scores.filter(s => s.strokes > 0).length
-  }
-
-  const scores = game.scores?.[playerId] || {}
-  return Object.keys(scores).filter(k => !isNaN(k)).length
-}
-
-function countBirdies(game, playerId) {
-  const player = game?.players?.find(p => p.id === playerId)
-
-  if (player && player.scores && Array.isArray(player.scores)) {
-    return player.scores.filter(s => {
-      if (s.strokes <= 0) return false
-      const par = s.par || 4
-      return s.strokes < par
-    }).length
-  }
-
-  const scores = game?.scores?.[playerId] || {}
-  const holes = game?.holes || []
-  let count = 0
+  let totalStrokes = 0
+  let totalPar = 0
+  let holesPlayed = 0
+  let birdies = 0
+  let pars = 0
+  let doubleOrWorse = 0
+  let puttTotal = 0
+  let puttCount = 0
+  const diffs = []
 
   Object.entries(scores).forEach(([k, v]) => {
     const holeNum = parseInt(k)
-    if (!isNaN(holeNum) && v > 0) {
-      const holeData = holes.find(h => h.hole === holeNum)
-      if (holeData && v < holeData.par) count++
+    if (isNaN(holeNum)) return
+    const strokes = extractStrokes(v)
+    if (strokes <= 0) return
+
+    const par = holeParMap[holeNum] || 4
+    const diff = strokes - par
+    totalStrokes += strokes
+    totalPar += par
+    holesPlayed++
+    diffs.push(diff)
+
+    if (diff <= -1) birdies++
+    if (diff === 0) pars++
+    if (diff >= 2) doubleOrWorse++
+
+    const putt = parseInt(putts[holeNum])
+    if (!isNaN(putt) && putt > 0) {
+      puttTotal += putt
+      puttCount++
     }
   })
 
-  return count
+  const avgPutts = puttCount > 0 ? puttTotal / puttCount : 2.0
+  const toPar = totalStrokes - totalPar
+
+  let volatility = 2.0
+  if (diffs.length > 0) {
+    const avgDiff = diffs.reduce((a, b) => a + b, 0) / diffs.length
+    const variance = diffs.reduce((sum, d) => sum + Math.pow(d - avgDiff, 2), 0) / diffs.length
+    volatility = Math.sqrt(variance)
+  }
+
+  return {
+    totalStrokes,
+    toPar,
+    holesPlayed,
+    birdies,
+    pars,
+    doubleOrWorse,
+    avgPutts,
+    volatility
+  }
 }
 
 module.exports = { generatePoster }

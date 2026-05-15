@@ -3,6 +3,50 @@
   padding-bottom: 120rpx;
 }
 
+.empty-state {
+  min-height: 72vh;
+  text-align: center;
+  padding: 120rpx 48rpx;
+  box-sizing: border-box;
+}
+
+.statistics-empty-icon {
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 42rpx;
+  margin-bottom: 32rpx;
+  background:
+    linear-gradient(90deg, transparent 24%, rgba(255,255,255,0.74) 24%, rgba(255,255,255,0.74) 31%, transparent 31%, transparent 46%, rgba(255,255,255,0.74) 46%, rgba(255,255,255,0.74) 53%, transparent 53%, transparent 68%, rgba(255,255,255,0.74) 68%, rgba(255,255,255,0.74) 75%, transparent 75%),
+    linear-gradient(135deg, #2c8f4e 0%, #1b5e20 100%);
+  box-shadow: 0 18rpx 40rpx rgba(44, 143, 78, 0.2);
+}
+
+.statistics-empty-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.statistics-empty-desc {
+  max-width: 520rpx;
+  margin-top: 14rpx;
+  font-size: 27rpx;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.statistics-empty-btn {
+  margin-top: 42rpx;
+  width: 320rpx;
+  height: 84rpx;
+  border-radius: 42rpx;
+  font-size: 30rpx;
+}
+
+.statistics-empty-btn::after {
+  border: none;
+}
+
 /* 总体概览 */
 .overview-header {
   margin-bottom: 30rpx;

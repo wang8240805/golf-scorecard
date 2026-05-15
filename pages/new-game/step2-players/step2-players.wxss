@@ -260,6 +260,54 @@
   align-items: center;
 }
 
+.game-config-card {
+  margin: 20rpx 24rpx;
+  padding: 24rpx;
+  border-radius: 16rpx;
+  background: #f7fbf8;
+  border: 1rpx solid #e2efe7;
+}
+
+.config-title-row {
+  margin-bottom: 16rpx;
+}
+
+.config-title {
+  display: block;
+  font-size: 28rpx;
+  color: #1f2b23;
+  font-weight: 600;
+}
+
+.config-desc {
+  display: block;
+  margin-top: 6rpx;
+  font-size: 22rpx;
+  color: #6b7a70;
+}
+
+.hole-count-segment {
+  display: flex;
+  border: 1rpx solid #c8dacc;
+  border-radius: 12rpx;
+  overflow: hidden;
+}
+
+.hole-count-option {
+  flex: 1;
+  text-align: center;
+  font-size: 26rpx;
+  line-height: 72rpx;
+  color: #355344;
+  background: #ffffff;
+}
+
+.hole-count-option.active {
+  color: #ffffff;
+  font-weight: 600;
+  background: #2c8f4e;
+}
+
 .quick-input {
   flex: 1;
   height: 80rpx;
@@ -760,6 +808,32 @@
   box-sizing: border-box;
 }
 
+.phone-row {
+  margin-top: 18rpx;
+}
+
+.phone-auth-btn {
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  color: #1b5e20;
+  background: #e8f5e9;
+  border: none;
+}
+
+.phone-auth-btn::after {
+  border: none;
+}
+
+.phone-hint {
+  display: block;
+  margin-top: 8rpx;
+  font-size: 22rpx;
+  color: #8a8a8a;
+}
+
 .auth-footer {
   padding: 24rpx 32rpx 40rpx;
 }
@@ -971,4 +1045,66 @@
   font-size: 24rpx;
   color: #2c8f4e;
   font-weight: 500;
+}
+
+/* 开赛前检查弹窗 */
+.checklist-content {
+  width: 620rpx;
+  max-width: 92vw;
+}
+
+.checklist-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+  margin: 10rpx 0 20rpx;
+}
+
+.check-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f6f9f7;
+  border-radius: 12rpx;
+  padding: 18rpx 20rpx;
+}
+
+.check-label {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.check-value {
+  font-size: 28rpx;
+  color: #1f3a2a;
+  font-weight: 600;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 14rpx;
+}
+
+.btn-cancel-check,
+.btn-confirm-check {
+  flex: 1;
+  border: none;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  padding: 18rpx 0;
+}
+
+.btn-cancel-check {
+  background: #f1f1f1;
+  color: #666;
+}
+
+.btn-confirm-check {
+  background: #2c8f4e;
+  color: #fff;
+}
+
+.btn-cancel-check::after,
+.btn-confirm-check::after {
+  border: none;
 }

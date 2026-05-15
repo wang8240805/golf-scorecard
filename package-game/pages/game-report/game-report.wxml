@@ -14,7 +14,7 @@
       </view>
       <view class="player-detail">
         <text class="player-name">{{currentPlayer.name}}</text>
-        <text class="player-score">{{currentPlayer.total}}杆 {{currentPlayer.toPar > 0 ? '+' : ''}}{{currentPlayer.toPar}}</text>
+        <text class="player-score">{{currentPlayerSummary.total}}杆 {{currentPlayerSummary.toParText}}</text>
       </view>
     </view>
     <text class="switch-text">切换球员 ></text>
@@ -105,13 +105,13 @@
 
   <!-- 分享海报按钮 -->
   <view class="action-bar">
-    <button wx:if="{{!posterImageUrl}}" class="btn btn-primary share-btn" bindtap="showPosterOptions">
+    <button wx:if="{{!posterImageUrl}}" class="btn btn-primary share-btn" bindtap="generatePoster">
       <text class="btn-icon">📸</text>
-      <text>生成分享海报</text>
+      <text>生成海报</text>
     </button>
     <button wx:if="{{posterImageUrl}}" class="btn btn-primary share-btn" bindtap="showPosterPreview">
       <text class="btn-icon">📷</text>
-      <text>查看海报</text>
+      <text>查看并分享海报</text>
     </button>
   </view>
 
@@ -124,7 +124,7 @@
       </view>
       <view class="poster-modal-body">
         <view class="style-option {{currentPlayer.id === item.id ? 'selected' : ''}}"
-              wx:for="{{game.players}}"
+              wx:for="{{reportPlayerOptions}}"
               wx:key="id"
               bindtap="selectPlayer"
               data-player-id="{{item.id}}">
@@ -134,7 +134,8 @@
             </view>
             <view class="player-option-info">
               <text class="style-name">{{item.name}}</text>
-              <text class="style-desc">{{item.total}}杆 {{item.toPar > 0 ? '+' : ''}}{{item.toPar}}</text>
+              <text class="style-desc" wx:if="{{item.validRound}}">{{item.totalDisplay}}杆 {{item.toParText}}</text>
+              <text class="style-desc invalid" wx:else>未完成18洞</text>
             </view>
           </view>
           <text class="style-check" wx:if="{{currentPlayer.id === item.id}}">✓</text>

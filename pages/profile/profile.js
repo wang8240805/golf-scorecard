@@ -1,5 +1,6 @@
 const app = getApp()
 const { USER_LEVELS } = require('../../utils/constants.js')
+const gameCompleteness = require('../../utils/game-completeness.js')
 
 // 默认头像 - 按照官方文档示例
 const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
@@ -189,15 +190,10 @@ Page({
     const games = wx.getStorageSync('games') || []
     const currentGame = wx.getStorageSync('currentGame')
 
-    // 过滤出用户本人完成的比赛（和首页统计口径一致）
+    // 过滤出用户本人18洞完整有效成绩（和首页/复盘口径一致）
     const completedGames = games.filter(game => {
-      if (!game.completed) return false
-
-      // 查找当前用户
-      const player = game.players?.find(p => p.isMe) || game.players?.[0]
-      if (!player) return false
-
-      return true
+      const player = gameCompleteness.getPlayer(game)
+      return player && gameCompleteness.isPlayerRoundComplete(game, player.id)
     })
 
     // 总场次（和首页统计口径一致，统计所有已完成比赛）
@@ -207,7 +203,7 @@ Page({
     let totalHoles = 0
     let allScores = []
     completedGames.forEach(game => {
-      const player = game.players?.find(p => p.isMe) || game.players?.[0]
+      const player = gameCompleteness.getPlayer(game)
       if (!player) return
 
       // 从 statistics 获取总杆数
@@ -220,9 +216,9 @@ Page({
       }
       // 新格式：player.scores数组
       else if (player.scores && Array.isArray(player.scores)) {
-        const validScores = player.scores.filter(s => s.strokes > 0)
+        const validScores = player.scores.filter(s => gameCompleteness.getStrokesValue(s) > 0)
         totalHoles += validScores.length
-        const total = validScores.reduce((sum, s) => sum + s.strokes, 0)
+        const total = validScores.reduce((sum, s) => sum + gameCompleteness.getStrokesValue(s), 0)
         if (total > 0) {
           allScores.push(total)
         }
@@ -230,7 +226,7 @@ Page({
       // 旧格式：game.scores对象
       else if (game.scores && game.scores[player.id]) {
         const scores = game.scores[player.id]
-        const validScores = Object.values(scores).filter(v => v > 0)
+        const validScores = Object.values(scores).filter(v => gameCompleteness.getStrokesValue(v) > 0)
         totalHoles += validScores.length
         const total = validScores.reduce((sum, s) => {
           const strokes = typeof s === 'object' ? s.strokes : s

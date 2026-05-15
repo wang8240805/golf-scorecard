@@ -15,11 +15,8 @@
 
     <view class="form-group">
       <text class="form-label">联系方式（选填）</text>
-      <view class="contact-wrapper">
-        <input class="form-input" placeholder="点击右侧按钮获取微信/手机号" bindinput="onContactInput" value="{{contact}}" />
-        <button class="get-contact-btn" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">获取</button>
-      </view>
-      <text class="contact-hint">点击按钮授权后自动填入，无需手动输入</text>
+      <input class="form-input" placeholder="手机号 / 微信 / 邮箱，方便我们联系你" bindinput="onContactInput" value="{{contact}}" />
+      <text class="contact-hint">{{contactSource || '如账号里已有手机号会自动带入，也可以手动修改'}}</text>
     </view>
 
     <button class="btn btn-primary submit-btn" bindtap="submitFeedback" disabled="{{!content}}">提交反馈</button>

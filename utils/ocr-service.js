@@ -4,6 +4,7 @@
  */
 
 const DebugLog = require('./debug-log.js')
+const OCR_GUIDE_KEY = '__ocr_capture_guide_seen__'
 
 const OCRService = {
   /**
@@ -12,6 +13,7 @@ const OCRService = {
    * @returns {Promise<Object>} 识别结果
    */
   async recognize(imagePath) {
+    await this.showCaptureGuideOnce()
     DebugLog.log('[OCR] 开始识别, 图片路径:', imagePath)
     wx.showLoading({ title: '上传中...', mask: true })
 
@@ -77,7 +79,11 @@ const OCRService = {
           DebugLog.log('[OCR] 校验结果:', JSON.stringify(data.validation))
         }
         // 输出推断的PAR值
-        const inferred = data.holes.filter(h => h.source === 'inferred' || h.source === 'default')
+        const inferred = data.holes.filter(h =>
+          h.source === 'rule_infer' ||
+          h.source === 'default_fill' ||
+          h.needs_review
+        )
         if (inferred.length > 0) {
           DebugLog.log(`[OCR] 推断的洞: ${inferred.map(h => `#${h.hole}=${h.par}`).join(', ')}`)
         }
@@ -122,7 +128,7 @@ const OCRService = {
    * @returns {Promise<boolean>} 用户是否确认
    */
   showResultConfirm(result, options = {}) {
-    const { holes, confidence, validation } = result
+    const { holes, validation } = result
 
     let content = ''
 
@@ -141,8 +147,6 @@ const OCRService = {
 
     if (validation && !validation.valid) {
       content = `识别到${holes.length}洞数据，但数据可能不准确：${validation.reason}\n\n是否使用该数据？`
-    } else if (confidence < 0.7) {
-      content = `识别到${holes.length}洞数据，但置信度较低(${Math.round(confidence * 100)}%)，请仔细核对。`
     } else {
       // 计算总标准杆
       const totalPar = holes.reduce((sum, h) => sum + h.par, 0)
@@ -157,6 +161,33 @@ const OCRService = {
         cancelText: '取消',
         success: res => resolve(res.confirm)
       })
+    })
+  },
+
+  showCaptureGuideOnce() {
+    return new Promise(resolve => {
+      try {
+        const seen = wx.getStorageSync(OCR_GUIDE_KEY)
+        if (seen) {
+          resolve()
+          return
+        }
+        wx.showModal({
+          title: '拍照小提示',
+          content: '请把整张记分卡完整拍入画面，四角都要露出；尽量正对拍摄，避免反光和阴影，底部后9洞不要贴边裁切。',
+          showCancel: false,
+          confirmText: '知道了',
+          success: function() {
+            wx.setStorageSync(OCR_GUIDE_KEY, Date.now())
+            resolve()
+          },
+          fail: function() {
+            resolve()
+          }
+        })
+      } catch (e) {
+        resolve()
+      }
     })
   },
 

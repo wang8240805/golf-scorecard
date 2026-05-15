@@ -15,6 +15,26 @@
         "type": "folder"
       },
       {
+        "value": "tests",
+        "type": "folder"
+      },
+      {
+        "value": "coverage",
+        "type": "folder"
+      },
+      {
+        "value": "reports",
+        "type": "folder"
+      },
+      {
+        "value": "scenarios",
+        "type": "folder"
+      },
+      {
+        "value": "scripts",
+        "type": "folder"
+      },
+      {
         "value": "private.key",
         "type": "file"
       },

@@ -1,7 +1,9 @@
 <view class="container">
   <view class="empty-state" wx:if="{{games.length === 0}}">
-    <text>暂无比赛记录</text>
-    <text style="font-size: 26rpx; margin-top: 16rpx;">完成一场比赛后将在这里显示</text>
+    <view class="history-empty-icon"></view>
+    <text class="history-empty-title">暂无比赛记录</text>
+    <text class="history-empty-desc">完成一场18洞比赛后，成绩和统计会保存在这里</text>
+    <button class="btn btn-primary history-empty-btn" bindtap="startNewGame">开始新比赛</button>
   </view>
 
   <block wx:if="{{games.length > 0}}">
@@ -32,18 +34,26 @@
       <view class="section-title">比赛记录</view>
       <view class="game-list">
         <view class="game-card" wx:for="{{games}}" wx:key="id">
-          <view class="game-header" bindtap="toggleExpand" data-index="{{index}}">
-            <view class="game-main">
-              <text class="game-course">{{item.courseName}}</text>
-              <view class="game-meta">
-                <text class="game-date">{{item.date}}</text>
-                <text class="game-players">{{item.players.length}}人</text>
+          <view class="history-game-item {{item.statusClass}}" bindtap="toggleExpand" data-index="{{index}}">
+            <view class="history-game-main">
+              <view class="history-game-info">
+                <view class="history-game-title-row">
+                  <text class="history-game-name">{{item.courseName || '未知球场'}}</text>
+                  <text class="history-status-pill {{item.statusClass}}">{{item.statusText}}</text>
+                </view>
+                <text class="history-game-date">{{item.date || ''}} · {{item.players.length}}人</text>
+              </view>
+              <view class="history-game-meta-row">
+                <text class="history-game-meta">已打 {{item.holesPlayed || 0}}/{{item.holesTotal || 18}} 洞</text>
+                <text class="history-game-meta history-game-to-par {{'to-par-' + (item.toParClass || 'empty')}}">{{item.toParText || '-'}}</text>
+                <text class="history-game-meta warning" wx:if="{{item.incompleteTip}}">{{item.incompleteTip}}</text>
               </view>
             </view>
-            <view class="game-status">
-              <text class="badge {{item.completed ? 'badge-primary' : 'badge-warning'}}">
-                {{item.completed ? '已完成' : '进行中'}}
-              </text>
+            <view class="history-game-side">
+              <view class="history-game-scorebox">
+                <text class="history-game-score">{{item.myScore || '-'}}</text>
+                <text class="history-game-score-label">杆</text>
+              </view>
               <text class="expand-icon {{item.expanded ? 'expanded' : ''}}">›</text>
             </view>
           </view>
@@ -69,7 +79,7 @@
             </view>
 
             <!-- 洞数统计 -->
-            <view class="detail-section" wx:if="{{item.completed}}">
+            <view class="detail-section" wx:if="{{item.isCompleted}}">
               <view class="section-label">统计</view>
               <view class="detail-stats">
                 <view class="detail-stat">
@@ -93,7 +103,7 @@
 
             <!-- 操作按钮 -->
             <view class="detail-actions">
-              <block wx:if="{{!item.completed}}">
+              <block wx:if="{{!item.isCompleted}}">
                 <button class="btn btn-primary btn-sm" bindtap="continueGame" data-game="{{item}}">
                   继续比赛
                 </button>

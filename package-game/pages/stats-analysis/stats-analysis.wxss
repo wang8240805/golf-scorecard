@@ -258,6 +258,25 @@
   border-radius: 12rpx;
 }
 
+.lock-card {
+  border: 1rpx dashed #c9d3ce;
+  background: #f8fbf9;
+}
+
+.lock-title {
+  display: block;
+  font-size: 30rpx;
+  color: #2f3f35;
+  font-weight: 600;
+}
+
+.lock-desc {
+  display: block;
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  color: #6d7d73;
+}
+
 .suggestion-icon {
   font-size: 36rpx;
 }
@@ -332,4 +351,16 @@
   font-size: 28rpx;
   color: var(--text-secondary);
   margin-bottom: 40rpx;
+  line-height: 1.5;
+}
+
+.empty-start-btn {
+  width: 320rpx;
+  height: 84rpx;
+  border-radius: 42rpx;
+  font-size: 30rpx;
+}
+
+.empty-start-btn::after {
+  border: none;
 }

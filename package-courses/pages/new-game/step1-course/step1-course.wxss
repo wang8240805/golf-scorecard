@@ -114,6 +114,10 @@
 
 .header-left {
   flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  flex-wrap: wrap;
 }
 
 .recommended-badge {
@@ -126,6 +130,37 @@
   border-radius: 20rpx;
 }
 
+.match-badge {
+  display: inline-block;
+  padding: 6rpx 14rpx;
+  border-radius: 18rpx;
+  font-size: 22rpx;
+  font-weight: 600;
+}
+
+.match-badge.high {
+  background: rgba(46, 204, 113, 0.92);
+  color: #fff;
+}
+
+.match-badge.medium {
+  background: rgba(255, 193, 7, 0.95);
+  color: #6b4d00;
+}
+
+.match-badge.low {
+  background: rgba(244, 67, 54, 0.92);
+  color: #fff;
+}
+
+.match-hint {
+  display: block;
+  margin-top: -8rpx;
+  margin-bottom: 10rpx;
+  font-size: 22rpx;
+  color: #ffe4b5;
+}
+
 .hero-distance {
   background: rgba(255, 255, 255, 0.95);
   padding: 8rpx 16rpx;
@@ -136,6 +171,27 @@
   font-size: 24rpx;
   font-weight: 700;
   color: #2c8f4e;
+}
+
+.hero-distance.match-distance.high {
+  background: rgba(46, 204, 113, 0.95);
+}
+
+.hero-distance.match-distance.medium {
+  background: rgba(255, 193, 7, 0.95);
+}
+
+.hero-distance.match-distance.low {
+  background: rgba(244, 67, 54, 0.95);
+}
+
+.hero-distance.match-distance.high .distance-value,
+.hero-distance.match-distance.low .distance-value {
+  color: #fff;
+}
+
+.hero-distance.match-distance.medium .distance-value {
+  color: #6b4d00;
 }
 
 /* 球场名称行 */
@@ -252,6 +308,7 @@
   background: rgba(255, 255, 255, 0.95);
   border-radius: 16rpx;
   overflow: hidden;
+  box-shadow: 0 10rpx 24rpx rgba(0, 0, 0, 0.08);
 }
 
 .holes-row {
@@ -269,6 +326,7 @@
 
 .hole-label {
   width: 80rpx;
+  flex: 0 0 80rpx;
   text-align: center;
   font-size: 24rpx;
   font-weight: 600;
@@ -300,6 +358,36 @@
   font-weight: 700;
   color: #2c8f4e;
   padding: 14rpx 0;
+  position: relative;
+}
+
+.hole-par.editable {
+  background: #fff;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.hole-par.editable::after {
+  content: "";
+  position: absolute;
+  left: 18rpx;
+  right: 18rpx;
+  bottom: 8rpx;
+  height: 4rpx;
+  border-radius: 999rpx;
+  background: rgba(44, 143, 78, 0.16);
+}
+
+.hole-par.editable:active {
+  background: rgba(44, 143, 78, 0.08);
+  transform: scale(0.96);
+}
+
+.holes-edit-hint {
+  display: block;
+  margin-top: 10rpx;
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.4;
 }
 
 /* 加载状态 */
@@ -356,6 +444,24 @@
   background: #ffffff;
   box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.06);
   z-index: 100;
+}
+
+.btn-temp-course {
+  width: 100%;
+  height: 72rpx;
+  line-height: 72rpx;
+  margin-bottom: 14rpx;
+  background: #eef7f1;
+  color: #276f43;
+  border: 1rpx solid #cfe7d8;
+  border-radius: 36rpx;
+  font-size: 27rpx;
+  font-weight: 600;
+  padding: 0;
+}
+
+.btn-temp-course::after {
+  border: none;
 }
 
 .btn-primary-large {
@@ -587,6 +693,12 @@
 .table-cell.new.editable {
   cursor: pointer;
   transition: all 0.2s ease;
+}
+
+.table-cell.new.editable.review {
+  background: #fff7e8;
+  box-shadow: inset 0 0 0 1rpx #ffb84d;
+  color: #b25b00;
 }
 
 .table-cell.new.editable:active {

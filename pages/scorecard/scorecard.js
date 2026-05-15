@@ -3,6 +3,7 @@ const { GAME_MODES } = require('../../data/game-modes.js')
 const storageDebounced = require('../../utils/storage-debounce.js')
 const OCRService = require('../../utils/ocr-service.js')
 const analysisReport = require('../../utils/analysis-report.js')
+const gameCompleteness = require('../../utils/game-completeness.js')
 const preferenceManager = require('../../utils/preference-manager.js')
 const { PLAYER_COLORS } = require('../../utils/constants.js')
 const { formatDate } = require('../../utils/date-utils.js')
@@ -28,8 +29,19 @@ Page({
       playerName: '',
       strokes: null,
       putts: 2,
+      fairway: null,
+      penalty: 0,
       showCustomInput: false
     },
+    scoreScrollIntoView: '',
+    scoreScrollLeft: 0,
+    scoreStrokeOptions: [],
+    singleEntryDiffOptions: [],
+    singleEntryDiffWheelOptions: [],
+    singleEntryPuttOptions: [1, 2, 3, 4],
+    singleEntryPuttWheelOptions: [1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4],
+    singleEntryDiffIndex: 0,
+    singleEntryPuttIndex: 1,
     // 球员总杆显示列表（与players数组顺序一致）
     playerTotalList: [],
     // 记分卡网格数据（预计算每个洞每个球员的成绩）
@@ -40,6 +52,7 @@ Page({
     originalTotalPar: 0,
     ocrHoles: [],
     ocrTotalPar: 0,
+    ocrReviewCount: 0,
     hasDiff: false,
     hasScoreDiff: false,
     // 邀请弹窗
@@ -58,10 +71,23 @@ Page({
     pendingConfirmations: [],      // 待本人确认的成绩列表
     pendingCount: 0,               // 待确认数量
     showPendingModal: false,       // 是否显示待确认弹窗
-    myOpenid: null                 // 当前用户的openid
+    myOpenid: null,                // 当前用户的openid
+    finalizeAfterPending: false,   // 是否在处理完待确认后继续完赛
+    pendingBatchProcessing: false, // 是否正在批量处理待确认项
+    autoAdvanceEnabled: true,      // 当前洞录完后自动跳到下一洞
+    syncStateText: '本地已保存',
+    unsyncedCount: 0,
+    showBatchEntryModal: false,
+    batchScores: {},
+    batchEntries: {},
+    batchDiffOptions: [-1, 0, 1, 2, 3, 4],
+    batchPuttOptions: [1, 2, 3, 4],
+    scoreEntryDefaultMode: 'par',
+    scoreActionStack: []
   },
 
   onLoad(options) {
+    this.isReadonlyMode = !!(options && options.mode === 'readonly') || wx.getStorageSync('viewMode') === 'readonly'
     // 获取gameId参数（多人同步比赛）
     if (options && options.gameId) {
       this.gameId = options.gameId
@@ -70,9 +96,78 @@ Page({
 
     // 检查系统信息
     this.checkSystemInfo()
+    this.loadScoreEntryDefaultMode()
 
     this.loadCourses()
     this.loadGame()
+  },
+
+  loadScoreEntryDefaultMode() {
+    const mode = wx.getStorageSync('scoreEntryDefaultMode')
+    if (mode === 'par' || mode === 'parPlusOne') {
+      this.setData({ scoreEntryDefaultMode: mode })
+    }
+  },
+
+  setScoreEntryDefaultMode(e) {
+    const mode = e.currentTarget.dataset.mode
+    if (mode !== 'par' && mode !== 'parPlusOne') return
+    this.setData({ scoreEntryDefaultMode: mode }, () => {
+      this.refreshOpenScoreEntryDefaults(mode)
+    })
+    wx.setStorageSync('scoreEntryDefaultMode', mode)
+  },
+
+  getDefaultStrokesByMode(holePar, modeOverride) {
+    const par = parseInt(holePar, 10) || 4
+    const mode = modeOverride || this.data.scoreEntryDefaultMode || 'par'
+    if (mode === 'parPlusOne') return par + 1
+    return par
+  },
+
+  getCurrentHolePar() {
+    return (this.data.currentHoleData && this.data.currentHoleData.par) ? this.data.currentHoleData.par : 4
+  },
+
+  getActiveHolesByCount(holes, holeCount) {
+    if (!Array.isArray(holes)) return []
+    const normalizedHoleCount = parseInt(holeCount, 10) === 9 ? 9 : 18
+    return holes.slice(0, Math.min(normalizedHoleCount, holes.length))
+  },
+
+  hasScoreOnCurrentHole(playerId) {
+    const game = this.data.currentGame || {}
+    const scores = game.scores || {}
+    const raw = scores[playerId] ? scores[playerId][this.data.currentHole] : null
+    return this.extractScoreValue(raw) !== null
+  },
+
+  refreshOpenScoreEntryDefaults(mode) {
+    const holePar = this.getCurrentHolePar()
+    const defaultStrokes = this.getDefaultStrokesByMode(holePar, mode)
+
+    if (this.data.editingScore && this.data.editingScore.playerId && !this.hasScoreOnCurrentHole(this.data.editingScore.playerId)) {
+      this.setData({
+        'editingScore.strokes': defaultStrokes
+      })
+    }
+
+    if (this.data.showBatchEntryModal) {
+      const game = this.data.currentGame || {}
+      const scores = game.scores || {}
+      const entries = this.data.batchEntries || {}
+      const nextEntries = {}
+      ;(game.players || []).forEach((player) => {
+        const existing = entries[player.id] || { diff: 0, putts: 2 }
+        const raw = scores[player.id] ? scores[player.id][this.data.currentHole] : null
+        const hasStoredScore = this.extractScoreValue(raw) !== null
+        nextEntries[player.id] = {
+          diff: hasStoredScore ? existing.diff : defaultStrokes - holePar,
+          putts: existing.putts
+        }
+      })
+      this.setData({ batchEntries: nextEntries })
+    }
   },
 
   // 检查系统信息
@@ -85,11 +180,42 @@ Page({
 
   onShow() {
     this.loadGame()
+    this.updateSyncStateText()
 
     // 设置TabBar选中状态 - 记分卡页面属于功能页，不高亮任何tab
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
       this.getTabBar().setData({ selected: null })
     }
+  },
+
+  startNewGame() {
+    wx.navigateTo({
+      url: '/package-courses/pages/new-game/step1-course/step1-course'
+    })
+  },
+
+  updateSyncStateText() {
+    if (!this.isCloudGame) {
+      this.setData({ syncStateText: '本地已保存' })
+      return
+    }
+    const unsynced = this.data.unsyncedCount || 0
+    if (unsynced > 0) {
+      this.setData({ syncStateText: `待同步 ${unsynced} 条` })
+    } else {
+      this.setData({ syncStateText: '云端同步中' })
+    }
+  },
+
+  markSyncFailed() {
+    const next = (this.data.unsyncedCount || 0) + 1
+    this.setData({ unsyncedCount: next }, () => this.updateSyncStateText())
+  },
+
+  markSyncSuccess() {
+    const current = this.data.unsyncedCount || 0
+    const next = Math.max(0, current - 1)
+    this.setData({ unsyncedCount: next }, () => this.updateSyncStateText())
   },
 
   // 分享给微信好友，邀请加入比赛
@@ -250,16 +376,34 @@ Page({
       courses = wx.getStorageSync('courses') || []
     }
 
-    const course = courses.find(c => c.id === currentGame.courseId)
-    if (!course) {
-      this.setData({ currentGame: null })
-      return
+    let course = courses.find(c => c.id === currentGame.courseId)
+    // 兼容历史数据：courseId 失配时，按球场名兜底匹配
+    if (!course && currentGame.courseName) {
+      const normalizedTarget = String(currentGame.courseName).replace(/\s+/g, '').toLowerCase()
+      course = courses.find(function(c) {
+        const n = String(c.name || '').replace(/\s+/g, '').toLowerCase()
+        return n === normalizedTarget || n.indexOf(normalizedTarget) >= 0 || normalizedTarget.indexOf(n) >= 0
+      })
+    }
+
+    // 历史只读兜底：球场库中找不到也要能打开该场比赛
+    let holes = null
+    if (course && Array.isArray(course.holes) && course.holes.length > 0) {
+      holes = course.holes
+    } else if (Array.isArray(currentGame.holes) && currentGame.holes.length > 0) {
+      holes = currentGame.holes
+    } else {
+      // 最后兜底：默认18洞Par4，至少保证可查看
+      holes = []
+      for (let i = 1; i <= 18; i++) {
+        holes.push({ hole: i, par: 4, distance: 0 })
+      }
     }
 
     // 检查球场是否有完整的Par数据
-    const parCheck = this.checkCourseParData(course)
+    const parCheck = this.checkCourseParData({ holes: holes, id: currentGame.courseId })
 
-    if (!parCheck.hasData) {
+    if (!parCheck.hasData && !this.isReadonlyMode) {
       // Par数据缺失，显示引导界面
       this.setData({
         currentGame,
@@ -270,17 +414,17 @@ Page({
       return
     }
 
-    // 如果有用户贡献的数据，使用它
-    let holes = course.holes
-    if (parCheck.fromUser) {
+    // 如果有用户贡献的数据，使用它（只在有course时）
+    if (parCheck.fromUser && course) {
       const userCourseHoles = wx.getStorageSync('userCourseHoles') || {}
       holes = userCourseHoles[course.id].holes
     }
 
     // 创建一个副本，使用正确的holes数据
+    const activeHoles = this.getActiveHolesByCount(holes, currentGame.holeCount)
     const courseWithCorrectHoles = {
-      ...course,
-      holes: holes
+      ...(course || { id: currentGame.courseId, name: currentGame.courseName || '未知球场' }),
+      holes: activeHoles
     }
 
     const now = new Date()
@@ -290,16 +434,16 @@ Page({
     const currentMode = GAME_MODES.find(m => m.id === currentGame.gameMode) || GAME_MODES[0]
 
     // 预计算每个球员的总杆显示（转换为数组，保持与players数组顺序一致）
-    const playerTotalList = this.calcPlayerTotalList(currentGame, holes)
+    const playerTotalList = this.calcPlayerTotalList(currentGame, activeHoles)
     // 预计算记分卡网格数据
-    const scoreGridData = this.calcScoreGridData(currentGame, holes)
+    const scoreGridData = this.calcScoreGridData(currentGame, activeHoles)
 
     this.setData({
       currentGame,
-      holes: holes,
-      totalHoles: holes.length,
-      totalPar: holes.reduce((sum, h) => sum + h.par, 0),
-      currentHoleData: holes[0],
+      holes: activeHoles,
+      totalHoles: activeHoles.length,
+      totalPar: activeHoles.reduce((sum, h) => sum + h.par, 0),
+      currentHoleData: activeHoles[0],
       currentDate: dateStr,
       currentMode,
       playerTotalList,
@@ -311,7 +455,7 @@ Page({
 
     // 恢复上次记录的洞
     const savedHole = wx.getStorageSync('currentHole')
-    if (savedHole && savedHole <= holes.length) {
+    if (savedHole && savedHole <= activeHoles.length) {
       this.setCurrentHole(savedHole)
     }
   },
@@ -741,12 +885,15 @@ Page({
       customPar: cloudGame.customPar || {},
       advancedStats: cloudGame.advancedStats || {},
       fairways: cloudGame.fairways || {},
+      penalties: cloudGame.penalties || {},
+      holeCount: parseInt(cloudGame.holeCount, 10) === 9 ? 9 : 18,
       qrcodeUrl: cloudGame.qrcodeUrl || null,
       qrcodeFileId: cloudGame.qrcodeFileId || null
     }
+    const activeHoles = this.getActiveHolesByCount(course.holes, currentGame.holeCount)
 
     // 计算实际totalPar，考虑自定义par修改
-    const actualTotalPar = course.holes.reduce((sum, hole) => {
+    const actualTotalPar = activeHoles.reduce((sum, hole) => {
       const par = currentGame.customPar && currentGame.customPar[hole.hole]
         ? currentGame.customPar[hole.hole]
         : hole.par
@@ -754,15 +901,15 @@ Page({
     }, 0)
 
     // 预计算每个球员的总杆显示
-    const playerTotalList = this.calcPlayerTotalList(currentGame, course.holes)
-    const scoreGridData = this.calcScoreGridData(currentGame, course.holes)
+    const playerTotalList = this.calcPlayerTotalList(currentGame, activeHoles)
+    const scoreGridData = this.calcScoreGridData(currentGame, activeHoles)
 
     this.setData({
       currentGame: currentGame,
-      holes: course.holes,
-      totalHoles: course.holes.length,
+      holes: activeHoles,
+      totalHoles: activeHoles.length,
       totalPar: actualTotalPar,
-      currentHoleData: course.holes[0],
+      currentHoleData: activeHoles[0],
       currentDate: dateStr,
       currentMode: currentMode,
       playerTotalList: playerTotalList,
@@ -911,7 +1058,8 @@ Page({
       fairways: {
         ...currentGame.fairways,
         ...(updatedGame.fairways || {})
-      }
+      },
+      holeCount: parseInt(updatedGame.holeCount, 10) === 9 ? 9 : (parseInt(currentGame.holeCount, 10) === 9 ? 9 : 18)
     }
 
     // 为新球员初始化scores/putts等空间（比赛开始后加入的球员）
@@ -944,11 +1092,15 @@ Page({
     })
 
     // 重新计算网格数据
-    const playerTotalList = this.calcPlayerTotalList(newGame, this.data.holes)
-    const scoreGridData = this.calcScoreGridData(newGame, this.data.holes)
+    const activeHoles = this.getActiveHolesByCount(this.data.holes, newGame.holeCount)
+    const playerTotalList = this.calcPlayerTotalList(newGame, activeHoles)
+    const scoreGridData = this.calcScoreGridData(newGame, activeHoles)
 
     this.setData({
       currentGame: newGame,
+      holes: activeHoles,
+      totalHoles: activeHoles.length,
+      currentHoleData: activeHoles[Math.max(0, this.data.currentHole - 1)] || activeHoles[0],
       playerTotalList,
       scoreGridData
     })
@@ -1025,6 +1177,7 @@ Page({
       penalties: game.penalties,
       advancedStats: game.advancedStats,
       fairways: game.fairways,
+      holeCount: parseInt(game.holeCount, 10) === 9 ? 9 : 18,
       updateTime: db.serverDate()
     }
 
@@ -1556,13 +1709,27 @@ Page({
     if (holeNum && holeNum !== this.data.currentHole) {
       this.setCurrentHole(parseInt(holeNum))
     }
+    this.openSingleEntryModal(playerId)
+  },
 
+  // 打开单人录入（可被批量弹窗复用）
+  openSingleEntryModal(playerId) {
     const player = this.data.currentGame.players.find(p => p.id === playerId)
     const currentScore = this.getScore(playerId)
     const currentPutts = this.getPutts(playerId) || 2
+    const currentFairway = this.data.currentGame?.fairways?.[playerId]?.[this.data.currentHole]
+    const currentPenalty = parseInt(this.data.currentGame?.penalties?.[playerId]?.[this.data.currentHole], 10) || 0
 
-    // 如果没有成绩，默认设为当前洞的标准杆
-    const defaultStrokes = currentScore || this.data.currentHoleData.par
+    const holePar = this.getCurrentHolePar()
+    const diffOptions = this.getSingleEntryDiffOptions(holePar)
+    const defaultStrokes = currentScore || this.getDefaultStrokesByMode(holePar)
+    const defaultDiff = defaultStrokes - holePar
+    const diffBaseIndex = Math.max(0, diffOptions.indexOf(defaultDiff))
+    const diffWheelOptions = diffOptions.concat(diffOptions).concat(diffOptions)
+    const diffIndex = diffOptions.length + diffBaseIndex
+    const puttOptions = [1, 2, 3, 4]
+    const puttBaseIndex = Math.max(0, puttOptions.indexOf(currentPutts))
+    const puttIndex = puttOptions.length + puttBaseIndex
 
     this.setData({
       editingScore: {
@@ -1570,8 +1737,105 @@ Page({
         playerName: player ? player.name : '',
         strokes: defaultStrokes,
         putts: currentPutts,
+        fairway: currentFairway === true ? true : (currentFairway === false ? false : null),
+        penalty: Math.max(0, Math.min(3, currentPenalty)),
         showCustomInput: false
-      }
+      },
+      scoreScrollIntoView: ''
+    }, () => {
+      this.setData({
+        singleEntryDiffOptions: diffOptions,
+        singleEntryDiffWheelOptions: diffWheelOptions,
+        singleEntryPuttOptions: puttOptions,
+        singleEntryPuttWheelOptions: puttOptions.concat(puttOptions).concat(puttOptions),
+        singleEntryDiffIndex: diffIndex,
+        singleEntryPuttIndex: puttIndex
+      })
+    })
+  },
+
+  // 单人滚轮差点范围：理论最小到1杆(即 diff=1-par)，最大到 Double Par(diff=+par)
+  getSingleEntryDiffOptions(holePar) {
+    const range = this.getDiffRangeByPar(holePar)
+    const minDiff = range.minDiff
+    const maxDiff = range.maxDiff
+    const options = []
+    for (let d = minDiff; d <= maxDiff; d++) {
+      options.push(d)
+    }
+    return options
+  },
+
+  getDiffRangeByPar(holePar) {
+    const par = parseInt(holePar, 10) || 4
+    return {
+      minDiff: 1 - par,
+      maxDiff: par
+    }
+  },
+
+  onSingleEntryWheelChange(e) {
+    const values = e.detail.value || [0, 0]
+    const diffIndexRaw = values[0] || 0
+    const puttIndexRaw = values[1] || 0
+    const diffOptions = this.data.singleEntryDiffOptions || []
+    const puttOptions = this.data.singleEntryPuttOptions || [1, 2, 3, 4]
+    const diffLen = diffOptions.length || 1
+    const puttLen = puttOptions.length || 1
+    const diffNorm = ((diffIndexRaw % diffLen) + diffLen) % diffLen
+    const puttNorm = ((puttIndexRaw % puttLen) + puttLen) % puttLen
+    const holePar = this.getCurrentHolePar()
+    const diff = diffOptions[diffNorm] || 0
+    const putts = puttOptions[puttNorm] || 2
+    const strokes = Math.max(1, holePar + diff)
+    const diffRecenter = diffLen + diffNorm
+    const puttRecenter = puttLen + puttNorm
+
+    this.setData({
+      singleEntryDiffIndex: diffRecenter,
+      singleEntryPuttIndex: puttRecenter,
+      'editingScore.strokes': strokes,
+      'editingScore.putts': putts
+    })
+  },
+
+  adjustSingleDiff(e) {
+    const delta = parseInt(e.currentTarget.dataset.delta, 10)
+    if (Number.isNaN(delta)) return
+    const holePar = this.getCurrentHolePar()
+    const diffOptions = this.data.singleEntryDiffOptions || this.getSingleEntryDiffOptions(holePar)
+    if (!diffOptions.length) return
+    const minDiff = diffOptions[0]
+    const maxDiff = diffOptions[diffOptions.length - 1]
+    const currentStrokes = parseInt(this.data.editingScore.strokes, 10) || holePar
+    const currentDiff = currentStrokes - holePar
+    const nextDiff = Math.max(minDiff, Math.min(maxDiff, currentDiff + delta))
+    const nextStrokes = Math.max(1, holePar + nextDiff)
+    const baseIndex = Math.max(0, diffOptions.indexOf(nextDiff))
+    const recenterIndex = diffOptions.length + baseIndex
+
+    this.setData({
+      singleEntryDiffIndex: recenterIndex,
+      'editingScore.strokes': nextStrokes
+    })
+  },
+
+  adjustSinglePutts(e) {
+    const delta = parseInt(e.currentTarget.dataset.delta, 10)
+    if (Number.isNaN(delta)) return
+    const currentPutts = parseInt(this.data.editingScore.putts, 10) || 2
+    const nextPutts = Math.max(1, Math.min(4, currentPutts + delta))
+    this.setData({
+      'editingScore.putts': nextPutts
+    })
+  },
+
+  // 批量录入中点击球员，切换到该球员单人录入
+  openSingleFromBatch(e) {
+    const playerId = e.currentTarget.dataset.playerid
+    if (!playerId) return
+    this.setData({ showBatchEntryModal: false }, () => {
+      this.openSingleEntryModal(playerId)
     })
   },
 
@@ -1614,8 +1878,15 @@ Page({
         playerName: '',
         strokes: null,
         putts: 2,
+        fairway: null,
+        penalty: 0,
         showCustomInput: false
-      }
+      },
+      scoreScrollIntoView: '',
+      scoreScrollLeft: 0,
+      singleEntryDiffOptions: [],
+      singleEntryDiffIndex: 0,
+      singleEntryPuttIndex: 1
     })
   },
 
@@ -1669,9 +1940,30 @@ Page({
     })
   },
 
+  setFairway(e) {
+    const value = e.currentTarget.dataset.value
+    if (value === 'hit') {
+      this.setData({ 'editingScore.fairway': true })
+      return
+    }
+    if (value === 'miss') {
+      this.setData({ 'editingScore.fairway': false })
+      return
+    }
+    this.setData({ 'editingScore.fairway': null })
+  },
+
+  adjustPenalty(e) {
+    const delta = parseInt(e.currentTarget.dataset.delta, 10)
+    if (Number.isNaN(delta)) return
+    const current = parseInt(this.data.editingScore.penalty, 10) || 0
+    const next = Math.max(0, Math.min(3, current + delta))
+    this.setData({ 'editingScore.penalty': next })
+  },
+
   // 确认成绩录入
   confirmScore() {
-    const { playerId, strokes, putts } = this.data.editingScore
+    const { playerId, strokes, putts, fairway, penalty } = this.data.editingScore
     if (!playerId || !strokes) return
 
     // 获取最新的游戏数据（避免并发修改）
@@ -1681,14 +1973,33 @@ Page({
     // 确保 scores 结构存在
     if (!game.scores) game.scores = {}
     if (!game.scores[playerId]) game.scores[playerId] = {}
+    if (!game.putts) game.putts = {}
+    if (!game.putts[playerId]) game.putts[playerId] = {}
+    if (!game.fairways) game.fairways = {}
+    if (!game.fairways[playerId]) game.fairways[playerId] = {}
+    if (!game.penalties) game.penalties = {}
+    if (!game.penalties[playerId]) game.penalties[playerId] = {}
+
+    const player = (game.players || []).find(function(p) { return p.id === playerId })
+    const previousScore = game.scores[playerId][currentHole]
+    const previousPutts = game.putts[playerId][currentHole]
+    const previousFairway = game.fairways[playerId][currentHole]
+    const previousPenalty = game.penalties[playerId][currentHole]
 
     // 更新杆数
     game.scores[playerId][currentHole] = strokes
 
     // 更新推杆数
-    if (!game.putts) game.putts = {}
-    if (!game.putts[playerId]) game.putts[playerId] = {}
     game.putts[playerId][currentHole] = putts
+    game.fairways[playerId][currentHole] = fairway
+    game.penalties[playerId][currentHole] = Math.max(0, parseInt(penalty, 10) || 0)
+
+    if (!game.advancedStats) game.advancedStats = {}
+    if (!game.advancedStats[playerId]) game.advancedStats[playerId] = {}
+    game.advancedStats[playerId][currentHole] = {
+      fairway: fairway,
+      penalty: Math.max(0, parseInt(penalty, 10) || 0)
+    }
 
     // 如果是本地比赛，使用防抖保存到 storage（500ms延迟批量写入）
     if (!this.isCloudGame) {
@@ -1722,7 +2033,18 @@ Page({
     this.setData({
       currentGame: game,
       playerTotalList: playerTotalList,
-      [`scoreGridData[${currentHoleIndex}].scores`]: updatedScores
+      [`scoreGridData[${currentHoleIndex}].scores`]: updatedScores,
+      scoreActionStack: (this.data.scoreActionStack || []).concat([{
+        playerId: playerId,
+        playerName: player ? player.name : '球员',
+        hole: currentHole,
+        previousScore: previousScore === undefined ? null : previousScore,
+        previousPutts: previousPutts === undefined ? null : previousPutts,
+        previousFairway: previousFairway === undefined ? null : previousFairway,
+        previousPenalty: previousPenalty === undefined ? null : previousPenalty,
+        newScore: strokes,
+        newPutts: putts
+      }])
     })
 
     // 更新领先者
@@ -1749,6 +2071,7 @@ Page({
         },
         success: (res) => {
           console.log('[权限校验] 成绩确认更新成功', res.result)
+          this.markSyncSuccess()
           // 如果需要确认，提示用户
           if (res.result && res.result.needsConfirmation) {
             wx.showToast({
@@ -1760,6 +2083,7 @@ Page({
         },
         fail: (err) => {
           console.error('[权限校验] 成绩确认更新失败:', err)
+          this.markSyncFailed()
           wx.showToast({
             title: err.result && err.result.error ? err.result.error : '更新失败',
             icon: 'none'
@@ -1772,8 +2096,227 @@ Page({
     this.checkAndAutoAdvance()
   },
 
+  undoLastScoreInput() {
+    const stack = this.data.scoreActionStack || []
+    const action = stack[stack.length - 1]
+    if (!action || !action.playerId || !action.hole) return
+
+    const game = this.isCloudGame ? this.data.currentGame : (wx.getStorageSync('currentGame') || this.data.currentGame)
+    if (!game) return
+    if (!game.scores) game.scores = {}
+    if (!game.scores[action.playerId]) game.scores[action.playerId] = {}
+    if (!game.putts) game.putts = {}
+    if (!game.putts[action.playerId]) game.putts[action.playerId] = {}
+    if (!game.fairways) game.fairways = {}
+    if (!game.fairways[action.playerId]) game.fairways[action.playerId] = {}
+    if (!game.penalties) game.penalties = {}
+    if (!game.penalties[action.playerId]) game.penalties[action.playerId] = {}
+
+    if (action.previousScore === null || action.previousScore === undefined) {
+      delete game.scores[action.playerId][action.hole]
+    } else {
+      game.scores[action.playerId][action.hole] = action.previousScore
+    }
+
+    if (action.previousPutts === null || action.previousPutts === undefined) {
+      delete game.putts[action.playerId][action.hole]
+    } else {
+      game.putts[action.playerId][action.hole] = action.previousPutts
+    }
+    if (action.previousFairway === null || action.previousFairway === undefined) {
+      delete game.fairways[action.playerId][action.hole]
+    } else {
+      game.fairways[action.playerId][action.hole] = action.previousFairway
+    }
+    if (action.previousPenalty === null || action.previousPenalty === undefined) {
+      delete game.penalties[action.playerId][action.hole]
+    } else {
+      game.penalties[action.playerId][action.hole] = action.previousPenalty
+    }
+
+    if (!this.isCloudGame) {
+      wx.setStorageSync('currentGame', game)
+    } else {
+      this.updateCloudGame(game)
+    }
+
+    this.setData({
+      currentGame: game,
+      scoreActionStack: stack.slice(0, stack.length - 1)
+    }, () => {
+      this.updateScoreGrid()
+      const course = this.data.courses.find(c => c.id === game.courseId)
+      this.calculateLeader(game, course)
+      this.setCurrentHole(action.hole)
+    })
+
+    wx.showToast({
+      title: '已撤销上一笔',
+      icon: 'none'
+    })
+  },
+
+  openBatchEntryModal() {
+    const game = this.data.currentGame
+    const hole = this.data.currentHole
+    const scores = (game && game.scores) ? game.scores : {}
+    const putts = (game && game.putts) ? game.putts : {}
+    const holePar = this.getCurrentHolePar()
+    const diffOptions = this.getBatchDiffOptions(holePar)
+    const initEntries = {}
+    ;(game.players || []).forEach((p) => {
+      const raw = scores[p.id] ? scores[p.id][hole] : null
+      const v = this.extractScoreValue(raw)
+      const currentPutts = parseInt(putts[p.id] && putts[p.id][hole], 10)
+      const defaultStrokes = this.getDefaultStrokesByMode(holePar)
+      const diff = v !== null ? (v - holePar) : (defaultStrokes - holePar)
+      const diffRange = this.getDiffRangeByPar(holePar)
+      initEntries[p.id] = {
+        diff: Math.max(diffRange.minDiff, Math.min(diffRange.maxDiff, diff)),
+        putts: Number.isNaN(currentPutts) ? 2 : Math.max(1, Math.min(4, currentPutts))
+      }
+    })
+    this.setData({
+      showBatchEntryModal: true,
+      batchDiffOptions: diffOptions,
+      batchEntries: initEntries
+    })
+  },
+
+  // 差点固定顺序：-1, E(0), +1, +2...，并按当前Par裁切到+Par（Double Par上限）
+  getBatchDiffOptions(holePar) {
+    const range = this.getDiffRangeByPar(holePar)
+    const options = []
+    for (let i = range.minDiff; i <= range.maxDiff; i++) {
+      options.push(i)
+    }
+    return options
+  },
+
+  hideBatchEntryModal() {
+    this.setData({ showBatchEntryModal: false })
+  },
+
+  onBatchScoreInput(e) {
+    const playerId = e.currentTarget.dataset.playerid
+    const value = (e.detail.value || '').replace(/[^\d]/g, '')
+    this.setData({
+      [`batchScores.${playerId}`]: value
+    })
+  },
+
+  onBatchDiffTap(e) {
+    const playerId = e.currentTarget.dataset.playerid
+    const diff = parseInt(e.currentTarget.dataset.diff, 10)
+    if (!playerId || Number.isNaN(diff)) return
+    this.setData({
+      [`batchEntries.${playerId}.diff`]: diff
+    })
+  },
+
+  adjustBatchDiff(e) {
+    const playerId = e.currentTarget.dataset.playerid
+    const delta = parseInt(e.currentTarget.dataset.delta, 10)
+    if (!playerId || Number.isNaN(delta)) return
+    const diffOptions = this.data.batchDiffOptions || []
+    if (!diffOptions.length) return
+    const current = parseInt(this.data.batchEntries?.[playerId]?.diff, 10) || 0
+    const minDiff = diffOptions[0]
+    const maxDiff = diffOptions[diffOptions.length - 1]
+    const next = Math.max(minDiff, Math.min(maxDiff, current + delta))
+    this.setData({
+      [`batchEntries.${playerId}.diff`]: next
+    })
+  },
+
+  adjustBatchPutts(e) {
+    const playerId = e.currentTarget.dataset.playerid
+    const delta = parseInt(e.currentTarget.dataset.delta, 10)
+    if (!playerId || Number.isNaN(delta)) return
+    const currentPutts = parseInt(this.data.batchEntries?.[playerId]?.putts, 10) || 2
+    const nextPutts = Math.max(1, Math.min(4, currentPutts + delta))
+    this.setData({
+      [`batchEntries.${playerId}.putts`]: nextPutts
+    })
+  },
+
+  onBatchPuttsTap(e) {
+    const playerId = e.currentTarget.dataset.playerid
+    const putts = parseInt(e.currentTarget.dataset.putts, 10)
+    if (!playerId || Number.isNaN(putts)) return
+    this.setData({
+      [`batchEntries.${playerId}.putts`]: putts
+    })
+  },
+
+  applyBatchScores() {
+    const game = this.isCloudGame ? this.data.currentGame : (wx.getStorageSync('currentGame') || this.data.currentGame)
+    const hole = this.data.currentHole
+    const holePar = this.getCurrentHolePar()
+    const players = game.players || []
+    const batchEntries = this.data.batchEntries || {}
+    const userInfo = wx.getStorageSync('userInfo') || {}
+    const modifierName = userInfo.nickName || '球友'
+    let changed = 0
+
+    if (!game.scores) game.scores = {}
+    if (!game.putts) game.putts = {}
+
+    players.forEach((p) => {
+      const entry = batchEntries[p.id]
+      if (!entry) return
+      const diff = parseInt(entry.diff, 10)
+      const puttsValue = parseInt(entry.putts, 10)
+      const v = Math.max(1, holePar + (Number.isNaN(diff) ? 0 : diff))
+      const finalPutts = Number.isNaN(puttsValue) ? 2 : Math.max(1, Math.min(4, puttsValue))
+      if (!v || v <= 0) return
+      if (!game.scores[p.id]) game.scores[p.id] = {}
+      if (!game.putts[p.id]) game.putts[p.id] = {}
+      game.scores[p.id][hole] = v
+      game.putts[p.id][hole] = finalPutts
+      changed++
+
+      if (this.isCloudGame) {
+        wx.cloud.callFunction({
+          name: 'updateScore',
+          data: {
+            gameId: game.gameId || game.id,
+            playerId: p.id,
+            hole: hole,
+            strokes: v,
+            putts: finalPutts,
+            modifierName: modifierName
+          },
+          success: () => this.markSyncSuccess(),
+          fail: () => this.markSyncFailed()
+        })
+      }
+    })
+
+    if (changed === 0) {
+      wx.showToast({ title: '请至少输入1个成绩', icon: 'none' })
+      return
+    }
+
+    if (!this.isCloudGame) {
+      storageDebounced.setStorageDebounced('currentGame', game, 500)
+    }
+
+    this.setData({
+      currentGame: game,
+      showBatchEntryModal: false
+    }, () => {
+      this.updateScoreGrid()
+      this.updateSyncStateText()
+      this.checkAndAutoAdvance()
+    })
+    wx.showToast({ title: `已录入 ${changed} 人`, icon: 'success' })
+  },
+
   // 检查是否所有球员都已完成当前洞，如果是则自动跳到下一洞或完成比赛
   checkAndAutoAdvance() {
+    if (!this.data.autoAdvanceEnabled) return
+
     const game = this.data.currentGame
     const currentHole = this.data.currentHole
     const players = game.players || []
@@ -1823,6 +2366,12 @@ Page({
         this.setCurrentHole(currentHole + 1)
       }, 300)
     }
+  },
+
+  toggleAutoAdvance(e) {
+    this.setData({
+      autoAdvanceEnabled: !!e.detail.value
+    })
   },
 
   // 获取总推杆数
@@ -2316,6 +2865,84 @@ Page({
 
   // 完成比赛
   finishGame() {
+    // 有待确认成绩时，先进入确认流程
+    if (this.data.pendingCount > 0) {
+      this.setData({
+        showPendingModal: true,
+        finalizeAfterPending: true
+      })
+      wx.showToast({
+        title: '请先确认待确认成绩',
+        icon: 'none'
+      })
+      return
+    }
+
+    const validation = this.getRoundValidationSummary()
+    const advancedSummary = this.getAdvancedCollectionSummary(validation.totalHoles)
+    if (validation.incompletePlayers.length > 0) {
+      const playerSummaries = validation.players.map(function(p) {
+        return `${p.name}(${p.filled}/${validation.totalHoles})`
+      }).join('、')
+      wx.showModal({
+        title: '保存部分成绩？',
+        content: `当前记录：${playerSummaries}\n\n可以保存为本场成绩卡，但不会生成复盘海报，也不会计入18洞技术统计。`,
+        confirmText: '保存成绩',
+        cancelText: '继续补录',
+        success: (res) => {
+          if (res.confirm) {
+            this.showFinishConfirmModal(validation)
+          }
+        }
+      })
+      return
+    }
+
+    if (advancedSummary.missingCount > 0) {
+      wx.showModal({
+        title: '高级数据未录满',
+        content: `还有 ${advancedSummary.missingCount} 条球道/罚杆未记录，补录后趋势分析会更准确。是否仍完成比赛？`,
+        confirmText: '仍然完成',
+        cancelText: '继续补录',
+        success: (res) => {
+          if (res.confirm) {
+            this.showFinishConfirmModal(validation)
+          }
+        }
+      })
+      return
+    }
+
+    this.showFinishConfirmModal(validation)
+  },
+
+  getAdvancedCollectionSummary(totalHoles) {
+    const game = this.data.currentGame || {}
+    const players = game.players || []
+    const fairways = game.fairways || {}
+    const penalties = game.penalties || {}
+    const holeCount = parseInt(totalHoles, 10) || this.data.totalHoles || 18
+    let missingCount = 0
+
+    players.forEach((player) => {
+      const pFairway = fairways[player.id] || {}
+      const pPenalty = penalties[player.id] || {}
+      for (let hole = 1; hole <= holeCount; hole++) {
+        const fairway = pFairway[hole]
+        const penalty = pPenalty[hole]
+        const hasFairway = fairway === true || fairway === false
+        const hasPenalty = penalty !== undefined && penalty !== null && penalty !== ''
+        if (!hasFairway || !hasPenalty) {
+          missingCount++
+        }
+      }
+    })
+
+    return { missingCount: missingCount }
+  },
+
+  // 显示完赛确认弹窗
+  showFinishConfirmModal(validation) {
     console.log('【finishGame】开始完成比赛')
 
     // 检查当前游戏数据
@@ -2344,11 +2971,13 @@ Page({
       winnerText = `\n\n🏆 ${winnerInfo.title}\n${playerNames}\n${winnerInfo.players[0]?.score || ''}`
     }
 
+    const quickSummary = this.buildFinishQuickSummary(game, winnerInfo, validation)
+
     console.log('【finishGame】准备显示确认弹窗')
 
     wx.showModal({
       title: '比赛结束',
-      content: `本场比赛已结束！${winnerText}\n\n是否查看详细报告？`,
+      content: `本场比赛已结束！${winnerText}\n\n${quickSummary}\n\n是否查看详细报告？`,
       confirmText: '查看报告',
       cancelText: '留在本页',
       success: (res) => {
@@ -2372,6 +3001,114 @@ Page({
     })
   },
 
+  buildFinishQuickSummary(game, winnerInfo, validation) {
+    try {
+      const holes = this.data.holes || []
+      const players = game.players || []
+      const scores = game.scores || {}
+      const totalHoles = holes.length || 18
+
+      // 以第一位球员估算已打洞数（多人一般同步推进）
+      let played = 0
+      if (players.length > 0) {
+        const p0 = players[0]
+        const p0Scores = scores[p0.id] || {}
+        played = Object.keys(p0Scores).filter((hole) => this.extractScoreValue(p0Scores[hole]) !== null).length
+      }
+
+      let leadLine = '领先信息：暂无'
+      if (winnerInfo && winnerInfo.players && winnerInfo.players.length > 0) {
+        const p = winnerInfo.players[0]
+        leadLine = `当前领先：${p.name || '-'} ${p.score || ''}`.trim()
+      }
+
+      let validLine = ''
+      if (validation && validation.validPlayers) {
+        validLine = `\n有效成绩：${validation.validPlayers.length}人`
+      }
+      let replayLine = ''
+      if (players.length > 0) {
+        const focusPlayer = players[0]
+        const playerScores = scores[focusPlayer.id] || {}
+        let bestHole = null
+        let worstCount = 0
+        let frontTotal = 0
+        let backTotal = 0
+        let frontPar = 0
+        let backPar = 0
+        holes.forEach((hole, index) => {
+          const raw = playerScores[hole.hole]
+          const strokes = this.extractScoreValue(raw)
+          if (strokes === null) return
+          const diff = strokes - hole.par
+          if (!bestHole || diff < bestHole.diff) {
+            bestHole = { hole: hole.hole, diff: diff }
+          }
+          if (diff >= 2) worstCount++
+          if (index < 9) {
+            frontTotal += strokes
+            frontPar += hole.par
+          } else {
+            backTotal += strokes
+            backPar += hole.par
+          }
+        })
+        const bestText = bestHole ? `最佳洞：${bestHole.hole}洞(${bestHole.diff > 0 ? '+' : ''}${bestHole.diff})` : '最佳洞：-'
+        const splitText = totalHoles > 9
+          ? `前九${frontTotal - frontPar > 0 ? '+' : ''}${frontTotal - frontPar} / 后九${backTotal - backPar > 0 ? '+' : ''}${backTotal - backPar}`
+          : `9洞差杆：${frontTotal - frontPar > 0 ? '+' : ''}${frontTotal - frontPar}`
+        replayLine = `\n${bestText} · 爆洞${worstCount}个\n${splitText}`
+      }
+      return `已打 ${played}/${totalHoles} 洞\n${leadLine}${validLine}${replayLine}`
+    } catch (e) {
+      return ''
+    }
+  },
+
+  getRoundValidationSummary() {
+    const game = this.data.currentGame || {}
+    const players = game.players || []
+    const scores = game.scores || {}
+    const holes = this.data.holes || []
+    const totalHoles = holes.length || 18
+
+    const validPlayers = []
+    const incompletePlayers = []
+    const playersSummary = []
+
+    players.forEach((player) => {
+      const playerScores = scores[player.id] || {}
+      let filled = 0
+      for (let i = 1; i <= totalHoles; i++) {
+        const scoreData = playerScores[i]
+        const score = this.extractScoreValue(scoreData)
+        if (score !== null && score > 0) filled++
+      }
+      if (filled >= totalHoles) {
+        validPlayers.push(player)
+      } else {
+        incompletePlayers.push({
+          id: player.id,
+          name: player.name || '球员',
+          filled: filled
+        })
+      }
+      playersSummary.push({
+        id: player.id,
+        name: player.name || '球员',
+        filled: filled
+      })
+    })
+
+    return {
+      totalHoles,
+      validPlayers,
+      incompletePlayers,
+      players: playersSummary,
+      isCompleteRound: incompletePlayers.length === 0
+    }
+  },
+
   // 计算比赛获胜者（用于完成比赛时显示）
   calculateWinnerForGame() {
     const game = this.data.currentGame
@@ -2383,12 +3120,14 @@ Page({
 
     if (players.length === 0) return null
 
+    const expectedHoles = (holes && holes.length) || 18
     // 计算每个球员的总成绩
     const playersWithTotals = players.map(player => {
       const scores = game.scores?.[player.id] || {}
       let total = 0
       let parTotal = 0
       let hasScore = false
+      let holesPlayed = 0
 
       Object.entries(scores).forEach(([holeNum, scoreData]) => {
         // 兼容新旧格式
@@ -2396,6 +3135,7 @@ Page({
         if (strokes && parseInt(strokes) > 0) {
           total += parseInt(strokes)
           hasScore = true
+          holesPlayed++
           const hole = holes.find(h => (h.hole == holeNum || h.holeNumber == holeNum))
           if (hole) parTotal += hole.par
         }
@@ -2405,15 +3145,19 @@ Page({
         ...player,
         total: total,
         toPar: total - parTotal,
-        hasScore: hasScore
+        hasScore: hasScore,
+        holesPlayed: holesPlayed,
+        isValidRound: holesPlayed >= expectedHoles
       }
     })
+    const validPlayersWithTotals = playersWithTotals.filter(function(p) { return p.isValidRound })
+    const rankingPool = validPlayersWithTotals.length > 0 ? validPlayersWithTotals : playersWithTotals
 
     switch (mode) {
       case 'stroke':
       case 'match':
         // 比杆赛/比洞赛：杆数最少者获胜
-        const sortedByScore = [...playersWithTotals].sort((a, b) => (a.total || 0) - (b.total || 0))
+        const sortedByScore = [...rankingPool].sort((a, b) => (a.total || 0) - (b.total || 0))
         if (sortedByScore.length === 0 || !sortedByScore[0]) return null
         const bestScore = sortedByScore[0].total || 0
         const winners = sortedByScore.filter(p => (p.total || 0) === bestScore)
@@ -2430,7 +3174,7 @@ Page({
 
       case 'stableford':
         // 史特伯福特：积分最高者获胜
-        const sortedByPoints = [...playersWithTotals].sort((a, b) => (b.points || 0) - (a.points || 0))
+        const sortedByPoints = [...rankingPool].sort((a, b) => (b.points || 0) - (a.points || 0))
         if (sortedByPoints.length === 0 || !sortedByPoints[0]) return null
         const bestPoints = sortedByPoints[0].points || 0
         const pointWinners = sortedByPoints.filter(p => (p.points || 0) === bestPoints)
@@ -2445,7 +3189,7 @@ Page({
         }
 
       case 'skins':
-        const sortedBySkins = [...playersWithTotals].sort((a, b) => (b.skinsWon || 0) - (a.skinsWon || 0))
+        const sortedBySkins = [...rankingPool].sort((a, b) => (b.skinsWon || 0) - (a.skinsWon || 0))
         if (sortedBySkins.length === 0 || !sortedBySkins[0]) return null
         const bestSkins = sortedBySkins[0].skinsWon || 0
         if (bestSkins > 0) {
@@ -2463,7 +3207,7 @@ Page({
         return null
 
       default:
-        const defaultSorted = [...playersWithTotals].sort((a, b) => (a.total || 0) - (b.total || 0))
+        const defaultSorted = [...rankingPool].sort((a, b) => (a.total || 0) - (b.total || 0))
         if (defaultSorted.length === 0 || !defaultSorted[0]) return null
         const defaultToPar = defaultSorted[0].toPar || 0
         return {
@@ -2480,6 +3224,23 @@ Page({
 
   // 完成比赛核心逻辑（公共部分）
   _finalizeGameCore(game, keepCurrent = false) {
+    // 关键：保存当场洞位快照，避免后续球场库变更导致历史回看全部变成默认Par4
+    if (!game.holes || !Array.isArray(game.holes) || game.holes.length === 0) {
+      const holesSnapshot = this.data.holes || []
+      if (Array.isArray(holesSnapshot) && holesSnapshot.length > 0) {
+        game.holes = JSON.parse(JSON.stringify(holesSnapshot))
+      }
+    }
+    if ((!game.totalPar || game.totalPar <= 0) && Array.isArray(game.holes) && game.holes.length > 0) {
+      game.totalPar = game.holes.reduce(function(sum, h) { return sum + (h.par || 0) }, 0)
+    }
+    const validation = this.getRoundValidationSummary()
+    game.validScorePlayerIds = validation.validPlayers.map(function(p) { return p.id })
+    game.invalidScorePlayerIds = validation.incompletePlayers.map(function(p) { return p.id })
+    game.isCompleteRound = validation.isCompleteRound
+    game.roundType = validation.isCompleteRound ? 'complete' : 'partial'
+    game.holesPlayedSummary = validation.players
+
     game.completed = true
     game.endTime = Date.now()
     game.updateTime = Date.now()
@@ -2548,10 +3309,22 @@ Page({
         return
       }
 
-      this._finalizeGameCore(game, false)
+      const updatedGame = this._finalizeGameCore(game, false)
+
+      if (updatedGame.roundType === 'partial') {
+        wx.setStorageSync('currentGame', updatedGame)
+        wx.setStorageSync('viewMode', 'readonly')
+        wx.showToast({ title: '成绩已保存', icon: 'success', duration: 1500 })
+        setTimeout(() => {
+          wx.navigateTo({
+            url: '/pages/scorecard/scorecard?mode=readonly&gameId=' + (updatedGame.id || '')
+          })
+        }, 800)
+        return
+      }
 
       wx.showToast({ title: '比赛完成！', icon: 'success', duration: 1500 })
-      setTimeout(() => this.generateAndShare(game), 1500)
+      setTimeout(() => this.generateAndShare(updatedGame), 1500)
     } catch (err) {
       console.error('【completeGame】错误:', err)
       wx.showToast({ title: '完成比赛失败', icon: 'none' })
@@ -2592,11 +3365,11 @@ Page({
   // 生成海报并分享
   async generateAndShare(game) {
     wx.showLoading({ title: '生成海报...' })
+    const player = gameCompleteness.getPlayer(game) || game.players[0] || { name: '球员', color: '#2c8f4e' }
 
     try {
       // 获取用户偏好的海报风格
       const preferredStyle = preferenceManager.getPreference('posterStyle', 'pro')
-      const player = game.players[0] || { name: '球员', color: '#2c8f4e' }
 
       // 生成海报
       const posterUrl = await posterGenerator.generatePoster({
@@ -2614,7 +3387,7 @@ Page({
         success: (res) => {
           res.eventChannel.emit('reportData', {
             game: game,
-            report: analysisReport.generateGameReport(game),
+            report: analysisReport.generateGameReport(game, [], player),
             posterUrl: posterUrl,
             autoShowPoster: true
           })
@@ -2630,7 +3403,7 @@ Page({
         success: (res) => {
           res.eventChannel.emit('reportData', {
             game: game,
-            report: analysisReport.generateGameReport(game)
+            report: analysisReport.generateGameReport(game, [], player)
           })
         }
       })
@@ -2653,12 +3426,25 @@ Page({
       console.log('【calculateStatistics】未找到球场数据:', game.courseId)
     }
 
+    const holesSource = Array.isArray(game.holes) && game.holes.length > 0
+      ? game.holes
+      : (course?.holes || [])
+    const totalHoles = holesSource.length || 18
+    const validIds = Array.isArray(game.validScorePlayerIds) ? game.validScorePlayerIds : null
+
     game.players.forEach(player => {
       const scores = game.scores?.[player.id] || {}
+      const playedCount = Object.keys(scores).filter((holeNum) => {
+        const v = this.extractScoreValue(scores[holeNum])
+        return v !== null && parseInt(v) > 0
+      }).length
+      const isValidRound = validIds ? validIds.includes(player.id) : playedCount >= totalHoles
+
       const playerStats = {
         totalScore: 0,
         totalPar: 0,
         holesPlayed: 0,
+        validRound: isValidRound,
         pars: 0,
         birdies: 0,
         eagles: 0,
@@ -2667,11 +3453,17 @@ Page({
         others: 0
       }
 
+      // 未录满18洞：不计为有效成绩
+      if (!isValidRound) {
+        stats[player.id] = playerStats
+        return
+      }
+
       Object.entries(scores).forEach(([holeNum, scoreData]) => {
         // 兼容新旧格式
         const strokes = this.extractScoreValue(scoreData)
         if (strokes) {
-          const holeData = course?.holes?.find(h => h.hole === parseInt(holeNum))
+          const holeData = holesSource.find(h => h.hole === parseInt(holeNum))
           const par = holeData?.par || 4 // 默认par 4
 
           playerStats.totalScore += parseInt(strokes) || 0
@@ -2698,12 +3490,19 @@ Page({
   // ========== 智能分析报告 ==========
   generateAnalysisReport() {
     const historyGames = wx.getStorageSync('games') || []
-    const report = analysisReport.generateGameReport(this.data.currentGame, historyGames)
+    const game = this.data.currentGame
+    const player = gameCompleteness.getPlayer(game)
+    if (!player || !gameCompleteness.isPlayerRoundComplete(game, player.id)) {
+      wx.showToast({ title: '完成18洞后可复盘', icon: 'none' })
+      return
+    }
+
+    const report = analysisReport.generateGameReport(game, historyGames, player)
 
     wx.navigateTo({
       url: '/package-game/pages/game-report/game-report',
       success: (res) => {
-        res.eventChannel.emit('reportData', { report, game: this.data.currentGame })
+        res.eventChannel.emit('reportData', { report, game: game })
       }
     })
   },
@@ -2746,7 +3545,13 @@ Page({
 
       if (result.success && result.holes && result.holes.length > 0) {
         // 转换为compareData需要的格式
-        const ocrHoles = result.holes.map((h, idx) => ({ id: h.hole || idx + 1, par: h.par }))
+        const ocrHoles = result.holes.map((h, idx) => ({
+          id: h.hole || idx + 1,
+          par: h.par,
+          confidence: h.confidence,
+          source: h.source,
+          needs_review: h.needs_review === true
+        }))
         this.compareData(ocrHoles)
       } else {
         wx.showModal({
@@ -2766,7 +3571,13 @@ Page({
     // 使用新的OCR服务
     OCRService.recognize(imagePath).then(result => {
       if (result.success && result.holes && result.holes.length > 0) {
-        const ocrHoles = result.holes.map((h, idx) => ({ id: h.hole || idx + 1, par: h.par }))
+        const ocrHoles = result.holes.map((h, idx) => ({
+          id: h.hole || idx + 1,
+          par: h.par,
+          confidence: h.confidence,
+          source: h.source,
+          needs_review: h.needs_review === true
+        }))
         this.compareData(ocrHoles)
       } else {
         wx.showModal({
@@ -2791,19 +3602,34 @@ Page({
     for (let i = 1; i <= 18; i++) {
       const match = ocrHoles.find(h => h.id === i)
       if (match) {
-        fullOcrHoles.push({ hole: i, par: match.par })
+        fullOcrHoles.push({
+          hole: i,
+          par: match.par,
+          confidence: match.confidence,
+          source: match.source,
+          needs_review: match.needs_review === true
+        })
         const original = originalHoles[i - 1]
         if (original && original.par !== match.par) {
           hasDiff = true
         }
       } else if (originalHoles[i - 1]) {
-        fullOcrHoles.push({ hole: i, par: originalHoles[i - 1].par })
+        fullOcrHoles.push({
+          hole: i,
+          par: originalHoles[i - 1].par,
+          needs_review: true
+        })
       } else {
-        fullOcrHoles.push({ hole: i, par: 4 }) // 默认值
+        fullOcrHoles.push({
+          hole: i,
+          par: 4,
+          needs_review: true
+        }) // 默认值
       }
     }
 
     const ocrTotalPar = fullOcrHoles.reduce((sum, h) => sum + h.par, 0)
+    const ocrReviewCount = fullOcrHoles.filter(h => h.needs_review).length
 
     // 检查是否有已记录成绩会被覆盖
     let hasScoreDiff = false
@@ -2820,6 +3646,7 @@ Page({
     this.setData({
       ocrHoles: fullOcrHoles,
       ocrTotalPar,
+      ocrReviewCount,
       hasDiff,
       hasScoreDiff,
       showOcrVerifyModal: true
@@ -2828,7 +3655,10 @@ Page({
 
   // 关闭弹窗
   hideOcrVerifyModal() {
-    this.setData({ showOcrVerifyModal: false })
+    this.setData({
+      showOcrVerifyModal: false,
+      ocrReviewCount: 0
+    })
   },
 
   // 阻止冒泡
@@ -2952,6 +3782,18 @@ Page({
     this.setData({ showPendingModal: false })
   },
 
+  // 检查是否可继续完赛流程
+  continueFinalizeIfReady() {
+    if (this.data.finalizeAfterPending && this.data.pendingCount === 0) {
+      this.setData({
+        finalizeAfterPending: false,
+        showPendingModal: false
+      })
+      // 待确认处理完成，继续完赛确认
+      this.showFinishConfirmModal()
+    }
+  },
+
   // 确认成绩
   confirmPendingScore(e) {
     const hole = e.currentTarget.dataset.hole
@@ -2974,14 +3816,28 @@ Page({
       success: (res) => {
         wx.hideLoading()
         if (res.result && res.result.success) {
+          // 本地同步该洞状态为已确认，避免弱网下列表回弹
+          const currentGame = this.data.currentGame
+          if (currentGame && myPlayer && currentGame.scores && currentGame.scores[myPlayer.id] && currentGame.scores[myPlayer.id][hole]) {
+            const currentScoreData = this.extractScoreObject(currentGame.scores[myPlayer.id][hole]) || {}
+            currentGame.scores[myPlayer.id][hole] = {
+              ...currentScoreData,
+              confirmed: true,
+              confirmedAt: Date.now(),
+              confirmedBy: userInfo.openid
+            }
+          }
+
           wx.showToast({ title: '已确认', icon: 'success' })
           // 从待确认列表移除
           const pendingConfirmations = this.data.pendingConfirmations.filter(p => p.hole !== hole)
           this.setData({
+            currentGame,
             pendingConfirmations,
             pendingCount: pendingConfirmations.length,
             showPendingModal: pendingConfirmations.length > 0
           })
+          this.continueFinalizeIfReady()
         } else {
           wx.showToast({ title: res.result?.error || '确认失败', icon: 'none' })
         }
@@ -3023,14 +3879,32 @@ Page({
             success: (res) => {
               wx.hideLoading()
               if (res.result && res.result.success) {
+                // 本地同步拒绝结果，尽量贴近云端返回
+                const currentGame = this.data.currentGame
+                if (currentGame && myPlayer && currentGame.scores && currentGame.scores[myPlayer.id]) {
+                  const restoredStrokes = res.result.restoredStrokes
+                  currentGame.scores[myPlayer.id][hole] = {
+                    strokes: restoredStrokes,
+                    confirmed: true,
+                    modifiedBy: userInfo.openid,
+                    modifiedByName: '本人',
+                    modifiedAt: Date.now()
+                  }
+                  if (currentGame.putts && currentGame.putts[myPlayer.id] && res.result.restoredPutts !== undefined) {
+                    currentGame.putts[myPlayer.id][hole] = res.result.restoredPutts
+                  }
+                }
+
                 wx.showToast({ title: '已拒绝', icon: 'success' })
                 // 从待确认列表移除
                 const pendingConfirmations = this.data.pendingConfirmations.filter(p => p.hole !== hole)
                 this.setData({
+                  currentGame,
                   pendingConfirmations,
                   pendingCount: pendingConfirmations.length,
                   showPendingModal: pendingConfirmations.length > 0
                 })
+                this.continueFinalizeIfReady()
               } else {
                 wx.showToast({ title: res.result?.error || '拒绝失败', icon: 'none' })
               }
@@ -3044,6 +3918,97 @@ Page({
         }
       }
     })
+  },
+
+  // 批量确认待确认成绩
+  confirmAllPendingScores() {
+    this.processPendingScoresBatch('confirm')
+  },
+
+  // 批量拒绝待确认成绩
+  rejectAllPendingScores() {
+    wx.showModal({
+      title: '批量拒绝',
+      content: '确定拒绝全部待确认成绩吗？将恢复原成绩。',
+      confirmText: '全部拒绝',
+      confirmColor: '#ff4d4f',
+      success: (res) => {
+        if (res.confirm) {
+          this.processPendingScoresBatch('reject')
+        }
+      }
+    })
+  },
+
+  // 批量处理待确认成绩
+  processPendingScoresBatch(action) {
+    if (this.data.pendingBatchProcessing) return
+
+    const game = this.data.currentGame
+    const userInfo = wx.getStorageSync('userInfo') || {}
+    const myPlayer = game && game.players ? game.players.find(p => p.openid === userInfo.openid) : null
+    const pendingList = this.data.pendingConfirmations || []
+
+    if (!game || !myPlayer || pendingList.length === 0) return
+
+    const actionText = action === 'confirm' ? '确认' : '拒绝'
+    this.setData({ pendingBatchProcessing: true })
+    wx.showLoading({ title: '批量' + actionText + '中...' })
+
+    let successCount = 0
+    let failCount = 0
+    const failedHoles = new Set()
+
+    const processNext = (index) => {
+      if (index >= pendingList.length) {
+        wx.hideLoading()
+        const remainingPending = failCount > 0
+          ? this.data.pendingConfirmations.filter(item => failedHoles.has(item.hole))
+          : []
+
+        this.setData({
+          pendingBatchProcessing: false,
+          pendingConfirmations: remainingPending,
+          pendingCount: remainingPending.length,
+          showPendingModal: remainingPending.length > 0
+        })
+
+        if (failCount === 0) {
+          wx.showToast({ title: '已全部' + actionText, icon: 'success' })
+          this.continueFinalizeIfReady()
+        } else {
+          wx.showToast({ title: `${actionText}完成，${failCount}项失败`, icon: 'none' })
+        }
+        return
+      }
+
+      const hole = pendingList[index].hole
+      wx.cloud.callFunction({
+        name: 'confirmScore',
+        data: {
+          gameId: game.gameId || game.id,
+          playerId: myPlayer.id,
+          hole: hole,
+          action: action
+        },
+        success: (res) => {
+          if (res.result && res.result.success) {
+            successCount++
+          } else {
+            failCount++
+            failedHoles.add(hole)
+          }
+          processNext(index + 1)
+        },
+        fail: () => {
+          failCount++
+          failedHoles.add(hole)
+          processNext(index + 1)
+        }
+      })
+    }
+
+    processNext(0)
   },
 
   // 拦截左上角返回按钮，直接返回首页

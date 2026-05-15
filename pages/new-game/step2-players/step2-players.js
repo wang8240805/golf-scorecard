@@ -13,26 +13,117 @@ Page({
     showAuth: false,
     tempAvatar: '',
     tempNickName: '',
+    tempPhone: '',
+    tempPhoneMasked: '',
     colors: ['#2c8f4e', '#2196f3', '#ff9800', '#f44336', '#9c27b0', '#00bcd4', '#795548'],
     // 手动添加
     manualPlayerName: '',
     // 二维码
     qrcodeUrl: null,
-    maxPlayers: 4
+    maxPlayers: 4,
+    hasNavigatedToScorecard: false,
+    holeCount: 18
   },
 
   // 用于等待授权完成的 Promise resolve
   authResolve: null,
 
   onLoad: function(options) {
+    this.initHoleCount()
     this.loadCourse()
     this.initGame(options)
+  },
+
+  initHoleCount: function() {
+    var saved = parseInt(wx.getStorageSync('newGameHoleCount'), 10)
+    var holeCount = saved === 9 ? 9 : 18
+    this.setData({ holeCount: holeCount })
+  },
+
+  setHoleCount: function(e) {
+    var value = parseInt(e.currentTarget.dataset.value, 10)
+    var holeCount = value === 9 ? 9 : 18
+    this.setData({ holeCount: holeCount })
+    wx.setStorageSync('newGameHoleCount', holeCount)
   },
 
   onUnload: function() {
     if (this.watcher) {
       this.watcher.close()
     }
+    this._navigatingToScorecard = false
+  },
+
+  normalizePlayers: function(players) {
+    if (!Array.isArray(players)) return []
+    return players.map(function(player) {
+      if (!player) return player
+      if (player.avatarUrl || !player.avatar) {
+        return player
+      }
+      return {
+        ...player,
+        avatarUrl: player.avatar
+      }
+    })
+  },
+
+  buildQuickStartPlayers: function(existingPlayers) {
+    var names = wx.getStorageSync('quickStartPlayers') || []
+    if (!Array.isArray(names) || names.length === 0) return existingPlayers
+
+    var players = this.normalizePlayers(existingPlayers || [])
+    var colors = this.data.colors
+    names.forEach(function(name) {
+      if (!name || players.length >= 4) return
+      var normalized = String(name).trim()
+      if (!normalized) return
+      var exists = players.some(function(player) {
+        return player && player.name === normalized
+      })
+      if (exists) return
+      players.push({
+        id: 'quick_' + Date.now() + '_' + players.length,
+        name: normalized,
+        avatar: '',
+        avatarUrl: '',
+        openid: 'manual_quick_' + Date.now() + '_' + players.length,
+        color: colors[players.length % colors.length],
+        isCreator: false,
+        isQuickStart: true
+      })
+    })
+    wx.removeStorageSync('quickStartPlayers')
+    return players
+  },
+
+  syncPlayersToCloud: function(gameId, players) {
+    if (!gameId || gameId.startsWith('local_')) return
+    wx.cloud.callFunction({
+      name: 'gameAction',
+      data: {
+        action: 'updatePlayers',
+        gameId: gameId,
+        players: players
+      },
+      fail: function(err) {
+        console.error('同步快捷球员失败:', err)
+      }
+    })
+  },
+
+  saveLastGameSetup: function() {
+    var currentCourse = this.data.currentCourse
+    if (!currentCourse) return
+    var names = (this.data.players || []).map(function(player) {
+      return player && player.name
+    }).filter(Boolean).slice(0, 4)
+    wx.setStorageSync('lastGameSetup', {
+      courseId: currentCourse.id,
+      courseName: currentCourse.name,
+      playerNames: names,
+      updatedAt: Date.now()
+    })
   },
 
   // 加载球场信息
@@ -81,7 +172,8 @@ Page({
               openid: cachedInfo.openid,
               nickName: cloudUser.nickName,
               avatarUrl: cloudUser.avatarUrl,
-              unionid: cloudUser.unionid || cachedInfo.unionid
+              unionid: cloudUser.unionid || cachedInfo.unionid,
+              phoneNumber: cloudUser.phoneNumber || ''
             }
             wx.setStorageSync('userInfo', userInfo)
             console.log('从云端加载用户信息成功')
@@ -92,7 +184,8 @@ Page({
                 action: 'upsert',
                 nickName: userInfo.nickName,
                 avatarUrl: userInfo.avatarUrl,
-                unionid: userInfo.unionid || null
+                unionid: userInfo.unionid || null,
+                phoneNumber: userInfo.phoneNumber || ''
               }
             })
             resolve(userInfo)
@@ -107,7 +200,8 @@ Page({
               var userInfo = {
                 openid: openid,
                 nickName: profile.nickName,
-                avatarUrl: profile.avatarUrl
+                avatarUrl: profile.avatarUrl,
+                phoneNumber: profile.phoneNumber || ''
               }
 
               wx.setStorageSync('userInfo', userInfo)
@@ -119,7 +213,8 @@ Page({
                   action: 'upsert',
                   nickName: profile.nickName,
                   avatarUrl: profile.avatarUrl,
-                  unionid: null
+                  unionid: null,
+                  phoneNumber: profile.phoneNumber || ''
                 },
                 success: function(res) {
                   if (res.result && res.result.success) {
@@ -150,7 +245,8 @@ Page({
       var userInfo = {
         openid: openid,
         nickName: profile.nickName,
-        avatarUrl: profile.avatarUrl
+        avatarUrl: profile.avatarUrl,
+        phoneNumber: profile.phoneNumber || ''
       }
 
       wx.setStorageSync('userInfo', userInfo)
@@ -162,7 +258,8 @@ Page({
           action: 'upsert',
           nickName: profile.nickName,
           avatarUrl: profile.avatarUrl,
-          unionid: null
+          unionid: null,
+          phoneNumber: profile.phoneNumber || ''
         },
         success: function(res) {
           if (res.result && res.result.success) {
@@ -221,7 +318,9 @@ Page({
       self.setData({
         showAuth: true,
         tempAvatar: '',
-        tempNickName: ''
+        tempNickName: '',
+        tempPhone: '',
+        tempPhoneMasked: ''
       })
     })
   },
@@ -238,10 +337,40 @@ Page({
     this.setData({ tempNickName: e.detail.value })
   },
 
+  // 获取手机号
+  onGetPhoneNumber: function(e) {
+    var self = this
+    if (!e.detail || e.detail.errMsg !== 'getPhoneNumber:ok' || !e.detail.code) {
+      wx.showToast({ title: '未授权手机号', icon: 'none' })
+      return
+    }
+    wx.cloud.callFunction({
+      name: 'getPhoneNumber',
+      data: { code: e.detail.code },
+      success: function(res) {
+        if (res.result && res.result.success && res.result.phoneNumber) {
+          var phone = res.result.phoneNumber
+          var masked = phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')
+          self.setData({
+            tempPhone: phone,
+            tempPhoneMasked: masked
+          })
+          wx.showToast({ title: '手机号已授权', icon: 'success' })
+        } else {
+          wx.showToast({ title: '手机号授权失败', icon: 'none' })
+        }
+      },
+      fail: function() {
+        wx.showToast({ title: '手机号授权失败', icon: 'none' })
+      }
+    })
+  },
+
   // 确认授权
   confirmAuth: function() {
     var tempNickName = this.data.tempNickName
     var tempAvatar = this.data.tempAvatar
+    var tempPhone = this.data.tempPhone
 
     if (!tempNickName) {
       wx.showToast({ title: '请输入昵称', icon: 'none' })
@@ -253,7 +382,8 @@ Page({
     if (this.authResolve) {
       this.authResolve({
         nickName: tempNickName,
-        avatarUrl: tempAvatar || ''
+        avatarUrl: tempAvatar || '',
+        phoneNumber: tempPhone || ''
       })
       this.authResolve = null
     }
@@ -404,24 +534,30 @@ Page({
           openid: userInfo.openid,
           name: userInfo.nickName,
           avatar: userInfo.avatarUrl
-        }
+        },
+        holeCount: this.data.holeCount
       },
       success: function(res) {
         if (res.result && res.result.success) {
           console.log('创建比赛成功:', res.result.gameId)
+          var initialPlayers = self.buildQuickStartPlayers([{
+            id: 'player_' + userInfo.openid,
+            name: userInfo.nickName,
+            avatar: userInfo.avatarUrl,
+            avatarUrl: userInfo.avatarUrl,
+            openid: userInfo.openid,
+            isCreator: true
+          }])
           self.setData({
             gameId: res.result.gameId,
             myOpenid: userInfo.openid,
             myPlayerId: 'player_' + userInfo.openid,
             isLoading: false,
-            players: [{
-              id: 'player_' + userInfo.openid,
-              name: userInfo.nickName,
-              avatar: userInfo.avatarUrl,
-              openid: userInfo.openid,
-              isCreator: true
-            }]
+            players: initialPlayers
           })
+          if (initialPlayers.length > 1) {
+            self.syncPlayersToCloud(res.result.gameId, initialPlayers)
+          }
           // 如果有二维码fileID，获取临时URL
           if (res.result.qrcodeFileId) {
             self.getQrcodeUrl(res.result.qrcodeFileId)
@@ -479,18 +615,14 @@ Page({
             gameId: gameId,
             myOpenid: userInfo.openid,
             myPlayerId: 'player_' + userInfo.openid,
-            players: res.result.players,
+            players: self.normalizePlayers(res.result.players),
             isLoading: false
           })
           self.watchGame(gameId)
 
           // 如果比赛已经开始，直接跳转到记分卡
           if (res.result.status === 'playing') {
-            wx.setStorageSync('currentGameId', gameId)
-            wx.setStorageSync('currentPlayers', res.result.players)
-            wx.redirectTo({
-              url: '/pages/scorecard/scorecard?gameId=' + gameId
-            })
+            self.navigateToScorecard(gameId, res.result.players)
           }
         } else {
           wx.showToast({ title: res.result && res.result.error ? res.result.error : '加入失败', icon: 'none' })
@@ -511,10 +643,21 @@ Page({
 
     this.watcher = db.collection('games').where({ gameId: gameId }).watch({
       onChange: function(snapshot) {
-        if (snapshot.docChanges && snapshot.docChanges.length > 0) {
-          var game = snapshot.docChanges[0].doc
-          if (game) {
-            self.setData({ players: game.players })
+        var game = null
+
+        // 优先使用 docs（包含最新完整文档）
+        if (snapshot.docs && snapshot.docs.length > 0) {
+          game = snapshot.docs[0]
+        } else if (snapshot.docChanges && snapshot.docChanges.length > 0) {
+          game = snapshot.docChanges[0].doc
+        }
+
+        if (game) {
+          self.setData({ players: self.normalizePlayers(game.players || []) })
+
+          // 房主点击开始后，所有在房间页的参与者自动进入记分卡
+          if (game.status === 'playing') {
+            self.navigateToScorecard(gameId, game.players || [])
           }
         }
       },
@@ -524,21 +667,40 @@ Page({
     })
   },
 
+  // 统一跳转记分卡，防止重复跳转
+  navigateToScorecard: function(gameId, players) {
+    if (!gameId) return
+    if (this._navigatingToScorecard || this.data.hasNavigatedToScorecard) return
+
+    this._navigatingToScorecard = true
+    this.setData({ hasNavigatedToScorecard: true })
+
+    wx.setStorageSync('currentGameId', gameId)
+    wx.setStorageSync('currentPlayers', this.normalizePlayers(players || []))
+
+    wx.redirectTo({
+      url: '/pages/scorecard/scorecard?gameId=' + gameId,
+      complete: function() {}
+    })
+  },
+
   // 降级到本地模式
   fallbackToLocal: function(userInfo) {
     var gameId = 'local_' + Date.now()
+    var initialPlayers = this.buildQuickStartPlayers([{
+      id: 'player_local',
+      name: userInfo.nickName,
+      avatar: userInfo.avatarUrl,
+      avatarUrl: userInfo.avatarUrl,
+      openid: userInfo.openid || 'local_user',
+      isCreator: true
+    }])
     this.setData({
       gameId: gameId,
       myOpenid: userInfo.openid || 'local_user',
       myPlayerId: 'player_local',
       isLoading: false,
-      players: [{
-        id: 'player_local',
-        name: userInfo.nickName,
-        avatar: userInfo.avatarUrl,
-        openid: userInfo.openid || 'local_user',
-        isCreator: true
-      }]
+      players: initialPlayers
     })
   },
 
@@ -561,8 +723,14 @@ Page({
   startGame: function() {
     var self = this
     var gameId = this.data.gameId
-    var players = this.data.players
     var currentCourse = this.data.currentCourse
+    var isCreator = this.data.isCreator
+    var players = this.data.players
+
+    if (!isCreator) {
+      wx.showToast({ title: '仅房主可开始比赛', icon: 'none' })
+      return
+    }
 
     if (players.length === 0) {
       wx.showToast({ title: '至少需要1名球员', icon: 'none' })
@@ -574,30 +742,35 @@ Page({
       return
     }
 
+    if (gameId && gameId.startsWith('local_')) {
+      this.startLocalGame()
+      return
+    }
+
     wx.showLoading({ title: '准备开始...' })
+    this.saveLastGameSetup()
 
     wx.cloud.callFunction({
       name: 'gameAction',
       data: {
         action: 'start',
-        gameId: gameId
+        gameId: gameId,
+        holeCount: this.data.holeCount
       },
       success: function(res) {
         wx.hideLoading()
         if (res.result && res.result.success) {
-          wx.setStorageSync('currentGameId', gameId)
-          wx.setStorageSync('currentPlayers', players)
-
-          wx.redirectTo({
-            url: '/pages/scorecard/scorecard?gameId=' + gameId
-          })
+          self.navigateToScorecard(gameId, players)
         } else {
-          self.startLocalGame()
+          wx.showToast({
+            title: (res.result && res.result.error) ? res.result.error : '开始失败',
+            icon: 'none'
+          })
         }
       },
       fail: function(err) {
         wx.hideLoading()
-        self.startLocalGame()
+        wx.showToast({ title: '开始失败，请重试', icon: 'none' })
       }
     })
   },
@@ -615,6 +788,7 @@ Page({
       players: players,
       scores: {},
       putts: {},
+      holeCount: this.data.holeCount,
       timestamp: Date.now(),
       updateTime: Date.now(),
       completed: false
@@ -625,12 +799,9 @@ Page({
       game.putts[player.id] = {}
     })
 
+    this.saveLastGameSetup()
     wx.setStorageSync('currentGame', game)
-    wx.setStorageSync('currentGameId', gameId)
-
-    wx.redirectTo({
-      url: '/pages/scorecard/scorecard?gameId=' + gameId
-    })
+    this.navigateToScorecard(gameId, players)
   },
 
   // 阻止冒泡

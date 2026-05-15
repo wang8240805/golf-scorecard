@@ -74,7 +74,7 @@
   </view>
 
   <!-- 管理员功能 -->
-  <view class="card">
+  <view class="card" wx:if="{{isDeveloperMode}}">
     <view class="section-title">管理员功能</view>
     <view class="setting-list">
       <view class="setting-item" bindtap="importOfficialCourses">

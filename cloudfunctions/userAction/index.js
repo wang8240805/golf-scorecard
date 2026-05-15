@@ -21,7 +21,7 @@ exports.main = async (event, context) => {
 
 // 创建或更新用户信息
 async function upsertUser(event, openid) {
-  const { nickName, avatarUrl, unionid } = event
+  const { nickName, avatarUrl, unionid, phoneNumber } = event
 
   try {
     // 查询是否已存在
@@ -34,6 +34,7 @@ async function upsertUser(event, openid) {
         data: {
           nickName: nickName,
           avatarUrl: avatarUrl,
+          phoneNumber: phoneNumber || user.phoneNumber || '',
           updateTime: db.serverDate()
         }
       })
@@ -47,6 +48,7 @@ async function upsertUser(event, openid) {
           unionid: unionid || null,
           nickName: nickName,
           avatarUrl: avatarUrl,
+          phoneNumber: phoneNumber || '',
           createTime: db.serverDate(),
           updateTime: db.serverDate()
         }

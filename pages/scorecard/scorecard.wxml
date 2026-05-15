@@ -1,8 +1,10 @@
 <view class="page-container">
   <!-- 没有比赛时显示 -->
   <view class="empty-state" wx:if="{{!currentGame}}">
-    <text>暂无进行中的比赛</text>
-    <text style="font-size: 26rpx; margin-top: 16rpx;">点击下方GO按钮开始新比赛</text>
+    <view class="empty-scorecard-icon"></view>
+    <text class="empty-title">暂无进行中的比赛</text>
+    <text class="empty-subtitle">先选择球场和球员，再开始记分</text>
+    <button class="btn btn-primary empty-action-btn" bindtap="startNewGame">开始新比赛</button>
   </view>
 
   <block wx:if="{{currentGame}}">
@@ -17,7 +19,10 @@
         </view>
         <view class="hole-nav">
           <view class="nav-btn {{currentHole === 1 ? 'disabled' : ''}}" bindtap="prevHole">←</view>
-          <view class="hole-number">{{currentHole}}</view>
+          <view class="hole-meter">
+            <text class="hole-number">{{currentHole}}</text>
+            <text class="hole-meter-par">Par{{currentHoleData.par}}</text>
+          </view>
           <view class="nav-btn {{currentHole === totalHoles ? 'disabled' : ''}}" bindtap="nextHole">→</view>
         </view>
       </view>
@@ -33,12 +38,16 @@
     <!-- 球员成绩录入 - 横向排列 -->
     <view class="card score-input-card">
       <view class="section-header">
-        <text class="section-title">成绩录入</text>
-        <view class="header-actions">
-          <button class="add-player-btn" bindtap="showQrCodeModal">
+        <view class="section-title-block">
+          <text class="section-title">成绩录入</text>
+          <text class="section-subtitle">第{{currentHole}}洞 · Par{{currentHoleData.par}}</text>
+        </view>
+        <view class="header-actions player-card-actions">
+          <view class="btn-batch-entry btn-pill btn-pill-sm" bindtap="openBatchEntryModal">录入多人</view>
+          <view class="add-player-btn btn-pill btn-pill-sm" bindtap="showQrCodeModal">
             <text class="add-player-icon">+</text>
             <text class="add-player-text">加人</text>
-          </button>
+          </view>
         </view>
       </view>
       <view class="players-horizontal">
@@ -59,29 +68,22 @@
     <view class="card">
       <view class="section-header">
         <view class="section-title">记分卡</view>
-        <view class="scorecard-actions">
-          <view class="btn-ocr-scorecard" bindtap="startOcrVerify">
-            <text>📷</text>
-            <text>拍计分卡</text>
-          </view>
-          <button class="finish-game-btn" bindtap="finishGame">完成比赛</button>
-        </view>
       </view>
       <scroll-view class="score-grid-scroll" scroll-x="true" scroll-left="{{scrollLeft}}">
         <view class="score-grid transposed">
           <!-- 表头行：洞号 -->
-          <view class="grid-row header">
+          <view class="grid-row header sticky-header-row">
             <view class="grid-cell label-cell">洞/球员</view>
             <view class="grid-cell player-cell" wx:for="{{currentGame.players}}" wx:key="id">
               <view class="player-mini-wrapper">
-                <image class="player-mini" src="{{item.avatarUrl || ''}}" wx:if="{{item.avatarUrl}}"></image>
+                <image class="player-mini" src="{{item.avatarUrl || item.avatar || ''}}" wx:if="{{item.avatarUrl || item.avatar}}"></image>
                 <view class="player-mini" style="background: {{item.color}}" wx:else>{{item.name[0]}}</view>
                 <text class="player-mini-name">{{item.name}}</text>
               </view>
             </view>
           </view>
           <!-- 总杆数行（显示当前进度和差点） -->
-          <view class="grid-row total-row">
+          <view class="grid-row total-row sticky-total-row">
             <view class="grid-cell label-cell">杆数</view>
             <view class="grid-cell total-cell" wx:for="{{playerTotalList}}" wx:key="id">
               <view class="total-display">
@@ -116,6 +118,15 @@
         </view>
       </scroll-view>
     </view>
+
+    <view class="bottom-spacer"></view>
+  </view>
+
+  <view class="action-bar-fixed">
+    <view class="undo-score-btn btn-pill btn-pill-lg {{scoreActionStack.length > 0 ? '' : 'disabled'}}" bindtap="undoLastScoreInput">
+      撤销上一笔{{scoreActionStack.length > 0 ? '：' + scoreActionStack[scoreActionStack.length - 1].playerName + ' 第' + scoreActionStack[scoreActionStack.length - 1].hole + '洞' : ''}}
+    </view>
+    <view class="finish-game-btn btn-pill btn-pill-lg action-finish-btn" bindtap="finishGame">完成比赛</view>
   </view>
 
   </block>
@@ -124,64 +135,126 @@
   <view class="score-modal {{editingScore.playerId ? 'show' : ''}}" wx:if="{{editingScore.playerId}}" bindtap="hideScoreInput">
     <view class="score-modal-content apple-style" catchtap="preventHide">
       <view class="score-modal-header">
-        <text class="score-modal-title">{{editingScore.playerName}} - 第{{currentHole}}洞 Par{{currentHoleData.par}}</text>
+        <view class="score-title-stack">
+          <text class="score-modal-title">{{editingScore.playerName}}</text>
+          <text class="score-modal-subtitle">第{{currentHole}}洞 · Par{{currentHoleData.par}}</text>
+        </view>
         <text class="score-modal-close" bindtap="hideScoreInput">×</text>
       </view>
       <view class="score-modal-body">
-        <!-- 成绩选择区 - 简化为 Par-1 到 Double Par -->
-        <view class="score-selector-simple">
-          <text class="selector-label">选择成绩</text>
-          <scroll-view class="score-options-scroll" scroll-x>
-            <view class="score-options">
-              <view
-                class="score-option {{editingScore.strokes === item ? 'selected' : ''}} {{item < currentHoleData.par ? 'birdie' : ''}} {{item === currentHoleData.par ? 'par' : ''}} {{item > currentHoleData.par ? 'bogey' : ''}}"
-                wx:for="{{[1,2,3,4,5,6,7,8,9,10]}}"
-                wx:if="{{item <= currentHoleData.par * 2 && (item > 1 || currentHoleData.par <= 3)}}"
-                wx:key="*this"
-                bindtap="setStrokesQuick"
-                data-value="{{item}}"
-              >
-                <text class="score-value">{{item}}</text>
-                <text class="score-tag" wx:if="{{item === currentHoleData.par - 1}}">小鸟</text>
-                <text class="score-tag" wx:if="{{item === currentHoleData.par}}">标准</text>
-                <text class="score-tag" wx:if="{{item === currentHoleData.par + 1}}">柏忌</text>
-                <text class="score-tag" wx:if="{{item < currentHoleData.par - 1}}">老鹰</text>
-                <text class="score-tag" wx:if="{{item > currentHoleData.par + 1 && item <= currentHoleData.par + 2}}">双柏忌</text>
-                <text class="score-tag" wx:if="{{item > currentHoleData.par + 2}}">+{{item - currentHoleData.par}}</text>
-              </view>
-            </view>
-          </scroll-view>
-          <!-- 自定义输入框 -->
-          <view class="custom-input-wrapper" wx:if="{{editingScore.showCustomInput}}">
-            <text class="custom-input-label">输入杆数</text>
-            <input
-              class="custom-input"
-              type="number"
-              value="{{editingScore.strokes}}"
-              bindinput="onCustomStrokesInput"
-              placeholder="{{currentHoleData.par}}"
-              focus="{{editingScore.showCustomInput}}"
-            />
+        <view class="entry-mode-switch">
+          <view class="entry-mode-chip {{scoreEntryDefaultMode === 'par' ? 'active' : ''}}" bindtap="setScoreEntryDefaultMode" data-mode="par">
+            <text class="entry-mode-title">标准</text>
+            <text class="entry-mode-note">默认 Par</text>
+          </view>
+          <view class="entry-mode-chip {{scoreEntryDefaultMode === 'parPlusOne' ? 'active' : ''}}" bindtap="setScoreEntryDefaultMode" data-mode="parPlusOne">
+            <text class="entry-mode-title">进阶</text>
+            <text class="entry-mode-note">默认 Par+1</text>
           </view>
         </view>
-
-        <!-- 推杆数 -->
-        <view class="simple-putts">
-          <text class="simple-label">推杆</text>
-          <view class="simple-putts-options">
-            <view
-              class="simple-putt-btn {{editingScore.putts === item ? 'selected' : ''}}"
-              wx:for="{{[0,1,2,3,4]}}"
-              wx:key="*this"
-              bindtap="setPutts"
-              data-value="{{item}}"
-            >
-              {{item}}
+        <view class="stepper-panel">
+          <view class="stepper-row score">
+            <text class="stepper-label">杆数</text>
+            <view class="stepper-control">
+              <button class="stepper-btn meter minus" bindtap="adjustSingleDiff" data-delta="-1">−</button>
+              <view class="stepper-value large">{{editingScore.strokes}}</view>
+              <button class="stepper-btn meter plus" bindtap="adjustSingleDiff" data-delta="1">+</button>
+            </view>
+          </view>
+          <view class="stepper-row putt">
+            <text class="stepper-label">推杆</text>
+            <view class="stepper-control">
+              <button class="stepper-btn meter minus" bindtap="adjustSinglePutts" data-delta="-1">−</button>
+              <view class="stepper-value">{{editingScore.putts}}</view>
+              <button class="stepper-btn meter plus" bindtap="adjustSinglePutts" data-delta="1">+</button>
+            </view>
+          </view>
+          <view class="stepper-summary">
+            当前：{{editingScore.strokes}}杆（{{editingScore.strokes - currentHoleData.par === 0 ? 'Par' : ((editingScore.strokes - currentHoleData.par > 0 ? '+' : '') + (editingScore.strokes - currentHoleData.par))}}） · 推{{editingScore.putts}}
+          </view>
+        </view>
+        <view class="stepper-panel">
+          <view class="stepper-row">
+            <text class="stepper-label">球道命中</text>
+            <view class="entry-mode-switch compact">
+              <view class="entry-mode-chip {{editingScore.fairway === true ? 'active' : ''}}" bindtap="setFairway" data-value="hit">
+                <text class="entry-mode-title">命中</text>
+              </view>
+              <view class="entry-mode-chip {{editingScore.fairway === false ? 'active' : ''}}" bindtap="setFairway" data-value="miss">
+                <text class="entry-mode-title">未命中</text>
+              </view>
+              <view class="entry-mode-chip {{editingScore.fairway === null ? 'active' : ''}}" bindtap="setFairway" data-value="skip">
+                <text class="entry-mode-title">暂不填</text>
+              </view>
+            </view>
+          </view>
+          <view class="stepper-row putt">
+            <text class="stepper-label">罚杆</text>
+            <view class="stepper-control">
+              <button class="stepper-btn meter minus" bindtap="adjustPenalty" data-delta="-1">−</button>
+              <view class="stepper-value">{{editingScore.penalty}}</view>
+              <button class="stepper-btn meter plus" bindtap="adjustPenalty" data-delta="1">+</button>
             </view>
           </view>
         </view>
 
         <button class="btn btn-primary confirm-btn simple-confirm" bindtap="confirmScore">确定</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 批量录入弹窗 -->
+  <view class="modal {{showBatchEntryModal ? 'show' : ''}}" wx:if="{{showBatchEntryModal}}" bindtap="hideBatchEntryModal">
+    <view class="modal-content batch-entry-modal" catchtap="preventHide">
+      <view class="modal-header">
+        <view class="modal-title-stack">
+          <text class="modal-title">批量录入</text>
+          <text class="modal-subtitle">第{{currentHole}}洞 · Par{{currentHoleData.par}}</text>
+        </view>
+        <text class="modal-close" bindtap="hideBatchEntryModal">×</text>
+      </view>
+      <view class="modal-body">
+        <view class="entry-mode-switch compact">
+          <view class="entry-mode-chip {{scoreEntryDefaultMode === 'par' ? 'active' : ''}}" bindtap="setScoreEntryDefaultMode" data-mode="par">
+            <text class="entry-mode-title">标准</text>
+            <text class="entry-mode-note">默认 Par</text>
+          </view>
+          <view class="entry-mode-chip {{scoreEntryDefaultMode === 'parPlusOne' ? 'active' : ''}}" bindtap="setScoreEntryDefaultMode" data-mode="parPlusOne">
+            <text class="entry-mode-title">进阶</text>
+            <text class="entry-mode-note">默认 Par+1</text>
+          </view>
+        </view>
+        <view class="batch-entry-list">
+            <view class="batch-entry-item" wx:for="{{currentGame.players}}" wx:key="id">
+              <view class="batch-player" bindtap="openSingleFromBatch" data-playerid="{{item.id}}">
+                <image class="batch-avatar" src="{{item.avatarUrl || item.avatar || ''}}" wx:if="{{item.avatarUrl || item.avatar}}"></image>
+                <view class="batch-avatar batch-avatar-fallback" style="background: {{item.color || colors[index % colors.length]}}" wx:else>{{item.name[0]}}</view>
+                <view class="batch-player-main">
+                  <text class="batch-name">{{item.name}}</text>
+                  <text class="batch-current">当前：{{currentHoleData.par + (batchEntries[item.id] ? batchEntries[item.id].diff : 0)}}杆 · 推{{batchEntries[item.id] ? batchEntries[item.id].putts : 2}}</text>
+                </view>
+              </view>
+
+              <view class="batch-controls">
+                <text class="batch-group-title">杆数</text>
+                <view class="batch-stepper-control meter">
+                  <button class="stepper-btn meter minus" bindtap="adjustBatchDiff" data-playerid="{{item.id}}" data-delta="-1">−</button>
+                  <view class="stepper-value">{{currentHoleData.par + (batchEntries[item.id] ? batchEntries[item.id].diff : 0)}}</view>
+                  <button class="stepper-btn meter plus" bindtap="adjustBatchDiff" data-playerid="{{item.id}}" data-delta="1">+</button>
+                </view>
+                <text class="batch-group-title">推杆</text>
+                <view class="batch-stepper-control meter">
+                  <button class="stepper-btn meter minus" bindtap="adjustBatchPutts" data-playerid="{{item.id}}" data-delta="-1">−</button>
+                  <view class="stepper-value">{{batchEntries[item.id] ? batchEntries[item.id].putts : 2}}</view>
+                  <button class="stepper-btn meter plus" bindtap="adjustBatchPutts" data-playerid="{{item.id}}" data-delta="1">+</button>
+                </view>
+              </view>
+            </view>
+          </view>
+      </view>
+      <view class="modal-footer">
+        <button class="btn btn-secondary" bindtap="hideBatchEntryModal">取消</button>
+        <button class="btn btn-primary" bindtap="applyBatchScores">确认录入</button>
       </view>
     </view>
   </view>
@@ -246,7 +319,7 @@
         <text class="qrcode-close" bindtap="hideQrCodeModal">×</text>
       </view>
       <view class="qrcode-body">
-        <button class="qrcode-share-btn" open-type="share">
+        <button class="qrcode-share-btn btn-pill btn-pill-lg" open-type="share">
           <text class="btn-icon">👥</text>
           <text>分享给微信好友</text>
         </button>
@@ -267,7 +340,7 @@
         </view>
         <view class="manual-add">
           <input class="manual-input" placeholder="输入姓名" value="{{manualPlayerName}}" bindinput="onManualNameInput" />
-          <button class="manual-add-btn" bindtap="addManualPlayer">添加</button>
+          <button class="manual-add-btn btn-pill btn-pill-sm" bindtap="addManualPlayer">添加</button>
         </view>
       </view>
     </view>
@@ -289,8 +362,8 @@
               <text class="pending-modifier">由 {{item.modifiedByName}} 修改</text>
             </view>
             <view class="pending-item-actions">
-              <button class="pending-btn confirm" catchtap="confirmPendingScore" data-hole="{{item.hole}}">确认</button>
-              <button class="pending-btn reject" catchtap="rejectPendingScore" data-hole="{{item.hole}}">拒绝</button>
+              <button class="pending-btn btn-pill btn-pill-xs confirm" catchtap="confirmPendingScore" data-hole="{{item.hole}}">确认</button>
+              <button class="pending-btn btn-pill btn-pill-xs reject" catchtap="rejectPendingScore" data-hole="{{item.hole}}">拒绝</button>
             </view>
           </view>
         </view>
@@ -316,17 +389,17 @@
         <view class="par-guide-options">
           <button class="par-guide-btn primary" bindtap="selectParDataSource" data-source="ocr">
             <text class="btn-icon">📷</text>
-            <text>拍照识别</text>
+            <text class="btn-title">拍照识别</text>
             <text class="btn-desc">拍摄记分卡自动识别</text>
           </button>
           <button class="par-guide-btn" bindtap="selectParDataSource" data-source="manual">
             <text class="btn-icon">✏️</text>
-            <text>手动输入</text>
+            <text class="btn-title">手动输入</text>
             <text class="btn-desc">逐洞输入标准杆</text>
           </button>
           <button class="par-guide-btn secondary" bindtap="selectParDataSource" data-source="skip">
             <text class="btn-icon">⚡</text>
-            <text>使用默认值</text>
+            <text class="btn-title">使用默认值</text>
             <text class="btn-desc">全部Par 4（共72杆）</text>
           </button>
         </view>

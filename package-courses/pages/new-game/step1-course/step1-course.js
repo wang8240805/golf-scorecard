@@ -14,11 +14,14 @@ Page({
     ocrTotalPar: 0,
     frontNinePar: 0,
     backNinePar: 0,
+    ocrReviewCount: 0,
     ocrSource: '',
     ocrImagePath: '',
     // 修改PAR弹窗
     showEditParModal: false,
     editingIndex: -1,
+    editingHoleNumber: 1,
+    editingParSource: 'ocr',
     currentPar: 3
   },
 
@@ -31,12 +34,35 @@ Page({
     // 检查是否从全部球场页面返回并带回了选中球场
     const selectedCourse = wx.getStorageSync('selectedCourseForNewGame')
     if (selectedCourse && selectedCourse.id) {
+      let patchedCourse = selectedCourse
+      const userLoc = this.data.userLocation
+      if (userLoc && selectedCourse.latitude && selectedCourse.longitude) {
+        const d = calculateDistance(
+          userLoc.latitude,
+          userLoc.longitude,
+          selectedCourse.latitude,
+          selectedCourse.longitude
+        )
+        patchedCourse = {
+          ...selectedCourse,
+          distance: d,
+          distanceFormatted: formatDistance(d),
+          matchConfidence: this.getMatchConfidence(d)
+        }
+      }
       this.setData({
         selectedCourseId: selectedCourse.id,
-        recommendedCourse: selectedCourse
+        recommendedCourse: patchedCourse
       })
       wx.removeStorageSync('selectedCourseForNewGame')
     }
+  },
+
+  getMatchConfidence: function(distance) {
+    if (!isFinite(distance)) return { level: 'low', text: '低匹配' }
+    if (distance <= 12000) return { level: 'high', text: '高匹配' }
+    if (distance <= 35000) return { level: 'medium', text: '中匹配' }
+    return { level: 'low', text: '低匹配' }
   },
 
   // 从本地加载全部球场数据（打包在本地，不需要云端）
@@ -115,6 +141,7 @@ Page({
 
   // 计算附近球场
   calculateNearbyCourses: function(userLoc) {
+    const self = this
     const allCourses = wx.getStorageSync('courses') || []
     const builtinCourses = allCourses.filter(function(c) { return !c.id.startsWith('mock-') && !c.id.startsWith('custom-') })
 
@@ -127,6 +154,7 @@ Page({
         ...course,
         distance: distance,
         distanceFormatted: formatDistance(distance),
+        matchConfidence: self.getMatchConfidence(distance),
         totalDistanceFormatted: course.totalDistance > 0 ? (course.totalDistance / 1000).toFixed(1) + 'k' : '-'
       }
     })
@@ -164,6 +192,47 @@ Page({
         console.error('navigateTo fail:', err)
         wx.showToast({ title: '页面加载失败', icon: 'none' })
       }
+    })
+  },
+
+  getTemporaryCourse: function() {
+    var pars = [4, 4, 3, 5, 4, 4, 3, 5, 4, 4, 4, 3, 5, 4, 4, 3, 5, 4]
+    var holes = pars.map(function(par, index) {
+      return {
+        hole: index + 1,
+        par: par,
+        source: 'temporary'
+      }
+    })
+    return {
+      id: 'temp_standard_par72',
+      name: '临时球场（Par72）',
+      location: '稍后补充球场',
+      province: '临时',
+      city: '',
+      holes: holes,
+      totalPar: 72,
+      par: 72,
+      holesVerified: true,
+      isCustom: true,
+      isTemporary: true
+    }
+  },
+
+  useTemporaryCourse: function() {
+    var tempCourse = this.getTemporaryCourse()
+    var allCourses = wx.getStorageSync('courses') || []
+    var exists = allCourses.some(function(course) {
+      return course && course.id === tempCourse.id
+    })
+    if (!exists) {
+      allCourses.unshift(tempCourse)
+      wx.setStorageSync('courses', allCourses)
+    }
+    wx.setStorageSync('currentCourseId', tempCourse.id)
+    wx.removeStorageSync('quickStartPlayers')
+    wx.navigateTo({
+      url: '/pages/new-game/step2-players/step2-players?quick=temp'
     })
   },
 
@@ -221,18 +290,23 @@ Page({
         // 纯AI直接识别，直接使用识别结果
         const fullOcrHoles = result.holes.map((h, idx) => ({
           hole: h.hole || idx + 1,
-          par: h.par
+          par: h.par,
+          confidence: h.confidence,
+          source: h.source,
+          needs_review: h.needs_review === true
         }))
 
         const ocrTotalPar = fullOcrHoles.reduce((sum, h) => sum + h.par, 0)
         const frontNinePar = fullOcrHoles.filter(h => h.hole <= 9).reduce((sum, h) => sum + h.par, 0)
         const backNinePar = fullOcrHoles.filter(h => h.hole > 9).reduce((sum, h) => sum + h.par, 0)
+        const ocrReviewCount = fullOcrHoles.filter(h => h.needs_review).length
 
         this.setData({
           ocrHoles: fullOcrHoles,
           ocrTotalPar,
           frontNinePar,
           backNinePar,
+          ocrReviewCount,
           ocrSource: 'AI直接识别',
           showOcrVerifyModal: true
         })
@@ -258,6 +332,7 @@ Page({
       ocrTotalPar: 0,
       frontNinePar: 0,
       backNinePar: 0,
+      ocrReviewCount: 0,
       ocrImagePath: ''
     })
   },
@@ -310,47 +385,140 @@ Page({
 
   // 点击修改某个洞的PAR值
   editPar: function(e) {
-    const index = e.currentTarget.dataset.index;
-    const currentPar = this.data.ocrHoles[index].par;
+    const index = Number(e.currentTarget.dataset.index)
+    const targetHole = this.data.ocrHoles[index]
+    if (!targetHole) return
 
     this.setData({
       showEditParModal: true,
       editingIndex: index,
-      currentPar: currentPar
-    });
+      editingHoleNumber: targetHole.hole || index + 1,
+      editingParSource: 'ocr',
+      currentPar: targetHole.par
+    })
+  },
+
+  // 点击主表格校准某个洞的PAR值
+  editCoursePar: function(e) {
+    const index = Number(e.currentTarget.dataset.index)
+    const holes = (this.data.recommendedCourse && this.data.recommendedCourse.holes) || []
+    const targetHole = holes[index]
+    if (!targetHole) return
+
+    this.setData({
+      showEditParModal: true,
+      editingIndex: index,
+      editingHoleNumber: targetHole.hole || index + 1,
+      editingParSource: 'course',
+      currentPar: targetHole.par
+    })
   },
 
   // 点击选项直接确认修改
   confirmSelectPar: function(e) {
-    const newPar = parseInt(e.currentTarget.dataset.par);
-    const { editingIndex, currentPar } = this.data;
+    const newPar = parseInt(e.currentTarget.dataset.par)
+    const { editingIndex, currentPar, editingParSource } = this.data
 
     if (newPar === currentPar) {
-      this.hideEditParModal();
-      return;
+      this.hideEditParModal()
+      return
+    }
+
+    if (editingParSource === 'course') {
+      this.updateCoursePar(editingIndex, newPar)
+      return
     }
 
     // 不可变更新ocrHoles
     const newOcrHoles = this.data.ocrHoles.map((h, i) => {
       if (i === editingIndex) {
-        return { ...h, par: newPar };
+        return { ...h, par: newPar, needs_review: false }
       }
-      return h;
-    });
+      return h
+    })
 
     // 重新计算小计和总计
-    const ocrTotalPar = newOcrHoles.reduce((sum, h) => sum + h.par, 0);
-    const frontNinePar = newOcrHoles.filter(h => h.hole <= 9).reduce((sum, h) => sum + h.par, 0);
-    const backNinePar = newOcrHoles.filter(h => h.hole > 9).reduce((sum, h) => sum + h.par, 0);
+    const ocrTotalPar = newOcrHoles.reduce((sum, h) => sum + h.par, 0)
+    const frontNinePar = newOcrHoles.filter(h => h.hole <= 9).reduce((sum, h) => sum + h.par, 0)
+    const backNinePar = newOcrHoles.filter(h => h.hole > 9).reduce((sum, h) => sum + h.par, 0)
+    const ocrReviewCount = newOcrHoles.filter(h => h.needs_review).length
 
     this.setData({
       ocrHoles: newOcrHoles,
       ocrTotalPar,
       frontNinePar,
       backNinePar,
+      ocrReviewCount,
       showEditParModal: false,
       editingIndex: -1
-    });
+    })
+  },
+
+  updateCoursePar: function(index, newPar) {
+    const recommendedCourse = this.data.recommendedCourse
+    if (!recommendedCourse || !Array.isArray(recommendedCourse.holes) || !recommendedCourse.holes[index]) {
+      this.hideEditParModal()
+      return
+    }
+
+    const newHoles = recommendedCourse.holes.map(function(hole, i) {
+      if (i === index) {
+        return {
+          ...hole,
+          par: newPar,
+          needs_review: false,
+          source: hole.source || 'manual'
+        }
+      }
+      return hole
+    })
+    const totalPar = newHoles.reduce(function(sum, hole) {
+      return sum + (parseInt(hole.par) || 0)
+    }, 0)
+    const updatedCourse = {
+      ...recommendedCourse,
+      holes: newHoles,
+      totalPar: totalPar,
+      holesVerified: true,
+      updatedAt: new Date().toISOString()
+    }
+
+    let allCourses = wx.getStorageSync('courses') || []
+    const courseIndex = allCourses.findIndex(function(course) {
+      return course && course.id === updatedCourse.id
+    })
+    if (courseIndex >= 0) {
+      allCourses[courseIndex] = {
+        ...allCourses[courseIndex],
+        ...updatedCourse
+      }
+    } else {
+      allCourses.push(updatedCourse)
+    }
+
+    wx.setStorageSync('courses', allCourses)
+    wx.setStorageSync('currentCourseId', updatedCourse.id)
+
+    this.setData({
+      recommendedCourse: updatedCourse,
+      showEditParModal: false,
+      editingIndex: -1,
+      editingParSource: 'course',
+      currentPar: newPar
+    })
+    wx.showToast({ title: '已校准第' + (newHoles[index].hole || index + 1) + '洞', icon: 'success' })
+
+    // 异步贡献到云端；本地先立即生效，避免弱网影响创建比赛。
+    try {
+      const saveTask = OCRService.saveCourseHoles(updatedCourse.id, newHoles, 'manual')
+      if (saveTask && saveTask.catch) {
+        saveTask.catch(function(err) {
+          console.warn('保存球场标准杆到云端失败，本地数据已生效:', err)
+        })
+      }
+    } catch (err) {
+      console.warn('保存球场标准杆到云端异常，本地数据已生效:', err)
+    }
   },
 
   // 关闭修改弹窗
@@ -358,7 +526,7 @@ Page({
     this.setData({
       showEditParModal: false,
       editingIndex: -1
-    });
+    })
   },
 
   // 阻止弹窗背景点击关闭

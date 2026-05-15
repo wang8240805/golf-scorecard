@@ -16,14 +16,18 @@
         <text class="overview-label">最佳成绩</text>
       </view>
       <view class="overview-item">
-        <text class="overview-value">{{stats.handicap}}</text>
+        <text class="overview-value">{{unlocks.handicap.unlocked ? stats.handicap : '待解锁'}}</text>
         <text class="overview-label">差点指数</text>
       </view>
     </view>
   </view>
+  <view class="card lock-card" wx:if="{{stats.totalGames > 0 && !unlocks.handicap.unlocked}}">
+    <text class="lock-title">差点指数解锁中</text>
+    <text class="lock-desc">再完成 {{unlocks.handicap.remain}} 场有效比赛可查看差点指数</text>
+  </view>
 
   <!-- 成绩分布 -->
-  <view class="card" wx:if="{{stats.totalGames > 0}}">
+  <view class="card" wx:if="{{stats.totalGames > 0 && unlocks.shortGame.unlocked}}">
     <view class="section-title">成绩分布</view>
     <view class="score-distribution">
       <view class="dist-item">
@@ -73,9 +77,13 @@
       </view>
     </view>
   </view>
+  <view class="card lock-card" wx:if="{{stats.totalGames > 0 && !unlocks.shortGame.unlocked}}">
+    <text class="lock-title">短杆模块解锁中</text>
+    <text class="lock-desc">再完成 {{unlocks.shortGame.remain}} 场有效比赛后展示</text>
+  </view>
 
   <!-- 短杆数据 -->
-  <view class="card" wx:if="{{stats.totalGames > 0}}">
+  <view class="card" wx:if="{{stats.totalGames > 0 && unlocks.driving.unlocked}}">
     <view class="section-title">短杆表现</view>
     <view class="short-game-grid">
       <view class="short-game-item">
@@ -108,6 +116,10 @@
       </view>
     </view>
   </view>
+  <view class="card lock-card" wx:if="{{stats.totalGames > 0 && !unlocks.driving.unlocked}}">
+    <text class="lock-title">开球模块解锁中</text>
+    <text class="lock-desc">再完成 {{unlocks.driving.remain}} 场有效比赛后展示</text>
+  </view>
 
   <!-- 开球数据 -->
   <view class="card" wx:if="{{stats.totalGames > 0}}">
@@ -129,7 +141,7 @@
           <text class="driving-value">{{stats.shortGame.puttsPerHole}}</text>
         </view>
         <view class="progress-bar">
-          <view class="progress-fill" style="width: {{(stats.shortGame.puttsPerHole/5)*100}}%"></view>
+          <view class="progress-fill" style="width: {{stats.shortGame.puttsProgress}}%"></view>
         </view>
         <text class="driving-desc">Tour平均 1.75</text>
       </view>
@@ -137,7 +149,7 @@
   </view>
 
   <!-- 趋势分析 -->
-  <view class="card" wx:if="{{stats.recentTrend.length > 0}}">
+  <view class="card" wx:if="{{stats.recentTrend.length > 0 && unlocks.trend.unlocked}}">
     <view class="section-title">近期趋势（最近10场）</view>
     <view class="trend-chart">
       <view class="trend-item" wx:for="{{stats.recentTrend}}" wx:key="index">
@@ -148,6 +160,10 @@
         <text class="trend-date">{{item.date}}</text>
       </view>
     </view>
+  </view>
+  <view class="card lock-card" wx:if="{{stats.totalGames > 0 && !unlocks.trend.unlocked}}">
+    <text class="lock-title">趋势图解锁中</text>
+    <text class="lock-desc">再完成 {{unlocks.trend.remain}} 场有效比赛可查看近期趋势</text>
   </view>
 
   <!-- 改进建议 -->
@@ -168,8 +184,8 @@
         <view class="icon-stats"></view>
       </view>
       <text class="empty-text">暂无数据</text>
-      <text class="empty-subtext">完成更多比赛后查看详细分析</text>
-      <button class="btn btn-primary" bindtap="goToScorecard">开始新比赛</button>
+      <text class="empty-subtext">完成18洞有效成绩后，这里会展示复盘和趋势</text>
+      <button class="btn btn-primary empty-start-btn" bindtap="startNewGame">开始新比赛</button>
     </view>
   </view>
 </view>

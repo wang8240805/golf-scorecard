@@ -17,14 +17,28 @@ Page({
     detailCourse: { holes: [] },
     userCity: '', // 用户所在城市
     userLocation: null,
-    fromNewGame: false // 是否从创建比赛页面进入
+    fromNewGame: false, // 是否从创建比赛页面进入
+    currentCourseId: '',
+    showAddCourseModal: false,
+    newCourseName: '',
+    newCourseLocation: '',
+    sampleCourseNames: [
+      '北京高尔夫球俱乐部',
+      '观澜湖高尔夫球会',
+      '佘山国际高尔夫俱乐部',
+      '深圳高尔夫俱乐部'
+    ],
+    onlineSyncing: false
   },
 
   onLoad(options) {
+    const fromNewGame = options && options.from === 'new-game'
     wx.setNavigationBarTitle({ title: '全部球场' })
     // 标记是否从创建比赛页面进入
     this.setData({
-      fromNewGame: options && options.from === 'new-game',
+      fromNewGame: fromNewGame,
+      sortBy: fromNewGame ? 'distance' : 'playCount',
+      currentCourseId: wx.getStorageSync('currentCourseId') || '',
       favoriteCourseIds: []
     }, () => {
       this.loadUserData()
@@ -35,6 +49,9 @@ Page({
 
   onShow() {
     this.loadUserData()
+    this.setData({
+      currentCourseId: wx.getStorageSync('currentCourseId') || ''
+    })
     // 本地数据已经加载过，不需要重新加载
     if (this.data.courses.length === 0) {
       this.loadCoursesLocal()
@@ -265,9 +282,9 @@ Page({
     if (searchKeyword.trim()) {
       const keyword = searchKeyword.toLowerCase()
       result = result.filter(c =>
-        c.name.toLowerCase().includes(keyword) ||
-        (c.location && c.location.toLowerCase().includes(keyword)) ||
-        (c.city && c.city.toLowerCase().includes(keyword))
+        String(c.name || '').toLowerCase().includes(keyword) ||
+        String(c.location || '').toLowerCase().includes(keyword) ||
+        String(c.city || '').toLowerCase().includes(keyword)
       )
     }
 
@@ -322,6 +339,27 @@ Page({
     })
   },
 
+  // 球场卡片点击：创建比赛场景下直接选中返回
+  onCourseTap(e) {
+    const course = e.currentTarget.dataset.course
+    if (!course || !course.id) return
+    if (this.data.fromNewGame) {
+      this.quickSelectCourse(course)
+      return
+    }
+    this.viewCourseDetail(e)
+  },
+
+  quickSelectCourse(course) {
+    wx.setStorageSync('currentCourseId', course.id)
+    wx.setStorageSync('selectedCourseForNewGame', course)
+    this.setData({ currentCourseId: course.id })
+    wx.showToast({ title: '已选中球场', icon: 'success' })
+    setTimeout(() => {
+      wx.navigateBack()
+    }, 250)
+  },
+
   // 关闭详情弹窗
   closeDetailModal() {
     this.setData({ showDetailModal: false })
@@ -351,5 +389,227 @@ Page({
 
   preventHide() {
     // 阻止冒泡
+  },
+
+  normalizeCourseName(name) {
+    return String(name || '')
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/[（）()\-·]/g, '')
+      .replace(/高尔夫(球场|俱乐部)?/g, '高尔夫')
+  },
+
+  mergeOnlineCourses(pois) {
+    const allCourses = wx.getStorageSync('courses') || []
+    const merged = Array.isArray(allCourses) ? [...allCourses] : []
+    let addedCount = 0
+    let updatedCount = 0
+
+    ;(pois || []).forEach((poi) => {
+      const normalized = this.normalizeCourseName(poi.name)
+      if (!normalized) return
+
+      let hitIndex = merged.findIndex((c) => {
+        const n = this.normalizeCourseName(c.name)
+        if (n && n === normalized) return true
+        if (c.latitude && c.longitude && poi.latitude && poi.longitude) {
+          const d = calculateDistance(c.latitude, c.longitude, poi.latitude, poi.longitude)
+          if (d < 1200 && n.indexOf(normalized.slice(0, 4)) >= 0) return true
+        }
+        return false
+      })
+
+      if (hitIndex >= 0) {
+        const existing = merged[hitIndex]
+        merged[hitIndex] = {
+          ...existing,
+          location: existing.location || poi.location || poi.address || '',
+          province: existing.province || poi.province || '',
+          city: existing.city || poi.city || '',
+          latitude: existing.latitude || poi.latitude || 0,
+          longitude: existing.longitude || poi.longitude || 0,
+          source: existing.source || poi.source || 'amap-poi',
+          sourceId: existing.sourceId || poi.sourceId || '',
+          updatedAt: new Date().toISOString()
+        }
+        updatedCount += 1
+      } else {
+        merged.push({
+          id: `amap-${poi.sourceId}`,
+          name: poi.name,
+          location: poi.location || poi.address || '',
+          province: poi.province || '',
+          city: poi.city || '',
+          latitude: poi.latitude || 0,
+          longitude: poi.longitude || 0,
+          holes: null,
+          holesVerified: false,
+          isCustom: false,
+          source: 'amap-poi',
+          sourceId: poi.sourceId,
+          createdAt: new Date().toISOString()
+        })
+        addedCount += 1
+      }
+    })
+
+    wx.setStorageSync('courses', merged)
+    return { addedCount, updatedCount, total: merged.length }
+  },
+
+  syncOnlineCourses() {
+    if (this.data.onlineSyncing) return
+    const cityText = (this.data.userCity || '').trim()
+    const cityForSearch = cityText.split(/\s+/)[0] || ''
+    this.fetchOnlineCourses('高尔夫球场', cityForSearch)
+  },
+
+  searchOnlineByKeyword() {
+    if (this.data.onlineSyncing) return
+    const keyword = (this.data.searchKeyword || '').trim()
+    if (!keyword) {
+      wx.showToast({ title: '请先输入关键词', icon: 'none' })
+      return
+    }
+    const cityText = (this.data.userCity || '').trim()
+    const cityForSearch = cityText.split(/\s+/)[0] || ''
+    this.fetchOnlineCourses(keyword, cityForSearch)
+  },
+
+  fetchOnlineCourses(keyword, city) {
+    this.setData({ onlineSyncing: true })
+    wx.showLoading({ title: '在线补全中...' })
+
+    wx.cloud.callFunction({
+      name: 'searchGolfCourses',
+      data: {
+        keyword: keyword,
+        city: city,
+        location: this.data.userLocation || null,
+        pageSize: 25
+      },
+      success: (res) => {
+        wx.hideLoading()
+        const result = res && res.result ? res.result : {}
+        if (!result.success) {
+          wx.showToast({ title: result.error || '在线检索失败', icon: 'none' })
+          this.setData({ onlineSyncing: false })
+          return
+        }
+
+        const pois = Array.isArray(result.data) ? result.data : []
+        if (pois.length === 0) {
+          wx.showToast({ title: '未找到匹配球场', icon: 'none' })
+          this.setData({ onlineSyncing: false })
+          return
+        }
+
+        const stat = this.mergeOnlineCourses(pois)
+        this.loadCoursesLocal()
+        this.loadUserData()
+        this.processAndDisplayCourses()
+        this.setData({ onlineSyncing: false })
+        wx.showToast({
+          title: `新增${stat.addedCount} 更新${stat.updatedCount}`,
+          icon: 'none',
+          duration: 2500
+        })
+      },
+      fail: (err) => {
+        wx.hideLoading()
+        console.error('[syncOnlineCourses] failed:', err)
+        this.setData({ onlineSyncing: false })
+        wx.showToast({ title: '在线检索失败', icon: 'none' })
+      }
+    })
+  },
+
+  openAddCourseModal() {
+    this.setData({
+      showAddCourseModal: true,
+      newCourseName: '',
+      newCourseLocation: this.data.userCity || ''
+    })
+  },
+
+  closeAddCourseModal() {
+    this.setData({ showAddCourseModal: false })
+  },
+
+  onNewCourseNameInput(e) {
+    this.setData({ newCourseName: e.detail.value })
+  },
+
+  useSampleCourseName(e) {
+    const name = e.currentTarget.dataset.name || ''
+    if (!name) return
+    this.setData({ newCourseName: name })
+    wx.showToast({ title: '已填入示例名称', icon: 'none' })
+  },
+
+  onNewCourseLocationInput(e) {
+    this.setData({ newCourseLocation: e.detail.value })
+  },
+
+  fillCurrentCity() {
+    this.setData({
+      newCourseLocation: this.data.userCity || ''
+    })
+    wx.showToast({ title: '已填入当前城市', icon: 'none' })
+  },
+
+  confirmAddCourse() {
+    const name = (this.data.newCourseName || '').trim()
+    const location = (this.data.newCourseLocation || '').trim()
+    if (!name) {
+      wx.showToast({ title: '请输入球场名称', icon: 'none' })
+      return
+    }
+
+    const holes = []
+    for (let i = 1; i <= 18; i++) {
+      holes.push({
+        hole: i,
+        par: 4,
+        distance: 0,
+        handicap: i
+      })
+    }
+
+    const now = Date.now()
+    const newCourse = {
+      id: 'custom-' + now,
+      name: name,
+      location: location || (this.data.userCity || ''),
+      province: this.data.userCity || '',
+      city: this.data.userCity || '',
+      latitude: this.data.userLocation ? this.data.userLocation.latitude : 0,
+      longitude: this.data.userLocation ? this.data.userLocation.longitude : 0,
+      holes: holes,
+      totalPar: 72,
+      holesVerified: true,
+      isCustom: true,
+      createdAt: new Date(now).toISOString(),
+      playCount: 0
+    }
+
+    const allCourses = wx.getStorageSync('courses') || []
+    allCourses.push(newCourse)
+    wx.setStorageSync('courses', allCourses)
+
+    this.setData({ showAddCourseModal: false })
+
+    if (this.data.fromNewGame) {
+      wx.setStorageSync('currentCourseId', newCourse.id)
+      wx.setStorageSync('selectedCourseForNewGame', newCourse)
+      wx.showToast({ title: '已添加并选中', icon: 'success' })
+      setTimeout(() => {
+        wx.navigateBack()
+      }, 300)
+      return
+    }
+
+    this.processAndDisplayCourses()
+    wx.showToast({ title: '球场已添加', icon: 'success' })
   }
 })

@@ -1,4 +1,5 @@
 const { formatDate } = require('../../../utils/date-utils.js')
+const gameCompleteness = require('../../../utils/game-completeness.js')
 
 Page({
   data: {
@@ -60,16 +61,20 @@ Page({
           }
 
           const p = playerMap.get(mapKey)
-          p.playCount++
-
-          if (player.totalScore) {
-            p.scores.push(player.totalScore)
+          if (gameCompleteness.isPlayerRoundComplete(game, player.id)) {
+            p.playCount++
+            if (game.statistics && game.statistics[player.id] && game.statistics[player.id].totalScore > 0) {
+              p.scores.push(game.statistics[player.id].totalScore)
+            }
           }
 
           // 判断是否是这场比赛的赢家
-          if (game.players && player.totalScore) {
-            const minScore = Math.min(...game.players.map(pl => pl.totalScore || 999))
-            if (player.totalScore === minScore) {
+          if (game.players && gameCompleteness.isPlayerRoundComplete(game, player.id)) {
+            const validIds = gameCompleteness.getValidScorePlayerIds(game)
+            const totals = validIds.map(id => game.statistics?.[id]?.totalScore || 999).filter(total => total < 999)
+            const playerTotal = game.statistics?.[player.id]?.totalScore || 0
+            const minScore = totals.length ? Math.min(...totals) : 999
+            if (playerTotal > 0 && playerTotal === minScore) {
               p.winCount++
             }
           }
@@ -133,18 +138,23 @@ Page({
 
     // 获取该球员的最近比赛
     const recentGames = games
-      .filter(g => g.players?.some(p => p.id === player.id && p.totalScore))
+      .filter(g => g.players?.some(p => p.id === player.id && gameCompleteness.isPlayerRoundComplete(g, p.id)))
       .slice(-5)
       .reverse()
       .map(g => {
         const p = g.players.find(pl => pl.id === player.id)
-        const avgScore = g.players.reduce((sum, pl) => sum + (pl.totalScore || 0), 0) / g.players.length
+        const validIds = gameCompleteness.getValidScorePlayerIds(g)
+        const totalScores = validIds.map(id => g.statistics?.[id]?.totalScore || 0).filter(Boolean)
+        const avgScore = totalScores.length
+          ? totalScores.reduce((sum, score) => sum + score, 0) / totalScores.length
+          : 0
+        const score = g.statistics?.[p.id]?.totalScore || 0
         return {
           id: g.id,
           courseName: g.courseName,
           date: formatDate(g.timestamp),
-          score: p.totalScore,
-          scoreClass: p.totalScore < avgScore ? 'good' : 'normal'
+          score,
+          scoreClass: score < avgScore ? 'good' : 'normal'
         }
       })
 
