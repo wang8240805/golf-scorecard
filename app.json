@@ -50,12 +50,12 @@
     "navigationBarTextStyle": "white"
   },
   "permission": {
-    "scope.userLocation": {
-      "desc": "获取您的位置以推荐附近球场"
+    "scope.userFuzzyLocation": {
+      "desc": "获取您的大致位置以推荐附近球场"
     }
   },
   "requiredPrivateInfos": [
-    "getLocation"
+    "getFuzzyLocation"
   ],
   "tabBar": {
     "custom": true,

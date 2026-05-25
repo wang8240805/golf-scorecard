@@ -10,37 +10,43 @@ const GOLF_ARCHETYPES = [
     name: '斯科蒂·舍夫勒',
     style: '全面压制型',
     tags: ['稳定铁杆', '关键推进', '失误控制'],
-    reason: '整体数据最均衡，像舍夫勒那样用稳定性赢比赛。'
+    reason: '整体数据最均衡，像舍夫勒那样用稳定性赢比赛。',
+    avatar: '/images/stars/scottie-scheffler.png'
   },
   {
     name: '罗里·麦克罗伊',
     style: '火力进攻型',
     tags: ['高抓鸟率', '进攻果岭', '节奏强势'],
-    reason: '抓鸟能力突出，比赛节奏偏进攻，具备麦克罗伊风格。'
+    reason: '抓鸟能力突出，比赛节奏偏进攻，具备麦克罗伊风格。',
+    avatar: '/images/stars/rory-mcilroy.png'
   },
   {
     name: '科林·森川',
     style: '精准稳健型',
     tags: ['保帕效率', '线路清晰', '稳定输出'],
-    reason: '保帕占比高、波动小，典型森川式精准稳健。'
+    reason: '保帕占比高、波动小，典型森川式精准稳健。',
+    avatar: '/images/stars/collin-morikawa.png'
   },
   {
     name: '布鲁克斯·科普卡',
     style: '大赛抗压型',
     tags: ['抗压能力', '中后程稳定', '关键洞处理'],
-    reason: '关键洞失误少，后程发挥更稳，具备科普卡式抗压特征。'
+    reason: '关键洞失误少，后程发挥更稳，具备科普卡式抗压特征。',
+    avatar: '/images/stars/brooks-koepka.png'
   },
   {
     name: '乔丹·斯皮思',
     style: '短杆创造型',
     tags: ['短杆手感', '救帕能力', '策略执行'],
-    reason: '短杆与救帕表现亮眼，球路选择很有斯皮思味道。'
+    reason: '短杆与救帕表现亮眼，球路选择很有斯皮思味道。',
+    avatar: '/images/stars/jordan-spieth.png'
   },
   {
     name: '琼·拉姆',
     style: '强势推进型',
     tags: ['推进能力', '进攻效率', '硬洞不怵'],
-    reason: '硬洞表现不弱，整体推进力像拉姆。'
+    reason: '硬洞表现不弱，整体推进力像拉姆。',
+    avatar: '/images/stars/jon-rahm.png'
   }
 ]
 
@@ -221,204 +227,365 @@ async function drawPosterContent(ctx, type, w, h, game, player, canvas) {
   await drawModernCardStyle(ctx, w, h, game, player, canvas)
 }
 
-/**
- * 现代卡片风格 - 统一的高端设计
- */
 async function drawModernCardStyle(ctx, w, h, game, player, canvas) {
-  const padding = 50
-  const cardRadius = 30
-
-  // ========== 顶部大卡片 ==========
-  const topCardY = 80
-  const topCardH = 320
-
-  // 卡片阴影
-  ctx.shadowColor = 'rgba(0,0,0,0.2)'
-  ctx.shadowBlur = 30
-  ctx.shadowOffsetY = 15
-
-  // 白色半透明卡片背景
-  ctx.fillStyle = 'rgba(255,255,255,0.95)'
-  roundRect(ctx, padding, topCardY, w - padding * 2, topCardH, cardRadius)
-  ctx.fill()
-
-  // 重置阴影
-  ctx.shadowColor = 'transparent'
-  ctx.shadowBlur = 0
-  ctx.shadowOffsetY = 0
-
-  // 顶部装饰条
-  const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7']
-  const barWidth = (w - padding * 2) / colors.length
-  colors.forEach((color, i) => {
-    ctx.fillStyle = color
-    ctx.fillRect(padding + i * barWidth, topCardY, barWidth, 6)
-  })
-
-  // 球场名称
-  ctx.fillStyle = '#2C3E50'
-  ctx.font = 'bold 44px sans-serif'
-  ctx.textAlign = 'center'
-  const courseName = game.courseName || '高尔夫战报'
-  ctx.fillText(courseName, w / 2, topCardY + 70)
-
-  // 日期
-  const date = new Date(game.timestamp || Date.now())
-  const dateStr = `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`
-  ctx.fillStyle = '#7F8C8D'
-  ctx.font = '28px sans-serif'
-  ctx.fillText(dateStr, w / 2, topCardY + 110)
-
-  const avatarY = topCardY + 200
-  await drawPlayerAvatar(ctx, canvas, player, w / 2, avatarY, 60)
-
-  // 球员名字
-  ctx.fillStyle = '#2C3E50'
-  ctx.font = 'bold 36px sans-serif'
-  ctx.fillText(player.name || '球员', w / 2, avatarY + 100)
-
-  // ========== 成绩统计卡片 ==========
-  const statsY = topCardY + topCardH + 30
-  const statsH = 200
-
-  // 阴影
-  ctx.shadowColor = 'rgba(0,0,0,0.15)'
-  ctx.shadowBlur = 20
-  ctx.shadowOffsetY = 10
-
-  ctx.fillStyle = 'rgba(255,255,255,0.95)'
-  roundRect(ctx, padding, statsY, w - padding * 2, statsH, cardRadius)
-  ctx.fill()
-
-  ctx.shadowColor = 'transparent'
-  ctx.shadowBlur = 0
-  ctx.shadowOffsetY = 0
-
-  // 成绩数据
+  const padding = 30
+  const panelRadius = 22
+  const panelW = w - padding * 2
   const roundStats = calculateRoundStats(game, player.id)
-  const totalStrokes = roundStats.totalStrokes
-  const toPar = roundStats.toPar
-  const birdies = roundStats.birdies
-
-  const stats = [
-    { label: '总杆数', value: totalStrokes, color: '#E74C3C' },
-    { label: '杆差', value: toPar > 0 ? `+${toPar}` : toPar, color: '#3498DB' },
-    { label: '抓鸟', value: birdies, color: '#27AE60' }
-  ]
-
-  const gap = (w - padding * 2) / 3
-  stats.forEach((stat, i) => {
-    const x = padding + gap * i + gap / 2
-    const y = statsY + 100
-
-    // 数值
-    ctx.fillStyle = stat.color
-    ctx.font = 'bold 64px sans-serif'
-    ctx.textAlign = 'center'
-    ctx.fillText(String(stat.value), x, y)
-
-    // 标签
-    ctx.fillStyle = '#7F8C8D'
-    ctx.font = '28px sans-serif'
-    ctx.fillText(stat.label, x, y + 45)
-  })
-
-  // ========== 综合评分卡片 ==========
-  const ratingY = statsY + statsH + 30
-  const ratingH = 280
-
-  ctx.shadowColor = 'rgba(0,0,0,0.15)'
-  ctx.shadowBlur = 20
-  ctx.shadowOffsetY = 10
-
-  ctx.fillStyle = 'rgba(255,255,255,0.95)'
-  roundRect(ctx, padding, ratingY, w - padding * 2, ratingH, cardRadius)
-  ctx.fill()
-
-  ctx.shadowColor = 'transparent'
-  ctx.shadowBlur = 0
-  ctx.shadowOffsetY = 0
-
-  // 评分标题
-  ctx.fillStyle = '#2C3E50'
-  ctx.font = '32px sans-serif'
-  ctx.textAlign = 'center'
-  ctx.fillText('综合评分', w / 2, ratingY + 50)
-
-  // 大分数
-  const ratingInfo = calculateRatingInfo(roundStats)
-  ctx.fillStyle = '#F39C12'
-  ctx.font = 'bold 140px sans-serif'
-  ctx.textAlign = 'center'
-  ctx.fillText(String(ratingInfo.score), w / 2, ratingY + 180)
-
-  // 分数标签
-  ctx.fillStyle = '#27AE60'
-  ctx.font = 'bold 36px sans-serif'
-  ctx.fillText(ratingInfo.label, w / 2, ratingY + 230)
-
-  // 评分依据
-  ctx.fillStyle = '#7F8C8D'
-  ctx.font = '22px sans-serif'
-  ctx.fillText('依据: 杆差40% 稳定性30% 推杆15% 抓鸟15%', w / 2, ratingY + 260)
-
-  // ========== 球风匹配卡片 ==========
-  const starY = ratingY + ratingH + 30
-  const starH = 220
-
-  ctx.shadowColor = 'rgba(0,0,0,0.15)'
-  ctx.shadowBlur = 20
-  ctx.shadowOffsetY = 10
-
-  // 渐变色背景卡片
-  const starGradient = ctx.createLinearGradient(padding, starY, w - padding * 2, starY + starH)
-  starGradient.addColorStop(0, '#667eea')
-  starGradient.addColorStop(1, '#764ba2')
-  ctx.fillStyle = starGradient
-  roundRect(ctx, padding, starY, w - padding * 2, starH, cardRadius)
-  ctx.fill()
-
-  ctx.shadowColor = 'transparent'
-  ctx.shadowBlur = 0
-  ctx.shadowOffsetY = 0
-
-  // 球风匹配标题
-  ctx.fillStyle = 'rgba(255,255,255,0.9)'
-  ctx.font = '28px sans-serif'
-  ctx.textAlign = 'center'
-  ctx.fillText('你的球风像', w / 2, starY + 55)
-
-  // 球星名字
+  const scoreRows = buildScorecardRows(game, player.id)
   const starMatch = matchGolfStar(roundStats)
+  const date = new Date(game.endTime || game.timestamp || Date.now())
+  const dateStr = `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`
+
+  drawPosterBase(ctx, w, h)
+
+  ctx.fillStyle = '#EAF3EA'
+  ctx.font = '26px sans-serif'
+  ctx.textAlign = 'left'
+  ctx.fillText('WINPAR ROUND SUMMARY', padding, 66)
+
+  ctx.fillStyle = '#FFFFFF'
+  ctx.font = 'bold 42px sans-serif'
+  drawTextFit(ctx, game.courseName || '高尔夫比赛总结', padding, 118, panelW - 150, 42)
+
+  ctx.fillStyle = 'rgba(255,255,255,0.78)'
+  ctx.font = '26px sans-serif'
+  ctx.fillText(`${dateStr} / ${roundStats.holesPlayed || 0}洞`, padding, 154)
+
+  await drawPlayerAvatar(ctx, canvas, player, w - padding - 52, 105, 52)
+  ctx.fillStyle = '#FFFFFF'
+  ctx.font = 'bold 26px sans-serif'
+  ctx.textAlign = 'right'
+  drawTextFit(ctx, player.name || '球员', w - padding - 112, 158, 140, 26, 'right')
+
+  const summaryY = 178
+  drawPanel(ctx, padding, summaryY, panelW, 154, panelRadius, '#F8F5EB')
+  ctx.fillStyle = '#183B2A'
+  ctx.font = 'bold 86px sans-serif'
+  ctx.textAlign = 'left'
+  ctx.fillText(String(roundStats.totalStrokes || '-'), padding + 24, summaryY + 96)
+
+  ctx.fillStyle = '#6A725E'
+  ctx.font = '26px sans-serif'
+  ctx.fillText('总杆', padding + 28, summaryY + 130)
+
+  drawSummaryMetric(ctx, padding + 190, summaryY + 34, '杆差', formatToPar(roundStats.toPar), getDiffColor(roundStats.toPar))
+  drawSummaryMetric(ctx, padding + 338, summaryY + 34, '小鸟+', String(roundStats.birdies || 0), '#1F7A4A')
+  drawSummaryMetric(ctx, padding + 484, summaryY + 34, '保帕', String(roundStats.pars || 0), '#8A5A16')
+
+  const tableY = 338
+  drawPanel(ctx, padding, tableY, panelW, 592, panelRadius, '#FFFFFF')
+  ctx.fillStyle = '#183B2A'
+  ctx.font = 'bold 34px sans-serif'
+  ctx.textAlign = 'left'
+  ctx.fillText('18洞成绩', padding + 24, tableY + 50)
+
+  ctx.fillStyle = '#5F6858'
+  ctx.font = '24px sans-serif'
+  ctx.textAlign = 'right'
+  ctx.fillText(`前九 ${formatToPar(roundStats.frontToPar)} / 后九 ${formatToPar(roundStats.backToPar)}`, padding + panelW - 24, tableY + 50)
+
+  drawScorecardGrid(ctx, scoreRows.slice(0, 9), padding + 20, tableY + 86, panelW - 40, 'OUT')
+  drawScorecardGrid(ctx, scoreRows.slice(9, 18), padding + 20, tableY + 314, panelW - 40, 'IN')
+
+  const styleY = 948
+  drawPanel(ctx, padding, styleY, panelW, 228, panelRadius, '#153B2A')
+
+  ctx.fillStyle = 'rgba(255,255,255,0.72)'
+  ctx.font = '26px sans-serif'
+  ctx.textAlign = 'left'
+  ctx.fillText('球风对标', padding + 24, styleY + 42)
+
+  await drawStarAvatar(ctx, canvas, padding + panelW - 76, styleY + 78, 46, starMatch)
+
   ctx.fillStyle = 'white'
   ctx.font = 'bold 44px sans-serif'
-  ctx.fillText(`★ ${starMatch.name} ★`, w / 2, starY + 115)
+  drawTextFit(ctx, starMatch.name, padding + 24, styleY + 96, panelW - 190, 44)
 
-  // 风格标签
-  ctx.fillStyle = 'rgba(255,255,255,0.8)'
-  ctx.font = '26px sans-serif'
-  ctx.fillText(starMatch.style, w / 2, starY + 155)
+  ctx.fillStyle = '#CDE7B0'
+  ctx.font = '28px sans-serif'
+  ctx.fillText(starMatch.style, padding + 24, styleY + 138)
 
-  // 三个风格标签
-  ctx.fillStyle = 'rgba(255,255,255,0.78)'
-  ctx.font = '22px sans-serif'
-  ctx.fillText(starMatch.tags.join(' · '), w / 2, starY + 183)
-
-  // 匹配原因
-  ctx.fillStyle = 'rgba(255,255,255,0.7)'
+  ctx.fillStyle = 'rgba(255,255,255,0.82)'
   ctx.font = '24px sans-serif'
-  const reason = starMatch.matchReason
-  if (reason.length > 24) {
-    ctx.fillText(reason.substring(0, 22) + '...', w / 2, starY + 208)
-  } else {
-    ctx.fillText(reason, w / 2, starY + 208)
-  }
+  drawTextFit(ctx, starMatch.tags.join(' / '), padding + 24, styleY + 174, panelW - 190, 24)
 
-  // ========== 底部 ==========
-  ctx.fillStyle = 'rgba(255,255,255,0.6)'
+  ctx.fillStyle = 'rgba(255,255,255,0.70)'
+  ctx.font = '24px sans-serif'
+  drawMultilineText(ctx, starMatch.matchReason, padding + 24, styleY + 206, panelW - 48, 30, 1)
+
+  ctx.fillStyle = 'rgba(255,255,255,0.64)'
   ctx.font = '24px sans-serif'
   ctx.textAlign = 'center'
-  ctx.fillText('⛳ WinPAR 高尔夫智能记分', w / 2, h - 60)
+  ctx.fillText('WinPAR 高尔夫智能记分', w / 2, h - 60)
+}
+
+function drawPosterBase(ctx, w, h) {
+  ctx.fillStyle = '#0F2E22'
+  ctx.fillRect(0, 0, w, h)
+
+  ctx.fillStyle = '#174533'
+  ctx.fillRect(0, 0, w, 255)
+
+  ctx.fillStyle = '#F1E7CC'
+  ctx.fillRect(0, 255, w, 16)
+
+  ctx.strokeStyle = 'rgba(255,255,255,0.08)'
+  ctx.lineWidth = 1
+  for (let y = 300; y < h; y += 46) {
+    ctx.beginPath()
+    ctx.moveTo(0, y)
+    ctx.lineTo(w, y)
+    ctx.stroke()
+  }
+}
+
+function drawPanel(ctx, x, y, width, height, radius, color) {
+  ctx.save()
+  ctx.shadowColor = 'rgba(0,0,0,0.18)'
+  ctx.shadowBlur = 18
+  ctx.shadowOffsetY = 8
+  ctx.fillStyle = color
+  roundRect(ctx, x, y, width, height, radius)
+  ctx.fill()
+  ctx.restore()
+}
+
+function drawSummaryMetric(ctx, x, y, label, value, color) {
+  ctx.fillStyle = '#6A725E'
+  ctx.font = '25px sans-serif'
+  ctx.textAlign = 'left'
+  ctx.fillText(label, x, y)
+
+  ctx.fillStyle = color
+  ctx.font = 'bold 52px sans-serif'
+  ctx.fillText(value, x, y + 60)
+}
+
+function drawStarAvatar(ctx, canvas, x, y, radius, starMatch) {
+  const avatar = starMatch && starMatch.avatar
+  return drawLocalCircleImage(ctx, canvas, avatar, x, y, radius).catch(() => {
+    drawStarAvatarBadge(ctx, x, y, radius, starMatch)
+  })
+}
+
+function drawStarAvatarBadge(ctx, x, y, radius, starMatch) {
+  const themes = {
+    '斯科蒂·舍夫勒': { from: '#2E7D32', to: '#66BB6A', mark: '舍' },
+    '罗里·麦克罗伊': { from: '#0D47A1', to: '#42A5F5', mark: '罗' },
+    '科林·森川': { from: '#455A64', to: '#90A4AE', mark: '森' },
+    '布鲁克斯·科普卡': { from: '#6A1B9A', to: '#AB47BC', mark: '科' },
+    '乔丹·斯皮思': { from: '#E65100', to: '#FFB74D', mark: '斯' },
+    '琼·拉姆': { from: '#1B5E20', to: '#81C784', mark: '拉' }
+  }
+  const theme = themes[(starMatch && starMatch.name) || ''] || { from: '#24543F', to: '#6DAE8A', mark: '星' }
+
+  const gradient = ctx.createLinearGradient(x - radius, y - radius, x + radius, y + radius)
+  gradient.addColorStop(0, theme.from)
+  gradient.addColorStop(1, theme.to)
+  ctx.fillStyle = gradient
+  ctx.beginPath()
+  ctx.arc(x, y, radius, 0, Math.PI * 2)
+  ctx.fill()
+
+  ctx.strokeStyle = 'rgba(255,255,255,0.9)'
+  ctx.lineWidth = 3
+  ctx.beginPath()
+  ctx.arc(x, y, radius, 0, Math.PI * 2)
+  ctx.stroke()
+
+  ctx.fillStyle = '#FFFFFF'
+  ctx.font = 'bold 28px sans-serif'
+  ctx.textAlign = 'center'
+  ctx.fillText(theme.mark, x, y + 9)
+}
+
+function drawLocalCircleImage(ctx, canvas, imagePath, x, y, radius) {
+  return new Promise((resolve, reject) => {
+    if (!imagePath || !canvas || !canvas.createImage) {
+      reject(new Error('local star avatar unavailable'))
+      return
+    }
+
+    const img = canvas.createImage()
+    img.onload = () => {
+      const sourceW = img.width || radius * 2
+      const sourceH = img.height || radius * 2
+      const side = Math.min(sourceW, sourceH)
+      const sx = Math.max(0, (sourceW - side) / 2)
+      const sy = Math.max(0, (sourceH - side) / 2)
+
+      ctx.save()
+      ctx.beginPath()
+      ctx.arc(x, y, radius, 0, Math.PI * 2)
+      ctx.clip()
+      ctx.drawImage(img, sx, sy, side, side, x - radius, y - radius, radius * 2, radius * 2)
+      ctx.restore()
+
+      ctx.strokeStyle = 'rgba(255,255,255,0.92)'
+      ctx.lineWidth = 3
+      ctx.beginPath()
+      ctx.arc(x, y, radius, 0, Math.PI * 2)
+      ctx.stroke()
+      resolve()
+    }
+    img.onerror = reject
+    img.src = imagePath
+  })
+}
+
+function drawScorecardGrid(ctx, rows, x, y, width, label) {
+  const labelW = 54
+  const totalDiffColW = 78
+  const cellW = (width - labelW - totalDiffColW) / 9
+  const rowH = 58
+  const headerBg = '#EEF4EA'
+  const lineColor = '#D8E0D3'
+  const totalPar = rows.reduce((sum, row) => sum + (parseInt(row.par, 10) || 0), 0)
+  const totalDiff = rows.reduce((sum, row) => {
+    if (!row.strokes) return sum
+    return sum + (parseInt(row.diff, 10) || 0)
+  }, 0)
+
+  ctx.fillStyle = '#183B2A'
+  ctx.font = 'bold 26px sans-serif'
+  ctx.textAlign = 'center'
+  ctx.fillText(label, x + labelW / 2, y + 35)
+
+  const rowLabels = ['洞', 'Par', '+/-']
+  rowLabels.forEach((rowLabel, rowIndex) => {
+    const rowY = y + rowIndex * rowH
+    ctx.fillStyle = rowIndex === 0 ? headerBg : '#FFFFFF'
+    roundRect(ctx, x, rowY, width, rowH, rowIndex === 0 ? 10 : 0)
+    ctx.fill()
+
+    ctx.strokeStyle = lineColor
+    ctx.lineWidth = 1
+    ctx.beginPath()
+    ctx.moveTo(x, rowY + rowH)
+    ctx.lineTo(x + width, rowY + rowH)
+    ctx.stroke()
+
+    ctx.fillStyle = rowIndex === 0 ? '#183B2A' : '#6A725E'
+    ctx.font = rowIndex === 0 ? 'bold 24px sans-serif' : '23px sans-serif'
+    ctx.fillText(rowLabel, x + labelW / 2, rowY + 36)
+
+    rows.forEach((row, colIndex) => {
+      const cellX = x + labelW + colIndex * cellW
+      let text = ''
+      let color = '#263A2E'
+      if (rowIndex === 0) text = String(row.hole)
+      if (rowIndex === 1) text = String(row.par)
+      if (rowIndex === 2) {
+        text = row.strokes ? formatToPar(row.diff) : '-'
+        color = row.strokes ? getDiffColor(row.diff) : '#A0A899'
+      }
+
+      ctx.fillStyle = color
+      ctx.font = rowIndex === 2 ? 'bold 27px sans-serif' : '24px sans-serif'
+      ctx.fillText(text, cellX + cellW / 2, rowY + 36)
+    })
+
+    const summaryCellX = x + labelW + 9 * cellW
+    ctx.strokeStyle = lineColor
+    ctx.lineWidth = 1
+    ctx.beginPath()
+    ctx.moveTo(summaryCellX, rowY)
+    ctx.lineTo(summaryCellX, rowY + rowH)
+    ctx.stroke()
+
+    let summaryText = ''
+    let summaryColor = '#6A725E'
+    if (rowIndex === 0) {
+      summaryText = '总计'
+      summaryColor = '#183B2A'
+    } else if (rowIndex === 1) {
+      summaryText = String(totalPar)
+      summaryColor = '#6A725E'
+    } else if (rowIndex === 2) {
+      summaryText = formatToPar(totalDiff)
+      summaryColor = getDiffColor(totalDiff)
+    }
+    ctx.fillStyle = summaryColor
+    ctx.font = rowIndex === 2 ? 'bold 27px sans-serif' : '23px sans-serif'
+    ctx.fillText(summaryText, summaryCellX + totalDiffColW / 2, rowY + 36)
+  })
+}
+
+function drawTextFit(ctx, text, x, y, maxWidth, fontSize, align = 'left') {
+  const value = String(text || '')
+  if (!value) return
+  ctx.textAlign = align
+  if (ctx.measureText(value).width <= maxWidth) {
+    ctx.fillText(value, x, y)
+    return
+  }
+  let next = value
+  while (next.length > 1 && ctx.measureText(next + '...').width > maxWidth) {
+    next = next.slice(0, -1)
+  }
+  ctx.fillText(next + '...', x, y)
+}
+
+function drawMultilineText(ctx, text, x, y, maxWidth, lineHeight, maxLines) {
+  const chars = String(text || '').split('')
+  const lines = []
+  let line = ''
+  chars.forEach((char) => {
+    const next = line + char
+    if (ctx.measureText(next).width > maxWidth && line) {
+      lines.push(line)
+      line = char
+    } else {
+      line = next
+    }
+  })
+  if (line) lines.push(line)
+  lines.slice(0, maxLines).forEach((item, index) => {
+    const output = index === maxLines - 1 && lines.length > maxLines ? item.slice(0, Math.max(1, item.length - 1)) + '...' : item
+    ctx.fillText(output, x, y + index * lineHeight)
+  })
+}
+
+function formatToPar(diff) {
+  const value = parseInt(diff, 10) || 0
+  if (value === 0) return 'E'
+  return value > 0 ? `+${value}` : String(value)
+}
+
+function getDiffColor(diff) {
+  const value = parseInt(diff, 10) || 0
+  if (value < 0) return '#1F7A4A'
+  if (value > 0) return '#B3472D'
+  return '#6A725E'
+}
+
+function buildScorecardRows(game, playerId) {
+  const holes = getPosterHoles(game)
+  const scores = (game && game.scores && game.scores[playerId]) || {}
+  return holes.map((hole) => {
+    const raw = scores[hole.hole] !== undefined ? scores[hole.hole] : scores[String(hole.hole)]
+    const strokes = extractStrokes(raw)
+    return {
+      hole: hole.hole,
+      par: hole.par,
+      strokes,
+      diff: strokes > 0 ? strokes - hole.par : 0
+    }
+  })
+}
+
+function getPosterHoles(game) {
+  const source = (game && (game.holes || game.course?.holes)) || []
+  const holes = source.map((h, index) => ({
+    hole: parseInt(h.hole || h.holeNumber || index + 1, 10),
+    par: parseInt(h.par, 10) || 4
+  })).filter((h) => h.hole > 0).slice(0, 18)
+
+  while (holes.length < 18) {
+    holes.push({ hole: holes.length + 1, par: 4 })
+  }
+  return holes
 }
 
 function drawPlayerAvatar(ctx, canvas, player, x, y, radius) {
@@ -493,41 +660,6 @@ function getColorByName(name) {
   return colors[Math.abs(hash) % colors.length]
 }
 
-// 评分计算
-function clamp(v, min, max) {
-  return Math.max(min, Math.min(max, v))
-}
-
-// 评分计算（多指标加权）
-function calculateRatingInfo(roundStats) {
-  const toPar = roundStats.toPar
-  const holesPlayed = roundStats.holesPlayed || 18
-  const birdieRate = holesPlayed > 0 ? roundStats.birdies / holesPlayed : 0
-  const avgPutts = roundStats.avgPutts || 2.0
-  const volatility = roundStats.volatility || 2.0
-
-  // 杆差得分（40）
-  const toParScore = clamp(40 - Math.max(0, toPar) * 2 + Math.max(0, -toPar) * 1.2, 10, 40)
-  // 稳定性得分（30），标准差越低越好
-  const consistencyScore = clamp(30 - (volatility - 1.6) * 10, 8, 30)
-  // 推杆得分（15），每洞推杆越低越好
-  const puttingScore = clamp(15 - (avgPutts - 1.8) * 12, 4, 15)
-  // 抓鸟得分（15）
-  const birdieScore = clamp(15 * (birdieRate / 0.25), 0, 15)
-
-  const score = Math.round(toParScore + consistencyScore + puttingScore + birdieScore)
-
-  let label = '表现稳健'
-  if (score >= 94) label = '大师级'
-  else if (score >= 88) label = '卓越表现'
-  else if (score >= 82) label = '高质量发挥'
-  else if (score >= 74) label = '发挥稳定'
-  else if (score >= 66) label = '持续进步'
-  else label = '训练潜力大'
-
-  return { score, label, toPar }
-}
-
 // 球风匹配（基于指标）
 function matchGolfStar(roundStats) {
   const holesPlayed = roundStats.holesPlayed || 18
@@ -559,19 +691,14 @@ function extractStrokes(scoreValue) {
 }
 
 function calculateRoundStats(game, playerId) {
-  const holes = (game && (game.holes || game.course?.holes)) || []
-  const holeParMap = {}
-  holes.forEach(h => {
-    if (h && h.hole !== undefined) {
-      holeParMap[parseInt(h.hole)] = parseInt(h.par) || 4
-    }
-  })
-
+  const holes = getPosterHoles(game)
   const scores = (game && game.scores && game.scores[playerId]) || {}
   const putts = (game && game.putts && game.putts[playerId]) || {}
 
   let totalStrokes = 0
   let totalPar = 0
+  let frontToPar = 0
+  let backToPar = 0
   let holesPlayed = 0
   let birdies = 0
   let pars = 0
@@ -580,16 +707,17 @@ function calculateRoundStats(game, playerId) {
   let puttCount = 0
   const diffs = []
 
-  Object.entries(scores).forEach(([k, v]) => {
-    const holeNum = parseInt(k)
-    if (isNaN(holeNum)) return
-    const strokes = extractStrokes(v)
+  holes.forEach((hole, index) => {
+    const raw = scores[hole.hole] !== undefined ? scores[hole.hole] : scores[String(hole.hole)]
+    const strokes = extractStrokes(raw)
     if (strokes <= 0) return
 
-    const par = holeParMap[holeNum] || 4
+    const par = hole.par || 4
     const diff = strokes - par
     totalStrokes += strokes
     totalPar += par
+    if (index < 9) frontToPar += diff
+    else backToPar += diff
     holesPlayed++
     diffs.push(diff)
 
@@ -597,7 +725,7 @@ function calculateRoundStats(game, playerId) {
     if (diff === 0) pars++
     if (diff >= 2) doubleOrWorse++
 
-    const putt = parseInt(putts[holeNum])
+    const putt = parseInt(putts[hole.hole] !== undefined ? putts[hole.hole] : putts[String(hole.hole)])
     if (!isNaN(putt) && putt > 0) {
       puttTotal += putt
       puttCount++
@@ -617,6 +745,8 @@ function calculateRoundStats(game, playerId) {
   return {
     totalStrokes,
     toPar,
+    frontToPar,
+    backToPar,
     holesPlayed,
     birdies,
     pars,

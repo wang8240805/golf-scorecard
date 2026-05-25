@@ -125,17 +125,26 @@ Page({
 
   // 获取用户位置
   getUserLocation: function() {
-    wx.getLocation({
-      type: 'gcj02',
-      success: function(res) {
-        const location = { latitude: res.latitude, longitude: res.longitude }
-        this.setData({ userLocation: location })
-        this.calculateNearbyCourses(location)
-      }.bind(this),
-      fail: function() {
-        // 定位失败，不使用默认位置，保持等待状态
-        this.setData({ userLocation: null })
-      }.bind(this)
+    const self = this
+    function handleLocationFail() {
+      // 定位失败，不使用默认位置，保持等待状态
+      self.setData({ userLocation: null })
+    }
+
+    wx.authorize({
+      scope: 'scope.userFuzzyLocation',
+      success: function() {
+        wx.getFuzzyLocation({
+          type: 'gcj02',
+          success: function(res) {
+            const location = { latitude: res.latitude, longitude: res.longitude }
+            self.setData({ userLocation: location })
+            self.calculateNearbyCourses(location)
+          },
+          fail: handleLocationFail
+        })
+      },
+      fail: handleLocationFail
     })
   },
 

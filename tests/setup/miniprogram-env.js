@@ -22,7 +22,9 @@ global.wx = {
   hideLoading: jest.fn(),
   showModal: jest.fn(),
   navigateTo: jest.fn(),
+  authorize: jest.fn(),
   getLocation: jest.fn(),
+  getFuzzyLocation: jest.fn(),
   getSystemInfoSync: function() {
     return {
       SDKVersion: "3.4.5",

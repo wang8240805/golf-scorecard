@@ -31,7 +31,11 @@ Page({
       avgTimeSaved: 0
     },
     latestFinishedGame: null,
-    quickStartSetup: null
+    quickStartSetup: null,
+    homeReadyTitle: '开始第一场比赛',
+    homeReadySubtitle: '球场数据加载完成后即可选择球场开局',
+    homeShowNewUserTip: true,
+    homeHasRecentGames: false
   },
 
   onLoad() {
@@ -68,22 +72,31 @@ Page({
 
   // 获取用户位置
   getUserLocation() {
-    wx.getLocation({
-      type: 'gcj02',
-      success: (res) => {
-        const location = {
-          latitude: res.latitude,
-          longitude: res.longitude
-        }
-        this.setData({
-          userLocation: location,
-          locationAuth: true
+    const self = this
+    function handleLocationFail() {
+      self.setData({ locationAuth: false })
+    }
+
+    wx.authorize({
+      scope: 'scope.userFuzzyLocation',
+      success: () => {
+        wx.getFuzzyLocation({
+          type: 'gcj02',
+          success: (res) => {
+            const location = {
+              latitude: res.latitude,
+              longitude: res.longitude
+            }
+            this.setData({
+              userLocation: location,
+              locationAuth: true
+            })
+            this.calculateNearbyCourses(location)
+          },
+          fail: handleLocationFail
         })
-        this.calculateNearbyCourses(location)
       },
-      fail: () => {
-        this.setData({ locationAuth: false })
-      }
+      fail: handleLocationFail
     })
   },
 
@@ -205,7 +218,7 @@ Page({
           const bt = b.timestamp || b.endTime || b.createTime || 0
           return bt - at
         })
-        .slice(0, 3)
+        .slice(0, 2)
         .map(game => {
         const me = game.players?.find(p => p.isMe) || game.players?.[0]
         // 从 statistics 或直接计算获取成绩
@@ -260,11 +273,14 @@ Page({
           holesPlayed: holesPlayed,
           holesTotal: gameHoles.length || 18,
           toParText: toParText,
-          toParClass: toParClass
+          toParClass: toParClass,
+          toParClassName: 'to-par-' + toParClass
         }
       }) // 保留所有比赛记录，分数缺失时在UI显示为“-”
 
       const latestFinishedGame = this.getLatestFinishedGame(games)
+      const quickStartSetup = this.buildQuickStartSetup(games)
+      const homeState = this.buildHomeState(recentGames, quickStartSetup, 0)
 
       this.setData({
         courses: [],
@@ -279,7 +295,11 @@ Page({
         ongoingGame: null,
         pageLoading: false,
         welcomeStats: this.buildWelcomeStats(games),
-        quickStartSetup: this.buildQuickStartSetup(games)
+        quickStartSetup: quickStartSetup,
+        homeReadyTitle: homeState.homeReadyTitle,
+        homeReadySubtitle: homeState.homeReadySubtitle,
+        homeShowNewUserTip: homeState.homeShowNewUserTip,
+        homeHasRecentGames: homeState.homeHasRecentGames
       }, () => {
         // 数据设置完成后，检查是否有进行中的比赛
         this.checkOngoingGame()
@@ -323,7 +343,7 @@ Page({
         const bt = b.timestamp || b.endTime || b.createTime || 0
         return bt - at
       })
-      .slice(0, 3)
+      .slice(0, 2)
       .map(game => {
       const me = game.players?.find(p => p.isMe) || game.players?.[0]
       // 从 statistics 或直接计算获取成绩
@@ -378,7 +398,8 @@ Page({
         holesPlayed: holesPlayed,
         holesTotal: gameHoles.length || 18,
         toParText: toParText,
-        toParClass: toParClass
+        toParClass: toParClass,
+        toParClassName: 'to-par-' + toParClass
       }
     }) // 保留所有比赛记录，分数缺失时在UI显示为“-”
 
@@ -386,6 +407,8 @@ Page({
     const averageScore = this.calculateAverageScore(currentCourse?.id)
 
     const latestFinishedGame = this.getLatestFinishedGame(uniqueGames)
+    const quickStartSetup = this.buildQuickStartSetup(uniqueGames)
+    const homeState = this.buildHomeState(recentGames, quickStartSetup, builtinCourses.length)
 
     this.setData({
       courses: customCourses,
@@ -400,7 +423,11 @@ Page({
       ongoingGame: null,
       pageLoading: false,
       welcomeStats: this.buildWelcomeStats(uniqueGames),
-      quickStartSetup: this.buildQuickStartSetup(uniqueGames)
+      quickStartSetup: quickStartSetup,
+      homeReadyTitle: homeState.homeReadyTitle,
+      homeReadySubtitle: homeState.homeReadySubtitle,
+      homeShowNewUserTip: homeState.homeShowNewUserTip,
+      homeHasRecentGames: homeState.homeHasRecentGames
     }, () => {
       // 数据设置完成后，检查是否有进行中的比赛
       this.checkOngoingGame()
@@ -445,6 +472,16 @@ Page({
     }
   },
 
+  buildHomeState(recentGames, quickStartSetup, courseCount) {
+    var hasRecentGames = Array.isArray(recentGames) && recentGames.length > 0
+    return {
+      homeReadyTitle: quickStartSetup || hasRecentGames ? '开始新比赛' : '开始第一场比赛',
+      homeReadySubtitle: courseCount === 0 ? '球场数据加载完成后即可选择球场开局' : '先开局，球员和球场细节都可以边打边补',
+      homeShowNewUserTip: this.data.isFirstVisit && !hasRecentGames && !quickStartSetup,
+      homeHasRecentGames: hasRecentGames
+    }
+  },
+
   buildQuickStartSetup(games) {
     const saved = wx.getStorageSync('lastGameSetup')
     if (saved && saved.courseId && saved.courseName) {
@@ -457,63 +494,7 @@ Page({
       }
     }
 
-    const latest = gameCompleteness.sortByLatest(games || [])[0]
-    if (!latest || !latest.courseId || !latest.courseName) return null
-    const playerNames = (latest.players || []).map(function(player) {
-      return player && player.name
-    }).filter(Boolean).slice(0, 4)
-    return {
-      courseId: latest.courseId,
-      courseName: latest.courseName,
-      playerNames: playerNames,
-      playerText: playerNames.length > 0 ? playerNames.join('、') : '沿用最近球局',
-      source: '最近比赛'
-    }
-  },
-
-  getTemporaryCourse() {
-    const holes = [4, 4, 3, 5, 4, 4, 3, 5, 4, 4, 4, 3, 5, 4, 4, 3, 5, 4].map(function(par, index) {
-      return {
-        hole: index + 1,
-        par: par,
-        source: 'temporary'
-      }
-    })
-    return {
-      id: 'temp_standard_par72',
-      name: '临时球场（Par72）',
-      location: '稍后补充球场',
-      province: '临时',
-      city: '',
-      holes: holes,
-      totalPar: 72,
-      par: 72,
-      holesVerified: true,
-      isCustom: true,
-      isTemporary: true
-    }
-  },
-
-  ensureTemporaryCourse() {
-    const tempCourse = this.getTemporaryCourse()
-    const courses = wx.getStorageSync('courses') || []
-    const exists = courses.some(function(course) {
-      return course && course.id === tempCourse.id
-    })
-    if (!exists) {
-      courses.unshift(tempCourse)
-      wx.setStorageSync('courses', courses)
-    }
-    wx.setStorageSync('currentCourseId', tempCourse.id)
-    return tempCourse
-  },
-
-  startTempGame() {
-    wx.removeStorageSync('quickStartPlayers')
-    this.ensureTemporaryCourse()
-    wx.navigateTo({
-      url: '/pages/new-game/step2-players/step2-players?quick=temp'
-    })
+    return null
   },
 
   quickReuseLastSetup() {
@@ -557,7 +538,7 @@ Page({
       // 从成绩数据中找出已打的洞
       const playedHoleNumbers = Object.keys(myScores)
         .map(Number)
-        .filter(holeNum => myScores[holeNum] > 0)
+        .filter(holeNum => gameCompleteness.getStrokesValue(myScores[holeNum]) > 0)
         .sort((a, b) => a - b)
 
       // 找到当前打到第几洞（用户有成绩的最后一洞的下一洞）
@@ -575,12 +556,16 @@ Page({
         const holeData = holes.find(h => h.hole === holeNum)
         const par = holeData ? holeData.par : 4
         playedPar += par
-        myStrokes += myScores[holeNum]
+        myStrokes += gameCompleteness.getStrokesValue(myScores[holeNum])
         myHolesPlayed++
       })
 
       // 只计算已打洞的差点
       const myToPar = myHolesPlayed > 0 ? myStrokes - playedPar : 0
+      const myToParText = myHolesPlayed > 0
+        ? (myToPar === 0 ? 'E' : (myToPar > 0 ? '+' : '') + myToPar)
+        : 'E'
+      const myToParClass = myToPar < 0 ? 'under' : (myToPar > 0 ? 'over' : '')
 
       // 计算预估成绩（按当前进度推算18洞）
       const totalPar = holes.reduce((sum, h) => sum + (h.par || 4), 0)
@@ -591,6 +576,7 @@ Page({
       this.setData({
         hasOngoingGame: true,
         ongoingGame: {
+          id: currentGame.id || currentGame.gameId || '',
           courseName: currentGame.courseName,
           currentHole,
           totalHoles,
@@ -599,6 +585,8 @@ Page({
             totalScore: myStrokes,
             holesPlayed: myHolesPlayed,
             toPar: myToPar,
+            toParText: myToParText,
+            toParClass: myToParClass,
             estimatedScore
           }
         }
@@ -651,7 +639,7 @@ Page({
 
   continueGameFromModal() {
     this.setData({ showOngoingDetail: false })
-    wx.navigateTo({ url: '/pages/scorecard/scorecard' })
+    this.goToScorecard()
   },
 
   hideOngoingDetail() {
@@ -766,8 +754,20 @@ Page({
 
   // 跳转到记分卡（进行中比赛）
   goToScorecard() {
+    const currentGame = wx.getStorageSync('currentGame')
+    if (!currentGame || currentGame.completed) {
+      this.setData({
+        hasOngoingGame: false,
+        ongoingGame: null,
+        ongoingDetail: null,
+        showOngoingDetail: false
+      })
+      wx.showToast({ title: '未找到进行中的比赛', icon: 'none' })
+      return
+    }
+    const gameId = currentGame.id || currentGame.gameId || ''
     wx.navigateTo({
-      url: '/pages/scorecard/scorecard'
+      url: '/pages/scorecard/scorecard' + (gameId ? '?gameId=' + gameId : '')
     })
   },
 

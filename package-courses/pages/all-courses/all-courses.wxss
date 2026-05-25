@@ -51,6 +51,31 @@
   border: none;
 }
 
+.tip-action-row {
+  display: flex;
+  gap: 16rpx;
+  margin-top: 14rpx;
+}
+
+.tip-action-row button {
+  flex: 1;
+  margin: 0;
+}
+
+.tip-temp-btn {
+  height: 58rpx;
+  line-height: 58rpx;
+  border-radius: 30rpx;
+  background: #f0f5f2;
+  color: #315542;
+  font-size: 24rpx;
+  padding: 0 22rpx;
+}
+
+.tip-temp-btn::after {
+  border: none;
+}
+
 /* 城市头部 */
 .city-header {
   display: flex;
@@ -113,6 +138,21 @@
   font-size: 28rpx;
   color: var(--text-primary);
 }
+
+.search-helper {
+  display: flex;
+  align-items: center;
+  gap: 14rpx;
+  padding: 14rpx 4rpx 0;
+}
+
+.search-helper-text {
+  flex: 1;
+  min-width: 0;
+  font-size: 23rpx;
+  line-height: 1.4;
+  color: #6a786f;
+}
 .clear-icon {
   font-size: 32rpx;
   color: var(--text-secondary);
@@ -125,8 +165,8 @@
   line-height: 56rpx;
   padding: 0;
   border-radius: 28rpx;
-  background: #eaf3ff;
-  color: #1559c0;
+  background: #f0f5f2;
+  color: #315542;
   border: none;
   font-size: 23rpx;
   margin: 0;
@@ -169,6 +209,11 @@
 .add-course-btn {
   background: #e8f5e9;
   color: #1b5e20;
+}
+
+.map-course-btn {
+  background: #f0f5f2;
+  color: #315542;
 }
 
 /* 球场列表 */
@@ -274,6 +319,22 @@
   color: var(--text-secondary);
 }
 
+.course-data-status {
+  padding: 2rpx 10rpx;
+  border-radius: 8rpx;
+  font-size: 22rpx;
+}
+
+.course-data-status.verified {
+  color: #1f7d43;
+  background: rgba(44, 143, 78, 0.1);
+}
+
+.course-data-status.missing {
+  color: #8a6426;
+  background: rgba(188, 132, 42, 0.12);
+}
+
 .course-actions {
   display: flex;
   flex-direction: row;
@@ -339,6 +400,37 @@
 }
 
 .empty-add-btn::after {
+  border: none;
+}
+
+.empty-action-row {
+  display: flex;
+  gap: 16rpx;
+  margin-top: 18rpx;
+}
+
+.empty-action-row button {
+  margin: 0;
+}
+
+.empty-temp-btn,
+.empty-map-btn {
+  min-width: 220rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  border-radius: 30rpx;
+  background: #f0f5f2;
+  color: #315542;
+  font-size: 24rpx;
+  padding: 0 24rpx;
+}
+
+.empty-map-btn {
+  margin-top: 16rpx;
+}
+
+.empty-temp-btn::after,
+.empty-map-btn::after {
   border: none;
 }
 

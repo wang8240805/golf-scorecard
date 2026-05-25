@@ -82,7 +82,6 @@ Page({
     batchEntries: {},
     batchDiffOptions: [-1, 0, 1, 2, 3, 4],
     batchPuttOptions: [1, 2, 3, 4],
-    scoreEntryDefaultMode: 'par',
     scoreActionStack: []
   },
 
@@ -96,37 +95,20 @@ Page({
 
     // 检查系统信息
     this.checkSystemInfo()
-    this.loadScoreEntryDefaultMode()
 
     this.loadCourses()
     this.loadGame()
   },
 
-  loadScoreEntryDefaultMode() {
-    const mode = wx.getStorageSync('scoreEntryDefaultMode')
-    if (mode === 'par' || mode === 'parPlusOne') {
-      this.setData({ scoreEntryDefaultMode: mode })
-    }
-  },
-
-  setScoreEntryDefaultMode(e) {
-    const mode = e.currentTarget.dataset.mode
-    if (mode !== 'par' && mode !== 'parPlusOne') return
-    this.setData({ scoreEntryDefaultMode: mode }, () => {
-      this.refreshOpenScoreEntryDefaults(mode)
-    })
-    wx.setStorageSync('scoreEntryDefaultMode', mode)
-  },
-
-  getDefaultStrokesByMode(holePar, modeOverride) {
-    const par = parseInt(holePar, 10) || 4
-    const mode = modeOverride || this.data.scoreEntryDefaultMode || 'par'
-    if (mode === 'parPlusOne') return par + 1
-    return par
-  },
-
   getCurrentHolePar() {
     return (this.data.currentHoleData && this.data.currentHoleData.par) ? this.data.currentHoleData.par : 4
+  },
+
+  normalizeFairwayDirection(value) {
+    if (value === 'left' || value === 'hit' || value === 'right') return value
+    if (value === true) return 'hit'
+    if (value === false) return 'left'
+    return null
   },
 
   getActiveHolesByCount(holes, holeCount) {
@@ -142,13 +124,13 @@ Page({
     return this.extractScoreValue(raw) !== null
   },
 
-  refreshOpenScoreEntryDefaults(mode) {
+  refreshOpenScoreEntryDefaults() {
     const holePar = this.getCurrentHolePar()
-    const defaultStrokes = this.getDefaultStrokesByMode(holePar, mode)
+    const defaultStrokes = holePar
 
     if (this.data.editingScore && this.data.editingScore.playerId && !this.hasScoreOnCurrentHole(this.data.editingScore.playerId)) {
       this.setData({
-        'editingScore.strokes': defaultStrokes
+        'editingScore.strokes': holePar
       })
     }
 
@@ -364,7 +346,15 @@ Page({
     }
 
     // 本地比赛从storage加载
-    const currentGame = wx.getStorageSync('currentGame')
+    let currentGame = wx.getStorageSync('currentGame')
+    if ((!currentGame || currentGame.completed) && this.gameId) {
+      const games = wx.getStorageSync('games') || []
+      const storedGame = games.find(g => g && (g.id === this.gameId || g.gameId === this.gameId))
+      if (storedGame && !storedGame.completed) {
+        currentGame = storedGame
+        wx.setStorageSync('currentGame', currentGame)
+      }
+    }
     if (!currentGame) {
       this.setData({ currentGame: null })
       return
@@ -1384,9 +1374,10 @@ Page({
         const score = playerScores[holeNumber]
         stats.played++
         stats.totalStrokes += score.strokes || 0
-        if (score.fairway !== undefined) {
+        const fairway = this.normalizeFairwayDirection(score.fairway)
+        if (fairway) {
           stats.fairwayAttempts++
-          if (score.fairway === true) {
+          if (fairway === 'hit') {
             stats.fairwayHits++
           }
         }
@@ -1722,7 +1713,7 @@ Page({
 
     const holePar = this.getCurrentHolePar()
     const diffOptions = this.getSingleEntryDiffOptions(holePar)
-    const defaultStrokes = currentScore || this.getDefaultStrokesByMode(holePar)
+    const defaultStrokes = currentScore || holePar
     const defaultDiff = defaultStrokes - holePar
     const diffBaseIndex = Math.max(0, diffOptions.indexOf(defaultDiff))
     const diffWheelOptions = diffOptions.concat(diffOptions).concat(diffOptions)
@@ -1737,7 +1728,7 @@ Page({
         playerName: player ? player.name : '',
         strokes: defaultStrokes,
         putts: currentPutts,
-        fairway: currentFairway === true ? true : (currentFairway === false ? false : null),
+        fairway: this.normalizeFairwayDirection(currentFairway),
         penalty: Math.max(0, Math.min(3, currentPenalty)),
         showCustomInput: false
       },
@@ -1942,15 +1933,8 @@ Page({
 
   setFairway(e) {
     const value = e.currentTarget.dataset.value
-    if (value === 'hit') {
-      this.setData({ 'editingScore.fairway': true })
-      return
-    }
-    if (value === 'miss') {
-      this.setData({ 'editingScore.fairway': false })
-      return
-    }
-    this.setData({ 'editingScore.fairway': null })
+    if (value !== 'left' && value !== 'hit' && value !== 'right') return
+    this.setData({ 'editingScore.fairway': value })
   },
 
   adjustPenalty(e) {
@@ -2168,7 +2152,7 @@ Page({
       const raw = scores[p.id] ? scores[p.id][hole] : null
       const v = this.extractScoreValue(raw)
       const currentPutts = parseInt(putts[p.id] && putts[p.id][hole], 10)
-      const defaultStrokes = this.getDefaultStrokesByMode(holePar)
+      const defaultStrokes = holePar
       const diff = v !== null ? (v - holePar) : (defaultStrokes - holePar)
       const diffRange = this.getDiffRangeByPar(holePar)
       initEntries[p.id] = {
@@ -2879,7 +2863,6 @@ Page({
     }
 
     const validation = this.getRoundValidationSummary()
-    const advancedSummary = this.getAdvancedCollectionSummary(validation.totalHoles)
     if (validation.incompletePlayers.length > 0) {
       const playerSummaries = validation.players.map(function(p) {
         return `${p.name}(${p.filled}/${validation.totalHoles})`
@@ -2891,178 +2874,30 @@ Page({
         cancelText: '继续补录',
         success: (res) => {
           if (res.confirm) {
-            this.showFinishConfirmModal(validation)
+            this.applyWinnerInfo()
+            this.completeGame()
           }
         }
       })
       return
     }
 
-    if (advancedSummary.missingCount > 0) {
-      wx.showModal({
-        title: '高级数据未录满',
-        content: `还有 ${advancedSummary.missingCount} 条球道/罚杆未记录，补录后趋势分析会更准确。是否仍完成比赛？`,
-        confirmText: '仍然完成',
-        cancelText: '继续补录',
-        success: (res) => {
-          if (res.confirm) {
-            this.showFinishConfirmModal(validation)
-          }
-        }
-      })
-      return
-    }
-
-    this.showFinishConfirmModal(validation)
+    this.applyWinnerInfo()
+    this.completeGame()
   },
 
-  getAdvancedCollectionSummary(totalHoles) {
-    const game = this.data.currentGame || {}
-    const players = game.players || []
-    const fairways = game.fairways || {}
-    const penalties = game.penalties || {}
-    const holeCount = parseInt(totalHoles, 10) || this.data.totalHoles || 18
-    let missingCount = 0
-
-    players.forEach((player) => {
-      const pFairway = fairways[player.id] || {}
-      const pPenalty = penalties[player.id] || {}
-      for (let hole = 1; hole <= holeCount; hole++) {
-        const fairway = pFairway[hole]
-        const penalty = pPenalty[hole]
-        const hasFairway = fairway === true || fairway === false
-        const hasPenalty = penalty !== undefined && penalty !== null && penalty !== ''
-        if (!hasFairway || !hasPenalty) {
-          missingCount++
-        }
-      }
-    })
-
-    return { missingCount: missingCount }
-  },
-
-  // 显示完赛确认弹窗
-  showFinishConfirmModal(validation) {
-    console.log('【finishGame】开始完成比赛')
-
-    // 检查当前游戏数据
+  applyWinnerInfo() {
     const game = this.data.currentGame
-    if (!game) {
-      console.error('【finishGame】错误: currentGame 为空')
-      wx.showToast({ title: '比赛数据错误', icon: 'none' })
-      return
-    }
-    console.log('【finishGame】当前游戏:', game.id, '球员数:', game.players?.length)
-
-    // 先计算获胜者信息
+    if (!game) return null
     let winnerInfo = null
     try {
       winnerInfo = this.calculateWinnerForGame()
-      console.log('【finishGame】获胜者信息:', winnerInfo)
+      game.winnerInfo = winnerInfo
+      wx.setStorageSync('currentGame', game)
     } catch (err) {
       console.error('【finishGame】计算获胜者失败:', err)
-      console.error('【finishGame】错误堆栈:', err.stack)
     }
-
-    // 构建获胜者显示文本
-    let winnerText = ''
-    if (winnerInfo && winnerInfo.players && winnerInfo.players.length > 0) {
-      const playerNames = winnerInfo.players.map(p => p.name).join('、')
-      winnerText = `\n\n🏆 ${winnerInfo.title}\n${playerNames}\n${winnerInfo.players[0]?.score || ''}`
-    }
-
-    const quickSummary = this.buildFinishQuickSummary(game, winnerInfo, validation)
-
-    console.log('【finishGame】准备显示确认弹窗')
-
-    wx.showModal({
-      title: '比赛结束',
-      content: `本场比赛已结束！${winnerText}\n\n${quickSummary}\n\n是否查看详细报告？`,
-      confirmText: '查看报告',
-      cancelText: '留在本页',
-      success: (res) => {
-        console.log('【finishGame】用户选择:', res.confirm ? '查看报告' : '留在记分卡')
-        // 保存获胜者信息到游戏数据
-        game.winnerInfo = winnerInfo
-        wx.setStorageSync('currentGame', game)
-
-        // 无论选择哪个选项，都完成比赛
-        if (res.confirm) {
-          // 查看报告 - 完成比赛并跳转
-          this.completeGame()
-        } else {
-          // 留在记分卡 - 完成比赛但留在当前页面
-          this.completeGameStay()
-        }
-      },
-      fail: (err) => {
-        console.error('【finishGame】showModal 失败:', err)
-      }
-    })
-  },
-
-  buildFinishQuickSummary(game, winnerInfo, validation) {
-    try {
-      const holes = this.data.holes || []
-      const players = game.players || []
-      const scores = game.scores || {}
-      const totalHoles = holes.length || 18
-
-      // 以第一位球员估算已打洞数（多人一般同步推进）
-      let played = 0
-      if (players.length > 0) {
-        const p0 = players[0]
-        const p0Scores = scores[p0.id] || {}
-        played = Object.keys(p0Scores).filter((hole) => this.extractScoreValue(p0Scores[hole]) !== null).length
-      }
-
-      let leadLine = '领先信息：暂无'
-      if (winnerInfo && winnerInfo.players && winnerInfo.players.length > 0) {
-        const p = winnerInfo.players[0]
-        leadLine = `当前领先：${p.name || '-'} ${p.score || ''}`.trim()
-      }
-
-      let validLine = ''
-      if (validation && validation.validPlayers) {
-        validLine = `\n有效成绩：${validation.validPlayers.length}人`
-      }
-      let replayLine = ''
-      if (players.length > 0) {
-        const focusPlayer = players[0]
-        const playerScores = scores[focusPlayer.id] || {}
-        let bestHole = null
-        let worstCount = 0
-        let frontTotal = 0
-        let backTotal = 0
-        let frontPar = 0
-        let backPar = 0
-        holes.forEach((hole, index) => {
-          const raw = playerScores[hole.hole]
-          const strokes = this.extractScoreValue(raw)
-          if (strokes === null) return
-          const diff = strokes - hole.par
-          if (!bestHole || diff < bestHole.diff) {
-            bestHole = { hole: hole.hole, diff: diff }
-          }
-          if (diff >= 2) worstCount++
-          if (index < 9) {
-            frontTotal += strokes
-            frontPar += hole.par
-          } else {
-            backTotal += strokes
-            backPar += hole.par
-          }
-        })
-        const bestText = bestHole ? `最佳洞：${bestHole.hole}洞(${bestHole.diff > 0 ? '+' : ''}${bestHole.diff})` : '最佳洞：-'
-        const splitText = totalHoles > 9
-          ? `前九${frontTotal - frontPar > 0 ? '+' : ''}${frontTotal - frontPar} / 后九${backTotal - backPar > 0 ? '+' : ''}${backTotal - backPar}`
-          : `9洞差杆：${frontTotal - frontPar > 0 ? '+' : ''}${frontTotal - frontPar}`
-        replayLine = `\n${bestText} · 爆洞${worstCount}个\n${splitText}`
-      }
-      return `已打 ${played}/${totalHoles} 洞\n${leadLine}${validLine}${replayLine}`
-    } catch (e) {
-      return ''
-    }
+    return winnerInfo
   },
 
   getRoundValidationSummary() {
@@ -3323,8 +3158,7 @@ Page({
         return
       }
 
-      wx.showToast({ title: '比赛完成！', icon: 'success', duration: 1500 })
-      setTimeout(() => this.generateAndShare(updatedGame), 1500)
+      this.generateAndShare(updatedGame)
     } catch (err) {
       console.error('【completeGame】错误:', err)
       wx.showToast({ title: '完成比赛失败', icon: 'none' })
@@ -3789,8 +3623,7 @@ Page({
         finalizeAfterPending: false,
         showPendingModal: false
       })
-      // 待确认处理完成，继续完赛确认
-      this.showFinishConfirmModal()
+      this.finishGame()
     }
   },
 

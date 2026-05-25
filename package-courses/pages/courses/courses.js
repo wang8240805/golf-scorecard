@@ -102,22 +102,31 @@ Page({
       return
     }
 
-    wx.getLocation({
-      type: 'gcj02',
-      success: (res) => {
-        const location = {
-          latitude: res.latitude,
-          longitude: res.longitude
-        }
-        this.setData({ userLocation: location })
+    const self = this
+    function handleLocationFail() {
+      // 获取位置失败，继续处理显示
+      self.processAndDisplayCourses()
+    }
 
-        // 使用逆地理编码获取城市名称
-        this.getCityFromLocation(location)
+    wx.authorize({
+      scope: 'scope.userFuzzyLocation',
+      success: () => {
+        wx.getFuzzyLocation({
+          type: 'gcj02',
+          success: (res) => {
+            const location = {
+              latitude: res.latitude,
+              longitude: res.longitude
+            }
+            this.setData({ userLocation: location })
+
+            // 使用逆地理编码获取城市名称
+            this.getCityFromLocation(location)
+          },
+          fail: handleLocationFail
+        })
       },
-      fail: () => {
-        // 获取位置失败，继续处理显示
-        this.processAndDisplayCourses()
-      }
+      fail: handleLocationFail
     })
   },
 

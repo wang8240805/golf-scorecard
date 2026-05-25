@@ -22,6 +22,8 @@ Page({
     showAddCourseModal: false,
     newCourseName: '',
     newCourseLocation: '',
+    localResultCount: 0,
+    searchHintText: '',
     sampleCourseNames: [
       '北京高尔夫球俱乐部',
       '观澜湖高尔夫球会',
@@ -122,22 +124,31 @@ Page({
       return
     }
 
-    wx.getLocation({
-      type: 'gcj02',
-      success: (res) => {
-        const location = {
-          latitude: res.latitude,
-          longitude: res.longitude
-        }
-        this.setData({ userLocation: location })
+    const self = this
+    function handleLocationFail() {
+      // 获取位置失败，继续处理显示
+      self.processAndDisplayCourses()
+    }
 
-        // 使用逆地理编码获取城市名称
-        this.getCityFromLocation(location)
+    wx.authorize({
+      scope: 'scope.userFuzzyLocation',
+      success: () => {
+        wx.getFuzzyLocation({
+          type: 'gcj02',
+          success: (res) => {
+            const location = {
+              latitude: res.latitude,
+              longitude: res.longitude
+            }
+            this.setData({ userLocation: location })
+
+            // 使用逆地理编码获取城市名称
+            this.getCityFromLocation(location)
+          },
+          fail: handleLocationFail
+        })
       },
-      fail: () => {
-        // 获取位置失败，继续处理显示
-        this.processAndDisplayCourses()
-      }
+      fail: handleLocationFail
     })
   },
 
@@ -278,30 +289,78 @@ Page({
       result = result.filter(c => c.isFavorite)
     }
 
-    // 2. 按搜索关键词筛选
-    if (searchKeyword.trim()) {
-      const keyword = searchKeyword.toLowerCase()
-      result = result.filter(c =>
-        String(c.name || '').toLowerCase().includes(keyword) ||
-        String(c.location || '').toLowerCase().includes(keyword) ||
-        String(c.city || '').toLowerCase().includes(keyword)
-      )
+    // 2. 按搜索关键词筛选。创建球局时优先解决“快速找到本地库里的球场”，所以搜索态按相关度排序。
+    const keyword = searchKeyword.trim()
+    if (keyword) {
+      result = result
+        .map(c => {
+          return {
+            ...c,
+            _searchScore: this.getCourseSearchScore(c, keyword)
+          }
+        })
+        .filter(c => c._searchScore > 0)
+        .sort((a, b) => {
+          if (b._searchScore !== a._searchScore) return b._searchScore - a._searchScore
+          if (!!b.holesVerified !== !!a.holesVerified) return b.holesVerified ? 1 : -1
+          return (a.geoDistance || Infinity) - (b.geoDistance || Infinity)
+        })
+    } else {
+      // 3. 非搜索态排序
+      switch (sortBy) {
+        case 'playCount':
+          result.sort((a, b) => b.playCount - a.playCount)
+          break
+        case 'name':
+          result.sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'))
+          break
+        case 'distance':
+          result.sort((a, b) => (a.geoDistance || Infinity) - (b.geoDistance || Infinity))
+          break
+      }
     }
 
-    // 3. 排序
-    switch (sortBy) {
-      case 'playCount':
-        result.sort((a, b) => b.playCount - a.playCount)
-        break
-      case 'name':
-        result.sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'))
-        break
-      case 'distance':
-        result.sort((a, b) => (a.geoDistance || Infinity) - (b.geoDistance || Infinity))
-        break
+    this.setData({
+      filteredCourses: result,
+      localResultCount: result.length,
+      searchHintText: keyword
+        ? (result.length > 0 ? '已在本地球场库中匹配，可直接选用' : '本地库未找到，可手动新增或用地图补全名称地址')
+        : ''
+    })
+  },
+
+  getCourseSearchScore(course, keyword) {
+    const rawKeyword = String(keyword || '').trim()
+    const normalizedKeyword = this.normalizeCourseName(rawKeyword)
+    if (!normalizedKeyword) return 0
+
+    const name = String(course.name || '')
+    const location = String(course.location || '')
+    const city = String(course.city || '')
+    const province = String(course.province || '')
+    const normalizedName = this.normalizeCourseName(name)
+    const normalizedText = this.normalizeCourseName([name, location, city, province].join(' '))
+    const rawText = [name, location, city, province].join(' ').toLowerCase()
+    const keywordLower = rawKeyword.toLowerCase()
+
+    let score = 0
+    if (normalizedName === normalizedKeyword) score += 1000
+    if (normalizedName.indexOf(normalizedKeyword) === 0) score += 700
+    if (normalizedName.indexOf(normalizedKeyword) >= 0) score += 500
+    if (normalizedText.indexOf(normalizedKeyword) >= 0) score += 260
+    if (rawText.indexOf(keywordLower) >= 0) score += 160
+
+    const terms = keywordLower.split(/\s+/).filter(Boolean)
+    if (terms.length > 1 && terms.every(term => rawText.indexOf(term) >= 0)) {
+      score += 220
     }
 
-    this.setData({ filteredCourses: result })
+    if (course.holesVerified || (Array.isArray(course.holes) && course.holes.length >= 9)) score += 40
+    if (course.playCount > 0) score += Math.min(course.playCount * 8, 40)
+    if (course.isFavorite) score += 20
+    if (isFinite(course.geoDistance)) score += Math.max(0, 30 - Math.floor(course.geoDistance / 5000))
+
+    return score
   },
 
   // 切换收藏状态
@@ -395,8 +454,11 @@ Page({
     return String(name || '')
       .toLowerCase()
       .replace(/\s+/g, '')
-      .replace(/[（）()\-·]/g, '')
-      .replace(/高尔夫(球场|俱乐部)?/g, '高尔夫')
+      .replace(/[（）()\-·,，.。]/g, '')
+      .replace(/golfclub/g, 'golf')
+      .replace(/countryclub/g, 'club')
+      .replace(/高尔夫(球场|俱乐部|球会)?/g, '高尔夫')
+      .replace(/国际|俱乐部|球会|球场|乡村|公园|度假村/g, '')
   },
 
   mergeOnlineCourses(pois) {
@@ -473,12 +535,22 @@ Page({
     }
     const cityText = (this.data.userCity || '').trim()
     const cityForSearch = cityText.split(/\s+/)[0] || ''
-    this.fetchOnlineCourses(keyword, cityForSearch)
+    wx.showModal({
+      title: '地图补全',
+      content: '地图补全只能补充球场名称、地址和定位，通常没有每洞标准杆。找到后仍可选用，开赛时再拍卡或手动校准。',
+      confirmText: '继续查找',
+      cancelText: '取消',
+      success: (res) => {
+        if (res.confirm) {
+          this.fetchOnlineCourses(keyword, cityForSearch)
+        }
+      }
+    })
   },
 
   fetchOnlineCourses(keyword, city) {
     this.setData({ onlineSyncing: true })
-    wx.showLoading({ title: '在线补全中...' })
+    wx.showLoading({ title: '地图补全中...' })
 
     wx.cloud.callFunction({
       name: 'searchGolfCourses',
@@ -499,7 +571,7 @@ Page({
 
         const pois = Array.isArray(result.data) ? result.data : []
         if (pois.length === 0) {
-          wx.showToast({ title: '未找到匹配球场', icon: 'none' })
+          wx.showToast({ title: '地图未找到', icon: 'none' })
           this.setData({ onlineSyncing: false })
           return
         }
@@ -510,7 +582,7 @@ Page({
         this.processAndDisplayCourses()
         this.setData({ onlineSyncing: false })
         wx.showToast({
-          title: `新增${stat.addedCount} 更新${stat.updatedCount}`,
+          title: `地图新增${stat.addedCount} 更新${stat.updatedCount}`,
           icon: 'none',
           duration: 2500
         })
@@ -519,9 +591,54 @@ Page({
         wx.hideLoading()
         console.error('[syncOnlineCourses] failed:', err)
         this.setData({ onlineSyncing: false })
-        wx.showToast({ title: '在线检索失败', icon: 'none' })
+        wx.showToast({ title: '地图补全失败', icon: 'none' })
       }
     })
+  },
+
+  getTemporaryCourse() {
+    const pars = [4, 4, 3, 5, 4, 4, 3, 5, 4, 4, 4, 3, 5, 4, 4, 3, 5, 4]
+    const holes = pars.map(function(par, index) {
+      return {
+        hole: index + 1,
+        par: par,
+        distance: 0,
+        handicap: index + 1,
+        source: 'temporary'
+      }
+    })
+    return {
+      id: 'temp_standard_par72',
+      name: '临时球场（Par72）',
+      location: '稍后补充球场',
+      province: '临时',
+      city: '',
+      holes: holes,
+      totalPar: 72,
+      par: 72,
+      holesVerified: true,
+      holesSource: 'temporary',
+      isCustom: true,
+      isTemporary: true
+    }
+  },
+
+  useTemporaryCourse() {
+    const tempCourse = this.getTemporaryCourse()
+    const allCourses = wx.getStorageSync('courses') || []
+    const exists = allCourses.some(function(course) {
+      return course && course.id === tempCourse.id
+    })
+    if (!exists) {
+      allCourses.unshift(tempCourse)
+      wx.setStorageSync('courses', allCourses)
+    }
+    wx.setStorageSync('currentCourseId', tempCourse.id)
+    wx.setStorageSync('selectedCourseForNewGame', tempCourse)
+    wx.showToast({ title: '已选择临时球场', icon: 'success' })
+    setTimeout(() => {
+      wx.navigateBack()
+    }, 250)
   },
 
   openAddCourseModal() {
@@ -587,8 +704,11 @@ Page({
       longitude: this.data.userLocation ? this.data.userLocation.longitude : 0,
       holes: holes,
       totalPar: 72,
+      par: 72,
       holesVerified: true,
+      holesSource: 'manual-create',
       isCustom: true,
+      source: 'manual-create',
       createdAt: new Date(now).toISOString(),
       playCount: 0
     }

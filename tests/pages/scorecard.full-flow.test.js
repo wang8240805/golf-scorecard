@@ -49,14 +49,49 @@ describe("scorecard full flow regression", function() {
     expect(arg.content).toContain("不会计入18洞技术统计")
 
     arg.success({ confirm: true })
-    const confirmArg = wx.showModal.mock.calls[1][0]
-    expect(confirmArg.title).toBe("比赛结束")
-    confirmArg.success({ confirm: false })
+    expect(wx.showModal).toHaveBeenCalledTimes(1)
 
     const savedGames = wx.getStorageSync("games")
     expect(savedGames).toHaveLength(1)
     expect(savedGames[0].roundType).toBe("partial")
     expect(savedGames[0].isCompleteRound).toBe(false)
+  })
+
+  test("finishGame should generate poster directly for complete rounds", function() {
+    const page = loadPage(path.resolve(__dirname, "../../pages/scorecard/scorecard.js"))
+    const holes = createHoles(18, 4)
+    const p1Scores = {}
+    const p2Scores = {}
+    holes.forEach(function(hole) {
+      p1Scores[hole.hole] = 4
+      p2Scores[hole.hole] = 5
+    })
+    page.generateAndShare = jest.fn()
+    page.data = {
+      pendingCount: 0,
+      holes: holes,
+      courses: [],
+      currentGame: {
+        id: "g-complete",
+        courseId: "c1",
+        courseName: "Test Course",
+        players: [
+          { id: "p1", name: "A" },
+          { id: "p2", name: "B" }
+        ],
+        scores: {
+          p1: p1Scores,
+          p2: p2Scores
+        }
+      }
+    }
+
+    page.finishGame()
+
+    expect(wx.showModal).not.toHaveBeenCalled()
+    expect(page.generateAndShare).toHaveBeenCalledTimes(1)
+    expect(page.generateAndShare.mock.calls[0][0].completed).toBe(true)
+    expect(page.generateAndShare.mock.calls[0][0].winnerInfo.players[0].name).toBe("A")
   })
 
   test("single entry quick +/- should clamp by par-based diff range", function() {
@@ -100,12 +135,11 @@ describe("scorecard full flow regression", function() {
     })).toBe(-3)
   })
 
-  test("entry default mode switch should refresh unfilled single and batch entries", function() {
+  test("entry defaults should refresh unfilled single and batch entries to par baseline", function() {
     const page = loadPage(path.resolve(__dirname, "../../pages/scorecard/scorecard.js"))
     page.data = {
       currentHole: 1,
       currentHoleData: { par: 4 },
-      scoreEntryDefaultMode: "par",
       editingScore: {
         playerId: "p2",
         playerName: "B",
@@ -129,17 +163,11 @@ describe("scorecard full flow regression", function() {
       }
     }
 
-    page.setScoreEntryDefaultMode({ currentTarget: { dataset: { mode: "parPlusOne" } } })
-
-    expect(page.data.scoreEntryDefaultMode).toBe("parPlusOne")
+    page.refreshOpenScoreEntryDefaults()
     expect(readPatchedValue(page.data, "editingScore.strokes", function() {
       return page.data.editingScore.strokes
-    })).toBe(5)
+    })).toBe(4)
     expect(page.data.batchEntries.p1.diff).toBe(0)
-    expect(page.data.batchEntries.p2.diff).toBe(1)
-
-    page.setScoreEntryDefaultMode({ currentTarget: { dataset: { mode: "par" } } })
-
     expect(page.data.batchEntries.p2.diff).toBe(0)
   })
 

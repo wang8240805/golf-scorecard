@@ -46,7 +46,7 @@ function validateData(courseId, holes) {
 }
 
 exports.main = async (event, context) => {
-  const { courseId, holes, totalPar, source } = event
+  const { courseId, holes, totalPar, source, sourceMeta } = event
   const { OPENID } = cloud.getWXContext()
 
   console.log('[savePublicCourseData] 收到请求, courseId:', courseId, 'holes:', holes.length)
@@ -115,12 +115,23 @@ exports.main = async (event, context) => {
       .where({ courseId: courseId })
       .get()
 
+    const previous = result.data && result.data.length > 0 ? result.data[0] : null
+    const verifiedAt = new Date().toISOString()
+    const sourceHistory = (previous && previous.sourceHistory ? previous.sourceHistory : []).concat([{
+      source: source || 'user-contrib',
+      verifiedAt: verifiedAt,
+      sourceMeta: sourceMeta || {}
+    }]).slice(-20)
+
     const data = {
       courseId: courseId,
       holes: holes,
       totalPar: totalPar,
-      verifiedAt: new Date().toISOString(),
+      verifiedAt: verifiedAt,
       source: source || 'user-contrib',
+      sourceMeta: sourceMeta || {},
+      revision: previous && previous.revision ? previous.revision + 1 : 1,
+      sourceHistory: sourceHistory,
       contributorOpenId: OPENID
     }
 

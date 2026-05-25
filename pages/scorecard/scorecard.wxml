@@ -36,14 +36,13 @@
     </view>
 
     <!-- 球员成绩录入 - 横向排列 -->
-    <view class="card score-input-card">
+    <view class="card score-input-card" wx:if="{{currentGame.players && currentGame.players.length < 4}}">
       <view class="section-header">
         <view class="section-title-block">
-          <text class="section-title">成绩录入</text>
+          <text class="section-title">球员管理</text>
           <text class="section-subtitle">第{{currentHole}}洞 · Par{{currentHoleData.par}}</text>
         </view>
         <view class="header-actions player-card-actions">
-          <view class="btn-batch-entry btn-pill btn-pill-sm" bindtap="openBatchEntryModal">录入多人</view>
           <view class="add-player-btn btn-pill btn-pill-sm" bindtap="showQrCodeModal">
             <text class="add-player-icon">+</text>
             <text class="add-player-text">加人</text>
@@ -68,64 +67,64 @@
     <view class="card">
       <view class="section-header">
         <view class="section-title">记分卡</view>
+        <view class="btn-batch-entry btn-pill btn-pill-sm" bindtap="openBatchEntryModal">录入多人</view>
       </view>
-      <scroll-view class="score-grid-scroll" scroll-x="true" scroll-left="{{scrollLeft}}">
-        <view class="score-grid transposed">
-          <!-- 表头行：洞号 -->
-          <view class="grid-row header sticky-header-row">
-            <view class="grid-cell label-cell">洞/球员</view>
-            <view class="grid-cell player-cell" wx:for="{{currentGame.players}}" wx:key="id">
-              <view class="player-mini-wrapper">
-                <image class="player-mini" src="{{item.avatarUrl || item.avatar || ''}}" wx:if="{{item.avatarUrl || item.avatar}}"></image>
-                <view class="player-mini" style="background: {{item.color}}" wx:else>{{item.name[0]}}</view>
-                <text class="player-mini-name">{{item.name}}</text>
+      <view class="score-grid-shell">
+        <view class="score-grid-fixed-header">
+          <view class="score-grid transposed">
+            <!-- 表头行：球员 -->
+            <view class="grid-row header">
+              <view class="grid-cell label-cell">洞/球员</view>
+              <view class="grid-cell player-cell" wx:for="{{currentGame.players}}" wx:key="id">
+                <view class="player-mini-wrapper">
+                  <image class="player-mini" src="{{item.avatarUrl || item.avatar || ''}}" wx:if="{{item.avatarUrl || item.avatar}}"></image>
+                  <view class="player-mini" style="background: {{item.color}}" wx:else>{{item.name[0]}}</view>
+                  <text class="player-mini-name">{{item.name}}</text>
+                </view>
               </view>
             </view>
-          </view>
-          <!-- 总杆数行（显示当前进度和差点） -->
-          <view class="grid-row total-row sticky-total-row">
-            <view class="grid-cell label-cell">杆数</view>
-            <view class="grid-cell total-cell" wx:for="{{playerTotalList}}" wx:key="id">
-              <view class="total-display">
-                <text class="total-main">{{item.total}}</text>
-                <text class="total-diff {{item.class}}">{{item.diff}}</text>
+            <!-- 总杆数行 -->
+            <view class="grid-row total-row">
+              <view class="grid-cell label-cell">杆数</view>
+              <view class="grid-cell total-cell" wx:for="{{playerTotalList}}" wx:key="id">
+                <view class="total-display">
+                  <text class="total-main">{{item.total}}</text>
+                  <text class="total-diff {{item.class}}">{{item.diff}}</text>
+                </view>
               </view>
             </view>
-          </view>
-          <!-- 每个洞一行 -->
-          <view class="grid-row {{currentHole === item.hole ? 'current-row' : ''}}" wx:for="{{scoreGridData}}" wx:for-item="item" wx:key="hole">
-            <view class="grid-cell label-cell hole-label" bindtap="jumpToHole" data-hole="{{item.hole}}">
-              <text class="hole-num">{{item.hole}}</text>
-              <text class="hole-par">Par{{item.par}}</text>
-            </view>
-            <view
-              class="grid-cell {{score.class}}"
-              wx:for="{{item.scores}}"
-              wx:for-item="score"
-              wx:key="playerId"
-              bindtap="showScoreInput"
-              data-player="{{score.playerId}}"
-              data-hole="{{item.hole}}"
-            >
-              <text class="score-to-par {{score.class}}">{{score.display}}</text>
-              <view class="pending-indicator" wx:if="{{!score.confirmed}}">⏳</view>
-            </view>
-          </view>
-          <!-- 右侧留白，确保最后一列完整显示 -->
-          <view class="grid-row">
-            <view class="grid-cell" style="width: 30rpx; border: none; min-width: 30rpx;"></view>
           </view>
         </view>
-      </scroll-view>
+        <scroll-view class="score-grid-body-scroll" scroll-y="true">
+          <view class="score-grid transposed">
+            <!-- 每个洞一行 -->
+            <view class="grid-row {{currentHole === item.hole ? 'current-row' : ''}}" wx:for="{{scoreGridData}}" wx:for-item="item" wx:key="hole">
+              <view class="grid-cell label-cell hole-label" bindtap="jumpToHole" data-hole="{{item.hole}}">
+                <text class="hole-num">{{item.hole}}</text>
+                <text class="hole-par">Par{{item.par}}</text>
+              </view>
+              <view
+                class="grid-cell {{score.class}}"
+                wx:for="{{item.scores}}"
+                wx:for-item="score"
+                wx:key="playerId"
+                bindtap="showScoreInput"
+                data-player="{{score.playerId}}"
+                data-hole="{{item.hole}}"
+              >
+                <text class="score-to-par {{score.class}}">{{score.display}}</text>
+                <view class="pending-indicator" wx:if="{{!score.confirmed}}">⏳</view>
+              </view>
+            </view>
+          </view>
+        </scroll-view>
+      </view>
     </view>
 
     <view class="bottom-spacer"></view>
   </view>
 
   <view class="action-bar-fixed">
-    <view class="undo-score-btn btn-pill btn-pill-lg {{scoreActionStack.length > 0 ? '' : 'disabled'}}" bindtap="undoLastScoreInput">
-      撤销上一笔{{scoreActionStack.length > 0 ? '：' + scoreActionStack[scoreActionStack.length - 1].playerName + ' 第' + scoreActionStack[scoreActionStack.length - 1].hole + '洞' : ''}}
-    </view>
     <view class="finish-game-btn btn-pill btn-pill-lg action-finish-btn" bindtap="finishGame">完成比赛</view>
   </view>
 
@@ -142,16 +141,6 @@
         <text class="score-modal-close" bindtap="hideScoreInput">×</text>
       </view>
       <view class="score-modal-body">
-        <view class="entry-mode-switch">
-          <view class="entry-mode-chip {{scoreEntryDefaultMode === 'par' ? 'active' : ''}}" bindtap="setScoreEntryDefaultMode" data-mode="par">
-            <text class="entry-mode-title">标准</text>
-            <text class="entry-mode-note">默认 Par</text>
-          </view>
-          <view class="entry-mode-chip {{scoreEntryDefaultMode === 'parPlusOne' ? 'active' : ''}}" bindtap="setScoreEntryDefaultMode" data-mode="parPlusOne">
-            <text class="entry-mode-title">进阶</text>
-            <text class="entry-mode-note">默认 Par+1</text>
-          </view>
-        </view>
         <view class="stepper-panel">
           <view class="stepper-row score">
             <text class="stepper-label">杆数</text>
@@ -175,16 +164,16 @@
         </view>
         <view class="stepper-panel">
           <view class="stepper-row">
-            <text class="stepper-label">球道命中</text>
+            <text class="stepper-label">球道方向</text>
             <view class="entry-mode-switch compact">
-              <view class="entry-mode-chip {{editingScore.fairway === true ? 'active' : ''}}" bindtap="setFairway" data-value="hit">
+              <view class="entry-mode-chip {{editingScore.fairway === 'left' ? 'active' : ''}}" bindtap="setFairway" data-value="left">
+                <text class="entry-mode-title">← 偏左</text>
+              </view>
+              <view class="entry-mode-chip {{editingScore.fairway === 'hit' ? 'active' : ''}}" bindtap="setFairway" data-value="hit">
                 <text class="entry-mode-title">命中</text>
               </view>
-              <view class="entry-mode-chip {{editingScore.fairway === false ? 'active' : ''}}" bindtap="setFairway" data-value="miss">
-                <text class="entry-mode-title">未命中</text>
-              </view>
-              <view class="entry-mode-chip {{editingScore.fairway === null ? 'active' : ''}}" bindtap="setFairway" data-value="skip">
-                <text class="entry-mode-title">暂不填</text>
+              <view class="entry-mode-chip {{editingScore.fairway === 'right' ? 'active' : ''}}" bindtap="setFairway" data-value="right">
+                <text class="entry-mode-title">偏右 →</text>
               </view>
             </view>
           </view>
@@ -214,16 +203,6 @@
         <text class="modal-close" bindtap="hideBatchEntryModal">×</text>
       </view>
       <view class="modal-body">
-        <view class="entry-mode-switch compact">
-          <view class="entry-mode-chip {{scoreEntryDefaultMode === 'par' ? 'active' : ''}}" bindtap="setScoreEntryDefaultMode" data-mode="par">
-            <text class="entry-mode-title">标准</text>
-            <text class="entry-mode-note">默认 Par</text>
-          </view>
-          <view class="entry-mode-chip {{scoreEntryDefaultMode === 'parPlusOne' ? 'active' : ''}}" bindtap="setScoreEntryDefaultMode" data-mode="parPlusOne">
-            <text class="entry-mode-title">进阶</text>
-            <text class="entry-mode-note">默认 Par+1</text>
-          </view>
-        </view>
         <view class="batch-entry-list">
             <view class="batch-entry-item" wx:for="{{currentGame.players}}" wx:key="id">
               <view class="batch-player" bindtap="openSingleFromBatch" data-playerid="{{item.id}}">

@@ -195,16 +195,27 @@ const OCRService = {
    * 保存球场洞数据到本地 + 同步云端共享
    * @param {string} courseId - 球场ID
    * @param {Array} holes - 洞数据
-   * @param {string} source - 数据来源 ('ocr' | 'manual')
+   * @param {string} source - 数据来源 ('ocr' | 'manual' | 'public-web')
+   * @param {Object} sourceMeta - 来源元数据
    */
-  saveCourseHoles(courseId, holes, source = 'ocr') {
+  saveCourseHoles(courseId, holes, source = 'ocr', sourceMeta = {}) {
     // 保存到本地
     const userCourseHoles = wx.getStorageSync('userCourseHoles') || {}
+    const previous = userCourseHoles[courseId]
+    const verifiedAt = new Date().toISOString()
 
     userCourseHoles[courseId] = {
       holes: holes,
-      verifiedAt: new Date().toISOString().split('T')[0],
-      source: source
+      verifiedAt: verifiedAt.split('T')[0],
+      verifiedAtFull: verifiedAt,
+      source: source,
+      sourceMeta: sourceMeta || {},
+      revision: previous && previous.revision ? previous.revision + 1 : 1,
+      sourceHistory: (previous && previous.sourceHistory ? previous.sourceHistory : []).concat([{
+        source: source,
+        verifiedAt: verifiedAt,
+        sourceMeta: sourceMeta || {}
+      }]).slice(-10)
     }
 
     wx.setStorageSync('userCourseHoles', userCourseHoles)
@@ -217,6 +228,8 @@ const OCRService = {
       courses[courseIndex].holes = holes
       courses[courseIndex].totalPar = totalPar
       courses[courseIndex].holesVerified = true
+      courses[courseIndex].holesSource = source
+      courses[courseIndex].holesSourceMeta = sourceMeta || {}
       wx.setStorageSync('courses', courses)
     }
 
@@ -231,7 +244,8 @@ const OCRService = {
           courseId: courseId,
           holes: holes,
           totalPar: totalPar,
-          source: source
+          source: source,
+          sourceMeta: sourceMeta || {}
         },
         success: res => {
           if (res.result && res.result.success) {
@@ -336,7 +350,11 @@ const OCRService = {
               userCourseHoles[courseId] = {
                 holes: publicItem.holes,
                 verifiedAt: publicItem.verifiedAt,
-                source: 'cloud-public'
+                verifiedAtFull: publicItem.verifiedAt,
+                source: publicItem.source || 'cloud-public',
+                sourceMeta: publicItem.sourceMeta || {},
+                revision: publicItem.revision || 1,
+                sourceHistory: publicItem.sourceHistory || []
               }
               mergedCount++
               console.log('[OCR] 合并云端公开数据:', courseId)

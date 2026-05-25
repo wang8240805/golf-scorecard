@@ -125,7 +125,6 @@
 
   <!-- 底部下一步按钮 -->
   <view class="action-bar-fixed">
-    <button class="btn-temp-course" bindtap="useTemporaryCourse">先用临时 Par72 开局</button>
     <button class="btn-primary-large" bindtap="goNext">下一步</button>
   </view>
 

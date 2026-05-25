@@ -63,7 +63,7 @@
 
 /* 底部留白 - 在内容区和按钮之间创建空间 */
 .bottom-spacer {
-  height: 260rpx;
+  height: 160rpx;
 }
 
 /* 底部操作栏 - sticky定位在页面底部 */
@@ -79,7 +79,6 @@
   z-index: 100;
   display: flex;
   flex-direction: column;
-  gap: 16rpx;
 }
 
 .action-bar-fixed .btn {
@@ -182,24 +181,6 @@
   color: #fff;
   min-width: 152rpx;
   margin: 0;
-}
-
-.undo-score-btn {
-  width: 100%;
-  min-width: 0;
-  height: 78rpx;
-  font-size: 27rpx;
-  color: #28613f;
-  background: #eef7f1;
-  border: 1rpx solid #d2e8db;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.undo-score-btn.disabled {
-  color: #a7aca8;
-  background: #f4f5f4;
-  border-color: #ebeeec;
 }
 
 .action-finish-btn {
@@ -521,6 +502,45 @@
   background: #f7faf8;
   border-radius: 14rpx;
   box-shadow: inset 0 0 0 1rpx #e7eee9;
+}
+
+.score-grid-shell {
+  width: 100%;
+  overflow: hidden;
+  background: #f7faf8;
+  border-radius: 14rpx;
+  box-shadow: inset 0 0 0 1rpx #e7eee9;
+}
+
+.score-grid-fixed-header {
+  overflow: hidden;
+}
+
+.score-grid-body-scroll {
+  width: 100%;
+  height: 54vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.score-grid-fixed-header .score-grid,
+.score-grid-body-scroll .score-grid {
+  display: table !important;
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;
+}
+
+/* 固定表头：球员行保持绿色背景，避免被通用白底覆盖 */
+.score-grid-fixed-header .score-grid.transposed .grid-row.header .grid-cell {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary-dark);
+}
+
+.score-grid-fixed-header .score-grid.transposed .grid-row.header .player-mini-name {
+  color: #fff;
+  text-shadow: 0 1rpx 3rpx rgba(0, 0, 0, 0.3);
 }
 
 /* 表格右侧留白，确保最后一列完整显示 */
@@ -1106,9 +1126,9 @@
   color: white;
 }
 
-/* 冻结前两行：球员名行 + 杆数行 */
+/* 固定表头结构中不再依赖 sticky，保留类名兼容旧结构 */
 .score-grid.transposed .sticky-header-row {
-  position: sticky;
+  position: static;
   top: 0;
   z-index: 12;
 }
@@ -1120,7 +1140,7 @@
 }
 
 .score-grid.transposed .sticky-total-row {
-  position: sticky;
+  position: static;
   top: 84rpx;
   z-index: 11;
 }
@@ -1158,14 +1178,16 @@
 }
 
 .score-grid.transposed .player-cell {
-  min-width: 60rpx;
+  min-width: 104rpx;
 }
 
 .player-mini-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4rpx;
+  gap: 6rpx;
+  min-height: 82rpx;
+  justify-content: center;
 }
 
 .player-mini {
@@ -1183,12 +1205,14 @@
 
 .player-mini-name {
   font-size: 20rpx;
-  color: #fff;
+  color: #f4fff8;
   font-weight: 600;
   max-width: 90rpx;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  line-height: 1.2;
+  text-shadow: 0 1rpx 2rpx rgba(0, 0, 0, 0.2);
 }
 
 .score-grid.transposed .current-row {
@@ -2714,6 +2738,7 @@
 .header-actions {
   display: flex;
   align-items: center;
+  gap: 10rpx;
   flex-shrink: 0;
 }
 

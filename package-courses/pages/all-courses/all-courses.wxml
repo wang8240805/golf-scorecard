@@ -1,13 +1,14 @@
 <view class="container">
   <view class="card select-mode-tip" wx:if="{{fromNewGame}}">
     <text class="tip-title">为本场比赛选择球场</text>
-    <text class="tip-desc">点击球场卡片或右侧“选用”即可返回</text>
+    <text class="tip-desc">优先从本地球场库选择。找不到时，可以手动新增或先快速开局。</text>
     <view class="tip-steps">
-      <text class="tip-step">1. 先输入球场名称搜索</text>
-      <text class="tip-step">2. 没找到就点“手动新增”</text>
-      <text class="tip-step">3. 赛中可再拍照校准标准杆</text>
+      <text class="tip-step">地图补全只补名称、地址和定位；标准杆仍以本地库、拍卡和手动校准为准。</text>
     </view>
-    <button class="tip-add-btn" bindtap="openAddCourseModal">没找到球场？手动新增</button>
+    <view class="tip-action-row">
+      <button class="tip-add-btn" bindtap="openAddCourseModal">手动新增</button>
+      <button class="tip-temp-btn" bindtap="useTemporaryCourse">快速开局</button>
+    </view>
   </view>
 
   <!-- 搜索框 -->
@@ -22,7 +23,10 @@
         bindinput="onSearchInput"
       />
       <text class="clear-icon" wx:if="{{searchKeyword}}" bindtap="clearSearch">×</text>
-      <button class="search-online-btn" bindtap="searchOnlineByKeyword" loading="{{onlineSyncing}}" disabled="{{onlineSyncing}}">联网查找</button>
+    </view>
+    <view class="search-helper" wx:if="{{searchKeyword}}">
+      <text class="search-helper-text">{{searchHintText}}</text>
+      <button class="search-online-btn" bindtap="searchOnlineByKeyword" loading="{{onlineSyncing}}" disabled="{{onlineSyncing}}">地图补全</button>
     </view>
   </view>
 
@@ -37,6 +41,9 @@
       </button>
       <button class="toolbar-btn add-course-btn" bindtap="openAddCourseModal" wx:if="{{!fromNewGame}}">
         手动新增
+      </button>
+      <button class="toolbar-btn map-course-btn" bindtap="searchOnlineByKeyword" loading="{{onlineSyncing}}" disabled="{{onlineSyncing}}" wx:if="{{!fromNewGame && searchKeyword}}">
+        地图补全
       </button>
     </view>
   </view>
@@ -61,6 +68,8 @@
             <text class="course-location" wx:if="{{item.location}}">{{item.location}}</text>
             <text class="play-count" wx:if="{{item.playCount > 0}}">打过 {{item.playCount}} 次</text>
             <text class="play-count new-course" wx:if="{{item.playCount === 0}}">未打过</text>
+            <text class="course-data-status verified" wx:if="{{item.holes && item.holes.length > 0}}">有标准杆</text>
+            <text class="course-data-status missing" wx:else>需校准</text>
           </view>
         </view>
         <view class="course-actions">
@@ -78,7 +87,11 @@
     <view class="empty-state">
       <view class="empty-icon">⛳</view>
       <text class="empty-text">{{searchKeyword ? '没有找到匹配的球场' : showFavoritesOnly ? '还没有收藏任何球场' : '暂无球场数据'}}</text>
-      <button class="empty-add-btn" wx:if="{{fromNewGame}}" bindtap="openAddCourseModal">没找到？手动新增球场</button>
+      <view class="empty-action-row" wx:if="{{fromNewGame}}">
+        <button class="empty-add-btn" bindtap="openAddCourseModal">手动新增</button>
+        <button class="empty-temp-btn" bindtap="useTemporaryCourse">快速开局</button>
+      </view>
+      <button class="empty-map-btn" wx:if="{{searchKeyword}}" bindtap="searchOnlineByKeyword" loading="{{onlineSyncing}}" disabled="{{onlineSyncing}}">用地图补全名称地址</button>
     </view>
   </view>
 

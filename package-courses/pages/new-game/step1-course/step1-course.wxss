@@ -446,24 +446,6 @@
   z-index: 100;
 }
 
-.btn-temp-course {
-  width: 100%;
-  height: 72rpx;
-  line-height: 72rpx;
-  margin-bottom: 14rpx;
-  background: #eef7f1;
-  color: #276f43;
-  border: 1rpx solid #cfe7d8;
-  border-radius: 36rpx;
-  font-size: 27rpx;
-  font-weight: 600;
-  padding: 0;
-}
-
-.btn-temp-course::after {
-  border: none;
-}
-
 .btn-primary-large {
   width: 100%;
   height: 88rpx;
