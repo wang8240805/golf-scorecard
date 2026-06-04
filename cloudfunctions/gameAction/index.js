@@ -22,8 +22,12 @@ exports.main = async (event, context) => {
       return await startGame(event)
     case 'getQrCode':
       return await getQrCode(event)
+    case 'getReportQrCode':
+      return await getReportQrCode(event)
     case 'updatePlayers':
       return await updatePlayers(event)
+    case 'syncLocalGame':
+      return await syncLocalGame(event)
     default:
       return { success: false, error: '未知操作' }
   }
@@ -113,6 +117,89 @@ async function getQrCode(event) {
   }
 }
 
+async function createWxaCode(options) {
+  const accessToken = await getAccessToken()
+  const generateUrl = `https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=${accessToken}`
+
+  const res = await axios.post(generateUrl, {
+    scene: options.scene,
+    page: options.page,
+    width: options.width || 430,
+    auto_color: false,
+    line_color: options.lineColor || { r: 0, g: 0, b: 0 },
+    is_hyaline: false,
+    check_path: false
+  }, {
+    responseType: 'arraybuffer'
+  })
+
+  return res.data
+}
+
+async function getReportQrCode(event) {
+  const { gameId } = event
+
+  if (!gameId) {
+    return { success: false, error: '缺少gameId' }
+  }
+
+  try {
+    console.log('开始生成成绩回看小程序码, gameId:', gameId)
+
+    const fileContent = await createWxaCode({
+      // getwxacodeunlimit scene has a tight length limit, so report links use r=.
+      scene: `r=${gameId}`,
+      page: 'pages/index/index',
+      width: 430,
+      lineColor: { r: 24, g: 59, b: 42 }
+    })
+
+    const cloudPath = `report-qrcodes/${gameId}_${Date.now()}.png`
+    const uploadResult = await cloud.uploadFile({
+      cloudPath: cloudPath,
+      fileContent: fileContent
+    })
+
+    const urlResult = await cloud.getTempFileURL({
+      fileList: [uploadResult.fileID]
+    })
+
+    const gameRes = await db.collection('games').where(_.or([
+      { gameId: _.eq(gameId) },
+      { id: _.eq(gameId) }
+    ])).limit(1).get()
+
+    if (gameRes.data.length > 0) {
+      const game = gameRes.data[0]
+      await db.collection('games').doc(game._id).update({
+        data: { reportQrcodeFileId: uploadResult.fileID }
+      })
+    }
+
+    return {
+      success: true,
+      qrcodeUrl: urlResult.fileList[0].tempFileURL,
+      qrcodeFileId: uploadResult.fileID
+    }
+  } catch (err) {
+    console.error('生成成绩回看小程序码异常:', err)
+    return { success: false, error: err.message || JSON.stringify(err) }
+  }
+}
+
+function serializeReportGame(game) {
+  if (!game) return null
+  const {
+    _openid,
+    _updateTime,
+    _createTime,
+    ...safeGame
+  } = game
+
+  safeGame._id = game._id
+  return safeGame
+}
+
 // 创建比赛
 async function createGame(event) {
   const { courseId, courseName, player, holeCount } = event
@@ -173,7 +260,10 @@ async function joinGame(event) {
 
   try {
     // 查询比赛
-    const gameRes = await db.collection('games').where({ gameId }).get()
+    const gameRes = await db.collection('games').where(_.or([
+      { gameId: _.eq(gameId) },
+      { id: _.eq(gameId) }
+    ])).limit(1).get()
 
     if (gameRes.data.length === 0) {
       return { success: false, error: '比赛不存在' }
@@ -269,7 +359,10 @@ async function getGame(event) {
   }
 
   try {
-    const gameRes = await db.collection('games').where({ gameId }).get()
+    const gameRes = await db.collection('games').where(_.or([
+      { gameId: _.eq(gameId) },
+      { id: _.eq(gameId) }
+    ])).limit(1).get()
 
     if (gameRes.data.length === 0) {
       return { success: false, error: '比赛不存在' }
@@ -278,14 +371,7 @@ async function getGame(event) {
     const game = gameRes.data[0]
     return {
       success: true,
-      game: {
-        gameId: game.gameId,
-        courseId: game.courseId,
-        courseName: game.courseName,
-        status: game.status,
-        players: game.players,
-        qrcodeFileId: game.qrcodeFileId
-      }
+      game: serializeReportGame(game)
     }
   } catch (err) {
     console.error('获取比赛失败:', err)
@@ -385,5 +471,131 @@ async function updatePlayers(event) {
   } catch (err) {
     console.error('更新球员列表失败:', err)
     return { success: false, error: err.message }
+  }
+}
+
+function sanitizeLocalGame(rawGame, openid) {
+  const game = rawGame || {}
+  const {
+    _id,
+    _openid,
+    _updateTime,
+    _createTime,
+    createTime,
+    updateTime,
+    cloudSyncStatus,
+    cloudSyncError,
+    cloudSyncedAt,
+    ...safeGame
+  } = game
+
+  const localId = safeGame.id || safeGame.gameId
+  safeGame.id = localId
+  safeGame.gameId = safeGame.gameId || localId
+  safeGame.status = safeGame.completed === true ? 'completed' : 'playing'
+  safeGame.source = 'localAutoSync'
+  safeGame.autoSynced = true
+  safeGame.clientUpdateTime = updateTime || Date.now()
+  safeGame.syncedBy = openid
+
+  return {
+    _id,
+    game: safeGame
+  }
+}
+
+function hasPlayerOpenid(game, openid) {
+  const players = game && Array.isArray(game.players) ? game.players : []
+  return players.some(function(player) {
+    return player && player.openid === openid
+  })
+}
+
+async function findSyncedLocalGame(localGame, requestedId) {
+  if (requestedId) {
+    try {
+      const doc = await db.collection('games').doc(requestedId).get()
+      if (doc && doc.data) return doc.data
+    } catch (e) {}
+  }
+
+  const gameId = localGame.gameId || localGame.id
+  const id = localGame.id || localGame.gameId
+  const gameRes = await db.collection('games')
+    .where(_.or([
+      { gameId: _.eq(gameId) },
+      { id: _.eq(id) }
+    ]))
+    .limit(1)
+    .get()
+
+  return gameRes.data && gameRes.data.length > 0 ? gameRes.data[0] : null
+}
+
+// 自动同步本地进行中比赛
+async function syncLocalGame(event) {
+  const { OPENID } = cloud.getWXContext()
+  const rawGame = event.game
+
+  if (!rawGame || !rawGame.id) {
+    return { success: false, error: '缺少比赛数据' }
+  }
+
+  try {
+    const sanitized = sanitizeLocalGame(rawGame, OPENID)
+    const localGame = sanitized.game
+
+    if (!localGame.gameId || String(localGame.gameId).indexOf('local_') !== 0) {
+      return { success: false, error: '只支持同步本地比赛' }
+    }
+
+    if (!hasPlayerOpenid(localGame, OPENID)) {
+      return { success: false, error: '只有比赛参与者可以同步' }
+    }
+
+    const existing = await findSyncedLocalGame(localGame, sanitized._id)
+    if (existing) {
+      const isSameGame = existing.gameId === localGame.gameId || existing.id === localGame.id
+      if (!isSameGame) {
+        return { success: false, error: '云端比赛与本地比赛不匹配' }
+      }
+
+      if (!hasPlayerOpenid(existing, OPENID)) {
+        return { success: false, error: '无权更新该比赛' }
+      }
+
+      const { _id, _openid, _updateTime, _createTime, ...updateData } = localGame
+      await db.collection('games').doc(existing._id).update({
+        data: {
+          ...updateData,
+          updateTime: db.serverDate()
+        }
+      })
+
+      return {
+        success: true,
+        _id: existing._id,
+        gameId: localGame.gameId,
+        updated: true
+      }
+    }
+
+    const addResult = await db.collection('games').add({
+      data: {
+        ...localGame,
+        createTime: db.serverDate(),
+        updateTime: db.serverDate()
+      }
+    })
+
+    return {
+      success: true,
+      _id: addResult._id,
+      gameId: localGame.gameId,
+      created: true
+    }
+  } catch (err) {
+    console.error('同步本地比赛失败:', err)
+    return { success: false, error: err.message || JSON.stringify(err) }
   }
 }

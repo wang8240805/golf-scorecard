@@ -7,9 +7,6 @@ const PREFERENCE_KEY = 'user_preferences'
 
 // 默认偏好设置
 const DEFAULT_PREFERENCES = {
-  // 海报风格偏好
-  posterStyle: 'pro', // 'pro' | 'minimal' | 'fun'
-
   // 其他可扩展的偏好
   // theme: 'light',
   // fontSize: 'medium',

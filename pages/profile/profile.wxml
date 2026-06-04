@@ -69,10 +69,10 @@
   <view class="card setting-card">
     <view class="setting-title">设置与服务</view>
     <van-cell-group>
-      <van-cell title="设置" is-link bindtap="goToSettings"></van-cell>
-      <van-cell title="意见反馈" is-link bindtap="goToFeedback"></van-cell>
-      <van-cell title="关于" value="v{{version}}" is-link bindtap="goToAbout"></van-cell>
-      <van-cell title="登出" is-link bindtap="logout" wx:if="{{userInfo}}"></van-cell>
+      <van-cell title="设置" is-link bind:click="goToSettings"></van-cell>
+      <van-cell title="意见反馈" is-link bind:click="goToFeedback"></van-cell>
+      <van-cell title="关于" value="v{{version}}" is-link bind:click="goToAbout"></van-cell>
+      <van-cell title="登出" is-link bind:click="logout" wx:if="{{userInfo}}"></van-cell>
     </van-cell-group>
   </view>
 

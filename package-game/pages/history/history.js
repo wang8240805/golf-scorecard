@@ -1,4 +1,5 @@
 const gameCompleteness = require('../../../utils/game-completeness.js')
+const ongoingGameStorage = require('../../../utils/ongoing-game-storage.js')
 
 Page({
   data: {
@@ -45,12 +46,7 @@ Page({
   loadData() {
     const courses = wx.getStorageSync('courses') || []
     const currentGame = wx.getStorageSync('currentGame')
-    let games = wx.getStorageSync('games') || []
-
-    // 合并进行中的比赛
-    if (currentGame) {
-      games = [...games, currentGame]
-    }
+    let games = ongoingGameStorage.mergeGameIntoList(wx.getStorageSync('games') || [], currentGame)
 
     // 反转顺序，最新的在前
     games = games.reverse()
@@ -255,6 +251,11 @@ Page({
 
   deleteGame(e) {
     const game = e.currentTarget.dataset.game
+    const hasIdentity = game && (game.id || game.gameId || game._id)
+    if (!hasIdentity) {
+      wx.showToast({ title: '无法识别比赛记录', icon: 'none' })
+      return
+    }
 
     wx.showModal({
       title: '确认删除',
@@ -264,12 +265,12 @@ Page({
         if (res.confirm) {
           // 删历史记录
           let games = wx.getStorageSync('games') || []
-          games = games.filter(g => g.id !== game.id)
+          games = games.filter(g => !ongoingGameStorage.isSameGame(g, game))
           wx.setStorageSync('games', games)
 
           // 如果删除的是当前进行中的比赛，也清除
           const currentGame = wx.getStorageSync('currentGame')
-          if (currentGame && currentGame.id === game.id) {
+          if (currentGame && ongoingGameStorage.isSameGame(currentGame, game)) {
             wx.removeStorageSync('currentGame')
           }
 
@@ -300,10 +301,7 @@ Page({
     const allGames = wx.getStorageSync('games') || []
     const currentGame = wx.getStorageSync('currentGame')
 
-    let games = [...allGames]
-    if (currentGame) {
-      games.push(currentGame)
-    }
+    let games = ongoingGameStorage.mergeGameIntoList(allGames, currentGame)
     games = games.reverse()
 
     const start = this.data.pageSize * (currentPage - 1)

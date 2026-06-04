@@ -9,6 +9,8 @@ if (!wx.cloud) {
 }
 
 const OCRService = require('./utils/ocr-service.js')
+const ongoingGameCloudSync = require('./utils/ongoing-game-cloud-sync.js')
+const ongoingGameStorage = require('./utils/ongoing-game-storage.js')
 
 App({
   privacyResolve: null,
@@ -29,8 +31,20 @@ App({
         console.warn('[App] 同步公开球场数据失败:', err)
       })
 
-    // 从云端拉取当前用户的历史比赛记录，合并到本地
-    this.syncUserGameHistory()
+    // 确保有 openid 后再同步云端数据；本地缓存被清空时也能拉回比赛记录
+    this.ensureOpenId()
+      .then(() => {
+        ongoingGameCloudSync.syncPendingGames()
+        return this.syncUserGameHistory()
+      })
+      .then((mergedCount) => {
+        if (mergedCount > 0) {
+          this.eventBus.emit('gameDataChanged', {
+            timestamp: Date.now(),
+            mergedCount: mergedCount
+          })
+        }
+      })
       .catch((err) => {
         console.warn('[App] 同步历史比赛记录失败:', err)
       })
@@ -56,6 +70,55 @@ App({
         }
       })
     }
+  },
+
+  ensureOpenId() {
+    return new Promise((resolve) => {
+      const userInfo = wx.getStorageSync('userInfo') || {}
+      if (userInfo.openid) {
+        resolve(userInfo.openid)
+        return
+      }
+
+      if (!wx.cloud || !wx.login) {
+        resolve('')
+        return
+      }
+
+      wx.login({
+        success: (loginRes) => {
+          if (!loginRes.code) {
+            resolve('')
+            return
+          }
+
+          wx.cloud.callFunction({
+            name: 'code2session',
+            data: { code: loginRes.code },
+            success: (res) => {
+              const data = res && res.result ? res.result : {}
+              if (data.success && data.openid) {
+                const nextUserInfo = {
+                  ...userInfo,
+                  openid: data.openid,
+                  unionid: data.unionid || userInfo.unionid
+                }
+                wx.setStorageSync('userInfo', nextUserInfo)
+                resolve(data.openid)
+                return
+              }
+              resolve('')
+            },
+            fail: () => {
+              resolve('')
+            }
+          })
+        },
+        fail: () => {
+          resolve('')
+        }
+      })
+    })
   },
 
   // 清理存储空间
@@ -167,8 +230,18 @@ App({
 
           // 合并策略：基于ID查找，找到重复则保留最新版本（updateTime较大的）
           cloudGames.forEach(cloudGame => {
+            if (
+              ongoingGameStorage.isOngoingGame(cloudGame) &&
+              ongoingGameStorage.hasCompletedMarker(cloudGame)
+            ) {
+              return
+            }
+
             // 查找是否已存在
             const existingIdx = localGames.findIndex(local => {
+              if (ongoingGameStorage.isSameGame(local, cloudGame)) {
+                return true
+              }
               // 通过 gameId 或 id 判断重复
               if (local.gameId && cloudGame.gameId) {
                 return local.gameId === cloudGame.gameId
@@ -211,6 +284,12 @@ App({
               const cloudUpdateTime = cloudGame.updateTime || cloudGame.endTime || 0
               // 云端更新，覆盖本地
               if (cloudUpdateTime > localUpdateTime) {
+                if (
+                  ongoingGameStorage.isCompletedGame(local) &&
+                  ongoingGameStorage.isOngoingGame(cloudGame)
+                ) {
+                  return
+                }
                 // 如果云端标记删除，从本地删除
                 if (cloudGame.deleted) {
                   localGames.splice(existingIdx, 1)

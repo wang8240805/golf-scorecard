@@ -260,54 +260,6 @@
   align-items: center;
 }
 
-.game-config-card {
-  margin: 20rpx 24rpx;
-  padding: 24rpx;
-  border-radius: 16rpx;
-  background: #f7fbf8;
-  border: 1rpx solid #e2efe7;
-}
-
-.config-title-row {
-  margin-bottom: 16rpx;
-}
-
-.config-title {
-  display: block;
-  font-size: 28rpx;
-  color: #1f2b23;
-  font-weight: 600;
-}
-
-.config-desc {
-  display: block;
-  margin-top: 6rpx;
-  font-size: 22rpx;
-  color: #6b7a70;
-}
-
-.hole-count-segment {
-  display: flex;
-  border: 1rpx solid #c8dacc;
-  border-radius: 12rpx;
-  overflow: hidden;
-}
-
-.hole-count-option {
-  flex: 1;
-  text-align: center;
-  font-size: 26rpx;
-  line-height: 72rpx;
-  color: #355344;
-  background: #ffffff;
-}
-
-.hole-count-option.active {
-  color: #ffffff;
-  font-weight: 600;
-  background: #2c8f4e;
-}
-
 .quick-input {
   flex: 1;
   height: 80rpx;

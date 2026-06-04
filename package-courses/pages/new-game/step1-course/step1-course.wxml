@@ -53,6 +53,14 @@
         </view>
       </view>
 
+      <view class="game-config-card">
+        <text class="config-title">比赛洞数</text>
+        <view class="hole-count-segment">
+          <view class="hole-count-option {{holeCount === 9 ? 'active' : ''}}" bindtap="setHoleCount" data-value="9">9洞</view>
+          <view class="hole-count-option {{holeCount === 18 ? 'active' : ''}}" bindtap="setHoleCount" data-value="18">18洞</view>
+        </view>
+      </view>
+
       <!-- 标准杆数据区域 - 根据 holes 是否存在显示不同内容 -->
       <view class="holes-section">
         <!-- 有 holes 数据时显示表格 -->

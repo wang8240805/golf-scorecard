@@ -1,10 +1,11 @@
 const app = getApp()
 const { GAME_MODES } = require('../../data/game-modes.js')
+const { COURSE_CATALOG_VERSION, buildCourseCatalog } = require('../../utils/course-catalog.js')
 const storageDebounced = require('../../utils/storage-debounce.js')
 const OCRService = require('../../utils/ocr-service.js')
 const analysisReport = require('../../utils/analysis-report.js')
 const gameCompleteness = require('../../utils/game-completeness.js')
-const preferenceManager = require('../../utils/preference-manager.js')
+const ongoingGameStorage = require('../../utils/ongoing-game-storage.js')
 const { PLAYER_COLORS } = require('../../utils/constants.js')
 const { formatDate } = require('../../utils/date-utils.js')
 const posterGenerator = require('../../utils/poster-generator.js')
@@ -35,6 +36,9 @@ Page({
     },
     scoreScrollIntoView: '',
     scoreScrollLeft: 0,
+    scoreGridScrollTop: 0,
+    scoreGridRowHeight: 0,
+    scoreGridViewportHeight: 0,
     scoreStrokeOptions: [],
     singleEntryDiffOptions: [],
     singleEntryDiffWheelOptions: [],
@@ -87,10 +91,14 @@ Page({
 
   onLoad(options) {
     this.isReadonlyMode = !!(options && options.mode === 'readonly') || wx.getStorageSync('viewMode') === 'readonly'
+    if (!(options && options.mode === 'readonly')) {
+      wx.removeStorageSync('viewMode')
+      this.isReadonlyMode = false
+    }
     // 获取gameId参数（多人同步比赛）
     if (options && options.gameId) {
       this.gameId = options.gameId
-      this.isCloudGame = true
+      this.isCloudGame = this.shouldLoadGameFromCloud(options.gameId)
     }
 
     // 检查系统信息
@@ -98,6 +106,29 @@ Page({
 
     this.loadCourses()
     this.loadGame()
+  },
+
+  shouldLoadGameFromCloud(gameId) {
+    if (!gameId) return false
+    if (String(gameId).indexOf('local_') === 0) return false
+
+    const currentGame = wx.getStorageSync('currentGame')
+    if (
+      currentGame &&
+      (currentGame.id === gameId || currentGame.gameId === gameId) &&
+      ongoingGameStorage.isOngoingGame(currentGame)
+    ) {
+      return false
+    }
+
+    const games = wx.getStorageSync('games') || []
+    const storedGame = Array.isArray(games)
+      ? games.find(function(game) {
+        return game && (game.id === gameId || game.gameId === gameId)
+      })
+      : null
+
+    return !ongoingGameStorage.isOngoingGame(storedGame)
   },
 
   getCurrentHolePar() {
@@ -115,6 +146,29 @@ Page({
     if (!Array.isArray(holes)) return []
     const normalizedHoleCount = parseInt(holeCount, 10) === 9 ? 9 : 18
     return holes.slice(0, Math.min(normalizedHoleCount, holes.length))
+  },
+
+  normalizeGameData(game) {
+    if (!game) return game
+    if (!Array.isArray(game.players)) {
+      game.players = []
+    }
+    if (!game.scores) game.scores = {}
+    if (!game.putts) game.putts = {}
+    if (!game.fairways) game.fairways = {}
+    if (!game.penalties) game.penalties = {}
+    if (!game.advancedStats) game.advancedStats = {}
+
+    game.players.forEach(function(player) {
+      if (!player || !player.id) return
+      if (!game.scores[player.id]) game.scores[player.id] = {}
+      if (!game.putts[player.id]) game.putts[player.id] = {}
+      if (!game.fairways[player.id]) game.fairways[player.id] = {}
+      if (!game.penalties[player.id]) game.penalties[player.id] = {}
+      if (!game.advancedStats[player.id]) game.advancedStats[player.id] = {}
+    })
+
+    return game
   },
 
   hasScoreOnCurrentHole(playerId) {
@@ -300,8 +354,8 @@ Page({
       manualPlayerName: ''
     })
 
-    // 保存到本地
-    wx.setStorageSync('currentGame', game)
+    // 保存到本地，并镜像到 games 作为恢复兜底
+    ongoingGameStorage.saveCurrentGame(game)
 
     // 更新记分卡数据
     if (this.updateScoreGrid) {
@@ -334,7 +388,17 @@ Page({
   },
 
   loadCourses() {
-    const courses = wx.getStorageSync('courses') || []
+    let courses = wx.getStorageSync('courses') || []
+    if (!courses || courses.length === 0) {
+      courses = buildCourseCatalog([])
+      wx.setStorageSync('courses', courses)
+      wx.setStorageSync('coursesInitialized', true)
+      wx.setStorageSync('coursesDataVersion', COURSE_CATALOG_VERSION)
+    } else {
+      courses = buildCourseCatalog(courses)
+      wx.setStorageSync('courses', courses)
+      wx.setStorageSync('coursesDataVersion', COURSE_CATALOG_VERSION)
+    }
     this.setData({ courses })
   },
 
@@ -345,20 +409,25 @@ Page({
       return
     }
 
-    // 本地比赛从storage加载
-    let currentGame = wx.getStorageSync('currentGame')
-    if ((!currentGame || currentGame.completed) && this.gameId) {
+    // 本地比赛从storage加载；currentGame 丢失时从 games 恢复最新未完成比赛
+    let currentGame = ongoingGameStorage.getRestoredOngoingGame() || wx.getStorageSync('currentGame')
+    if (this.gameId) {
+      const currentMatchesGameId = currentGame && (currentGame.id === this.gameId || currentGame.gameId === this.gameId)
       const games = wx.getStorageSync('games') || []
       const storedGame = games.find(g => g && (g.id === this.gameId || g.gameId === this.gameId))
-      if (storedGame && !storedGame.completed) {
+      if (
+        (!currentMatchesGameId || !ongoingGameStorage.isOngoingGame(currentGame)) &&
+        ongoingGameStorage.isOngoingGame(storedGame)
+      ) {
         currentGame = storedGame
-        wx.setStorageSync('currentGame', currentGame)
+        ongoingGameStorage.saveCurrentGame(currentGame)
       }
     }
     if (!currentGame) {
       this.setData({ currentGame: null })
       return
     }
+    currentGame = this.normalizeGameData(currentGame)
 
     // 从storage重新读取courses，避免真机加载延迟导致找不到球场
     let courses = this.data.courses
@@ -444,10 +513,9 @@ Page({
     this.calculateLeader(currentGame, courseWithCorrectHoles)
 
     // 恢复上次记录的洞
-    const savedHole = wx.getStorageSync('currentHole')
-    if (savedHole && savedHole <= activeHoles.length) {
-      this.setCurrentHole(savedHole)
-    }
+    const savedHole = parseInt(wx.getStorageSync('currentHole'), 10)
+    const initialHole = savedHole && savedHole <= activeHoles.length ? savedHole : 1
+    this.setCurrentHole(initialHole)
   },
 
   // 检查球场是否有完整的Par数据
@@ -864,7 +932,7 @@ Page({
     }
 
     // 转换云端数据格式为本地格式
-    const currentGame = {
+    const currentGame = this.normalizeGameData({
       ...cloudGame,
       courseId: cloudGame.courseId,
       courseName: cloudGame.courseName || '',
@@ -879,7 +947,7 @@ Page({
       holeCount: parseInt(cloudGame.holeCount, 10) === 9 ? 9 : 18,
       qrcodeUrl: cloudGame.qrcodeUrl || null,
       qrcodeFileId: cloudGame.qrcodeFileId || null
-    }
+    })
     const activeHoles = this.getActiveHolesByCount(course.holes, currentGame.holeCount)
 
     // 计算实际totalPar，考虑自定义par修改
@@ -905,6 +973,7 @@ Page({
       playerTotalList: playerTotalList,
       scoreGridData: scoreGridData
     })
+    ongoingGameStorage.saveCurrentGame(currentGame)
 
     // 如果有二维码fileID，获取临时URL
     if (currentGame.qrcodeFileId) {
@@ -937,6 +1006,7 @@ Page({
 
   // 监听云端比赛数据变化，实时同步
   watchCloudGame(gameId) {
+    if (!gameId || this._cloudWatchDisabled) return
     if (!wx.cloud) {
       console.warn('云开发未初始化，跳过云端监听')
       return
@@ -955,14 +1025,12 @@ Page({
           this.onCloudGameUpdate(updatedGame)
         },
         onError: err => {
-          console.error('云端监听错误:', err)
-          // 自动重连机制
+          console.warn('云端监听不可用:', err)
           self.handleWatchError(gameId, err)
         }
       })
     } catch (e) {
-      console.error('创建云端监听失败:', e)
-      // 尝试重连
+      console.warn('创建云端监听失败:', e)
       this.handleWatchError(gameId, e)
     }
   },
@@ -975,6 +1043,16 @@ Page({
         this.watcher.close()
       } catch (e) {}
       this.watcher = null
+    }
+
+    if (this.isCloudRealtimeLoginError(err)) {
+      this._cloudWatchDisabled = true
+      this._watchRetryCount = 0
+      console.warn('云端实时监听登录失败，已暂停监听重试，记分卡可继续使用')
+      if (this.isCloudGame) {
+        this.setData({ syncStateText: '云端已加载' })
+      }
+      return
     }
 
     // 初始化重连计数
@@ -993,6 +1071,15 @@ Page({
     this.reconnectTimer = setTimeout(() => {
       this.watchCloudGame(gameId)
     }, delay)
+  },
+
+  isCloudRealtimeLoginError(err) {
+    const message = String(
+      (err && (err.errMsg || err.message || err.toString && err.toString())) || err || ''
+    )
+    return message.indexOf('-402002') >= 0 ||
+      message.indexOf('login fail') >= 0 ||
+      message.indexOf('ws connection not exists') >= 0
   },
 
   // 云端数据更新，同步到本地
@@ -1026,7 +1113,7 @@ Page({
       mergedPlayers = currentGame.players
     }
 
-    const newGame = {
+    const newGame = this.normalizeGameData({
       ...currentGame,
       ...updatedGame,
       players: mergedPlayers,
@@ -1050,7 +1137,7 @@ Page({
         ...(updatedGame.fairways || {})
       },
       holeCount: parseInt(updatedGame.holeCount, 10) === 9 ? 9 : (parseInt(currentGame.holeCount, 10) === 9 ? 9 : 18)
-    }
+    })
 
     // 为新球员初始化scores/putts等空间（比赛开始后加入的球员）
     newGame.players.forEach(function(player) {
@@ -1094,6 +1181,7 @@ Page({
       playerTotalList,
       scoreGridData
     })
+    ongoingGameStorage.saveCurrentGame(newGame)
 
     // 重新计算领先者
     const course = this.data.courses.find(c => c.id === newGame.courseId)
@@ -1346,12 +1434,76 @@ Page({
       currentHole: hole,
       currentHoleData: holeData
     }, () => {
+      this.alignCurrentHoleToScoreGridTop(hole)
       // setData完成后执行回调
       if (typeof callback === 'function') {
         callback()
       }
     })
     wx.setStorageSync('currentHole', hole)
+  },
+
+  getScoreGridRowIndex(hole) {
+    const scoreGridData = this.data.scoreGridData || []
+    const targetHole = parseInt(hole, 10)
+    const matchedIndex = scoreGridData.findIndex(function(item) {
+      return parseInt(item && item.hole, 10) === targetHole
+    })
+    if (matchedIndex >= 0) return matchedIndex
+    return Math.max(0, targetHole - 1)
+  },
+
+  getScoreGridFallbackMetrics() {
+    let viewportHeight = 320
+    try {
+      const systemInfo = wx.getSystemInfoSync ? wx.getSystemInfoSync() : {}
+      if (systemInfo && systemInfo.windowHeight) {
+        viewportHeight = Math.round(systemInfo.windowHeight * 0.54)
+      }
+    } catch (err) {
+      viewportHeight = 320
+    }
+
+    return {
+      rowHeight: this.data.scoreGridRowHeight || 48,
+      viewportHeight: this.data.scoreGridViewportHeight || viewportHeight
+    }
+  },
+
+  applyScoreGridTopScroll(hole, rowHeight, viewportHeight) {
+    const rowIndex = this.getScoreGridRowIndex(hole)
+    const safeRowHeight = rowHeight || this.data.scoreGridRowHeight || 48
+    const safeViewportHeight = viewportHeight || this.data.scoreGridViewportHeight || 320
+    const scrollTop = Math.max(0, Math.round(rowIndex * safeRowHeight))
+
+    this.setData({
+      scoreGridScrollTop: scrollTop,
+      scoreGridRowHeight: safeRowHeight,
+      scoreGridViewportHeight: safeViewportHeight
+    })
+  },
+
+  alignCurrentHoleToScoreGridTop(hole) {
+    const targetHole = parseInt(hole, 10) || this.data.currentHole || 1
+    if (!this.data.scoreGridData || this.data.scoreGridData.length === 0) return
+
+    if (!wx.createSelectorQuery) {
+      const fallback = this.getScoreGridFallbackMetrics()
+      this.applyScoreGridTopScroll(targetHole, fallback.rowHeight, fallback.viewportHeight)
+      return
+    }
+
+    const query = wx.createSelectorQuery().in(this)
+    query.select('.score-grid-body-scroll').boundingClientRect()
+    query.select('.score-hole-row').boundingClientRect()
+    query.exec((res) => {
+      const viewportRect = res && res[0]
+      const rowRect = res && res[1]
+      const fallback = this.getScoreGridFallbackMetrics()
+      const viewportHeight = viewportRect && viewportRect.height ? viewportRect.height : fallback.viewportHeight
+      const rowHeight = rowRect && rowRect.height ? rowRect.height : fallback.rowHeight
+      this.applyScoreGridTopScroll(targetHole, rowHeight, viewportHeight)
+    })
   },
 
   // 获取用户在某洞的历史统计数据
@@ -1453,7 +1605,7 @@ Page({
     })
 
     if (!this.isCloudGame) {
-      wx.setStorageSync('currentGame', game)
+      ongoingGameStorage.saveCurrentGame(game)
     } else {
       this.updateCloudGame(game)
     }
@@ -1554,7 +1706,7 @@ Page({
     const game = this.data.currentGame
 
     if (!this.isCloudGame) {
-      wx.setStorageSync('currentGame', game)
+      ongoingGameStorage.saveCurrentGame(game)
     } else {
       this.updateCloudGame(game)
     }
@@ -1586,7 +1738,11 @@ Page({
         game.teams[p.id] = Math.floor(index / 2) + 1
       })
       this.setData({ currentGame: game })
-      wx.setStorageSync('currentGame', game)
+      if (!this.isCloudGame) {
+        ongoingGameStorage.saveCurrentGame(game)
+      } else {
+        this.updateCloudGame(game)
+      }
     }
     this.setData({ showTeamModal: true })
   },
@@ -1605,7 +1761,7 @@ Page({
     game.teams[playerId] = newTeam
     this.setData({ currentGame: { ...game } })
     if (!this.isCloudGame) {
-      wx.setStorageSync('currentGame', game)
+      ongoingGameStorage.saveCurrentGame(game)
     } else {
       this.updateCloudGame(game)
     }
@@ -1629,7 +1785,7 @@ Page({
       game.currentLandlordId = game.players[0].id
       this.setData({ currentGame: game })
       if (!this.isCloudGame) {
-        wx.setStorageSync('currentGame', game)
+        ongoingGameStorage.saveCurrentGame(game)
       } else {
         this.updateCloudGame(game)
       }
@@ -1652,7 +1808,7 @@ Page({
   saveLandlordSetup() {
     const game = this.data.currentGame
     if (!this.isCloudGame) {
-      wx.setStorageSync('currentGame', game)
+      ongoingGameStorage.saveCurrentGame(game)
     } else {
       this.updateCloudGame(game)
     }
@@ -1985,9 +2141,9 @@ Page({
       penalty: Math.max(0, parseInt(penalty, 10) || 0)
     }
 
-    // 如果是本地比赛，使用防抖保存到 storage（500ms延迟批量写入）
+    // 如果是本地比赛，立即写入 currentGame 与 games 镜像，避免退出/缓存清理造成丢失
     if (!this.isCloudGame) {
-      storageDebounced.setStorageDebounced('currentGame', game, 500)
+      ongoingGameStorage.saveCurrentGame(game)
     }
 
     // 优化：只更新当前球员的数据，而不是重新计算所有
@@ -2119,7 +2275,7 @@ Page({
     }
 
     if (!this.isCloudGame) {
-      wx.setStorageSync('currentGame', game)
+      ongoingGameStorage.saveCurrentGame(game)
     } else {
       this.updateCloudGame(game)
     }
@@ -2283,7 +2439,7 @@ Page({
     }
 
     if (!this.isCloudGame) {
-      storageDebounced.setStorageDebounced('currentGame', game, 500)
+      ongoingGameStorage.saveCurrentGame(game)
     }
 
     this.setData({
@@ -2708,7 +2864,7 @@ Page({
     this.setData({ currentGame: newGame })
 
     if (!this.isCloudGame) {
-      storageDebounced.setStorageDebounced('currentGame', newGame, 500)
+      ongoingGameStorage.saveCurrentGame(newGame)
     } else {
       // 云端游戏：单个成绩修改通过云函数更新，带服务端权限校验
       // 只有球员本人（openid匹配）能修改自己的成绩
@@ -2779,7 +2935,7 @@ Page({
     })
 
     if (!this.isCloudGame) {
-      wx.setStorageSync('currentGame', game)
+      ongoingGameStorage.saveCurrentGame(game)
     } else {
       this.updateCloudGame(game)
     }
@@ -2835,7 +2991,7 @@ Page({
         })
 
         if (!this.isCloudGame) {
-          wx.setStorageSync('currentGame', game)
+          ongoingGameStorage.saveCurrentGame(game)
         }
 
         wx.showToast({ title: '添加成功', icon: 'success' })
@@ -2893,7 +3049,7 @@ Page({
     try {
       winnerInfo = this.calculateWinnerForGame()
       game.winnerInfo = winnerInfo
-      wx.setStorageSync('currentGame', game)
+      ongoingGameStorage.saveCurrentGame(game)
     } catch (err) {
       console.error('【finishGame】计算获胜者失败:', err)
     }
@@ -3077,22 +3233,30 @@ Page({
     game.holesPlayedSummary = validation.players
 
     game.completed = true
+    game.status = 'completed'
     game.endTime = Date.now()
     game.updateTime = Date.now()
+    ongoingGameStorage.markGameCompleted(game)
     game.statistics = this.calculateStatistics(game)
 
     // 保存到历史记录
     const games = wx.getStorageSync('games') || []
-    // 查找是否已存在这条记录（编辑已完成比赛的情况）
-    const existingIndex = games.findIndex(g => g.id === game.id || g.gameId === game.gameId)
-    if (existingIndex >= 0) {
-      // 已存在，替换旧数据
-      games[existingIndex] = game
-    } else {
-      // 不存在，新增
-      games.push(game)
+    const nextGames = []
+    let replaced = false
+    ;(Array.isArray(games) ? games : []).forEach(function(storedGame) {
+      if (ongoingGameStorage.isSameGame(storedGame, game)) {
+        if (!replaced) {
+          nextGames.push(game)
+          replaced = true
+        }
+        return
+      }
+      nextGames.push(storedGame)
+    })
+    if (!replaced) {
+      nextGames.push(game)
     }
-    wx.setStorageSync('games', games)
+    wx.setStorageSync('games', nextGames)
 
     // 是否保留当前比赛
     if (keepCurrent) {
@@ -3147,12 +3311,10 @@ Page({
       const updatedGame = this._finalizeGameCore(game, false)
 
       if (updatedGame.roundType === 'partial') {
-        wx.setStorageSync('currentGame', updatedGame)
-        wx.setStorageSync('viewMode', 'readonly')
         wx.showToast({ title: '成绩已保存', icon: 'success', duration: 1500 })
         setTimeout(() => {
-          wx.navigateTo({
-            url: '/pages/scorecard/scorecard?mode=readonly&gameId=' + (updatedGame.id || '')
+          wx.switchTab({
+            url: '/pages/index/index'
           })
         }, 800)
         return
@@ -3202,14 +3364,14 @@ Page({
     const player = gameCompleteness.getPlayer(game) || game.players[0] || { name: '球员', color: '#2c8f4e' }
 
     try {
-      // 获取用户偏好的海报风格
-      const preferredStyle = preferenceManager.getPreference('posterStyle', 'pro')
+      const reportQrcodeUrl = await this.ensureReportQrCode(game)
 
       // 生成海报
       const posterUrl = await posterGenerator.generatePoster({
-        type: preferredStyle,
+        type: 'pro',
         game,
         player,
+        qrcodeUrl: reportQrcodeUrl,
         context: this
       })
 
@@ -3223,6 +3385,7 @@ Page({
             game: game,
             report: analysisReport.generateGameReport(game, [], player),
             posterUrl: posterUrl,
+            reportQrcodeUrl: reportQrcodeUrl,
             autoShowPoster: true
           })
         }
@@ -3242,6 +3405,34 @@ Page({
         }
       })
     }
+  },
+
+  ensureReportQrCode(game) {
+    const gameId = (game && (game.gameId || game.id || game._id)) || ''
+    if (!gameId || !wx.cloud) return Promise.resolve('')
+
+    return new Promise((resolve) => {
+      wx.cloud.callFunction({
+        name: 'gameAction',
+        data: {
+          action: 'getReportQrCode',
+          gameId: gameId
+        },
+        success: (res) => {
+          const result = res && res.result ? res.result : {}
+          if (result.success && result.qrcodeUrl) {
+            resolve(result.qrcodeUrl)
+            return
+          }
+          console.warn('生成成绩回看码失败:', result.error)
+          resolve('')
+        },
+        fail: (err) => {
+          console.warn('生成成绩回看码异常:', err)
+          resolve('')
+        }
+      })
+    })
   },
 
   calculateStatistics(game) {
@@ -3554,7 +3745,7 @@ Page({
   saveGame() {
     const game = this.data.currentGame
     if (!this.isCloudGame) {
-      wx.setStorageSync('currentGame', game)
+      ongoingGameStorage.saveCurrentGame(game)
     } else {
       this.updateCloudGame(game)
     }

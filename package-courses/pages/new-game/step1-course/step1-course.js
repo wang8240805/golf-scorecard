@@ -1,6 +1,6 @@
 const { calculateDistance, formatDistance } = require('../../../../utils/geo-utils.js')
 const OCRService = require('../../../../utils/ocr-service.js')
-const ALL_COURSES = require('../../../../data/courses-accurate.js')
+const { COURSE_CATALOG_VERSION, buildCourseCatalog } = require('../../../../utils/course-catalog.js')
 
 Page({
   data: {
@@ -8,6 +8,7 @@ Page({
     recommendedCourse: null,
     selectedCourseId: '',
     coursesLoaded: false,
+    holeCount: 18,
     // OCR识别弹窗
     showOcrVerifyModal: false,
     ocrHoles: [],
@@ -26,6 +27,7 @@ Page({
   },
 
   onLoad() {
+    this.initHoleCount()
     this.loadCoursesLocal()
     this.getUserLocation()
   },
@@ -34,6 +36,10 @@ Page({
     // 检查是否从全部球场页面返回并带回了选中球场
     const selectedCourse = wx.getStorageSync('selectedCourseForNewGame')
     if (selectedCourse && selectedCourse.id) {
+      if (selectedCourse.isTemporary) {
+        wx.removeStorageSync('selectedCourseForNewGame')
+        return
+      }
       let patchedCourse = selectedCourse
       const userLoc = this.data.userLocation
       if (userLoc && selectedCourse.latitude && selectedCourse.longitude) {
@@ -65,56 +71,29 @@ Page({
     return { level: 'low', text: '低匹配' }
   },
 
+  initHoleCount: function() {
+    var saved = parseInt(wx.getStorageSync('newGameHoleCount'), 10)
+    var holeCount = saved === 9 ? 9 : 18
+    this.setData({ holeCount: holeCount })
+  },
+
+  setHoleCount: function(e) {
+    var value = parseInt(e.currentTarget.dataset.value, 10)
+    var holeCount = value === 9 ? 9 : 18
+    this.setData({ holeCount: holeCount })
+    wx.setStorageSync('newGameHoleCount', holeCount)
+  },
+
   // 从本地加载全部球场数据（打包在本地，不需要云端）
   loadCoursesLocal: function() {
     var self = this
-    var courses = ALL_COURSES || []
     var localCourses = wx.getStorageSync('courses') || []
-    var localMap = {}
-    localCourses.forEach(function(course) {
-      if (course && course.id) {
-        localMap[course.id] = course
-      }
-    })
-
-    // 预处理：确保格式正确，标记holes为null需要云端匹配
-    courses = courses.map(function(course) {
-      var newCourse = {}
-      for (var key in course) {
-        newCourse[key] = course[key]
-      }
-      if (!newCourse.holesVerified) {
-        newCourse.holes = null
-        newCourse.holesVerified = false
-      }
-      return newCourse
-    })
-
-    // 合并本地动态数据，避免覆盖用户已校对/贡献的数据
-    var mergedCourses = courses.map(function(course) {
-      var localCourse = localMap[course.id]
-      if (!localCourse) {
-        return course
-      }
-      return {
-        ...course,
-        ...localCourse
-      }
-    })
-
-    // 保留仅存在于本地的自定义球场
-    localCourses.forEach(function(course) {
-      if (!course || !course.id) return
-      var exists = mergedCourses.find(function(c) { return c.id === course.id })
-      if (!exists && course.isCustom) {
-        mergedCourses.push(course)
-      }
-    })
+    var mergedCourses = buildCourseCatalog(localCourses)
 
     // 保存到缓存
     wx.setStorageSync('courses', mergedCourses)
     wx.setStorageSync('coursesInitialized', true)
-    wx.setStorageSync('coursesDataVersion', 'local-v1')
+    wx.setStorageSync('coursesDataVersion', COURSE_CATALOG_VERSION)
     this.setData({ coursesLoaded: true })
 
     // 如果已有位置信息，立刻计算推荐
@@ -152,7 +131,15 @@ Page({
   calculateNearbyCourses: function(userLoc) {
     const self = this
     const allCourses = wx.getStorageSync('courses') || []
-    const builtinCourses = allCourses.filter(function(c) { return !c.id.startsWith('mock-') && !c.id.startsWith('custom-') })
+    const builtinCourses = allCourses.filter(function(c) {
+      return c &&
+        !c.isTemporary &&
+        !c.isCustom &&
+        !String(c.id || '').startsWith('mock-') &&
+        !String(c.id || '').startsWith('custom-') &&
+        isFinite(parseFloat(c.latitude)) &&
+        isFinite(parseFloat(c.longitude))
+    })
 
     const coursesWithDistance = builtinCourses.map(function(course) {
       const distance = calculateDistance(
@@ -168,8 +155,15 @@ Page({
       }
     })
 
-    // 按距离排序
-    coursesWithDistance.sort(function(a, b) { return a.distance - b.distance })
+    // 按距离排序；距离接近时优先推荐有标准杆的数据源
+    coursesWithDistance.sort(function(a, b) {
+      var distanceDiff = a.distance - b.distance
+      if (Math.abs(distanceDiff) <= 500) {
+        if (!!b.hasStandardPar !== !!a.hasStandardPar) return b.hasStandardPar ? 1 : -1
+        if (!!b.isPublicScorecard !== !!a.isPublicScorecard) return b.isPublicScorecard ? 1 : -1
+      }
+      return distanceDiff
+    })
 
     // 取最近的作为推荐
     const recommendedCourse = coursesWithDistance.length > 0 ? coursesWithDistance[0] : null
@@ -201,47 +195,6 @@ Page({
         console.error('navigateTo fail:', err)
         wx.showToast({ title: '页面加载失败', icon: 'none' })
       }
-    })
-  },
-
-  getTemporaryCourse: function() {
-    var pars = [4, 4, 3, 5, 4, 4, 3, 5, 4, 4, 4, 3, 5, 4, 4, 3, 5, 4]
-    var holes = pars.map(function(par, index) {
-      return {
-        hole: index + 1,
-        par: par,
-        source: 'temporary'
-      }
-    })
-    return {
-      id: 'temp_standard_par72',
-      name: '临时球场（Par72）',
-      location: '稍后补充球场',
-      province: '临时',
-      city: '',
-      holes: holes,
-      totalPar: 72,
-      par: 72,
-      holesVerified: true,
-      isCustom: true,
-      isTemporary: true
-    }
-  },
-
-  useTemporaryCourse: function() {
-    var tempCourse = this.getTemporaryCourse()
-    var allCourses = wx.getStorageSync('courses') || []
-    var exists = allCourses.some(function(course) {
-      return course && course.id === tempCourse.id
-    })
-    if (!exists) {
-      allCourses.unshift(tempCourse)
-      wx.setStorageSync('courses', allCourses)
-    }
-    wx.setStorageSync('currentCourseId', tempCourse.id)
-    wx.removeStorageSync('quickStartPlayers')
-    wx.navigateTo({
-      url: '/pages/new-game/step2-players/step2-players?quick=temp'
     })
   },
 

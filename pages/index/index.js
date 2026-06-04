@@ -2,7 +2,8 @@ const app = getApp()
 const { calculateDistance } = require('../../utils/geo-utils.js')
 const { formatDate } = require('../../utils/date-utils.js')
 const gameCompleteness = require('../../utils/game-completeness.js')
-const ALL_COURSES = require('../../data/courses-accurate.js')
+const ongoingGameStorage = require('../../utils/ongoing-game-storage.js')
+const { COURSE_CATALOG_VERSION, buildCourseCatalog } = require('../../utils/course-catalog.js')
 
 Page({
   data: {
@@ -38,7 +39,9 @@ Page({
     homeHasRecentGames: false
   },
 
-  onLoad() {
+  onLoad(options) {
+    this.handleLaunchScene(options || {})
+
     const hasVisited = wx.getStorageSync('indexVisited') === true
     this.setData({ isFirstVisit: !hasVisited })
     wx.setStorageSync('indexVisited', true)
@@ -57,6 +60,50 @@ Page({
       this.loadData()
     }
     app.eventBus.on('gameDataChanged', this.gameDataChangeCallback)
+  },
+
+  handleLaunchScene(options) {
+    const target = this.parseLaunchScene(options)
+    if (!target || target.type !== 'report' || !target.gameId) return
+
+    setTimeout(function() {
+      wx.navigateTo({
+        url: '/package-game/pages/game-report/game-report?gameId=' + encodeURIComponent(target.gameId) + '&readonly=1'
+      })
+    }, 120)
+  },
+
+  parseLaunchScene(options) {
+    if (!options) return null
+    if (options.type === 'report' && options.gameId) {
+      return { type: 'report', gameId: options.gameId }
+    }
+    if (options.r) {
+      return { type: 'report', gameId: options.r }
+    }
+    if (!options.scene) return null
+
+    var scene = ''
+    try {
+      scene = decodeURIComponent(options.scene)
+    } catch (e) {
+      scene = options.scene
+    }
+    if (!scene) return null
+
+    if (scene.indexOf('r=') === 0) {
+      return { type: 'report', gameId: scene.slice(2) }
+    }
+
+    var params = {}
+    scene.split('&').forEach(function(part) {
+      var pair = part.split('=')
+      if (pair[0]) params[pair[0]] = pair[1] || ''
+    })
+    if (params.type === 'report' && params.gameId) {
+      return { type: 'report', gameId: params.gameId }
+    }
+    return null
   },
 
   onShow() {
@@ -117,7 +164,13 @@ Page({
 
     const courses = wx.getStorageSync('courses') || []
     // 过滤掉模拟数据，显示所有真实球场
-    const builtinCourses = courses.filter(c => !c.id.startsWith('mock-'))
+    const builtinCourses = courses.filter(c => {
+      return c &&
+        !c.isTemporary &&
+        !String(c.id || '').startsWith('mock-') &&
+        isFinite(parseFloat(c.latitude)) &&
+        isFinite(parseFloat(c.longitude))
+    })
 
     const coursesWithDistance = builtinCourses.map(course => {
       const distance = calculateDistance(
@@ -127,8 +180,15 @@ Page({
       return { ...course, distance }
     })
 
-    // 按距离排序
-    const sorted = coursesWithDistance.sort((a, b) => a.distance - b.distance)
+    // 按距离排序；距离接近时优先展示有标准杆的数据源
+    const sorted = coursesWithDistance.sort(function(a, b) {
+      const distanceDiff = a.distance - b.distance
+      if (Math.abs(distanceDiff) <= 500) {
+        if (!!b.hasStandardPar !== !!a.hasStandardPar) return b.hasStandardPar ? 1 : -1
+        if (!!b.isPublicScorecard !== !!a.isPublicScorecard) return b.isPublicScorecard ? 1 : -1
+      }
+      return distanceDiff
+    })
 
     // 取最近的10个
     const nearbyCourses = sorted.slice(0, 10).map(course => ({
@@ -162,42 +222,20 @@ Page({
     const cachedCourses = wx.getStorageSync('courses')
 
     if (isInitialized && cachedCourses && cachedCourses.length > 0) {
-      // 已初始化，直接使用缓存，快速显示
-      this.setData({ courseCount: cachedCourses.length })
+      // 已初始化，轻量重建 catalog，保证公开标准杆数据和本地校正都在
+      var enrichedCourses = buildCourseCatalog(cachedCourses)
+      wx.setStorageSync('courses', enrichedCourses)
+      wx.setStorageSync('coursesDataVersion', COURSE_CATALOG_VERSION)
+      this.setData({ courseCount: enrichedCourses.length })
       return
     }
 
-    // 首次加载：处理球场数据
-    var courses = ALL_COURSES || []
-    // 预处理
-    courses = courses.map(function(course) {
-      var newCourse = {}
-      for (var key in course) {
-        newCourse[key] = course[key]
-      }
-      if (!newCourse.holesVerified) {
-        newCourse.holes = null
-        newCourse.holesVerified = false
-      }
-      return newCourse
-    })
-
-    // 合并用户自定义球场
-    var localCourses = wx.getStorageSync('courses') || []
-    var customCourses = localCourses.filter(function(c) {
-      return c.isCustom
-    })
-    customCourses.forEach(function(custom) {
-      var exists = courses.find(function(c) { return c.id === custom.id })
-      if (!exists) {
-        courses.push(custom)
-      }
-    })
+    var courses = buildCourseCatalog(cachedCourses || [])
 
     // 保存到缓存
     wx.setStorageSync('courses', courses)
     wx.setStorageSync('coursesInitialized', true)
-    wx.setStorageSync('coursesDataVersion', 'local-v1')
+    wx.setStorageSync('coursesDataVersion', COURSE_CATALOG_VERSION)
 
     this.setData({ courseCount: courses.length })
   },
@@ -511,8 +549,8 @@ Page({
   },
 
   checkOngoingGame() {
-    const currentGame = wx.getStorageSync('currentGame')
-    if (currentGame && !currentGame.completed) {
+    const currentGame = ongoingGameStorage.getRestoredOngoingGame()
+    if (currentGame) {
       const scores = currentGame.scores || {}
       const players = currentGame.players || []
 
@@ -529,7 +567,12 @@ Page({
       // 找到当前用户（isMe=true 或第一个球员）
       const me = players.find(p => p.isMe) || players[0]
       if (!me) {
-        this.setData({ hasOngoingGame: false, ongoingGame: null })
+        this.setData({
+          hasOngoingGame: false,
+          ongoingGame: null,
+          ongoingDetail: null,
+          showOngoingDetail: false
+        })
         return
       }
 
@@ -592,7 +635,12 @@ Page({
         }
       })
     } else {
-      this.setData({ hasOngoingGame: false, ongoingGame: null, ongoingDetail: null })
+      this.setData({
+        hasOngoingGame: false,
+        ongoingGame: null,
+        ongoingDetail: null,
+        showOngoingDetail: false
+      })
     }
     this.loadUserStats()
   },
@@ -754,8 +802,8 @@ Page({
 
   // 跳转到记分卡（进行中比赛）
   goToScorecard() {
-    const currentGame = wx.getStorageSync('currentGame')
-    if (!currentGame || currentGame.completed) {
+    const currentGame = ongoingGameStorage.getRestoredOngoingGame()
+    if (!currentGame) {
       this.setData({
         hasOngoingGame: false,
         ongoingGame: null,
@@ -821,7 +869,7 @@ Page({
         success: (res) => {
           if (res.confirm) {
             // 设置为当前比赛并跳转记分
-            wx.setStorageSync('currentGame', game)
+            ongoingGameStorage.saveCurrentGame(game)
             wx.navigateTo({
               url: '/pages/scorecard/scorecard'
             })
@@ -901,8 +949,8 @@ Page({
 
   quickContinueLatest() {
     // 1) 优先进入进行中的比赛
-    const currentGame = wx.getStorageSync('currentGame')
-    if (currentGame && !currentGame.completed) {
+    const currentGame = ongoingGameStorage.getRestoredOngoingGame()
+    if (currentGame) {
       wx.navigateTo({
         url: '/pages/scorecard/scorecard'
       })

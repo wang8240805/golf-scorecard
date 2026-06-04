@@ -1,7 +1,25 @@
 const path = require("path")
 const { loadPage } = require("../helpers/load-page")
 
+function createHoles(count) {
+  const holes = []
+  for (let i = 1; i <= count; i++) {
+    holes.push({ hole: i, par: 4 })
+  }
+  return holes
+}
+
 describe("scorecard page", function() {
+  test("loadCourses should initialize packaged courses for invited first-time players", function() {
+    const page = loadPage(path.resolve(__dirname, "../../pages/scorecard/scorecard.js"))
+
+    page.loadCourses()
+
+    expect(page.data.courses.length).toBeGreaterThan(0)
+    expect(wx.getStorageSync("courses").length).toBe(page.data.courses.length)
+    expect(wx.getStorageSync("coursesInitialized")).toBe(true)
+  })
+
   test("updateSyncStateText should show local state when not cloud game", function() {
     const page = loadPage(path.resolve(__dirname, "../../pages/scorecard/scorecard.js"))
     page.data = { unsyncedCount: 3, syncStateText: "" }
@@ -34,5 +52,187 @@ describe("scorecard page", function() {
       unsyncedCount: page.data.unsyncedCount,
       syncStateText: page.data.syncStateText
     }).toMatchSnapshot()
+  })
+
+  test("loadGame should prefer requested unfinished game over stale currentGame", function() {
+    const page = loadPage(path.resolve(__dirname, "../../pages/scorecard/scorecard.js"))
+    const holes = createHoles(18)
+    page.gameId = "wanted"
+    page.isCloudGame = false
+    page.data.courses = [
+      { id: "c1", name: "Old Course", holes: holes },
+      { id: "c2", name: "Wanted Course", holes: holes }
+    ]
+    page.calculateLeader = jest.fn()
+
+    wx.setStorageSync("currentGame", {
+      id: "old",
+      courseId: "c1",
+      courseName: "Old Course",
+      players: [{ id: "p1", name: "A" }],
+      scores: { p1: {} },
+      completed: false
+    })
+    wx.setStorageSync("games", [{
+      id: "wanted",
+      courseId: "c2",
+      courseName: "Wanted Course",
+      players: [{ id: "p1", name: "A" }],
+      scores: { p1: {} },
+      completed: false
+    }])
+
+    page.loadGame()
+
+    expect(page.data.currentGame.id).toBe("wanted")
+    expect(wx.getStorageSync("currentGame").id).toBe("wanted")
+  })
+
+  test("loadGame should initialize missing score maps for restored games", function() {
+    const page = loadPage(path.resolve(__dirname, "../../pages/scorecard/scorecard.js"))
+    const holes = createHoles(18)
+    page.isCloudGame = false
+    page.data.courses = [
+      { id: "c1", name: "Recover Course", holes: holes }
+    ]
+
+    wx.setStorageSync("currentGame", {
+      id: "g-missing-scores",
+      courseId: "c1",
+      courseName: "Recover Course",
+      players: [{ id: "p1", name: "A" }],
+      completed: false
+    })
+
+    expect(function() {
+      page.loadGame()
+    }).not.toThrow()
+    expect(page.data.currentGame.scores.p1).toEqual({})
+    expect(page.data.currentGame.putts.p1).toEqual({})
+    expect(page.data.currentGame.fairways.p1).toEqual({})
+    expect(page.data.currentGame.penalties.p1).toEqual({})
+  })
+
+  test("onLoad should keep local gameId in local mode", function() {
+    const page = loadPage(path.resolve(__dirname, "../../pages/scorecard/scorecard.js"))
+    page.loadCloudGame = jest.fn()
+    page.loadCourses = jest.fn()
+    page.loadGame = jest.fn()
+    page.checkSystemInfo = jest.fn()
+
+    page.onLoad({ gameId: "local_1000" })
+
+    expect(page.gameId).toBe("local_1000")
+    expect(page.isCloudGame).toBe(false)
+  })
+
+  test("onLoad should keep matching stored unfinished game in local mode even when id is not local-prefixed", function() {
+    wx.setStorageSync("currentGame", {
+      id: "g-resume",
+      courseId: "c1",
+      courseName: "Recover Course",
+      players: [{ id: "p1", name: "A" }],
+      scores: { p1: {} },
+      completed: false
+    })
+    const page = loadPage(path.resolve(__dirname, "../../pages/scorecard/scorecard.js"))
+    page.loadCloudGame = jest.fn()
+    page.loadCourses = jest.fn()
+    page.loadGame = jest.fn()
+    page.checkSystemInfo = jest.fn()
+
+    page.onLoad({ gameId: "g-resume" })
+
+    expect(page.isCloudGame).toBe(false)
+  })
+
+  test("onLoad should load unmatched non-local gameId from cloud", function() {
+    const page = loadPage(path.resolve(__dirname, "../../pages/scorecard/scorecard.js"))
+    page.loadCloudGame = jest.fn()
+    page.loadCourses = jest.fn()
+    page.loadGame = jest.fn()
+    page.checkSystemInfo = jest.fn()
+
+    page.onLoad({ gameId: "cloud-game-1" })
+
+    expect(page.isCloudGame).toBe(true)
+  })
+
+  test("onLoad should clear stale readonly mode for normal scorecard entry", function() {
+    wx.setStorageSync("viewMode", "readonly")
+    const page = loadPage(path.resolve(__dirname, "../../pages/scorecard/scorecard.js"))
+    page.loadCourses = jest.fn()
+    page.loadGame = jest.fn()
+    page.checkSystemInfo = jest.fn()
+
+    page.onLoad({})
+
+    expect(page.isReadonlyMode).toBe(false)
+    expect(wx.getStorageSync("viewMode")).toBeUndefined()
+  })
+
+  test("setCurrentHole should align the active hole below score grid totals", function() {
+    const page = loadPage(path.resolve(__dirname, "../../pages/scorecard/scorecard.js"))
+    page.data = {
+      holes: createHoles(18),
+      currentHole: 1,
+      currentHoleData: { hole: 1, par: 4 },
+      scoreGridData: createHoles(18),
+      scoreGridScrollTop: 0,
+      scoreGridRowHeight: 0,
+      scoreGridViewportHeight: 0
+    }
+
+    page.setCurrentHole(10)
+
+    expect(page.data.currentHole).toBe(10)
+    expect(page.data.currentHoleData).toEqual({ hole: 10, par: 4 })
+    expect(page.data.scoreGridScrollTop).toBe(432)
+    expect(wx.getStorageSync("currentHole")).toBe(10)
+  })
+
+  test("cloud watch login failure should stop realtime retries without console error", function() {
+    jest.useFakeTimers()
+    const page = loadPage(path.resolve(__dirname, "../../pages/scorecard/scorecard.js"))
+    const watchError = new Error("errCode: -402002 realtime listener init watch fail | errMsg: login fail Error: invalid state: ws connection not exists")
+    const close = jest.fn()
+    const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(function() {})
+    const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation(function() {})
+    page.isCloudGame = true
+    page.data = {
+      syncStateText: "云端同步中"
+    }
+
+    wx.cloud = {
+      database: function() {
+        return {
+          collection: function() {
+            return {
+              doc: function() {
+                return {
+                  watch: function(options) {
+                    options.onError(watchError)
+                    return { close: close }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    page.watchCloudGame("cloud-game-1")
+    jest.runOnlyPendingTimers()
+
+    expect(page._cloudWatchDisabled).toBe(true)
+    expect(page._watchRetryCount).toBe(0)
+    expect(page.data.syncStateText).toBe("云端已加载")
+    expect(consoleErrorSpy).not.toHaveBeenCalled()
+    expect(consoleWarnSpy).toHaveBeenCalled()
+
+    consoleErrorSpy.mockRestore()
+    consoleWarnSpy.mockRestore()
+    jest.useRealTimers()
   })
 })

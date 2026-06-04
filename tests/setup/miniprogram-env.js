@@ -22,6 +22,9 @@ global.wx = {
   hideLoading: jest.fn(),
   showModal: jest.fn(),
   navigateTo: jest.fn(),
+  redirectTo: jest.fn(),
+  switchTab: jest.fn(),
+  login: jest.fn(),
   authorize: jest.fn(),
   getLocation: jest.fn(),
   getFuzzyLocation: jest.fn(),
@@ -40,5 +43,6 @@ global.getApp = function() {
 
 beforeEach(function() {
   wx.clearStorageSync()
+  delete wx.cloud
   jest.clearAllMocks()
 })

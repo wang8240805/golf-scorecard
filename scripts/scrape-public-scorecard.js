@@ -89,6 +89,7 @@ function extractNextData(html) {
 
 function normalizeCourse(pageProps, teeName) {
   const course = pageProps.course || {}
+  const facility = pageProps.facility || {}
   const tees = Array.isArray(pageProps.tees) ? pageProps.tees : []
   if (tees.length === 0) {
     throw new Error("No tee scorecard data found")
@@ -110,6 +111,10 @@ function normalizeCourse(pageProps, teeName) {
     id: "public-" + String(course.courseId || course.clubId || "unknown").toLowerCase(),
     name: [course.facilityName, course.courseName].filter(Boolean).join(" - "),
     location: [course.city, course.country].filter(Boolean).join(", "),
+    city: course.city || facility.city || "",
+    country: course.country || facility.country || "",
+    latitude: parseFloat(facility.latitude || course.latitude) || 0,
+    longitude: parseFloat(facility.longitude || course.longitude) || 0,
     source: "public-web",
     sourceUrl: pageProps.slug ? "https://www.golfify.io/courses/" + pageProps.slug : "",
     sourceProvider: "golfify.io",

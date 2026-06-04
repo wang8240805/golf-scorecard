@@ -78,7 +78,7 @@ const BACKGROUNDS = {
  * 主函数：生成比赛海报
  */
 function generatePoster(options) {
-  const { type = 'pro', game, player, bgType = 'default', customBgUrl, context = null } = options
+  const { type = 'pro', game, player, bgType = 'default', customBgUrl, qrcodeUrl = '', context = null } = options
 
   return new Promise((resolve, reject) => {
     // 重试机制，最多尝试3次获取canvas节点
@@ -116,17 +116,17 @@ function generatePoster(options) {
           // 如果有自定义背景图片
           if (bgType === 'custom' && customBgUrl) {
             loadAndDrawBackground(canvas, ctx, customBgUrl, width, height, async () => {
-              await drawPosterContent(ctx, type, width, height, game, player, canvas)
+              await drawPosterContent(ctx, type, width, height, game, player, canvas, qrcodeUrl)
               exportCanvas(canvas, width, height, resolve, reject)
             }, () => {
               drawBackground(ctx, bgType, width, height)
-              drawPosterContent(ctx, type, width, height, game, player, canvas).then(() => {
+              drawPosterContent(ctx, type, width, height, game, player, canvas, qrcodeUrl).then(() => {
                 exportCanvas(canvas, width, height, resolve, reject)
               }).catch(reject)
             })
           } else {
             drawBackground(ctx, bgType, width, height)
-            drawPosterContent(ctx, type, width, height, game, player, canvas).then(() => {
+            drawPosterContent(ctx, type, width, height, game, player, canvas, qrcodeUrl).then(() => {
               exportCanvas(canvas, width, height, resolve, reject)
             }).catch(reject)
           }
@@ -222,18 +222,19 @@ function exportCanvas(canvas, width, height, resolve, reject) {
 }
 
 // 绘制海报内容
-async function drawPosterContent(ctx, type, w, h, game, player, canvas) {
+async function drawPosterContent(ctx, type, w, h, game, player, canvas, qrcodeUrl) {
   // 全局使用统一的卡片样式
-  await drawModernCardStyle(ctx, w, h, game, player, canvas)
+  await drawModernCardStyle(ctx, w, h, game, player, canvas, qrcodeUrl)
 }
 
-async function drawModernCardStyle(ctx, w, h, game, player, canvas) {
+async function drawModernCardStyle(ctx, w, h, game, player, canvas, qrcodeUrl) {
   const padding = 30
   const panelRadius = 22
   const panelW = w - padding * 2
   const roundStats = calculateRoundStats(game, player.id)
   const scoreRows = buildScorecardRows(game, player.id)
   const starMatch = matchGolfStar(roundStats)
+  const highlight = buildPosterHighlight(roundStats, scoreRows)
   const date = new Date(game.endTime || game.timestamp || Date.now())
   const dateStr = `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`
 
@@ -258,25 +259,31 @@ async function drawModernCardStyle(ctx, w, h, game, player, canvas) {
   ctx.textAlign = 'right'
   drawTextFit(ctx, player.name || '球员', w - padding - 112, 158, 140, 26, 'right')
 
-  const summaryY = 178
-  drawPanel(ctx, padding, summaryY, panelW, 154, panelRadius, '#F8F5EB')
+  const heroY = 178
+  drawPanel(ctx, padding, heroY, panelW, 236, panelRadius, '#F8F5EB')
   ctx.fillStyle = '#183B2A'
-  ctx.font = 'bold 86px sans-serif'
+  ctx.font = 'bold 126px sans-serif'
   ctx.textAlign = 'left'
-  ctx.fillText(String(roundStats.totalStrokes || '-'), padding + 24, summaryY + 96)
+  ctx.fillText(String(roundStats.totalStrokes || '-'), padding + 28, heroY + 128)
+
+  ctx.fillStyle = '#6A725E'
+  ctx.font = '28px sans-serif'
+  ctx.fillText('总杆', padding + 34, heroY + 168)
+
+  ctx.fillStyle = getDiffColor(roundStats.toPar)
+  ctx.font = 'bold 58px sans-serif'
+  ctx.fillText(formatToPar(roundStats.toPar), padding + 216, heroY + 112)
 
   ctx.fillStyle = '#6A725E'
   ctx.font = '26px sans-serif'
-  ctx.fillText('总杆', padding + 28, summaryY + 130)
+  ctx.fillText('距标准杆', padding + 220, heroY + 150)
 
-  drawSummaryMetric(ctx, padding + 190, summaryY + 34, '杆差', formatToPar(roundStats.toPar), getDiffColor(roundStats.toPar))
-  drawSummaryMetric(ctx, padding + 338, summaryY + 34, '小鸟+', String(roundStats.birdies || 0), '#1F7A4A')
-  drawSummaryMetric(ctx, padding + 484, summaryY + 34, '保帕', String(roundStats.pars || 0), '#8A5A16')
+  drawHighlightBlock(ctx, padding + 366, heroY + 42, panelW - 390, 156, highlight)
 
-  const tableY = 338
-  drawPanel(ctx, padding, tableY, panelW, 592, panelRadius, '#FFFFFF')
+  const tableY = 438
+  drawPanel(ctx, padding, tableY, panelW, 420, panelRadius, '#FFFFFF')
   ctx.fillStyle = '#183B2A'
-  ctx.font = 'bold 34px sans-serif'
+  ctx.font = 'bold 32px sans-serif'
   ctx.textAlign = 'left'
   ctx.fillText('18洞成绩', padding + 24, tableY + 50)
 
@@ -285,34 +292,43 @@ async function drawModernCardStyle(ctx, w, h, game, player, canvas) {
   ctx.textAlign = 'right'
   ctx.fillText(`前九 ${formatToPar(roundStats.frontToPar)} / 后九 ${formatToPar(roundStats.backToPar)}`, padding + panelW - 24, tableY + 50)
 
-  drawScorecardGrid(ctx, scoreRows.slice(0, 9), padding + 20, tableY + 86, panelW - 40, 'OUT')
-  drawScorecardGrid(ctx, scoreRows.slice(9, 18), padding + 20, tableY + 314, panelW - 40, 'IN')
+  drawScorecardGrid(ctx, scoreRows.slice(0, 9), padding + 20, tableY + 86, panelW - 40, 'OUT', 44)
+  drawScorecardGrid(ctx, scoreRows.slice(9, 18), padding + 20, tableY + 246, panelW - 40, 'IN', 44)
 
-  const styleY = 948
-  drawPanel(ctx, padding, styleY, panelW, 228, panelRadius, '#153B2A')
+  const styleY = 882
+  drawPanel(ctx, padding, styleY, panelW, 184, panelRadius, '#153B2A')
 
   ctx.fillStyle = 'rgba(255,255,255,0.72)'
-  ctx.font = '26px sans-serif'
+  ctx.font = '24px sans-serif'
   ctx.textAlign = 'left'
-  ctx.fillText('球风对标', padding + 24, styleY + 42)
+  ctx.fillText('球风对标', padding + 24, styleY + 38)
 
-  await drawStarAvatar(ctx, canvas, padding + panelW - 76, styleY + 78, 46, starMatch)
+  await drawStarAvatar(ctx, canvas, padding + panelW - 70, styleY + 72, 42, starMatch)
 
   ctx.fillStyle = 'white'
-  ctx.font = 'bold 44px sans-serif'
-  drawTextFit(ctx, starMatch.name, padding + 24, styleY + 96, panelW - 190, 44)
+  ctx.font = 'bold 40px sans-serif'
+  drawTextFit(ctx, starMatch.name, padding + 24, styleY + 88, panelW - 178, 40)
 
   ctx.fillStyle = '#CDE7B0'
-  ctx.font = '28px sans-serif'
-  ctx.fillText(starMatch.style, padding + 24, styleY + 138)
+  ctx.font = '26px sans-serif'
+  ctx.fillText(starMatch.style, padding + 24, styleY + 126)
 
   ctx.fillStyle = 'rgba(255,255,255,0.82)'
-  ctx.font = '24px sans-serif'
-  drawTextFit(ctx, starMatch.tags.join(' / '), padding + 24, styleY + 174, panelW - 190, 24)
+  ctx.font = '23px sans-serif'
+  drawTextFit(ctx, starMatch.tags.join(' / '), padding + 24, styleY + 160, panelW - 180, 23)
 
-  ctx.fillStyle = 'rgba(255,255,255,0.70)'
+  const footerY = 1092
+  drawPanel(ctx, padding, footerY, panelW, 160, panelRadius, '#F8F5EB')
+  ctx.fillStyle = '#183B2A'
+  ctx.font = 'bold 30px sans-serif'
+  ctx.textAlign = 'left'
+  ctx.fillText('扫码查看本场成绩', padding + 24, footerY + 54)
+
+  ctx.fillStyle = '#667160'
   ctx.font = '24px sans-serif'
-  drawMultilineText(ctx, starMatch.matchReason, padding + 24, styleY + 206, panelW - 48, 30, 1)
+  drawMultilineText(ctx, '保存海报或分享给球友，打开 WinPAR 可回看完整战报。', padding + 24, footerY + 92, panelW - 190, 30, 2)
+
+  await drawReportQrCode(ctx, canvas, qrcodeUrl, padding + panelW - 132, footerY + 20, 112)
 
   ctx.fillStyle = 'rgba(255,255,255,0.64)'
   ctx.font = '24px sans-serif'
@@ -360,6 +376,76 @@ function drawSummaryMetric(ctx, x, y, label, value, color) {
   ctx.fillStyle = color
   ctx.font = 'bold 52px sans-serif'
   ctx.fillText(value, x, y + 60)
+}
+
+function drawHighlightBlock(ctx, x, y, width, height, highlight) {
+  ctx.save()
+  ctx.fillStyle = '#153B2A'
+  roundRect(ctx, x, y, width, height, 18)
+  ctx.fill()
+
+  ctx.fillStyle = 'rgba(255,255,255,0.70)'
+  ctx.font = '23px sans-serif'
+  ctx.textAlign = 'left'
+  ctx.fillText('本场亮点', x + 18, y + 36)
+
+  ctx.fillStyle = '#FFFFFF'
+  ctx.font = 'bold 34px sans-serif'
+  drawTextFit(ctx, highlight.title, x + 18, y + 82, width - 36, 34)
+
+  ctx.fillStyle = '#CDE7B0'
+  ctx.font = '24px sans-serif'
+  drawMultilineText(ctx, highlight.desc, x + 18, y + 120, width - 36, 30, 2)
+  ctx.restore()
+}
+
+function drawReportQrCode(ctx, canvas, qrcodeUrl, x, y, size) {
+  if (!qrcodeUrl) {
+    drawQrFallback(ctx, x, y, size)
+    return Promise.resolve()
+  }
+
+  return new Promise((resolve) => {
+    if (!canvas || !canvas.createImage) {
+      drawQrFallback(ctx, x, y, size)
+      resolve()
+      return
+    }
+
+    const img = canvas.createImage()
+    img.onload = () => {
+      ctx.save()
+      ctx.fillStyle = '#FFFFFF'
+      roundRect(ctx, x - 8, y - 8, size + 16, size + 16, 16)
+      ctx.fill()
+      ctx.drawImage(img, x, y, size, size)
+      ctx.restore()
+      resolve()
+    }
+    img.onerror = () => {
+      drawQrFallback(ctx, x, y, size)
+      resolve()
+    }
+    img.src = qrcodeUrl
+  })
+}
+
+function drawQrFallback(ctx, x, y, size) {
+  ctx.save()
+  ctx.fillStyle = '#FFFFFF'
+  roundRect(ctx, x - 8, y - 8, size + 16, size + 16, 16)
+  ctx.fill()
+  ctx.strokeStyle = '#183B2A'
+  ctx.lineWidth = 4
+  roundRect(ctx, x + 10, y + 10, size - 20, size - 20, 10)
+  ctx.stroke()
+  ctx.fillStyle = '#183B2A'
+  ctx.font = 'bold 24px sans-serif'
+  ctx.textAlign = 'center'
+  ctx.fillText('WinPAR', x + size / 2, y + size / 2 - 4)
+  ctx.font = '20px sans-serif'
+  ctx.fillText('回看', x + size / 2, y + size / 2 + 28)
+  ctx.restore()
 }
 
 function drawStarAvatar(ctx, canvas, x, y, radius, starMatch) {
@@ -434,11 +520,10 @@ function drawLocalCircleImage(ctx, canvas, imagePath, x, y, radius) {
   })
 }
 
-function drawScorecardGrid(ctx, rows, x, y, width, label) {
+function drawScorecardGrid(ctx, rows, x, y, width, label, rowH = 58) {
   const labelW = 54
   const totalDiffColW = 78
   const cellW = (width - labelW - totalDiffColW) / 9
-  const rowH = 58
   const headerBg = '#EEF4EA'
   const lineColor = '#D8E0D3'
   const totalPar = rows.reduce((sum, row) => sum + (parseInt(row.par, 10) || 0), 0)
@@ -753,6 +838,55 @@ function calculateRoundStats(game, playerId) {
     doubleOrWorse,
     avgPutts,
     volatility
+  }
+}
+
+function buildPosterHighlight(roundStats, scoreRows) {
+  const rows = Array.isArray(scoreRows) ? scoreRows.filter(row => row.strokes > 0) : []
+  const bestHole = rows.reduce((best, row) => {
+    if (!best || row.diff < best.diff) return row
+    return best
+  }, null)
+
+  if (bestHole && bestHole.diff <= -1) {
+    return {
+      title: `${bestHole.hole}洞 ${formatToPar(bestHole.diff)}`,
+      desc: `本轮最佳洞，${bestHole.strokes}杆完成 Par ${bestHole.par}`
+    }
+  }
+
+  if ((roundStats.birdies || 0) > 0) {
+    return {
+      title: `小鸟+ ${roundStats.birdies}`,
+      desc: '进攻端有亮点，抓分能力在线'
+    }
+  }
+
+  if ((roundStats.backToPar || 0) < (roundStats.frontToPar || 0)) {
+    const improve = (roundStats.frontToPar || 0) - (roundStats.backToPar || 0)
+    return {
+      title: `后九少 ${improve} 杆`,
+      desc: '后半程节奏更稳，完成一次反攻'
+    }
+  }
+
+  if ((roundStats.pars || 0) >= 6) {
+    return {
+      title: `保帕 ${roundStats.pars}`,
+      desc: '稳定处理关键洞，失误控制不错'
+    }
+  }
+
+  if ((roundStats.doubleOrWorse || 0) === 0 && (roundStats.holesPlayed || 0) >= 18) {
+    return {
+      title: '全场无大失误',
+      desc: '没有双柏忌以上，节奏控制稳定'
+    }
+  }
+
+  return {
+    title: `${roundStats.holesPlayed || 0}洞完赛`,
+    desc: `总杆${roundStats.totalStrokes || '-'}，杆差${formatToPar(roundStats.toPar)}`
   }
 }
 

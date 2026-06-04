@@ -1,9 +1,19 @@
 const app = getApp()
 const { calculateDistance } = require('../../../utils/geo-utils.js')
-const ALL_COURSES = require('../../../data/courses-accurate.js')
+const { COURSE_CATALOG_VERSION, buildCourseCatalog } = require('../../../utils/course-catalog.js')
 
 // 开发模式开关
 const DEV_MODE = false
+const PROVINCE_NAMES = [
+  '北京', '上海', '天津', '重庆',
+  '河北', '山西', '辽宁', '吉林', '黑龙江',
+  '江苏', '浙江', '安徽', '福建', '江西', '山东',
+  '河南', '湖北', '湖南', '广东', '海南',
+  '四川', '贵州', '云南', '陕西', '甘肃', '青海',
+  '台湾', '内蒙古', '广西', '宁夏', '新疆', '西藏',
+  '香港', '澳门'
+]
+const MUNICIPALITY_NAMES = ['北京', '上海', '天津', '重庆', '香港', '澳门']
 
 Page({
   data: {
@@ -24,6 +34,10 @@ Page({
     newCourseLocation: '',
     localResultCount: 0,
     searchHintText: '',
+    selectedProvinceFilter: '',
+    provinceQuickFilters: [],
+    allProvinceOptions: [],
+    showProvincePicker: false,
     sampleCourseNames: [
       '北京高尔夫球俱乐部',
       '观澜湖高尔夫球会',
@@ -40,6 +54,7 @@ Page({
     this.setData({
       fromNewGame: fromNewGame,
       sortBy: fromNewGame ? 'distance' : 'playCount',
+      selectedProvinceFilter: fromNewGame ? '__nearby__' : '',
       currentCourseId: wx.getStorageSync('currentCourseId') || '',
       favoriteCourseIds: []
     }, () => {
@@ -62,52 +77,12 @@ Page({
 
   // 从本地加载全部球场数据
   loadCoursesLocal: function() {
-    var self = this
-    var courses = ALL_COURSES || []
     var localAllCourses = wx.getStorageSync('courses') || []
-    var localMap = {}
-    localAllCourses.forEach(function(course) {
-      if (course && course.id) {
-        localMap[course.id] = course
-      }
-    })
-
-    // 预处理
-    courses = courses.map(function(course) {
-      var newCourse = {}
-      for (var key in course) {
-        newCourse[key] = course[key]
-      }
-      if (!newCourse.holesVerified) {
-        newCourse.holes = null
-        newCourse.holesVerified = false
-      }
-      return newCourse
-    })
-
-    // 合并本地动态数据，避免覆盖用户已校对/贡献的数据
-    var mergedCourses = courses.map(function(course) {
-      var localCourse = localMap[course.id]
-      if (!localCourse) {
-        return course
-      }
-      return {
-        ...course,
-        ...localCourse
-      }
-    })
-
-    // 保留仅存在于本地的自定义球场
-    localAllCourses.forEach(function(course) {
-      if (!course || !course.id) return
-      var exists = mergedCourses.find(function(c) { return c.id === course.id })
-      if (!exists && course.isCustom) {
-        mergedCourses.push(course)
-      }
-    })
+    var mergedCourses = buildCourseCatalog(localAllCourses)
 
     // 保存到缓存
     wx.setStorageSync('courses', mergedCourses)
+    wx.setStorageSync('coursesDataVersion', COURSE_CATALOG_VERSION)
     this.setData({ courses: mergedCourses })
     this.processAndDisplayCourses()
   },
@@ -272,9 +247,147 @@ Page({
     })
   },
 
+  getCourseProvince: function(course) {
+    if (!course) return ''
+    var province = this.normalizeProvinceName(course.province || '')
+    if (province) return province
+
+    var cityAsProvince = this.normalizeProvinceName(course.city || '')
+    return MUNICIPALITY_NAMES.indexOf(cityAsProvince) >= 0 ? cityAsProvince : ''
+  },
+
+  normalizeProvinceName: function(value) {
+    var name = String(value || '').trim().replace(/\s+/g, '')
+    if (!name) return ''
+    var aliases = {
+      '北京市': '北京',
+      '上海市': '上海',
+      '天津市': '天津',
+      '重庆市': '重庆',
+      '香港特别行政区': '香港',
+      '澳门特别行政区': '澳门',
+      '内蒙古自治区': '内蒙古',
+      '广西壮族自治区': '广西',
+      '宁夏回族自治区': '宁夏',
+      '新疆维吾尔自治区': '新疆',
+      '西藏自治区': '西藏'
+    }
+    if (aliases[name]) return aliases[name]
+    if (PROVINCE_NAMES.indexOf(name) >= 0) return name
+
+    for (var i = 0; i < PROVINCE_NAMES.length; i++) {
+      var province = PROVINCE_NAMES[i]
+      if (
+        name.indexOf(province + '省') === 0 ||
+        name.indexOf(province + '市') === 0 ||
+        name.indexOf(province + '自治区') === 0 ||
+        name.indexOf(province + '特别行政区') === 0 ||
+        name.indexOf(province) === 0 && province.length >= 3
+      ) {
+        return province
+      }
+    }
+
+    return ''
+  },
+
+  buildProvinceQuickFilters: function(courses) {
+    if (!this.data.fromNewGame || !Array.isArray(courses) || courses.length === 0) {
+      return []
+    }
+
+    var provinceCountMap = {}
+    courses.forEach((course) => {
+      var province = this.getCourseProvince(course)
+      if (!province) return
+      provinceCountMap[province] = (provinceCountMap[province] || 0) + 1
+    })
+
+    var filters = [{
+      label: '附近',
+      value: '__nearby__',
+      type: 'nearby'
+    }]
+
+    Object.keys(provinceCountMap)
+      .sort(function(a, b) {
+        if (provinceCountMap[b] !== provinceCountMap[a]) return provinceCountMap[b] - provinceCountMap[a]
+        return a.localeCompare(b, 'zh-CN')
+      })
+      .slice(0, 8)
+      .forEach(function(province) {
+        filters.push({
+          label: province,
+          value: province,
+          type: 'province'
+        })
+      })
+
+    filters.push({
+      label: '其他',
+      value: '__more__',
+      type: 'more'
+    })
+
+    return filters
+  },
+
+  buildAllProvinceOptions: function(courses) {
+    if (!Array.isArray(courses) || courses.length === 0) {
+      return []
+    }
+
+    var provinceCountMap = {}
+    courses.forEach((course) => {
+      var province = this.getCourseProvince(course)
+      if (!province) return
+      provinceCountMap[province] = (provinceCountMap[province] || 0) + 1
+    })
+
+    return Object.keys(provinceCountMap)
+      .sort(function(a, b) {
+        if (provinceCountMap[b] !== provinceCountMap[a]) return provinceCountMap[b] - provinceCountMap[a]
+        return a.localeCompare(b, 'zh-CN')
+      })
+      .map(function(province) {
+        return {
+          label: province,
+          value: province,
+          count: provinceCountMap[province]
+        }
+      })
+  },
+
+  selectProvinceFilter: function(e) {
+    var value = e.currentTarget.dataset.value || ''
+    if (value === '__more__') {
+      this.setData({ showProvincePicker: true })
+      return
+    }
+    var nextValue = this.data.selectedProvinceFilter === value ? '' : value
+    this.setData({ selectedProvinceFilter: nextValue }, () => {
+      this.applyFilters()
+    })
+  },
+
+  selectProvinceFromPicker: function(e) {
+    var value = e.currentTarget.dataset.value || ''
+    if (!value) return
+    this.setData({
+      selectedProvinceFilter: value,
+      showProvincePicker: false
+    }, () => {
+      this.applyFilters()
+    })
+  },
+
+  closeProvincePicker: function() {
+    this.setData({ showProvincePicker: false })
+  },
+
   // 应用筛选和排序
   applyFilters() {
-    const { courses, searchKeyword, showFavoritesOnly, sortBy } = this.data
+    const { courses, searchKeyword, showFavoritesOnly, sortBy, selectedProvinceFilter } = this.data
 
     // 确保 courses 是数组
     if (!Array.isArray(courses)) {
@@ -283,10 +396,18 @@ Page({
     }
 
     let result = [...courses]
+    const provinceQuickFilters = this.buildProvinceQuickFilters(courses)
+    const allProvinceOptions = this.buildAllProvinceOptions(courses)
 
     // 1. 按收藏筛选
     if (showFavoritesOnly) {
       result = result.filter(c => c.isFavorite)
+    }
+
+    if (selectedProvinceFilter && selectedProvinceFilter !== '__nearby__') {
+      if (selectedProvinceFilter !== '__more__') {
+        result = result.filter(c => this.getCourseProvince(c) === selectedProvinceFilter)
+      }
     }
 
     // 2. 按搜索关键词筛选。创建球局时优先解决“快速找到本地库里的球场”，所以搜索态按相关度排序。
@@ -307,7 +428,8 @@ Page({
         })
     } else {
       // 3. 非搜索态排序
-      switch (sortBy) {
+      const activeSortBy = this.data.fromNewGame ? 'distance' : sortBy
+      switch (activeSortBy) {
         case 'playCount':
           result.sort((a, b) => b.playCount - a.playCount)
           break
@@ -322,6 +444,8 @@ Page({
 
     this.setData({
       filteredCourses: result,
+      provinceQuickFilters: provinceQuickFilters,
+      allProvinceOptions: allProvinceOptions,
       localResultCount: result.length,
       searchHintText: keyword
         ? (result.length > 0 ? '已在本地球场库中匹配，可直接选用' : '本地库未找到，可手动新增或用地图补全名称地址')
@@ -338,9 +462,10 @@ Page({
     const location = String(course.location || '')
     const city = String(course.city || '')
     const province = String(course.province || '')
+    const aliases = Array.isArray(course.searchAliases) ? course.searchAliases.join(' ') : ''
     const normalizedName = this.normalizeCourseName(name)
-    const normalizedText = this.normalizeCourseName([name, location, city, province].join(' '))
-    const rawText = [name, location, city, province].join(' ').toLowerCase()
+    const normalizedText = this.normalizeCourseName([name, location, city, province, aliases].join(' '))
+    const rawText = [name, location, city, province, aliases].join(' ').toLowerCase()
     const keywordLower = rawKeyword.toLowerCase()
 
     let score = 0
@@ -355,6 +480,8 @@ Page({
       score += 220
     }
 
+    if (course.courseDataQuality === 'verified' || course.courseDataQuality === 'manual' || course.courseDataQuality === 'ocr') score += 80
+    if (course.holesSource === 'public-web' || course.isPublicScorecard) score += 65
     if (course.holesVerified || (Array.isArray(course.holes) && course.holes.length >= 9)) score += 40
     if (course.playCount > 0) score += Math.min(course.playCount * 8, 40)
     if (course.isFavorite) score += 20
@@ -594,51 +721,6 @@ Page({
         wx.showToast({ title: '地图补全失败', icon: 'none' })
       }
     })
-  },
-
-  getTemporaryCourse() {
-    const pars = [4, 4, 3, 5, 4, 4, 3, 5, 4, 4, 4, 3, 5, 4, 4, 3, 5, 4]
-    const holes = pars.map(function(par, index) {
-      return {
-        hole: index + 1,
-        par: par,
-        distance: 0,
-        handicap: index + 1,
-        source: 'temporary'
-      }
-    })
-    return {
-      id: 'temp_standard_par72',
-      name: '临时球场（Par72）',
-      location: '稍后补充球场',
-      province: '临时',
-      city: '',
-      holes: holes,
-      totalPar: 72,
-      par: 72,
-      holesVerified: true,
-      holesSource: 'temporary',
-      isCustom: true,
-      isTemporary: true
-    }
-  },
-
-  useTemporaryCourse() {
-    const tempCourse = this.getTemporaryCourse()
-    const allCourses = wx.getStorageSync('courses') || []
-    const exists = allCourses.some(function(course) {
-      return course && course.id === tempCourse.id
-    })
-    if (!exists) {
-      allCourses.unshift(tempCourse)
-      wx.setStorageSync('courses', allCourses)
-    }
-    wx.setStorageSync('currentCourseId', tempCourse.id)
-    wx.setStorageSync('selectedCourseForNewGame', tempCourse)
-    wx.showToast({ title: '已选择临时球场', icon: 'success' })
-    setTimeout(() => {
-      wx.navigateBack()
-    }, 250)
   },
 
   openAddCourseModal() {

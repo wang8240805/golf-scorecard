@@ -95,10 +95,10 @@
             </view>
           </view>
         </view>
-        <scroll-view class="score-grid-body-scroll" scroll-y="true">
+        <scroll-view class="score-grid-body-scroll" scroll-y="true" scroll-top="{{scoreGridScrollTop}}" scroll-with-animation="true">
           <view class="score-grid transposed">
             <!-- 每个洞一行 -->
-            <view class="grid-row {{currentHole === item.hole ? 'current-row' : ''}}" wx:for="{{scoreGridData}}" wx:for-item="item" wx:key="hole">
+            <view id="score-hole-{{item.hole}}" class="grid-row score-hole-row {{currentHole === item.hole ? 'current-row' : ''}}" wx:for="{{scoreGridData}}" wx:for-item="item" wx:key="hole">
               <view class="grid-cell label-cell hole-label" bindtap="jumpToHole" data-hole="{{item.hole}}">
                 <text class="hole-num">{{item.hole}}</text>
                 <text class="hole-par">Par{{item.par}}</text>
@@ -294,32 +294,38 @@
   <view class="qrcode-modal" wx:if="{{showQrCode}}" bindtap="hideQrCodeModal">
     <view class="qrcode-content" catchtap="preventHide">
       <view class="qrcode-header">
-        <text class="qrcode-title">邀请球友加入</text>
-        <text class="qrcode-close" bindtap="hideQrCodeModal">×</text>
+        <view class="qrcode-title-stack">
+          <text class="qrcode-kicker">球员管理</text>
+          <text class="qrcode-title">添加球友</text>
+        </view>
+        <view class="qrcode-header-right">
+          <text class="qrcode-capacity">{{currentGame.players.length}}/4 人</text>
+          <text class="qrcode-close" bindtap="hideQrCodeModal">×</text>
+        </view>
       </view>
       <view class="qrcode-body">
-        <button class="qrcode-share-btn btn-pill btn-pill-lg" open-type="share">
-          <text class="btn-icon">👥</text>
-          <text>分享给微信好友</text>
-        </button>
-        <view class="divider" wx:if="{{qrcodeUrl}}">
-          <view class="divider-line"></view>
-          <text class="divider-text">或</text>
-          <view class="divider-line"></view>
+        <view class="invite-action-panel">
+          <button class="qrcode-share-btn" open-type="share">
+            <text class="share-icon">分享</text>
+            <text class="share-main">微信邀请</text>
+            <text class="share-arrow">›</text>
+          </button>
+          <view class="qrcode-wrapper" wx:if="{{qrcodeUrl}}">
+            <view class="qrcode-label-row">
+              <text class="qrcode-label">面对面扫码</text>
+              <text class="qrcode-label-sub">扫码即入</text>
+            </view>
+            <view class="qrcode-image-frame">
+              <image class="qrcode-image" src="{{qrcodeUrl}}" mode="aspectFit"></image>
+            </view>
+          </view>
         </view>
-        <view class="qrcode-wrapper" wx:if="{{qrcodeUrl}}">
-          <view class="qrcode-tips">让球友微信扫码加入</view>
-          <image class="qrcode-image" src="{{qrcodeUrl}}" mode="aspectFit"></image>
-          <view class="qrcode-tips">无需加好友，扫码即入</view>
-        </view>
-        <view class="divider">
-          <view class="divider-line"></view>
-          <text class="divider-text">或</text>
-          <view class="divider-line"></view>
-        </view>
-        <view class="manual-add">
-          <input class="manual-input" placeholder="输入姓名" value="{{manualPlayerName}}" bindinput="onManualNameInput" />
-          <button class="manual-add-btn btn-pill btn-pill-sm" bindtap="addManualPlayer">添加</button>
+        <view class="manual-add-section">
+          <text class="manual-add-title">手动添加</text>
+          <view class="manual-add">
+            <input class="manual-input" placeholder="输入姓名" value="{{manualPlayerName}}" bindinput="onManualNameInput" />
+            <button class="manual-add-btn" bindtap="addManualPlayer">添加</button>
+          </view>
         </view>
       </view>
     </view>

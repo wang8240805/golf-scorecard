@@ -1,0 +1,24904 @@
+const PUBLIC_SCORECARDS = [
+  {
+    "id": "public-chn-sh-0013-02",
+    "name": "Agile Binhai Golf Club - Forest",
+    "location": "Shanghai, China",
+    "city": "Shanghai",
+    "country": "China",
+    "latitude": 30.971311,
+    "longitude": 121.902245,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/agile-binhai-golf-club-forest",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:06.992Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6052
+    },
+    "teeName": "White",
+    "par": 73,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 335,
+        "handicap": 10
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 504,
+        "handicap": 14
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 354,
+        "handicap": 8
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 287,
+        "handicap": 16
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 154,
+        "handicap": 12
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 355,
+        "handicap": 4
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 511,
+        "handicap": 6
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 136,
+        "handicap": 18
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 559,
+        "handicap": 2
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 335,
+        "handicap": 13
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 449,
+        "handicap": 15
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 373,
+        "handicap": 1
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 317,
+        "handicap": 11
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "distance": 488,
+        "handicap": 7
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 145,
+        "handicap": 3
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 339,
+        "handicap": 5
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 132,
+        "handicap": 9
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 279,
+        "handicap": 17
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sh-0013-01",
+    "name": "Agile Binhai Golf Club - Lakes",
+    "location": "Shanghai, China",
+    "city": "Shanghai",
+    "country": "China",
+    "latitude": 30.971311,
+    "longitude": 121.902245,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/agile-binhai-golf-club-lakes",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:07.944Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6410
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 344,
+        "handicap": 13
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 164,
+        "handicap": 17
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 491,
+        "handicap": 9
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 414,
+        "handicap": 1
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 373,
+        "handicap": 7
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 132,
+        "handicap": 15
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 369,
+        "handicap": 11
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 526,
+        "handicap": 5
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 389,
+        "handicap": 3
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 355,
+        "handicap": 16
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 158,
+        "handicap": 6
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 378,
+        "handicap": 4
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 540,
+        "handicap": 10
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "distance": 173,
+        "handicap": 8
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 351,
+        "handicap": 14
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 404,
+        "handicap": 2
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 328,
+        "handicap": 18
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 521,
+        "handicap": 12
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0060-01",
+    "name": "Agile Golf and Country Club - A",
+    "location": "Zhongshan, China",
+    "city": "Zhongshan",
+    "country": "China",
+    "latitude": 22.491303,
+    "longitude": 113.448011,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/agile-golf-and-country-club-a",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:08.451Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": 68.5,
+      "slope": 120,
+      "totalDistance": 5982
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 330,
+        "handicap": 11
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 385,
+        "handicap": 9
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 164,
+        "handicap": 7
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 380,
+        "handicap": 1
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 337,
+        "handicap": 5
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 350,
+        "handicap": 13
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 135,
+        "handicap": 15
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 379,
+        "handicap": 3
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 486,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 386,
+        "handicap": 8
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 356,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 88,
+        "handicap": 16
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 549,
+        "handicap": 2
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 336,
+        "handicap": 14
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 352,
+        "handicap": 6
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 353,
+        "handicap": 10
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 116,
+        "handicap": 18
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 500,
+        "handicap": 12
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0060-02",
+    "name": "Agile Golf and Country Club - B",
+    "location": "Zhongshan, China",
+    "city": "Zhongshan",
+    "country": "China",
+    "latitude": 22.491303,
+    "longitude": 113.448011,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/agile-golf-and-country-club-b",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:08.840Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6212
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 386,
+        "handicap": 9
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 133,
+        "handicap": 5
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 321,
+        "handicap": 7
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 489,
+        "handicap": 1
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 145,
+        "handicap": 13
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 501,
+        "handicap": 17
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 346,
+        "handicap": 11
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 365,
+        "handicap": 3
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 330,
+        "handicap": 15
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 357,
+        "handicap": 16
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 393,
+        "handicap": 2
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 195,
+        "handicap": 12
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 399,
+        "handicap": 4
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 294,
+        "handicap": 18
+      },
+      {
+        "hole": 15,
+        "par": 5,
+        "distance": 515,
+        "handicap": 14
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 373,
+        "handicap": 6
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 174,
+        "handicap": 10
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 496,
+        "handicap": 8
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-hi-0013-01",
+    "name": "Begonia Bay Peninsula Golf - Begonia Bay Peninsula",
+    "location": "Sanya, China",
+    "city": "Sanya",
+    "country": "China",
+    "latitude": 18.273144,
+    "longitude": 109.699181,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/begonia-bay-peninsula-golf",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:09.738Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5859
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 315,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 499,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 146,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 535,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 172,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 377,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 260,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 397,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 329,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 268,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 195,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 313,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 507,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 343,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 336,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 5,
+        "distance": 424,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 115,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 328,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-bj-0054-01",
+    "name": "Beijing Country Golf Club - A",
+    "location": "Shunyi, China",
+    "city": "Shunyi",
+    "country": "China",
+    "latitude": 40.161855,
+    "longitude": 116.676288,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/beijing-country-golf-club-a",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:10.117Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2865
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 450,
+        "handicap": 12
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 160,
+        "handicap": 6
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 278,
+        "handicap": 18
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 375,
+        "handicap": 4
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 275,
+        "handicap": 16
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 358,
+        "handicap": 2
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 460,
+        "handicap": 10
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 164,
+        "handicap": 14
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 345,
+        "handicap": 8
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-bj-0054-02",
+    "name": "Beijing Country Golf Club - B",
+    "location": "Shunyi, China",
+    "city": "Shunyi",
+    "country": "China",
+    "latitude": 40.161855,
+    "longitude": 116.676288,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/beijing-country-golf-club-b",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:11.072Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 3065
+    },
+    "teeName": "White",
+    "par": 37,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 525,
+        "handicap": 2
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 325,
+        "handicap": 10
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 467,
+        "handicap": 6
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 342,
+        "handicap": 14
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 311,
+        "handicap": 16
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 294,
+        "handicap": 18
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 278,
+        "handicap": 12
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 205,
+        "handicap": 4
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 318,
+        "handicap": 8
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-bj-0054-03",
+    "name": "Beijing Country Golf Club - C",
+    "location": "Shunyi, China",
+    "city": "Shunyi",
+    "country": "China",
+    "latitude": 40.161855,
+    "longitude": 116.676288,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/beijing-country-golf-club-c",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:13.032Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 3062
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 504,
+        "handicap": 6
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 163,
+        "handicap": 14
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 276,
+        "handicap": 18
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 335,
+        "handicap": 10
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 402,
+        "handicap": 2
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 375,
+        "handicap": 12
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 178,
+        "handicap": 4
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 350,
+        "handicap": 8
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 479,
+        "handicap": 16
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-bj-0054-04",
+    "name": "Beijing Country Golf Club - D",
+    "location": "Shunyi, China",
+    "city": "Shunyi",
+    "country": "China",
+    "latitude": 40.161855,
+    "longitude": 116.676288,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/beijing-country-golf-club-d",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:14.836Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 3035
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 366,
+        "handicap": 5
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 214,
+        "handicap": 7
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 309,
+        "handicap": 13
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 564,
+        "handicap": 1
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 521,
+        "handicap": 3
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 357,
+        "handicap": 9
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 275,
+        "handicap": 17
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 278,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 3,
+        "distance": 151,
+        "handicap": 11
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-bj-0054-05",
+    "name": "Beijing Country Golf Club - E",
+    "location": "Shunyi, China",
+    "city": "Shunyi",
+    "country": "China",
+    "latitude": 40.161855,
+    "longitude": 116.676288,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/beijing-country-golf-club-e",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:16.316Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6012
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 294,
+        "handicap": 15
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 358,
+        "handicap": 17
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 544,
+        "handicap": 3
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 372,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 410,
+        "handicap": 1
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 169,
+        "handicap": 13
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 330,
+        "handicap": 11
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 180,
+        "handicap": 5
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 490,
+        "handicap": 9
+      },
+      {
+        "hole": 10,
+        "par": 5,
+        "distance": 450,
+        "handicap": 12
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 160,
+        "handicap": 6
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 278,
+        "handicap": 18
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 375,
+        "handicap": 4
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 275,
+        "handicap": 16
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 358,
+        "handicap": 2
+      },
+      {
+        "hole": 16,
+        "par": 5,
+        "distance": 460,
+        "handicap": 10
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 164,
+        "handicap": 14
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 345,
+        "handicap": 8
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-bj-0054-06",
+    "name": "Beijing Country Golf Club - F",
+    "location": "Shunyi, China",
+    "city": "Shunyi",
+    "country": "China",
+    "latitude": 40.161855,
+    "longitude": 116.676288,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/beijing-country-golf-club-f",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:17.761Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6071
+    },
+    "teeName": "White",
+    "par": 73,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 366,
+        "handicap": 5
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 214,
+        "handicap": 7
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 309,
+        "handicap": 13
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 564,
+        "handicap": 1
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 521,
+        "handicap": 3
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 357,
+        "handicap": 9
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 275,
+        "handicap": 17
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 278,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 3,
+        "distance": 121,
+        "handicap": 11
+      },
+      {
+        "hole": 10,
+        "par": 5,
+        "distance": 525,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 325,
+        "handicap": 10
+      },
+      {
+        "hole": 12,
+        "par": 5,
+        "distance": 467,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 342,
+        "handicap": 14
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 311,
+        "handicap": 16
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 295,
+        "handicap": 18
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 278,
+        "handicap": 12
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 205,
+        "handicap": 4
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 318,
+        "handicap": 8
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-bj-0026-01",
+    "name": "Beijing DaXing Capital Golf Club - Beijing DaXing Capital",
+    "location": "Daxing, China",
+    "city": "Daxing",
+    "country": "China",
+    "latitude": 39.720937,
+    "longitude": 116.299181,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/beijing-da-xing-capital-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:19.353Z",
+      "teeId": "",
+      "teeColor": "Black",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 7631
+    },
+    "teeName": "Black (1)",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 460,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 553,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 410,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 221,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 480,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 635,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 378,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 180,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 440,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 401,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 631,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 466,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 191,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 477,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 370,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 210,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 510,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 618,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-bj-0001-01",
+    "name": "Beijing Golf Club - Beijing",
+    "location": "Beijing, China",
+    "city": "Beijing",
+    "country": "China",
+    "latitude": 40.150841,
+    "longitude": 116.684516,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/beijing-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:20.514Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5522
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 306,
+        "handicap": 3
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 302,
+        "handicap": 13
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 130,
+        "handicap": 9
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 422,
+        "handicap": 17
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 347,
+        "handicap": 1
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 229,
+        "handicap": 15
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 121,
+        "handicap": 11
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 465,
+        "handicap": 7
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 322,
+        "handicap": 5
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 292,
+        "handicap": 16
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 347,
+        "handicap": 6
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 142,
+        "handicap": 10
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 489,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 330,
+        "handicap": 4
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 149,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 353,
+        "handicap": 2
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 303,
+        "handicap": 18
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 473,
+        "handicap": 14
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-bj-0004-01",
+    "name": "Beijing Hongfenghu Golf Club - Beijing Hongfenghu",
+    "location": "Changping, China",
+    "city": "Changping",
+    "country": "China",
+    "latitude": 40.124634,
+    "longitude": 116.346116,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/beijing-hongfenghu-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:21.561Z",
+      "teeId": "",
+      "teeColor": "Blue",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5400
+    },
+    "teeName": "Blue",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 300,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 300,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 300,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 300,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 300,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 300,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 300,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 300,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 300,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 300,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 300,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 300,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 300,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 300,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 300,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 300,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 300,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 300,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-bj-0005-01",
+    "name": "Beijing International Golf Club - Beijing International",
+    "location": "Changping, China",
+    "city": "Changping",
+    "country": "China",
+    "latitude": 40.27654,
+    "longitude": 116.25731,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/beijing-international-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:22.661Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6122
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 491,
+        "handicap": 3
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 388,
+        "handicap": 1
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 149,
+        "handicap": 13
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 360,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 484,
+        "handicap": 15
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 158,
+        "handicap": 5
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 383,
+        "handicap": 9
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 341,
+        "handicap": 11
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 341,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 372,
+        "handicap": 4
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 158,
+        "handicap": 14
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 310,
+        "handicap": 16
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 481,
+        "handicap": 6
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 381,
+        "handicap": 12
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 293,
+        "handicap": 18
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 344,
+        "handicap": 8
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 170,
+        "handicap": 10
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 518,
+        "handicap": 2
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-bj-0014-01",
+    "name": "Beijing Jade Island International Golf Club - Jade Island International",
+    "location": "Chaoyang, China",
+    "city": "Chaoyang",
+    "country": "China",
+    "latitude": 40.008777,
+    "longitude": 116.581912,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/beijing-jade-island-international-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:24.292Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6324
+    },
+    "teeName": "White",
+    "par": 71,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 347,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 145,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 511,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 364,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 166,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 487,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 407,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 370,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 331,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 400,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 513,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 142,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 301,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 405,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 396,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 132,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 5,
+        "distance": 493,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 414,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-bj-0055-01",
+    "name": "Beijing Riverside Resort Golf Academy - Beijing Riverside",
+    "location": "Shunyi, China",
+    "city": "Shunyi",
+    "country": "China",
+    "latitude": 40.06574,
+    "longitude": 116.530757,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/beijing-riverside-resort-golf-academy",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:25.292Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6246
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 553,
+        "handicap": 3
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 380,
+        "handicap": 11
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 152,
+        "handicap": 13
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 360,
+        "handicap": 15
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 405,
+        "handicap": 5
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 230,
+        "handicap": 7
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 146,
+        "handicap": 17
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 522,
+        "handicap": 1
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 375,
+        "handicap": 9
+      },
+      {
+        "hole": 10,
+        "par": 5,
+        "distance": 553,
+        "handicap": 6
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 380,
+        "handicap": 16
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 152,
+        "handicap": 2
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 360,
+        "handicap": 10
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 405,
+        "handicap": 4
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 230,
+        "handicap": 8
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 146,
+        "handicap": 12
+      },
+      {
+        "hole": 17,
+        "par": 5,
+        "distance": 522,
+        "handicap": 18
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 375,
+        "handicap": 14
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-bj-0041-01",
+    "name": "Beijing Yintai Hongye Golf Club - A",
+    "location": "Fengtai, China",
+    "city": "Fengtai",
+    "country": "China",
+    "latitude": 39.825528,
+    "longitude": 116.243449,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/beijing-yintai-hongye-golf-club-a",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:26.281Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5850
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 373,
+        "handicap": 10
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 300,
+        "handicap": 17
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 506,
+        "handicap": 14
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 113,
+        "handicap": 3
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 344,
+        "handicap": 12
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 368,
+        "handicap": 16
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 497,
+        "handicap": 4
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 163,
+        "handicap": 6
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 286,
+        "handicap": 8
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 305,
+        "handicap": 18
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 309,
+        "handicap": 11
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 340,
+        "handicap": 5
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 468,
+        "handicap": 7
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "distance": 187,
+        "handicap": 13
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 365,
+        "handicap": 2
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 294,
+        "handicap": 15
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 142,
+        "handicap": 9
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 490,
+        "handicap": 1
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-bj-0041-02",
+    "name": "Beijing Yintai Hongye Golf Club - B",
+    "location": "Fengtai, China",
+    "city": "Fengtai",
+    "country": "China",
+    "latitude": 39.825528,
+    "longitude": 116.243449,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/beijing-yintai-hongye-golf-club-b",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:27.236Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6163
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 364,
+        "handicap": 12
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 352,
+        "handicap": 13
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 369,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 553,
+        "handicap": 2
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 381,
+        "handicap": 8
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 135,
+        "handicap": 3
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 324,
+        "handicap": 15
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 486,
+        "handicap": 18
+      },
+      {
+        "hole": 9,
+        "par": 3,
+        "distance": 146,
+        "handicap": 14
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 291,
+        "handicap": 10
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 377,
+        "handicap": 6
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 168,
+        "handicap": 11
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 346,
+        "handicap": 16
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "distance": 472,
+        "handicap": 9
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 368,
+        "handicap": 1
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 349,
+        "handicap": 4
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 173,
+        "handicap": 7
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 509,
+        "handicap": 17
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-bj-0006-01",
+    "name": "Beyond Champion Golf Club - Beyond Champion",
+    "location": "Changping, China",
+    "city": "Changping",
+    "country": "China",
+    "latitude": 40.153978,
+    "longitude": 116.417433,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/beyond-champion-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:28.484Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5813
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 521,
+        "handicap": 6
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 317,
+        "handicap": 18
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 386,
+        "handicap": 2
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 354,
+        "handicap": 10
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 121,
+        "handicap": 16
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 525,
+        "handicap": 8
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 330,
+        "handicap": 12
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 180,
+        "handicap": 4
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 262,
+        "handicap": 14
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 340,
+        "handicap": 17
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 306,
+        "handicap": 15
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 142,
+        "handicap": 5
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 277,
+        "handicap": 13
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "distance": 423,
+        "handicap": 11
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 342,
+        "handicap": 7
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 152,
+        "handicap": 9
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 361,
+        "handicap": 1
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 474,
+        "handicap": 3
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sd-0008-04",
+    "name": "Castlex Qingdao Golf and Resort - Hill",
+    "location": "Qingdao, China",
+    "city": "Qingdao",
+    "country": "China",
+    "latitude": 36.80499,
+    "longitude": 120.197471,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/castlex-qingdao-golf-and-resort-hill",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:29.642Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2912
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 347,
+        "handicap": 8
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 535,
+        "handicap": 2
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 317,
+        "handicap": 4
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 116,
+        "handicap": 9
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 267,
+        "handicap": 7
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 319,
+        "handicap": 3
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 492,
+        "handicap": 5
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 160,
+        "handicap": 6
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 359,
+        "handicap": 1
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sd-0008-01",
+    "name": "Castlex Qingdao Golf and Resort - Lake",
+    "location": "Qingdao, China",
+    "city": "Qingdao",
+    "country": "China",
+    "latitude": 36.80499,
+    "longitude": 120.197471,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/castlex-qingdao-golf-and-resort-lake",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:30.523Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2922
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 340,
+        "handicap": 9
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 506,
+        "handicap": 8
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 359,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 165,
+        "handicap": 4
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 303,
+        "handicap": 7
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 379,
+        "handicap": 3
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 123,
+        "handicap": 1
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 340,
+        "handicap": 2
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 407,
+        "handicap": 6
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sd-0008-03",
+    "name": "Castlex Qingdao Golf and Resort - Sky",
+    "location": "Qingdao, China",
+    "city": "Qingdao",
+    "country": "China",
+    "latitude": 36.80499,
+    "longitude": 120.197471,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/castlex-qingdao-golf-and-resort-sky",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:31.522Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2936
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 328,
+        "handicap": 7
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 386,
+        "handicap": 4
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 129,
+        "handicap": 9
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 293,
+        "handicap": 2
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 300,
+        "handicap": 5
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 188,
+        "handicap": 3
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 498,
+        "handicap": 6
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 394,
+        "handicap": 1
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 420,
+        "handicap": 8
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sd-0008-02",
+    "name": "Castlex Qingdao Golf and Resort - Valley",
+    "location": "Qingdao, China",
+    "city": "Qingdao",
+    "country": "China",
+    "latitude": 36.80499,
+    "longitude": 120.197471,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/castlex-qingdao-golf-and-resort-valley",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:32.446Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2932
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 325,
+        "handicap": 4
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 316,
+        "handicap": 5
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 150,
+        "handicap": 9
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 548,
+        "handicap": 1
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 288,
+        "handicap": 6
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 461,
+        "handicap": 8
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 122,
+        "handicap": 7
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 347,
+        "handicap": 3
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 375,
+        "handicap": 2
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-bj-0016-01",
+    "name": "CBD International Golf Club - CBD International",
+    "location": "Chaoyang, China",
+    "city": "Chaoyang",
+    "country": "China",
+    "latitude": 39.87094,
+    "longitude": 116.514371,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/cbd-international-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:33.844Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5888
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 468,
+        "handicap": 4
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 355,
+        "handicap": 10
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 131,
+        "handicap": 17
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 343,
+        "handicap": 12
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 293,
+        "handicap": 13
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 125,
+        "handicap": 16
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 369,
+        "handicap": 2
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 356,
+        "handicap": 6
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 474,
+        "handicap": 7
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 362,
+        "handicap": 5
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 288,
+        "handicap": 15
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 125,
+        "handicap": 14
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 516,
+        "handicap": 9
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 380,
+        "handicap": 1
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 324,
+        "handicap": 8
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 102,
+        "handicap": 18
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 398,
+        "handicap": 3
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 479,
+        "handicap": 11
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0002-01",
+    "name": "Changzhou Stantn Club - Changzhou Stantn Club",
+    "location": "Changzhou, China",
+    "city": "Changzhou",
+    "country": "China",
+    "latitude": 31.828508,
+    "longitude": 119.993876,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/changzhou-stantn-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:34.670Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 1084
+    },
+    "teeName": "White",
+    "par": 28,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 210,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 91,
+        "handicap": 2
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 110,
+        "handicap": 3
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 127,
+        "handicap": 4
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 83,
+        "handicap": 5
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 121,
+        "handicap": 6
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 109,
+        "handicap": 7
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 142,
+        "handicap": 8
+      },
+      {
+        "hole": 9,
+        "par": 3,
+        "distance": 91,
+        "handicap": 9
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sc-0001-01",
+    "name": "Chengdu Grand Hill International Golf Club - Chengdu Grand Hill International",
+    "location": "Chengdu, China",
+    "city": "Chengdu",
+    "country": "China",
+    "latitude": 30.877025,
+    "longitude": 104.390172,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/chengdu-grand-hill-international-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:35.624Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5950
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 333,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 387,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 344,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 155,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 498,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 350,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 553,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 116,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 390,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 356,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 309,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 293,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 436,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "distance": 130,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 345,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 295,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 130,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 530,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-cq-0001-01",
+    "name": "Chongqing Hongding Golf Club - Chongqing Hongding",
+    "location": "Beibei, China",
+    "city": "Beibei",
+    "country": "China",
+    "latitude": 29.70654,
+    "longitude": 106.456772,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/chongqing-hongding-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:36.768Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6071
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 463,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 388,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 270,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 330,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 511,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 155,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 353,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 374,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 3,
+        "distance": 130,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 395,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 497,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 452,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 321,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "distance": 138,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 293,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 174,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 5,
+        "distance": 429,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 398,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-cq-0002-01",
+    "name": "Chongqing International Golf Club - Chongqing International",
+    "location": "Huaxi, China",
+    "city": "Huaxi",
+    "country": "China",
+    "latitude": 29.420789,
+    "longitude": 106.550426,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/chongqing-international-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:37.622Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2872
+    },
+    "teeName": "White",
+    "par": 35,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 354,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 356,
+        "handicap": 2
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 510,
+        "handicap": 3
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 381,
+        "handicap": 4
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 138,
+        "handicap": 5
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 325,
+        "handicap": 6
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 292,
+        "handicap": 7
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 126,
+        "handicap": 8
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 390,
+        "handicap": 9
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-cq-0005-01",
+    "name": "Chongqing Poly Golf Club - Eagle",
+    "location": "Yubei, China",
+    "city": "Yubei",
+    "country": "China",
+    "latitude": 29.668094,
+    "longitude": 106.567184,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/chongqing-poly-golf-club-eagle",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:38.486Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5581
+    },
+    "teeName": "White",
+    "par": 71,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 341,
+        "handicap": 8
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 157,
+        "handicap": 16
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 355,
+        "handicap": 10
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 467,
+        "handicap": 9
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 148,
+        "handicap": 14
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 409,
+        "handicap": 2
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 166,
+        "handicap": 15
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 451,
+        "handicap": 7
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 334,
+        "handicap": 11
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 361,
+        "handicap": 4
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 112,
+        "handicap": 18
+      },
+      {
+        "hole": 12,
+        "par": 5,
+        "distance": 469,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 277,
+        "handicap": 13
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 503,
+        "handicap": 1
+      },
+      {
+        "hole": 15,
+        "par": 5,
+        "distance": 503,
+        "handicap": 3
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 159,
+        "handicap": 17
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 332,
+        "handicap": 12
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 37,
+        "handicap": 5
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-cq-0005-02",
+    "name": "Chongqing Poly Golf Club - Phoenix",
+    "location": "Yubei, China",
+    "city": "Yubei",
+    "country": "China",
+    "latitude": 29.668094,
+    "longitude": 106.567184,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/chongqing-poly-golf-club-phoenix",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:39.386Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5964
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 285,
+        "handicap": 12
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 375,
+        "handicap": 7
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 373,
+        "handicap": 6
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 409,
+        "handicap": 5
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 562,
+        "handicap": 1
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 144,
+        "handicap": 16
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 467,
+        "handicap": 8
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 124,
+        "handicap": 18
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 285,
+        "handicap": 14
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 377,
+        "handicap": 3
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 173,
+        "handicap": 15
+      },
+      {
+        "hole": 12,
+        "par": 5,
+        "distance": 482,
+        "handicap": 4
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 334,
+        "handicap": 11
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 319,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 379,
+        "handicap": 2
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 275,
+        "handicap": 13
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 133,
+        "handicap": 17
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 468,
+        "handicap": 9
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-cq-0004-01",
+    "name": "Chongqing Qinglong Nanshan Golf Club - Chongqing Qinglong Nanshan",
+    "location": "Nan'an, China",
+    "city": "Nan'an",
+    "country": "China",
+    "latitude": 29.487812,
+    "longitude": 106.611741,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/chongqing-qinglong-nanshan-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:40.294Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6178
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 561,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 172,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 364,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 359,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 361,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 144,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 334,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 470,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 392,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 366,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 367,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 123,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 317,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 323,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 5,
+        "distance": 486,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 155,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 394,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 490,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-ln-0002-01",
+    "name": "Dalian Bangchui Island Hotel Golf Club - Dalian Bangchui Island Hotel",
+    "location": "Dalian, China",
+    "city": "Dalian",
+    "country": "China",
+    "latitude": 38.888299,
+    "longitude": 121.704947,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/dalian-bangchui-island-hotel-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:42.944Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2535
+    },
+    "teeName": "White",
+    "par": 35,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 252,
+        "handicap": 7
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 284,
+        "handicap": 5
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 311,
+        "handicap": 1
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 503,
+        "handicap": 2
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 133,
+        "handicap": 8
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 338,
+        "handicap": 3
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 306,
+        "handicap": 6
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 299,
+        "handicap": 4
+      },
+      {
+        "hole": 9,
+        "par": 3,
+        "distance": 109,
+        "handicap": 9
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-ln-0006-02",
+    "name": "Dalian Golden Pebble Beach Golf Club - Jinying",
+    "location": "Dalian Jinshi Tan, China",
+    "city": "Dalian Jinshi Tan",
+    "country": "China",
+    "latitude": 39.071787,
+    "longitude": 122.049725,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/dalian-golden-pebble-beach-golf-club-jinying",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:43.744Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6074
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 336,
+        "handicap": 10
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 501,
+        "handicap": 5
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 302,
+        "handicap": 14
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 322,
+        "handicap": 12
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 137,
+        "handicap": 16
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 355,
+        "handicap": 8
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 344,
+        "handicap": 9
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 98,
+        "handicap": 18
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 524,
+        "handicap": 2
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 429,
+        "handicap": 1
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 504,
+        "handicap": 6
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 126,
+        "handicap": 17
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 309,
+        "handicap": 11
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 405,
+        "handicap": 4
+      },
+      {
+        "hole": 15,
+        "par": 5,
+        "distance": 519,
+        "handicap": 3
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 164,
+        "handicap": 15
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 314,
+        "handicap": 13
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 385,
+        "handicap": 7
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-ln-0006-01",
+    "name": "Dalian Golden Pebble Beach Golf Club - Turtle",
+    "location": "Dalian Jinshi Tan, China",
+    "city": "Dalian Jinshi Tan",
+    "country": "China",
+    "latitude": 39.071787,
+    "longitude": 122.049725,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/dalian-golden-pebble-beach-golf-club-turtle",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:44.528Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6360
+    },
+    "teeName": "White",
+    "par": 71,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 340,
+        "handicap": 15
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 353,
+        "handicap": 7
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 156,
+        "handicap": 11
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 427,
+        "handicap": 13
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 466,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 377,
+        "handicap": 3
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 116,
+        "handicap": 1
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 414,
+        "handicap": 5
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 446,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 372,
+        "handicap": 14
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 339,
+        "handicap": 6
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 402,
+        "handicap": 4
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 131,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 475,
+        "handicap": 18
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 398,
+        "handicap": 10
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 159,
+        "handicap": 16
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 442,
+        "handicap": 2
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 547,
+        "handicap": 12
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-ln-0003-02",
+    "name": "Dalian Red Flag Valley Golf Club - Dragon",
+    "location": "Dalian, China",
+    "city": "Dalian",
+    "country": "China",
+    "latitude": 38.922262,
+    "longitude": 121.392767,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/dalian-red-flag-valley-golf-club-dragon",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:45.276Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2837
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 313,
+        "handicap": 5
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 518,
+        "handicap": 2
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 240,
+        "handicap": 8
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 129,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 318,
+        "handicap": 4
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 319,
+        "handicap": 6
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 115,
+        "handicap": 9
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 510,
+        "handicap": 3
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 375,
+        "handicap": 1
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-ln-0003-01",
+    "name": "Dalian Red Flag Valley Golf Club - Unicorn",
+    "location": "Dalian, China",
+    "city": "Dalian",
+    "country": "China",
+    "latitude": 38.922262,
+    "longitude": 121.392767,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/dalian-red-flag-valley-golf-club-unicorn",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:46.061Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5763
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 406,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 460,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 131,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 222,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 417,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 283,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 152,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 358,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 390,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 5,
+        "distance": 472,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 372,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 344,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 374,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "distance": 171,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 297,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 5,
+        "distance": 433,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 150,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 331,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-ln-0013-01",
+    "name": "Dalian Xiali Country Club - Dalian Xiali",
+    "location": "Xiajia Hezi Village, China",
+    "city": "Xiajia Hezi Village",
+    "country": "China",
+    "latitude": 39.036474,
+    "longitude": 121.524902,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/dalian-xiali-country-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:46.889Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6712
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 361,
+        "handicap": 13
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 180,
+        "handicap": 7
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 454,
+        "handicap": 1
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 383,
+        "handicap": 9
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 170,
+        "handicap": 11
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 488,
+        "handicap": 15
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 328,
+        "handicap": 17
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 580,
+        "handicap": 5
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 410,
+        "handicap": 3
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 421,
+        "handicap": 6
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 476,
+        "handicap": 10
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 323,
+        "handicap": 16
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 180,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 345,
+        "handicap": 14
+      },
+      {
+        "hole": 15,
+        "par": 5,
+        "distance": 601,
+        "handicap": 2
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 405,
+        "handicap": 18
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 170,
+        "handicap": 12
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 437,
+        "handicap": 4
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0008-01",
+    "name": "Dongguan Hill View Golf Club - Master",
+    "location": "Dongguan, China",
+    "city": "Dongguan",
+    "country": "China",
+    "latitude": 23.013666,
+    "longitude": 113.794883,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/dongguan-hill-view-golf-club-master",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:47.790Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5673
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 449,
+        "handicap": 5
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 133,
+        "handicap": 17
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 342,
+        "handicap": 7
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 324,
+        "handicap": 3
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 158,
+        "handicap": 15
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 478,
+        "handicap": 1
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 321,
+        "handicap": 9
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 285,
+        "handicap": 11
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 269,
+        "handicap": 13
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 338,
+        "handicap": 6
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 142,
+        "handicap": 18
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 352,
+        "handicap": 8
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 283,
+        "handicap": 12
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 286,
+        "handicap": 14
+      },
+      {
+        "hole": 15,
+        "par": 5,
+        "distance": 507,
+        "handicap": 2
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 164,
+        "handicap": 16
+      },
+      {
+        "hole": 17,
+        "par": 5,
+        "distance": 523,
+        "handicap": 4
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 319,
+        "handicap": 10
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0008-02",
+    "name": "Dongguan Hill View Golf Club - Open",
+    "location": "Dongguan, China",
+    "city": "Dongguan",
+    "country": "China",
+    "latitude": 23.013666,
+    "longitude": 113.794883,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/dongguan-hill-view-golf-club-open",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:48.666Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5769
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 286,
+        "handicap": 15
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 314,
+        "handicap": 7
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 132,
+        "handicap": 17
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 493,
+        "handicap": 3
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 266,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 143,
+        "handicap": 13
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 474,
+        "handicap": 5
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 145,
+        "handicap": 11
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 502,
+        "handicap": 1
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 330,
+        "handicap": 16
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 405,
+        "handicap": 2
+      },
+      {
+        "hole": 12,
+        "par": 5,
+        "distance": 476,
+        "handicap": 8
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 308,
+        "handicap": 6
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "distance": 171,
+        "handicap": 12
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 302,
+        "handicap": 4
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 150,
+        "handicap": 10
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 390,
+        "handicap": 18
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 482,
+        "handicap": 14
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0016-01",
+    "name": "Emerald Lakes Golf Club - Emerald Lakes",
+    "location": "Foshan, China",
+    "city": "Foshan",
+    "country": "China",
+    "latitude": 23.217439,
+    "longitude": 112.850748,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/emerald-lakes-golf-club-foshan",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:50.511Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6260
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 507,
+        "handicap": 6
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 478,
+        "handicap": 5
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 405,
+        "handicap": 3
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 142,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 354,
+        "handicap": 15
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 370,
+        "handicap": 1
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 399,
+        "handicap": 9
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 147,
+        "handicap": 17
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 489,
+        "handicap": 11
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 341,
+        "handicap": 13
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 359,
+        "handicap": 18
+      },
+      {
+        "hole": 12,
+        "par": 5,
+        "distance": 540,
+        "handicap": 2
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 160,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 332,
+        "handicap": 14
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 349,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 156,
+        "handicap": 10
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 355,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 377,
+        "handicap": 4
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0035-01",
+    "name": "Foshan Golf & Country Club - Foshan",
+    "location": "Nanhai, China",
+    "city": "Nanhai",
+    "country": "China",
+    "latitude": 23.101581,
+    "longitude": 113.045934,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/foshan-golf-country-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:52.759Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6192
+    },
+    "teeName": "White",
+    "par": 70,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 358,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 131,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 396,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 291,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 507,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 359,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 175,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 530,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 357,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 322,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 141,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 393,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 490,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 372,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 346,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 130,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 427,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 467,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-fj-0006-01",
+    "name": "Fujian Xiamen Bailuyuan Golf Club - Fujian Xiamen Bailuyuan",
+    "location": "Xiamen, China",
+    "city": "Xiamen",
+    "country": "China",
+    "latitude": 24.449734,
+    "longitude": 118.11915,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/fujian-xiamen-bailuyuan-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:53.451Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2700
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 300,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 300,
+        "handicap": 2
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 300,
+        "handicap": 3
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 300,
+        "handicap": 4
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 300,
+        "handicap": 5
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 300,
+        "handicap": 6
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 300,
+        "handicap": 7
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 300,
+        "handicap": 8
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 300,
+        "handicap": 9
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-bj-0061-01",
+    "name": "Grand Canal Club - Beijing Grand Canal",
+    "location": "Tongzhou, China",
+    "city": "Tongzhou",
+    "country": "China",
+    "latitude": 39.907818,
+    "longitude": 116.773883,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/grand-canal-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:55.844Z",
+      "teeId": "",
+      "teeColor": "Blue",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6741
+    },
+    "teeName": "Blue (L)",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 387,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 322,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 199,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 528,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 314,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 331,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 363,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 201,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 516,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 410,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 181,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 5,
+        "distance": 557,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 412,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "distance": 171,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 470,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 412,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 5,
+        "distance": 550,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 417,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-bj-0062-01",
+    "name": "Grand Canal Golf Club - Grand Canal",
+    "location": "Tongzhou, China",
+    "city": "Tongzhou",
+    "country": "China",
+    "latitude": 39.901175,
+    "longitude": 116.768234,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/grand-canal-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:56.748Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6478
+    },
+    "teeName": "White",
+    "par": 73,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 380,
+        "handicap": 6
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 315,
+        "handicap": 8
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 174,
+        "handicap": 10
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 501,
+        "handicap": 4
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 295,
+        "handicap": 12
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 311,
+        "handicap": 16
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 351,
+        "handicap": 14
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 170,
+        "handicap": 18
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 488,
+        "handicap": 2
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 371,
+        "handicap": 11
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 342,
+        "handicap": 15
+      },
+      {
+        "hole": 12,
+        "par": 5,
+        "distance": 586,
+        "handicap": 3
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 342,
+        "handicap": 13
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "distance": 155,
+        "handicap": 17
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 364,
+        "handicap": 5
+      },
+      {
+        "hole": 16,
+        "par": 5,
+        "distance": 401,
+        "handicap": 7
+      },
+      {
+        "hole": 17,
+        "par": 5,
+        "distance": 589,
+        "handicap": 1
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 343,
+        "handicap": 9
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0001-01",
+    "name": "Grand Shanghai International Golf - Grand Shanghai",
+    "location": "Ba Cheng, China",
+    "city": "Ba Cheng",
+    "country": "China",
+    "latitude": 31.412702,
+    "longitude": 120.84087,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/grand-shanghai-international-golf",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:57.532Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6336
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 490,
+        "handicap": 7
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 400,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 188,
+        "handicap": 15
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 392,
+        "handicap": 1
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 145,
+        "handicap": 17
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 363,
+        "handicap": 5
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 338,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 317,
+        "handicap": 9
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 504,
+        "handicap": 11
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 367,
+        "handicap": 10
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 345,
+        "handicap": 12
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 132,
+        "handicap": 18
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 416,
+        "handicap": 2
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "distance": 531,
+        "handicap": 4
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 172,
+        "handicap": 16
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 345,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 406,
+        "handicap": 6
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 485,
+        "handicap": 8
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0015-01",
+    "name": "Guangzhou Foison Golf Club - Dye",
+    "location": "Fengshen, China",
+    "city": "Fengshen",
+    "country": "China",
+    "latitude": 23.374323,
+    "longitude": 113.139448,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/guangzhou-foison-golf-club-dye",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:58.262Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5639
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 302,
+        "handicap": 13
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 135,
+        "handicap": 14
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 485,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 305,
+        "handicap": 1
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 318,
+        "handicap": 2
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 313,
+        "handicap": 17
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 148,
+        "handicap": 16
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 508,
+        "handicap": 10
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 383,
+        "handicap": 8
+      },
+      {
+        "hole": 10,
+        "par": 5,
+        "distance": 492,
+        "handicap": 11
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 348,
+        "handicap": 3
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 354,
+        "handicap": 18
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 133,
+        "handicap": 7
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 358,
+        "handicap": 12
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 155,
+        "handicap": 6
+      },
+      {
+        "hole": 16,
+        "par": 5,
+        "distance": 455,
+        "handicap": 15
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 120,
+        "handicap": 4
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 327,
+        "handicap": 9
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0015-02",
+    "name": "Guangzhou Foison Golf Club - Guangzhou Foison",
+    "location": "Fengshen, China",
+    "city": "Fengshen",
+    "country": "China",
+    "latitude": 23.374323,
+    "longitude": 113.139448,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/guangzhou-foison-golf-club-guangzhou-foison",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:58.953Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5838
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 314,
+        "handicap": 13
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 350,
+        "handicap": 14
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 462,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 265,
+        "handicap": 1
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 440,
+        "handicap": 2
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 163,
+        "handicap": 17
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 345,
+        "handicap": 16
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 142,
+        "handicap": 10
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 382,
+        "handicap": 8
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 384,
+        "handicap": 11
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 342,
+        "handicap": 3
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 125,
+        "handicap": 18
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 552,
+        "handicap": 7
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 306,
+        "handicap": 12
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 167,
+        "handicap": 6
+      },
+      {
+        "hole": 16,
+        "par": 5,
+        "distance": 494,
+        "handicap": 15
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 271,
+        "handicap": 4
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 334,
+        "handicap": 9
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0056-01",
+    "name": "Guangzhou International Golf Club - Guangzhou International",
+    "location": "Zencheng, China",
+    "city": "Zencheng",
+    "country": "China",
+    "latitude": 23.204441,
+    "longitude": 113.702149,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/guangzhou-international-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:07:59.834Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6706
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 382,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 377,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 185,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 395,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 350,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 520,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 340,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 195,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 489,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 395,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 397,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 148,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 450,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "distance": 505,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 210,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 405,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 5,
+        "distance": 563,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 400,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0059-01",
+    "name": "Guangzhou South Palms Golf Club - Guangzhou South Palms",
+    "location": "Zhenlong, China",
+    "city": "Zhenlong",
+    "country": "China",
+    "latitude": 23.268217,
+    "longitude": 113.56741,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/guangzhou-south-palms-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:00.572Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6085
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 285,
+        "handicap": 17
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 565,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 150,
+        "handicap": 9
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 365,
+        "handicap": 5
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 340,
+        "handicap": 7
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 330,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 165,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 410,
+        "handicap": 1
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 455,
+        "handicap": 15
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 290,
+        "handicap": 18
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 295,
+        "handicap": 10
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 280,
+        "handicap": 14
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 160,
+        "handicap": 12
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "distance": 520,
+        "handicap": 6
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 435,
+        "handicap": 2
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 410,
+        "handicap": 4
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 150,
+        "handicap": 8
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 480,
+        "handicap": 16
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-hi-0003-01",
+    "name": "Haikou Nanyang River Golf Club - Haikou Nanyang River",
+    "location": "Haikou, China",
+    "city": "Haikou",
+    "country": "China",
+    "latitude": 19.826277,
+    "longitude": 110.669032,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/haikou-nanyang-river-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:01.287Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6287
+    },
+    "teeName": "White",
+    "par": 71,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 394,
+        "handicap": 6
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 343,
+        "handicap": 13
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 149,
+        "handicap": 18
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 541,
+        "handicap": 3
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 199,
+        "handicap": 15
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 369,
+        "handicap": 9
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 344,
+        "handicap": 12
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 351,
+        "handicap": 10
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 477,
+        "handicap": 7
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 391,
+        "handicap": 4
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 371,
+        "handicap": 8
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 408,
+        "handicap": 5
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 168,
+        "handicap": 16
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "distance": 543,
+        "handicap": 2
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 359,
+        "handicap": 11
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 336,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 153,
+        "handicap": 17
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 391,
+        "handicap": 1
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-hi-0004-01",
+    "name": "Hainan Moonbay Golf Club - Moonbay",
+    "location": "Haikou, China",
+    "city": "Haikou",
+    "country": "China",
+    "latitude": 19.981927,
+    "longitude": 110.147885,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/hainan-moonbay-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:01.950Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5869
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 317,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 142,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 516,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 327,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 355,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 489,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 314,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 154,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 345,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 309,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 331,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 5,
+        "distance": 471,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 125,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "distance": 510,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 126,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 312,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 361,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 365,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-zj-0003-01",
+    "name": "Hangzhou Jiuqiao Golf and Country Club - Hangzhou Jiuqiao",
+    "location": "Hangzhou, China",
+    "city": "Hangzhou",
+    "country": "China",
+    "latitude": 30.334494,
+    "longitude": 120.399945,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/hangzhou-jiuqiao-golf-and-country-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:02.736Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5967
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 314,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 385,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 492,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 142,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 361,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 128,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 336,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 381,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 472,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 339,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 458,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 144,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 341,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 350,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 118,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 369,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 5,
+        "distance": 482,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 355,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-zj-0004-01",
+    "name": "Hangzhou Xihu International Golf and Country Club - Hangzhou Xihu International",
+    "location": "Hangzhou, China",
+    "city": "Hangzhou",
+    "country": "China",
+    "latitude": 30.173273,
+    "longitude": 120.070325,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/hangzhou-xihu-international-golf-and-country-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:03.355Z",
+      "teeId": "",
+      "teeColor": "Blue",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6307
+    },
+    "teeName": "Blue",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 370,
+        "handicap": 11
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 525,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 161,
+        "handicap": 17
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 399,
+        "handicap": 5
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 282,
+        "handicap": 13
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 345,
+        "handicap": 7
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 132,
+        "handicap": 15
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 486,
+        "handicap": 1
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 344,
+        "handicap": 9
+      },
+      {
+        "hole": 10,
+        "par": 5,
+        "distance": 486,
+        "handicap": 4
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 417,
+        "handicap": 12
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 340,
+        "handicap": 14
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 160,
+        "handicap": 18
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 398,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 378,
+        "handicap": 8
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 176,
+        "handicap": 16
+      },
+      {
+        "hole": 17,
+        "par": 5,
+        "distance": 509,
+        "handicap": 2
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 399,
+        "handicap": 6
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-bj-0019-01",
+    "name": "Honghua International Golf Club - Honghua International",
+    "location": "Chaoyang, China",
+    "city": "Chaoyang",
+    "country": "China",
+    "latitude": 40.008518,
+    "longitude": 116.418639,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/honghua-international-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:04.121Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5724
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 319,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 450,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 351,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 114,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 476,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 342,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 287,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 138,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 364,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 296,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 502,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 111,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 354,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "distance": 448,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 344,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 162,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 285,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 381,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-hi-0010-01",
+    "name": "IBL Golf & Sports Club - IBL",
+    "location": "Qiongshan, China",
+    "city": "Qiongshan",
+    "country": "China",
+    "latitude": 19.845605,
+    "longitude": 110.541247,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/ibl-golf-sports-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:04.826Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6272
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 389,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 150,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 421,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 405,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 496,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 296,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 402,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 175,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 504,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 415,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 518,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 152,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 365,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 335,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 130,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 5,
+        "distance": 479,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 280,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 360,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-bj-0052-01",
+    "name": "Junshan Beijing International Golf Club - Junshan Beijing International",
+    "location": "Miyun, China",
+    "city": "Miyun",
+    "country": "China",
+    "latitude": 40.441929,
+    "longitude": 116.820496,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/junshan-beijing-international-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:06.126Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5400
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 300,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 300,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 300,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 300,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 300,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 300,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 300,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 300,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 300,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 300,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 300,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 300,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 300,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 300,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 300,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 300,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 300,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 300,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-fj-0007-01",
+    "name": "Kai Kou (Xiamen) Golf Club - East",
+    "location": "Xiamen, China",
+    "city": "Xiamen",
+    "country": "China",
+    "latitude": 24.647612,
+    "longitude": 118.131421,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/kai-kou-xiamen-golf-club-east",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:07.459Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6247
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 358,
+        "handicap": 16
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 322,
+        "handicap": 12
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 536,
+        "handicap": 4
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 510,
+        "handicap": 14
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 381,
+        "handicap": 8
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 143,
+        "handicap": 10
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 323,
+        "handicap": 6
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 140,
+        "handicap": 18
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 381,
+        "handicap": 2
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 310,
+        "handicap": 15
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 378,
+        "handicap": 5
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 411,
+        "handicap": 1
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 367,
+        "handicap": 3
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "distance": 175,
+        "handicap": 9
+      },
+      {
+        "hole": 15,
+        "par": 5,
+        "distance": 510,
+        "handicap": 11
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 135,
+        "handicap": 13
+      },
+      {
+        "hole": 17,
+        "par": 5,
+        "distance": 476,
+        "handicap": 17
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 391,
+        "handicap": 7
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-fj-0007-02",
+    "name": "Kai Kou (Xiamen) Golf Club - West",
+    "location": "Xiamen, China",
+    "city": "Xiamen",
+    "country": "China",
+    "latitude": 24.647612,
+    "longitude": 118.131421,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/kai-kou-xiamen-golf-club-west",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:08.224Z",
+      "teeId": "",
+      "teeColor": "Black",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 7119
+    },
+    "teeName": "Pro",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 405,
+        "handicap": 16
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 184,
+        "handicap": 14
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 605,
+        "handicap": 2
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 591,
+        "handicap": 8
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 436,
+        "handicap": 6
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 367,
+        "handicap": 12
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 372,
+        "handicap": 18
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 175,
+        "handicap": 4
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 372,
+        "handicap": 10
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 421,
+        "handicap": 15
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 376,
+        "handicap": 17
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 392,
+        "handicap": 13
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 593,
+        "handicap": 9
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "distance": 602,
+        "handicap": 1
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 209,
+        "handicap": 3
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 391,
+        "handicap": 11
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 188,
+        "handicap": 5
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 440,
+        "handicap": 7
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-hi-0021-01",
+    "name": "Kangle Garden International Golf Club - Kangle Garden International",
+    "location": "Wanning, China",
+    "city": "Wanning",
+    "country": "China",
+    "latitude": 18.751771,
+    "longitude": 110.235381,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/kangle-garden-international-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:09.127Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6259
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 308,
+        "handicap": 16
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 173,
+        "handicap": 12
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 373,
+        "handicap": 10
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 383,
+        "handicap": 8
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 306,
+        "handicap": 14
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 161,
+        "handicap": 18
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 438,
+        "handicap": 6
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 358,
+        "handicap": 4
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 486,
+        "handicap": 2
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 359,
+        "handicap": 17
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 542,
+        "handicap": 3
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 428,
+        "handicap": 5
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 357,
+        "handicap": 11
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "distance": 175,
+        "handicap": 15
+      },
+      {
+        "hole": 15,
+        "par": 5,
+        "distance": 526,
+        "handicap": 1
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 348,
+        "handicap": 13
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 156,
+        "handicap": 7
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 382,
+        "handicap": 9
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-yn-0004-01",
+    "name": "Kunming Country Golf Club - Kunming",
+    "location": "Kunming, China",
+    "city": "Kunming",
+    "country": "China",
+    "latitude": 24.976092,
+    "longitude": 102.86208,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/kunming-country-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:10.093Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6084
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 455,
+        "handicap": 12
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 144,
+        "handicap": 18
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 320,
+        "handicap": 16
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 360,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 120,
+        "handicap": 11
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 345,
+        "handicap": 5
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 288,
+        "handicap": 14
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 356,
+        "handicap": 3
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 464,
+        "handicap": 10
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 398,
+        "handicap": 6
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 534,
+        "handicap": 2
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 144,
+        "handicap": 9
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 340,
+        "handicap": 13
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 418,
+        "handicap": 1
+      },
+      {
+        "hole": 15,
+        "par": 5,
+        "distance": 490,
+        "handicap": 15
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 150,
+        "handicap": 8
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 350,
+        "handicap": 17
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 408,
+        "handicap": 4
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-yn-0002-01",
+    "name": "Kunming Sunshine Golf Club - Kunming Sunshine",
+    "location": "Kunming, China",
+    "city": "Kunming",
+    "country": "China",
+    "latitude": 25.115319,
+    "longitude": 102.783812,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/kunming-sunshine-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:10.727Z",
+      "teeId": "",
+      "teeColor": "Black",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 7217
+    },
+    "teeName": "Black",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 375,
+        "handicap": 18
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 423,
+        "handicap": 10
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 463,
+        "handicap": 2
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 599,
+        "handicap": 4
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 236,
+        "handicap": 6
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 404,
+        "handicap": 8
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 159,
+        "handicap": 16
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 410,
+        "handicap": 12
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 580,
+        "handicap": 14
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 402,
+        "handicap": 17
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 210,
+        "handicap": 15
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 430,
+        "handicap": 7
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 556,
+        "handicap": 9
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 398,
+        "handicap": 1
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 443,
+        "handicap": 5
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 369,
+        "handicap": 3
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 192,
+        "handicap": 11
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 568,
+        "handicap": 13
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sh-0014-02",
+    "name": "Lake Malaren Golf Club Shanghai - Masters",
+    "location": "Shanghai, China",
+    "city": "Shanghai",
+    "country": "China",
+    "latitude": 31.40321,
+    "longitude": 121.369194,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/lake-malaren-golf-club-shanghai-masters",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:11.425Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6181
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 372,
+        "handicap": 7
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 488,
+        "handicap": 11
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 138,
+        "handicap": 17
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 381,
+        "handicap": 3
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 340,
+        "handicap": 13
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 176,
+        "handicap": 5
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 381,
+        "handicap": 9
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 308,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 534,
+        "handicap": 1
+      },
+      {
+        "hole": 10,
+        "par": 5,
+        "distance": 485,
+        "handicap": 14
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 313,
+        "handicap": 16
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 108,
+        "handicap": 8
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 370,
+        "handicap": 10
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "distance": 514,
+        "handicap": 2
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 152,
+        "handicap": 18
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 355,
+        "handicap": 12
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 364,
+        "handicap": 6
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 402,
+        "handicap": 4
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sh-0014-01",
+    "name": "Lake Malaren Golf Club Shanghai - North Forest",
+    "location": "Shanghai, China",
+    "city": "Shanghai",
+    "country": "China",
+    "latitude": 31.40321,
+    "longitude": 121.369194,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/lake-malaren-golf-club-shanghai-north-forest",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:12.114Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6217
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 368,
+        "handicap": 16
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 500,
+        "handicap": 10
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 332,
+        "handicap": 14
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 140,
+        "handicap": 8
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 394,
+        "handicap": 12
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 326,
+        "handicap": 4
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 172,
+        "handicap": 6
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 460,
+        "handicap": 18
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 382,
+        "handicap": 2
+      },
+      {
+        "hole": 10,
+        "par": 5,
+        "distance": 472,
+        "handicap": 13
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 343,
+        "handicap": 17
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 139,
+        "handicap": 7
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 305,
+        "handicap": 15
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 367,
+        "handicap": 11
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 427,
+        "handicap": 1
+      },
+      {
+        "hole": 16,
+        "par": 5,
+        "distance": 526,
+        "handicap": 9
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 151,
+        "handicap": 5
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 413,
+        "handicap": 3
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0017-01",
+    "name": "Lakeside Golf Club - Lakeside",
+    "location": "Suzhou, China",
+    "city": "Suzhou",
+    "country": "China",
+    "latitude": 31.382682,
+    "longitude": 120.715485,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/lakeside-golf-club-suzhou",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:12.767Z",
+      "teeId": "",
+      "teeColor": "Blue",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5400
+    },
+    "teeName": "Blue",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 300,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 300,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 300,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 300,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 300,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 300,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 300,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 300,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 300,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 300,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 300,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 300,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 300,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 300,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 300,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 300,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 300,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 300,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-bj-0030-01",
+    "name": "Longxi Hotspring Golf Club - Beijing Longxi Hotspring",
+    "location": "Daxing, China",
+    "city": "Daxing",
+    "country": "China",
+    "latitude": 39.625819,
+    "longitude": 116.300584,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/longxi-hotspring-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:13.701Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6219
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 320,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 315,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 550,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 144,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 390,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 123,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 385,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 500,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 400,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 395,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 142,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 350,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 440,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 365,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 340,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 155,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 395,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 510,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0012-01",
+    "name": "Mission Hills Golf Club - Dongguan - Annika",
+    "location": "Dongguan, China",
+    "city": "Dongguan",
+    "country": "China",
+    "latitude": 22.784624,
+    "longitude": 114.004215,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/mission-hills-golf-club-dongguan-annika",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:19.237Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": 67.3,
+      "slope": 126,
+      "totalDistance": 5438
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 495,
+        "handicap": 8
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 342,
+        "handicap": 4
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 430,
+        "handicap": 12
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 301,
+        "handicap": 6
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 117,
+        "handicap": 16
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 413,
+        "handicap": 2
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 136,
+        "handicap": 14
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 144,
+        "handicap": 10
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 277,
+        "handicap": 18
+      },
+      {
+        "hole": 10,
+        "par": 5,
+        "distance": 432,
+        "handicap": 11
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 333,
+        "handicap": 7
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 120,
+        "handicap": 17
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 458,
+        "handicap": 9
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "distance": 482,
+        "handicap": 5
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 154,
+        "handicap": 3
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 282,
+        "handicap": 15
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 127,
+        "handicap": 13
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 395,
+        "handicap": 1
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0012-03",
+    "name": "Mission Hills Golf Club - Dongguan - Leadbetter",
+    "location": "Dongguan, China",
+    "city": "Dongguan",
+    "country": "China",
+    "latitude": 22.784624,
+    "longitude": 114.004215,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/mission-hills-golf-club-dongguan-leadbetter",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:19.879Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": 68.7,
+      "slope": 127,
+      "totalDistance": 5844
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 374,
+        "handicap": 6
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 480,
+        "handicap": 8
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 146,
+        "handicap": 10
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 302,
+        "handicap": 14
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 298,
+        "handicap": 18
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 469,
+        "handicap": 2
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 308,
+        "handicap": 12
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 353,
+        "handicap": 4
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 278,
+        "handicap": 16
+      },
+      {
+        "hole": 10,
+        "par": 3,
+        "distance": 100,
+        "handicap": 17
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 345,
+        "handicap": 13
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 432,
+        "handicap": 1
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 506,
+        "handicap": 3
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "distance": 149,
+        "handicap": 7
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 345,
+        "handicap": 11
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 163,
+        "handicap": 15
+      },
+      {
+        "hole": 17,
+        "par": 5,
+        "distance": 459,
+        "handicap": 5
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 337,
+        "handicap": 9
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0012-05",
+    "name": "Mission Hills Golf Club - Dongguan - Norman",
+    "location": "Dongguan, China",
+    "city": "Dongguan",
+    "country": "China",
+    "latitude": 22.784624,
+    "longitude": 114.004215,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/mission-hills-golf-club-dongguan-norman",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:20.512Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6104
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 369,
+        "handicap": 8
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 252,
+        "handicap": 18
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 371,
+        "handicap": 14
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 115,
+        "handicap": 6
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 327,
+        "handicap": 16
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 149,
+        "handicap": 12
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 478,
+        "handicap": 4
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 471,
+        "handicap": 10
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 391,
+        "handicap": 2
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 302,
+        "handicap": 17
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 144,
+        "handicap": 15
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 389,
+        "handicap": 3
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 321,
+        "handicap": 11
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "distance": 562,
+        "handicap": 1
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 336,
+        "handicap": 13
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 149,
+        "handicap": 9
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 439,
+        "handicap": 5
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 539,
+        "handicap": 7
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0012-04",
+    "name": "Mission Hills Golf Club - Dongguan - Olazabal",
+    "location": "Dongguan, China",
+    "city": "Dongguan",
+    "country": "China",
+    "latitude": 22.784624,
+    "longitude": 114.004215,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/mission-hills-golf-club-dongguan-olazabal",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:21.243Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": 69.7,
+      "slope": 135,
+      "totalDistance": 6033
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 381,
+        "handicap": 9
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 139,
+        "handicap": 17
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 477,
+        "handicap": 7
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 365,
+        "handicap": 11
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 132,
+        "handicap": 15
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 390,
+        "handicap": 3
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 493,
+        "handicap": 5
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 149,
+        "handicap": 13
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 506,
+        "handicap": 1
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 314,
+        "handicap": 16
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 452,
+        "handicap": 8
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 380,
+        "handicap": 12
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 172,
+        "handicap": 10
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 312,
+        "handicap": 14
+      },
+      {
+        "hole": 15,
+        "par": 5,
+        "distance": 503,
+        "handicap": 2
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 366,
+        "handicap": 6
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 135,
+        "handicap": 18
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 367,
+        "handicap": 4
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0012-02",
+    "name": "Mission Hills Golf Club - Dongguan - Rose-Poulter",
+    "location": "Dongguan, China",
+    "city": "Dongguan",
+    "country": "China",
+    "latitude": 22.784624,
+    "longitude": 114.004215,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/mission-hills-golf-club-dongguan-rose-poulter",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:22.052Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5784
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 459,
+        "handicap": 17
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 179,
+        "handicap": 13
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 283,
+        "handicap": 7
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 487,
+        "handicap": 3
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 311,
+        "handicap": 1
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 166,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 494,
+        "handicap": 5
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 95,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 354,
+        "handicap": 9
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 324,
+        "handicap": 14
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 290,
+        "handicap": 12
+      },
+      {
+        "hole": 12,
+        "par": 5,
+        "distance": 474,
+        "handicap": 8
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 384,
+        "handicap": 6
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "distance": 134,
+        "handicap": 16
+      },
+      {
+        "hole": 15,
+        "par": 5,
+        "distance": 483,
+        "handicap": 4
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 343,
+        "handicap": 10
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 132,
+        "handicap": 18
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 392,
+        "handicap": 2
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0023-01",
+    "name": "Mission Hills Golf Club - Haikou - Blackstone",
+    "location": "Haikou, China",
+    "city": "Haikou",
+    "country": "China",
+    "latitude": 19.912445,
+    "longitude": 110.316345,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/mission-hills-golf-club-haikou-blackstone",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:22.977Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": 71.3,
+      "slope": 126,
+      "totalDistance": 6211
+    },
+    "teeName": "White",
+    "par": 73,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 371,
+        "handicap": 11
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 524,
+        "handicap": 7
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 368,
+        "handicap": 9
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 412,
+        "handicap": 3
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 121,
+        "handicap": 13
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 528,
+        "handicap": 1
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 304,
+        "handicap": 17
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 157,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 410,
+        "handicap": 5
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 312,
+        "handicap": 12
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 178,
+        "handicap": 8
+      },
+      {
+        "hole": 12,
+        "par": 5,
+        "distance": 442,
+        "handicap": 18
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 524,
+        "handicap": 2
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 338,
+        "handicap": 6
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 143,
+        "handicap": 14
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 290,
+        "handicap": 16
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 366,
+        "handicap": 4
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 423,
+        "handicap": 10
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0023-08",
+    "name": "Mission Hills Golf Club - Haikou - Double Pin",
+    "location": "Haikou, China",
+    "city": "Haikou",
+    "country": "China",
+    "latitude": 19.912445,
+    "longitude": 110.316345,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/mission-hills-golf-club-haikou-double-pin",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:24.276Z",
+      "teeId": "",
+      "teeColor": "Blue",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 1921
+    },
+    "teeName": "Blue",
+    "par": 54,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 3,
+        "distance": 139,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 122,
+        "handicap": 7
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 104,
+        "handicap": 13
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 98,
+        "handicap": 5
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 73,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 98,
+        "handicap": 3
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 85,
+        "handicap": 17
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 92,
+        "handicap": 11
+      },
+      {
+        "hole": 9,
+        "par": 3,
+        "distance": 100,
+        "handicap": 15
+      },
+      {
+        "hole": 10,
+        "par": 3,
+        "distance": 97,
+        "handicap": 10
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 112,
+        "handicap": 16
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 80,
+        "handicap": 18
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 111,
+        "handicap": 6
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "distance": 88,
+        "handicap": 12
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 118,
+        "handicap": 14
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 127,
+        "handicap": 8
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 118,
+        "handicap": 4
+      },
+      {
+        "hole": 18,
+        "par": 3,
+        "distance": 159,
+        "handicap": 2
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0023-05",
+    "name": "Mission Hills Golf Club - Haikou - Lava Fields",
+    "location": "Haikou, China",
+    "city": "Haikou",
+    "country": "China",
+    "latitude": 19.912445,
+    "longitude": 110.316345,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/mission-hills-golf-club-haikou-lava-fields",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:25.008Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": 69.9,
+      "slope": 137,
+      "totalDistance": 6025
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 494,
+        "handicap": 3
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 380,
+        "handicap": 5
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 326,
+        "handicap": 7
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 123,
+        "handicap": 17
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 345,
+        "handicap": 11
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 277,
+        "handicap": 15
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 435,
+        "handicap": 9
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 129,
+        "handicap": 13
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 389,
+        "handicap": 1
+      },
+      {
+        "hole": 10,
+        "par": 3,
+        "distance": 178,
+        "handicap": 10
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 334,
+        "handicap": 14
+      },
+      {
+        "hole": 12,
+        "par": 5,
+        "distance": 536,
+        "handicap": 2
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 403,
+        "handicap": 6
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 343,
+        "handicap": 16
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 133,
+        "handicap": 18
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 379,
+        "handicap": 8
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 339,
+        "handicap": 12
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 482,
+        "handicap": 4
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0023-06",
+    "name": "Mission Hills Golf Club - Haikou - Meadow Links",
+    "location": "Haikou, China",
+    "city": "Haikou",
+    "country": "China",
+    "latitude": 19.912445,
+    "longitude": 110.316345,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/mission-hills-golf-club-haikou-meadow-links",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:25.665Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5701
+    },
+    "teeName": "White",
+    "par": 70,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 321,
+        "handicap": 13
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 322,
+        "handicap": 7
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 352,
+        "handicap": 3
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 487,
+        "handicap": 1
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 124,
+        "handicap": 17
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 327,
+        "handicap": 9
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 320,
+        "handicap": 15
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 147,
+        "handicap": 11
+      },
+      {
+        "hole": 9,
+        "par": 3,
+        "distance": 146,
+        "handicap": 5
+      },
+      {
+        "hole": 10,
+        "par": 5,
+        "distance": 524,
+        "handicap": 4
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 336,
+        "handicap": 12
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 318,
+        "handicap": 16
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 185,
+        "handicap": 14
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 372,
+        "handicap": 8
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 421,
+        "handicap": 6
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 308,
+        "handicap": 18
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 170,
+        "handicap": 10
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 521,
+        "handicap": 2
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0023-02",
+    "name": "Mission Hills Golf Club - Haikou - Sandbelt Trails",
+    "location": "Haikou, China",
+    "city": "Haikou",
+    "country": "China",
+    "latitude": 19.912445,
+    "longitude": 110.316345,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/mission-hills-golf-club-haikou-sandbelt-trails",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:26.436Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": 67.9,
+      "slope": 122,
+      "totalDistance": 5893
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 513,
+        "handicap": 3
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 372,
+        "handicap": 1
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 287,
+        "handicap": 17
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 374,
+        "handicap": 9
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 131,
+        "handicap": 15
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 358,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 253,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 421,
+        "handicap": 7
+      },
+      {
+        "hole": 9,
+        "par": 3,
+        "distance": 132,
+        "handicap": 5
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 317,
+        "handicap": 10
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 331,
+        "handicap": 18
+      },
+      {
+        "hole": 12,
+        "par": 5,
+        "distance": 546,
+        "handicap": 2
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 362,
+        "handicap": 14
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "distance": 187,
+        "handicap": 8
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 318,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 154,
+        "handicap": 16
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 375,
+        "handicap": 4
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 462,
+        "handicap": 6
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0023-10",
+    "name": "Mission Hills Golf Club - Haikou - Shadow Dunes",
+    "location": "Haikou, China",
+    "city": "Haikou",
+    "country": "China",
+    "latitude": 19.912445,
+    "longitude": 110.316345,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/mission-hills-golf-club-haikou-shadow-dunes",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:27.301Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5429
+    },
+    "teeName": "White",
+    "par": 70,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 315,
+        "handicap": 9
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 319,
+        "handicap": 17
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 152,
+        "handicap": 7
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 454,
+        "handicap": 1
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 361,
+        "handicap": 5
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 268,
+        "handicap": 15
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 322,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 133,
+        "handicap": 11
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 342,
+        "handicap": 3
+      },
+      {
+        "hole": 10,
+        "par": 5,
+        "distance": 502,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 369,
+        "handicap": 8
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 293,
+        "handicap": 16
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 128,
+        "handicap": 14
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 293,
+        "handicap": 18
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 119,
+        "handicap": 10
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 381,
+        "handicap": 6
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 309,
+        "handicap": 12
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 369,
+        "handicap": 4
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0023-04",
+    "name": "Mission Hills Golf Club - Haikou - Stepping Stone",
+    "location": "Haikou, China",
+    "city": "Haikou",
+    "country": "China",
+    "latitude": 19.912445,
+    "longitude": 110.316345,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/mission-hills-golf-club-haikou-stepping-stone",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:28.155Z",
+      "teeId": "",
+      "teeColor": "Blue",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2176
+    },
+    "teeName": "Blue",
+    "par": 54,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 3,
+        "distance": 98,
+        "handicap": 17
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 152,
+        "handicap": 5
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 117,
+        "handicap": 1
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 115,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 127,
+        "handicap": 3
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 101,
+        "handicap": 13
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 105,
+        "handicap": 9
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 109,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 3,
+        "distance": 112,
+        "handicap": 11
+      },
+      {
+        "hole": 10,
+        "par": 3,
+        "distance": 109,
+        "handicap": 10
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 127,
+        "handicap": 8
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 132,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 107,
+        "handicap": 18
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "distance": 120,
+        "handicap": 14
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 141,
+        "handicap": 4
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 131,
+        "handicap": 12
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 120,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 3,
+        "distance": 153,
+        "handicap": 2
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0023-07",
+    "name": "Mission Hills Golf Club - Haikou - Stone Quarry",
+    "location": "Haikou, China",
+    "city": "Haikou",
+    "country": "China",
+    "latitude": 19.912445,
+    "longitude": 110.316345,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/mission-hills-golf-club-haikou-stone-quarry",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:28.766Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5043
+    },
+    "teeName": "White",
+    "par": 70,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 495,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 154,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 346,
+        "handicap": 9
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 326,
+        "handicap": 5
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 164,
+        "handicap": 11
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 234,
+        "handicap": 17
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 467,
+        "handicap": 7
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 118,
+        "handicap": 13
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 305,
+        "handicap": 15
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 359,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 85,
+        "handicap": 16
+      },
+      {
+        "hole": 12,
+        "par": 5,
+        "distance": 463,
+        "handicap": 4
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 257,
+        "handicap": 18
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 324,
+        "handicap": 6
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 109,
+        "handicap": 10
+      },
+      {
+        "hole": 16,
+        "par": 5,
+        "distance": 460,
+        "handicap": 8
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 102,
+        "handicap": 14
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 275,
+        "handicap": 12
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0023-09",
+    "name": "Mission Hills Golf Club - Haikou - The Preserve",
+    "location": "Haikou, China",
+    "city": "Haikou",
+    "country": "China",
+    "latitude": 19.912445,
+    "longitude": 110.316345,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/mission-hills-golf-club-haikou-the-preserve",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:29.506Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5469
+    },
+    "teeName": "White",
+    "par": 70,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 539,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 339,
+        "handicap": 13
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 171,
+        "handicap": 7
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 294,
+        "handicap": 5
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 312,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 322,
+        "handicap": 3
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 326,
+        "handicap": 15
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 311,
+        "handicap": 11
+      },
+      {
+        "hole": 9,
+        "par": 3,
+        "distance": 122,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 310,
+        "handicap": 16
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 127,
+        "handicap": 10
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 363,
+        "handicap": 4
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 332,
+        "handicap": 12
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "distance": 115,
+        "handicap": 18
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 335,
+        "handicap": 14
+      },
+      {
+        "hole": 16,
+        "par": 5,
+        "distance": 479,
+        "handicap": 6
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 148,
+        "handicap": 8
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 524,
+        "handicap": 2
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0023-03",
+    "name": "Mission Hills Golf Club - Haikou - The Vintage",
+    "location": "Haikou, China",
+    "city": "Haikou",
+    "country": "China",
+    "latitude": 19.912445,
+    "longitude": 110.316345,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/mission-hills-golf-club-haikou-the-vintage",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:30.251Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5870
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 307,
+        "handicap": 17
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 373,
+        "handicap": 11
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 441,
+        "handicap": 3
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 447,
+        "handicap": 1
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 364,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 402,
+        "handicap": 7
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 342,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 145,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 481,
+        "handicap": 5
+      },
+      {
+        "hole": 10,
+        "par": 3,
+        "distance": 144,
+        "handicap": 18
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 348,
+        "handicap": 14
+      },
+      {
+        "hole": 12,
+        "par": 5,
+        "distance": 489,
+        "handicap": 2
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 117,
+        "handicap": 16
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 327,
+        "handicap": 6
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 365,
+        "handicap": 4
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 294,
+        "handicap": 10
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 149,
+        "handicap": 12
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 335,
+        "handicap": 8
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0045-06",
+    "name": "Mission Hills Golf Club - Shenzhen - Els",
+    "location": "Shenzhen, China",
+    "city": "Shenzhen",
+    "country": "China",
+    "latitude": 22.782753,
+    "longitude": 114.009519,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/mission-hills-golf-club-shenzhen-els",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:30.990Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": 67.7,
+      "slope": 120,
+      "totalDistance": 5680
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 359,
+        "handicap": 3
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 329,
+        "handicap": 11
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 124,
+        "handicap": 17
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 533,
+        "handicap": 9
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 130,
+        "handicap": 15
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 447,
+        "handicap": 1
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 398,
+        "handicap": 5
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 283,
+        "handicap": 13
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 350,
+        "handicap": 7
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 254,
+        "handicap": 14
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 484,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 318,
+        "handicap": 10
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 465,
+        "handicap": 2
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 271,
+        "handicap": 12
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 106,
+        "handicap": 18
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 324,
+        "handicap": 8
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 142,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 363,
+        "handicap": 6
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0045-02",
+    "name": "Mission Hills Golf Club - Shenzhen - Faldo",
+    "location": "Shenzhen, China",
+    "city": "Shenzhen",
+    "country": "China",
+    "latitude": 22.782753,
+    "longitude": 114.009519,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/mission-hills-golf-club-shenzhen-faldo",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:31.700Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": 67.2,
+      "slope": 113,
+      "totalDistance": 5547
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 433,
+        "handicap": 7
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 363,
+        "handicap": 1
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 259,
+        "handicap": 13
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 437,
+        "handicap": 5
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 272,
+        "handicap": 11
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 147,
+        "handicap": 15
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 344,
+        "handicap": 9
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 137,
+        "handicap": 17
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 372,
+        "handicap": 3
+      },
+      {
+        "hole": 10,
+        "par": 5,
+        "distance": 485,
+        "handicap": 10
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 297,
+        "handicap": 12
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 323,
+        "handicap": 4
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 169,
+        "handicap": 16
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 375,
+        "handicap": 8
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 271,
+        "handicap": 14
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 106,
+        "handicap": 18
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 343,
+        "handicap": 2
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 414,
+        "handicap": 6
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0045-05",
+    "name": "Mission Hills Golf Club - Shenzhen - Ozaki",
+    "location": "Shenzhen, China",
+    "city": "Shenzhen",
+    "country": "China",
+    "latitude": 22.782753,
+    "longitude": 114.009519,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/mission-hills-golf-club-shenzhen-ozaki",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:32.461Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": 67.7,
+      "slope": 117,
+      "totalDistance": 5740
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 362,
+        "handicap": 3
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 284,
+        "handicap": 11
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 428,
+        "handicap": 1
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 380,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 367,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 103,
+        "handicap": 17
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 270,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 172,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 497,
+        "handicap": 5
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 249,
+        "handicap": 14
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 351,
+        "handicap": 8
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 165,
+        "handicap": 16
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 316,
+        "handicap": 12
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "distance": 530,
+        "handicap": 2
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 281,
+        "handicap": 10
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 354,
+        "handicap": 4
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 142,
+        "handicap": 18
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 489,
+        "handicap": 6
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0045-03",
+    "name": "Mission Hills Golf Club - Shenzhen - Peter Dye",
+    "location": "Shenzhen, China",
+    "city": "Shenzhen",
+    "country": "China",
+    "latitude": 22.782753,
+    "longitude": 114.009519,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/mission-hills-golf-club-shenzhen-peter-dye",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:33.152Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5608
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 354,
+        "handicap": 9
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 112,
+        "handicap": 15
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 281,
+        "handicap": 13
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 490,
+        "handicap": 5
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 320,
+        "handicap": 7
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 509,
+        "handicap": 1
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 336,
+        "handicap": 3
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 264,
+        "handicap": 17
+      },
+      {
+        "hole": 9,
+        "par": 3,
+        "distance": 120,
+        "handicap": 11
+      },
+      {
+        "hole": 10,
+        "par": 3,
+        "distance": 157,
+        "handicap": 10
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 268,
+        "handicap": 18
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 343,
+        "handicap": 14
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 453,
+        "handicap": 6
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 283,
+        "handicap": 8
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 273,
+        "handicap": 16
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 146,
+        "handicap": 12
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 412,
+        "handicap": 2
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 487,
+        "handicap": 4
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0045-04",
+    "name": "Mission Hills Golf Club - Shenzhen - Vijay",
+    "location": "Shenzhen, China",
+    "city": "Shenzhen",
+    "country": "China",
+    "latitude": 22.782753,
+    "longitude": 114.009519,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/mission-hills-golf-club-shenzhen-vijay",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:33.922Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": 67.6,
+      "slope": 117,
+      "totalDistance": 5720
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 465,
+        "handicap": 5
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 333,
+        "handicap": 15
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 120,
+        "handicap": 13
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 333,
+        "handicap": 11
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 239,
+        "handicap": 17
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 522,
+        "handicap": 1
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 293,
+        "handicap": 9
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 131,
+        "handicap": 7
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 384,
+        "handicap": 3
+      },
+      {
+        "hole": 10,
+        "par": 5,
+        "distance": 491,
+        "handicap": 4
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 449,
+        "handicap": 10
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 141,
+        "handicap": 12
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 473,
+        "handicap": 6
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "distance": 104,
+        "handicap": 16
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 316,
+        "handicap": 18
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 148,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 380,
+        "handicap": 8
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 398,
+        "handicap": 2
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0045-01",
+    "name": "Mission Hills Golf Club - Shenzhen - World Cup",
+    "location": "Shenzhen, China",
+    "city": "Shenzhen",
+    "country": "China",
+    "latitude": 22.782753,
+    "longitude": 114.009519,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/mission-hills-golf-club-shenzhen-world-cup",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:34.610Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": 68.3,
+      "slope": 128,
+      "totalDistance": 5785
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 310,
+        "handicap": 11
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 477,
+        "handicap": 5
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 298,
+        "handicap": 13
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 319,
+        "handicap": 9
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 178,
+        "handicap": 15
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 416,
+        "handicap": 1
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 332,
+        "handicap": 7
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 119,
+        "handicap": 17
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 335,
+        "handicap": 3
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 339,
+        "handicap": 16
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 469,
+        "handicap": 6
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 346,
+        "handicap": 10
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 142,
+        "handicap": 18
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 335,
+        "handicap": 8
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 153,
+        "handicap": 14
+      },
+      {
+        "hole": 16,
+        "par": 5,
+        "distance": 464,
+        "handicap": 2
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 391,
+        "handicap": 12
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 362,
+        "handicap": 4
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0045-07",
+    "name": "Mission Hills Golf Club - Shenzhen - Zhang Lei Wei",
+    "location": "Shenzhen, China",
+    "city": "Shenzhen",
+    "country": "China",
+    "latitude": 22.782753,
+    "longitude": 114.009519,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/mission-hills-golf-club-shenzhen-zhang-lei-wei",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:35.252Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2119
+    },
+    "teeName": "White",
+    "par": 54,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 3,
+        "distance": 93,
+        "handicap": 17
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 75,
+        "handicap": 15
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 80,
+        "handicap": 7
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 94,
+        "handicap": 9
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 132,
+        "handicap": 5
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 118,
+        "handicap": 13
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 118,
+        "handicap": 11
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 109,
+        "handicap": 1
+      },
+      {
+        "hole": 9,
+        "par": 3,
+        "distance": 187,
+        "handicap": 3
+      },
+      {
+        "hole": 10,
+        "par": 3,
+        "distance": 139,
+        "handicap": 6
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 85,
+        "handicap": 16
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 166,
+        "handicap": 4
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 136,
+        "handicap": 10
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "distance": 134,
+        "handicap": 8
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 115,
+        "handicap": 18
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 98,
+        "handicap": 12
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 105,
+        "handicap": 14
+      },
+      {
+        "hole": 18,
+        "par": 3,
+        "distance": 135,
+        "handicap": 2
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0008-01",
+    "name": "Nanjing Harvard Golf Club - Nanjing Harvard",
+    "location": "Nanjing, China",
+    "city": "Nanjing",
+    "country": "China",
+    "latitude": 32.128612,
+    "longitude": 118.656734,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/nanjing-harvard-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:39.877Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6426
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 380,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 150,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 380,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 500,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 359,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 326,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 468,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 175,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 400,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 5,
+        "distance": 512,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 380,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 180,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 417,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 286,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 5,
+        "distance": 515,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 450,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 368,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 3,
+        "distance": 180,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0009-01",
+    "name": "Nanjing Siji Tianlai Hotspring Rural Golf Club - Nanjing Siji Tianlai Hotspring Rural",
+    "location": "Nanjing, China",
+    "city": "Nanjing",
+    "country": "China",
+    "latitude": 32.068099,
+    "longitude": 119.03274,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/nanjing-siji-tianlai-hotspring-rural-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:40.525Z",
+      "teeId": "",
+      "teeColor": "Blue",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2700
+    },
+    "teeName": "Blue",
+    "par": 27,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 3,
+        "distance": 300,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 300,
+        "handicap": 2
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 300,
+        "handicap": 3
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 300,
+        "handicap": 4
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 300,
+        "handicap": 5
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 300,
+        "handicap": 6
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 300,
+        "handicap": 7
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 300,
+        "handicap": 8
+      },
+      {
+        "hole": 9,
+        "par": 3,
+        "distance": 300,
+        "handicap": 9
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0010-01",
+    "name": "Nanjing Sun Island Golf Club - Nanjing Sun Island",
+    "location": "Nanjing, China",
+    "city": "Nanjing",
+    "country": "China",
+    "latitude": 31.638977,
+    "longitude": 118.973684,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/nanjing-sun-island-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:41.261Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6091
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 552,
+        "handicap": 11
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 315,
+        "handicap": 13
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 402,
+        "handicap": 3
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 164,
+        "handicap": 1
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 308,
+        "handicap": 15
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 261,
+        "handicap": 17
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 168,
+        "handicap": 9
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 345,
+        "handicap": 7
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 510,
+        "handicap": 5
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 383,
+        "handicap": 4
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 379,
+        "handicap": 2
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 371,
+        "handicap": 16
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 489,
+        "handicap": 18
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 370,
+        "handicap": 12
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 153,
+        "handicap": 14
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 340,
+        "handicap": 8
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 148,
+        "handicap": 10
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 433,
+        "handicap": 6
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0011-05",
+    "name": "Nanjing Zhongshan International Golf Club - Lake",
+    "location": "Nanjing, China",
+    "city": "Nanjing",
+    "country": "China",
+    "latitude": 32.082202,
+    "longitude": 118.873116,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/nanjing-zhongshan-international-golf-club-lake",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:41.957Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2929
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 363,
+        "handicap": 4
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 490,
+        "handicap": 12
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 349,
+        "handicap": 10
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 87,
+        "handicap": 16
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 522,
+        "handicap": 18
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 280,
+        "handicap": 14
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 324,
+        "handicap": 8
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 153,
+        "handicap": 6
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 361,
+        "handicap": 2
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0011-04",
+    "name": "Nanjing Zhongshan International Golf Club - Mountain",
+    "location": "Nanjing, China",
+    "city": "Nanjing",
+    "country": "China",
+    "latitude": 32.082202,
+    "longitude": 118.873116,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/nanjing-zhongshan-international-golf-club-mountain",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:42.621Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 3059
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 352,
+        "handicap": 9
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 510,
+        "handicap": 17
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 152,
+        "handicap": 7
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 290,
+        "handicap": 1
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 348,
+        "handicap": 11
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 360,
+        "handicap": 13
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 498,
+        "handicap": 15
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 182,
+        "handicap": 3
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 367,
+        "handicap": 5
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0011-01",
+    "name": "Nanjing Zhongshan International Golf Club - Mountain-Lake",
+    "location": "Nanjing, China",
+    "city": "Nanjing",
+    "country": "China",
+    "latitude": 32.082202,
+    "longitude": 118.873116,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/nanjing-zhongshan-international-golf-club-mountain-lake",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:43.682Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5988
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 352,
+        "handicap": 9
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 510,
+        "handicap": 17
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 152,
+        "handicap": 7
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 290,
+        "handicap": 1
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 348,
+        "handicap": 11
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 360,
+        "handicap": 13
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 498,
+        "handicap": 15
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 182,
+        "handicap": 3
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 367,
+        "handicap": 5
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 363,
+        "handicap": 4
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 490,
+        "handicap": 12
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 349,
+        "handicap": 10
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 87,
+        "handicap": 16
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "distance": 522,
+        "handicap": 18
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 280,
+        "handicap": 14
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 324,
+        "handicap": 8
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 153,
+        "handicap": 6
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 361,
+        "handicap": 2
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0011-06",
+    "name": "Nanjing Zhongshan International Golf Club - Valley",
+    "location": "Nanjing, China",
+    "city": "Nanjing",
+    "country": "China",
+    "latitude": 32.082202,
+    "longitude": 118.873116,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/nanjing-zhongshan-international-golf-club-valley",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:44.293Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2911
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 339,
+        "handicap": 6
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 484,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 170,
+        "handicap": 2
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 376,
+        "handicap": 1
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 120,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 325,
+        "handicap": 5
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 270,
+        "handicap": 8
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 484,
+        "handicap": 7
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 343,
+        "handicap": 4
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0011-03",
+    "name": "Nanjing Zhongshan International Golf Club - Valley-Lake",
+    "location": "Nanjing, China",
+    "city": "Nanjing",
+    "country": "China",
+    "latitude": 32.082202,
+    "longitude": 118.873116,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/nanjing-zhongshan-international-golf-club-valley-lake",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:45.000Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5840
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 339,
+        "handicap": 6
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 484,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 170,
+        "handicap": 2
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 376,
+        "handicap": 1
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 120,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 325,
+        "handicap": 5
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 270,
+        "handicap": 8
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 484,
+        "handicap": 7
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 343,
+        "handicap": 4
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 363,
+        "handicap": 13
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 490,
+        "handicap": 12
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 349,
+        "handicap": 10
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 87,
+        "handicap": 16
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "distance": 522,
+        "handicap": 18
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 280,
+        "handicap": 14
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 324,
+        "handicap": 17
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 153,
+        "handicap": 15
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 361,
+        "handicap": 11
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0011-02",
+    "name": "Nanjing Zhongshan International Golf Club - Valley-Mountain",
+    "location": "Nanjing, China",
+    "city": "Nanjing",
+    "country": "China",
+    "latitude": 32.082202,
+    "longitude": 118.873116,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/nanjing-zhongshan-international-golf-club-valley-mountain",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:45.694Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5970
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 339,
+        "handicap": 6
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 484,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 170,
+        "handicap": 2
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 376,
+        "handicap": 1
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 120,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 325,
+        "handicap": 5
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 270,
+        "handicap": 8
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 484,
+        "handicap": 7
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 343,
+        "handicap": 4
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 352,
+        "handicap": 18
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 510,
+        "handicap": 17
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 152,
+        "handicap": 16
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 290,
+        "handicap": 10
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 348,
+        "handicap": 11
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 360,
+        "handicap": 13
+      },
+      {
+        "hole": 16,
+        "par": 5,
+        "distance": 498,
+        "handicap": 15
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 182,
+        "handicap": 12
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 367,
+        "handicap": 14
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sd-0018-02",
+    "name": "Nanshan Donghai East Golf Club - Sea Charm",
+    "location": "Yantai, China",
+    "city": "Yantai",
+    "country": "China",
+    "latitude": 37.712838,
+    "longitude": 120.420904,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/nanshan-donghai-east-golf-club-sea-charm",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:46.267Z",
+      "teeId": "",
+      "teeColor": "Blue",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5400
+    },
+    "teeName": "Blue",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 300,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 300,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 300,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 300,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 300,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 300,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 300,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 300,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 300,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 300,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 300,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 300,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 300,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 300,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 300,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 300,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 300,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 300,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sd-0018-03",
+    "name": "Nanshan Donghai East Golf Club - Sea Pavilion",
+    "location": "Yantai, China",
+    "city": "Yantai",
+    "country": "China",
+    "latitude": 37.712838,
+    "longitude": 120.420904,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/nanshan-donghai-east-golf-club-sea-pavilion",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:47.038Z",
+      "teeId": "",
+      "teeColor": "Blue",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5400
+    },
+    "teeName": "Blue",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 300,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 300,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 300,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 300,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 300,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 300,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 300,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 300,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 300,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 300,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 300,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 300,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 300,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 300,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 300,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 300,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 300,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 300,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sd-0018-04",
+    "name": "Nanshan Donghai East Golf Club - Sea Sky",
+    "location": "Yantai, China",
+    "city": "Yantai",
+    "country": "China",
+    "latitude": 37.712838,
+    "longitude": 120.420904,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/nanshan-donghai-east-golf-club-sea-sky",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:47.594Z",
+      "teeId": "",
+      "teeColor": "Blue",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5400
+    },
+    "teeName": "Blue",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 300,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 300,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 300,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 300,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 300,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 300,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 300,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 300,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 300,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 300,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 300,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 300,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 300,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 300,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 300,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 300,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 300,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 300,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sd-0018-01",
+    "name": "Nanshan Donghai East Golf Club - Seaview",
+    "location": "Yantai, China",
+    "city": "Yantai",
+    "country": "China",
+    "latitude": 37.712838,
+    "longitude": 120.420904,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/nanshan-donghai-east-golf-club-seaview",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:48.327Z",
+      "teeId": "",
+      "teeColor": "Blue",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5400
+    },
+    "teeName": "Blue",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 300,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 300,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 300,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 300,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 300,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 300,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 300,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 300,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 300,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 300,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 300,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 300,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 300,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 300,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 300,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 300,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 300,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 300,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sd-0019-02",
+    "name": "Nanshan Donghai West Golf Club - Montgomerie",
+    "location": "Yantai, China",
+    "city": "Yantai",
+    "country": "China",
+    "latitude": 37.712838,
+    "longitude": 120.420904,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/nanshan-donghai-west-golf-club-montgomerie",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:49.171Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6123
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 343,
+        "handicap": 11
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 366,
+        "handicap": 8
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 530,
+        "handicap": 1
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 378,
+        "handicap": 4
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 171,
+        "handicap": 15
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 271,
+        "handicap": 14
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 471,
+        "handicap": 7
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 154,
+        "handicap": 17
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 343,
+        "handicap": 9
+      },
+      {
+        "hole": 10,
+        "par": 5,
+        "distance": 487,
+        "handicap": 6
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 298,
+        "handicap": 13
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 398,
+        "handicap": 10
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 152,
+        "handicap": 16
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 416,
+        "handicap": 3
+      },
+      {
+        "hole": 15,
+        "par": 5,
+        "distance": 520,
+        "handicap": 2
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 332,
+        "handicap": 12
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 124,
+        "handicap": 18
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 369,
+        "handicap": 5
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sd-0019-01",
+    "name": "Nanshan Donghai West Golf Club - Pine Forest (Songtao)",
+    "location": "Yantai, China",
+    "city": "Yantai",
+    "country": "China",
+    "latitude": 37.712838,
+    "longitude": 120.420904,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/nanshan-donghai-west-golf-club-pine-forest-songtao",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:49.787Z",
+      "teeId": "",
+      "teeColor": "Blue",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5400
+    },
+    "teeName": "Blue",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 300,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 300,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 300,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 300,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 300,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 300,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 300,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 300,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 300,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 300,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 300,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 300,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 300,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 300,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 300,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 300,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 300,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 300,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sd-0005-01",
+    "name": "Nanshan International Golf Club - A/B",
+    "location": "Longkou, China",
+    "city": "Longkou",
+    "country": "China",
+    "latitude": 37.578706,
+    "longitude": 120.481829,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/nanshan-international-golf-club-a-b",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:50.426Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5765
+    },
+    "teeName": "White",
+    "par": 71,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 498,
+        "handicap": 4
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 388,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 138,
+        "handicap": 16
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 319,
+        "handicap": 10
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 535,
+        "handicap": 1
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 149,
+        "handicap": 15
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 364,
+        "handicap": 6
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 404,
+        "handicap": 2
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 278,
+        "handicap": 14
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 328,
+        "handicap": 11
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 352,
+        "handicap": 9
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 139,
+        "handicap": 17
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 336,
+        "handicap": 12
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 289,
+        "handicap": 13
+      },
+      {
+        "hole": 15,
+        "par": 5,
+        "distance": 449,
+        "handicap": 7
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 338,
+        "handicap": 8
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 119,
+        "handicap": 18
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 342,
+        "handicap": 5
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sd-0005-04",
+    "name": "Nanshan International Golf Club - Breeze (Shanshui)",
+    "location": "Longkou, China",
+    "city": "Longkou",
+    "country": "China",
+    "latitude": 37.578706,
+    "longitude": 120.481829,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/nanshan-international-golf-club-breeze-shanshui",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:51.067Z",
+      "teeId": "",
+      "teeColor": "Blue",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5400
+    },
+    "teeName": "Blue",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 300,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 300,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 300,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 300,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 300,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 300,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 300,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 300,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 300,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 300,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 300,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 300,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 300,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 300,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 300,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 300,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 300,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 300,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sd-0005-05",
+    "name": "Nanshan International Golf Club - Buddha Light (Foguang)",
+    "location": "Longkou, China",
+    "city": "Longkou",
+    "country": "China",
+    "latitude": 37.578706,
+    "longitude": 120.481829,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/nanshan-international-golf-club-buddha-light-foguang",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:51.757Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6298
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 385,
+        "handicap": 7
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 294,
+        "handicap": 13
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 339,
+        "handicap": 9
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 151,
+        "handicap": 18
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 273,
+        "handicap": 14
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 150,
+        "handicap": 17
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 547,
+        "handicap": 3
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 360,
+        "handicap": 11
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 526,
+        "handicap": 6
+      },
+      {
+        "hole": 10,
+        "par": 5,
+        "distance": 524,
+        "handicap": 5
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 163,
+        "handicap": 15
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 330,
+        "handicap": 12
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 383,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 414,
+        "handicap": 4
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 330,
+        "handicap": 10
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 431,
+        "handicap": 1
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 159,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 539,
+        "handicap": 2
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sd-0005-02",
+    "name": "Nanshan International Golf Club - C",
+    "location": "Longkou, China",
+    "city": "Longkou",
+    "country": "China",
+    "latitude": 37.578706,
+    "longitude": 120.481829,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/nanshan-international-golf-club-c",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:52.368Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2637
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 288,
+        "handicap": 8
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 281,
+        "handicap": 6
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 496,
+        "handicap": 2
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 347,
+        "handicap": 4
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 270,
+        "handicap": 5
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 242,
+        "handicap": 3
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 125,
+        "handicap": 9
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 422,
+        "handicap": 1
+      },
+      {
+        "hole": 9,
+        "par": 3,
+        "distance": 166,
+        "handicap": 7
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sd-0005-06",
+    "name": "Nanshan International Golf Club - Country Manor (Zhuangyuan)",
+    "location": "Longkou, China",
+    "city": "Longkou",
+    "country": "China",
+    "latitude": 37.578706,
+    "longitude": 120.481829,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/nanshan-international-golf-club-country-manor-zhuangyuan",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:52.984Z",
+      "teeId": "",
+      "teeColor": "Blue",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5400
+    },
+    "teeName": "Blue",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 300,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 300,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 300,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 300,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 300,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 300,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 300,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 300,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 300,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 300,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 300,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 300,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 300,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 300,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 300,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 300,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 300,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 300,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sd-0005-07",
+    "name": "Nanshan International Golf Club - Genting Forest (Yunding)",
+    "location": "Longkou, China",
+    "city": "Longkou",
+    "country": "China",
+    "latitude": 37.578706,
+    "longitude": 120.481829,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/nanshan-international-golf-club-genting-forest-yunding",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:53.615Z",
+      "teeId": "",
+      "teeColor": "Blue",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5400
+    },
+    "teeName": "Blue",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 300,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 300,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 300,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 300,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 300,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 300,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 300,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 300,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 300,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 300,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 300,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 300,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 300,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 300,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 300,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 300,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 300,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 300,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sd-0005-03",
+    "name": "Nanshan International Golf Club - Holy Sun (Shengdi)",
+    "location": "Longkou, China",
+    "city": "Longkou",
+    "country": "China",
+    "latitude": 37.578706,
+    "longitude": 120.481829,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/nanshan-international-golf-club-holy-sun-shengdi",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:54.265Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5288
+    },
+    "teeName": "White",
+    "par": 71,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 305,
+        "handicap": 9
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 173,
+        "handicap": 15
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 478,
+        "handicap": 2
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 150,
+        "handicap": 16
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 213,
+        "handicap": 14
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 347,
+        "handicap": 7
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 269,
+        "handicap": 12
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 436,
+        "handicap": 4
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 261,
+        "handicap": 13
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 329,
+        "handicap": 8
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 330,
+        "handicap": 3
+      },
+      {
+        "hole": 12,
+        "par": 5,
+        "distance": 529,
+        "handicap": 1
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 121,
+        "handicap": 17
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 270,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 125,
+        "handicap": 18
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 322,
+        "handicap": 5
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 314,
+        "handicap": 11
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 316,
+        "handicap": 6
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-zj-0005-01",
+    "name": "Ningbo Delson Green World Golf Club - Ningbo Delson Green World",
+    "location": "Ningbo, China",
+    "city": "Ningbo",
+    "country": "China",
+    "latitude": 29.734842,
+    "longitude": 121.653108,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/ningbo-delson-green-world-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:54.905Z",
+      "teeId": "",
+      "teeColor": "Gold",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 7092
+    },
+    "teeName": "Que (L)",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 372,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 170,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 372,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 574,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 419,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 190,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 605,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 371,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 412,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 5,
+        "distance": 584,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 414,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 223,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 411,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 415,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 444,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 152,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 457,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 507,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-bj-0038-01",
+    "name": "Orient Double Eagle Golf Club - Golden Eagle",
+    "location": "Fangshan, China",
+    "city": "Fangshan",
+    "country": "China",
+    "latitude": 39.709964,
+    "longitude": 116.232118,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/orient-double-eagle-golf-club-golden-eagle",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:08:59.088Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6324
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 560,
+        "handicap": 2
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 409,
+        "handicap": 5
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 377,
+        "handicap": 6
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 334,
+        "handicap": 12
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 346,
+        "handicap": 7
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 125,
+        "handicap": 17
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 279,
+        "handicap": 14
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 168,
+        "handicap": 16
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 548,
+        "handicap": 4
+      },
+      {
+        "hole": 10,
+        "par": 5,
+        "distance": 548,
+        "handicap": 3
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 126,
+        "handicap": 18
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 364,
+        "handicap": 8
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 339,
+        "handicap": 13
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 352,
+        "handicap": 11
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 354,
+        "handicap": 9
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 366,
+        "handicap": 10
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 173,
+        "handicap": 15
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 556,
+        "handicap": 1
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-bj-0038-02",
+    "name": "Orient Double Eagle Golf Club - Sword Eagle",
+    "location": "Fangshan, China",
+    "city": "Fangshan",
+    "country": "China",
+    "latitude": 39.709964,
+    "longitude": 116.232118,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/orient-double-eagle-golf-club-sword-eagle",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:00.661Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6801
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 549,
+        "handicap": 4
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 416,
+        "handicap": 7
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 195,
+        "handicap": 15
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 575,
+        "handicap": 3
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 160,
+        "handicap": 16
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 358,
+        "handicap": 14
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 351,
+        "handicap": 12
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 396,
+        "handicap": 8
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 346,
+        "handicap": 13
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 412,
+        "handicap": 9
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 412,
+        "handicap": 6
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 360,
+        "handicap": 10
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 143,
+        "handicap": 17
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 476,
+        "handicap": 1
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 345,
+        "handicap": 11
+      },
+      {
+        "hole": 16,
+        "par": 5,
+        "distance": 556,
+        "handicap": 5
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 153,
+        "handicap": 18
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 598,
+        "handicap": 2
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-zj-0006-01",
+    "name": "Orient Ningbo Golf and Country Club - Ningbo",
+    "location": "Ningbo, China",
+    "city": "Ningbo",
+    "country": "China",
+    "latitude": 29.901828,
+    "longitude": 121.73275,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/orient-ningbo-golf-and-country-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:03.282Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5961
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 548,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 352,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 160,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 335,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 325,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 340,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 503,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 138,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 306,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 5,
+        "distance": 468,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 314,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 335,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 162,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 336,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 99,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 376,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 5,
+        "distance": 495,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 369,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-bj-0056-01",
+    "name": "Orient Pearl Country Club (Beijing Ming Zhu) - Beijing Orient Pearl [Beijing Ming Zhu]",
+    "location": "Shunyi, China",
+    "city": "Shunyi",
+    "country": "China",
+    "latitude": 40.254754,
+    "longitude": 116.580517,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/orient-pearl-country-club-beijing-ming-zhu",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:04.426Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6095
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 507,
+        "handicap": 7
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 420,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 190,
+        "handicap": 11
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 552,
+        "handicap": 5
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 320,
+        "handicap": 17
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 386,
+        "handicap": 1
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 130,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 348,
+        "handicap": 9
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 343,
+        "handicap": 15
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 361,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 298,
+        "handicap": 16
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 337,
+        "handicap": 14
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 317,
+        "handicap": 12
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "distance": 497,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 151,
+        "handicap": 6
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 346,
+        "handicap": 8
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 120,
+        "handicap": 18
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 472,
+        "handicap": 4
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sh-0015-01",
+    "name": "Orient Shanghai Golf and Country Club - A",
+    "location": "Shanghai, China",
+    "city": "Shanghai",
+    "country": "China",
+    "latitude": 31.014751,
+    "longitude": 121.124635,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/orient-shanghai-golf-and-country-club-a",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:05.554Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5928
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 310,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 559,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 330,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 335,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 174,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 493,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 367,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 140,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 295,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 290,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 504,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 373,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 383,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 297,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 136,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 329,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 123,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 490,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sh-0015-02",
+    "name": "Orient Shanghai Golf and Country Club - B",
+    "location": "Shanghai, China",
+    "city": "Shanghai",
+    "country": "China",
+    "latitude": 31.014751,
+    "longitude": 121.124635,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/orient-shanghai-golf-and-country-club-b",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:06.574Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5928
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 297,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 136,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 329,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 123,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 490,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 290,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 504,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 373,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 383,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 330,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 335,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 174,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 493,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 367,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 140,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 295,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 310,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 559,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-bj-0023-01",
+    "name": "Orient Tianxing Country Club - Beijing Orient Tianxing",
+    "location": "Chaoyang, China",
+    "city": "Chaoyang",
+    "country": "China",
+    "latitude": 40.054468,
+    "longitude": 116.456398,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/orient-tianxing-country-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:07.732Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6151
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 399,
+        "handicap": 4
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 362,
+        "handicap": 15
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 366,
+        "handicap": 13
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 493,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 339,
+        "handicap": 17
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 141,
+        "handicap": 16
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 398,
+        "handicap": 3
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 133,
+        "handicap": 8
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 458,
+        "handicap": 14
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 341,
+        "handicap": 11
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 181,
+        "handicap": 2
+      },
+      {
+        "hole": 12,
+        "par": 5,
+        "distance": 538,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 336,
+        "handicap": 5
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 393,
+        "handicap": 1
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 320,
+        "handicap": 18
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 112,
+        "handicap": 12
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 367,
+        "handicap": 9
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 474,
+        "handicap": 10
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-zj-0009-01",
+    "name": "Orient Wenzhou Golf and Country Club - Wenzhou",
+    "location": "Wenzhou, China",
+    "city": "Wenzhou",
+    "country": "China",
+    "latitude": 28.065307,
+    "longitude": 120.555149,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/orient-wenzhou-golf-and-country-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:08.759Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5506
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 243,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 137,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 363,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 442,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 320,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 312,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 296,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 131,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 562,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 3,
+        "distance": 142,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 415,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 252,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 330,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "distance": 162,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 305,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 321,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 290,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 483,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-hb-0003-01",
+    "name": "Orient Wuhan Golf Country and Club - Orient (Wuhan)",
+    "location": "Wuhan, China",
+    "city": "Wuhan",
+    "country": "China",
+    "latitude": 30.508645,
+    "longitude": 114.18812,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/orient-wuhan-golf-country-and-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:09.770Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6122
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 347,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 358,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 572,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 385,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 112,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 347,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 172,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 530,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 330,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 368,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 294,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 333,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 156,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "distance": 528,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 360,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 328,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 116,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 486,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-fj-0008-01",
+    "name": "Orient (Xiamen) Golf & Country Club - A",
+    "location": "Xiamen, China",
+    "city": "Xiamen",
+    "country": "China",
+    "latitude": 24.528483,
+    "longitude": 118.044854,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/orient-xiamen-golf-country-club-a",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:10.674Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 3030
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 319,
+        "handicap": 7
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 488,
+        "handicap": 1
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 320,
+        "handicap": 4
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 136,
+        "handicap": 9
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 546,
+        "handicap": 3
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 366,
+        "handicap": 2
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 350,
+        "handicap": 5
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 160,
+        "handicap": 6
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 345,
+        "handicap": 8
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-fj-0008-02",
+    "name": "Orient (Xiamen) Golf & Country Club - B",
+    "location": "Xiamen, China",
+    "city": "Xiamen",
+    "country": "China",
+    "latitude": 24.528483,
+    "longitude": 118.044854,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/orient-xiamen-golf-country-club-b",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:11.672Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2848
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 317,
+        "handicap": 9
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 348,
+        "handicap": 1
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 135,
+        "handicap": 8
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 500,
+        "handicap": 2
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 322,
+        "handicap": 6
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 278,
+        "handicap": 5
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 142,
+        "handicap": 7
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 456,
+        "handicap": 3
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 350,
+        "handicap": 4
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-fj-0008-03",
+    "name": "Orient (Xiamen) Golf & Country Club - C",
+    "location": "Xiamen, China",
+    "city": "Xiamen",
+    "country": "China",
+    "latitude": 24.528483,
+    "longitude": 118.044854,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/orient-xiamen-golf-country-club-c",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:12.615Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2790
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 3,
+        "distance": 149,
+        "handicap": 9
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 319,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 385,
+        "handicap": 2
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 485,
+        "handicap": 1
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 295,
+        "handicap": 4
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 121,
+        "handicap": 8
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 421,
+        "handicap": 6
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 344,
+        "handicap": 5
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 271,
+        "handicap": 7
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-bj-0058-01",
+    "name": "Oriental Sun City Golf Club - Beijing Oriental Sun City",
+    "location": "Shunyi, China",
+    "city": "Shunyi",
+    "country": "China",
+    "latitude": 40.087938,
+    "longitude": 116.720722,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/oriental-sun-city-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:14.499Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5771
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 341,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 400,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 147,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 504,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 121,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 332,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 167,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 304,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 378,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 5,
+        "distance": 562,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 291,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 165,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 147,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 269,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 5,
+        "distance": 515,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 5,
+        "distance": 438,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 331,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 359,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-he-0003-01",
+    "name": "Oriental University City Golf Course - Oriental University City",
+    "location": "Langfang, China",
+    "city": "Langfang",
+    "country": "China",
+    "latitude": 39.608839,
+    "longitude": 116.746684,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/oriental-university-city-golf-course",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:16.216Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6016
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 328,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 145,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 503,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 122,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 334,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 491,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 381,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 332,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 313,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 346,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 500,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 354,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 182,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 383,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 341,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 319,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 130,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 512,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sd-0010-01",
+    "name": "Qingdao HuaShan Int Country Club - A",
+    "location": "Qingdao, China",
+    "city": "Qingdao",
+    "country": "China",
+    "latitude": 36.127103,
+    "longitude": 120.482989,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/qingdao-hua-shan-int-country-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:16.915Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 893
+    },
+    "teeName": "White",
+    "par": 27,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 3,
+        "distance": 74,
+        "handicap": 9
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 95,
+        "handicap": 8
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 145,
+        "handicap": 2
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 93,
+        "handicap": 6
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 117,
+        "handicap": 1
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 136,
+        "handicap": 3
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 66,
+        "handicap": 7
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 101,
+        "handicap": 5
+      },
+      {
+        "hole": 9,
+        "par": 3,
+        "distance": 66,
+        "handicap": 4
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sd-0011-01",
+    "name": "Qingdao International Golf Club - Qingdao International",
+    "location": "Qingdao, China",
+    "city": "Qingdao",
+    "country": "China",
+    "latitude": 36.126843,
+    "longitude": 120.483209,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/qingdao-international-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:17.663Z",
+      "teeId": "",
+      "teeColor": "Blue",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 7030
+    },
+    "teeName": "Blue",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 358,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 167,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 423,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 556,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 435,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 412,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 407,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 203,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 535,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 5,
+        "distance": 542,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 196,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 418,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 424,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 389,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 5,
+        "distance": 595,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 191,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 418,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 361,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sd-0012-01",
+    "name": "Qingdao Shilaoren International Golf Club - Shilaoren International",
+    "location": "Qingdao, China",
+    "city": "Qingdao",
+    "country": "China",
+    "latitude": 36.09563,
+    "longitude": 120.484304,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/qingdao-shilaoren-international-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:18.494Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6139
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 494,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 170,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 373,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 357,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 339,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 554,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 153,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 384,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 308,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 285,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 128,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 360,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 483,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 392,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 375,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 358,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 155,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 471,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0018-01",
+    "name": "Sanyang Golf & Country Club - Sanyang",
+    "location": "Suzhou, China",
+    "city": "Suzhou",
+    "country": "China",
+    "latitude": 31.239165,
+    "longitude": 120.863616,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/sanyang-golf-country-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:21.108Z",
+      "teeId": "",
+      "teeColor": "Black",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 7018
+    },
+    "teeName": "Black",
+    "par": 73,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 341,
+        "handicap": 15
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 530,
+        "handicap": 7
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 195,
+        "handicap": 13
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 328,
+        "handicap": 11
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 540,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 196,
+        "handicap": 17
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 460,
+        "handicap": 3
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 450,
+        "handicap": 1
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 420,
+        "handicap": 5
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 430,
+        "handicap": 6
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 462,
+        "handicap": 12
+      },
+      {
+        "hole": 12,
+        "par": 5,
+        "distance": 545,
+        "handicap": 18
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 205,
+        "handicap": 16
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 400,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 390,
+        "handicap": 14
+      },
+      {
+        "hole": 16,
+        "par": 5,
+        "distance": 410,
+        "handicap": 2
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 198,
+        "handicap": 4
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 518,
+        "handicap": 8
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sh-0011-01",
+    "name": "Shanghai Country Club - Shanghai",
+    "location": "Qingpu, China",
+    "city": "Qingpu",
+    "country": "China",
+    "latitude": 31.127692,
+    "longitude": 121.012447,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shanghai-country-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:21.844Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6020
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 450,
+        "handicap": 12
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 157,
+        "handicap": 6
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 339,
+        "handicap": 8
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 369,
+        "handicap": 14
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 291,
+        "handicap": 16
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 492,
+        "handicap": 4
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 131,
+        "handicap": 18
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 339,
+        "handicap": 10
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 400,
+        "handicap": 2
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 351,
+        "handicap": 1
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 349,
+        "handicap": 15
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 117,
+        "handicap": 17
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 517,
+        "handicap": 5
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 396,
+        "handicap": 13
+      },
+      {
+        "hole": 15,
+        "par": 5,
+        "distance": 464,
+        "handicap": 3
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 151,
+        "handicap": 11
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 343,
+        "handicap": 9
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 364,
+        "handicap": 7
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sh-0008-01",
+    "name": "Shanghai Dongzhuang Coast Golf Club - Linksland",
+    "location": "Pudong, China",
+    "city": "Pudong",
+    "country": "China",
+    "latitude": 31.181892,
+    "longitude": 121.791226,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shanghai-dongzhuang-coast-golf-club-linksland",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:22.572Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6268
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 373,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 363,
+        "handicap": 7
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 404,
+        "handicap": 3
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 383,
+        "handicap": 9
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 136,
+        "handicap": 17
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 342,
+        "handicap": 15
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 547,
+        "handicap": 5
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 362,
+        "handicap": 12
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 405,
+        "handicap": 2
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 385,
+        "handicap": 4
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 126,
+        "handicap": 14
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 315,
+        "handicap": 18
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 118,
+        "handicap": 16
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "distance": 526,
+        "handicap": 6
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 325,
+        "handicap": 10
+      },
+      {
+        "hole": 16,
+        "par": 5,
+        "distance": 482,
+        "handicap": 8
+      },
+      {
+        "hole": 17,
+        "par": 5,
+        "distance": 508,
+        "handicap": 11
+      },
+      {
+        "hole": 18,
+        "par": 3,
+        "distance": 168,
+        "handicap": 13
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sh-0008-02",
+    "name": "Shanghai Dongzhuang Coast Golf Club - Parkland",
+    "location": "Pudong, China",
+    "city": "Pudong",
+    "country": "China",
+    "latitude": 31.181892,
+    "longitude": 121.791226,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shanghai-dongzhuang-coast-golf-club-parkland",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:23.415Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6120
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 481,
+        "handicap": 8
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 191,
+        "handicap": 10
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 317,
+        "handicap": 6
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 475,
+        "handicap": 12
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 344,
+        "handicap": 4
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 140,
+        "handicap": 18
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 385,
+        "handicap": 2
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 348,
+        "handicap": 11
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 535,
+        "handicap": 3
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 387,
+        "handicap": 7
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 103,
+        "handicap": 17
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 392,
+        "handicap": 5
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 473,
+        "handicap": 13
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 360,
+        "handicap": 9
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 139,
+        "handicap": 15
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 383,
+        "handicap": 1
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 335,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 332,
+        "handicap": 14
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sh-0002-01",
+    "name": "Shanghai Golf Club - Shanghai",
+    "location": "Jiading, China",
+    "city": "Jiading",
+    "country": "China",
+    "latitude": 31.476051,
+    "longitude": 121.222469,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shanghai-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:24.538Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6050
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 476,
+        "handicap": 15
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 345,
+        "handicap": 9
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 372,
+        "handicap": 3
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 142,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 316,
+        "handicap": 1
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 480,
+        "handicap": 13
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 148,
+        "handicap": 11
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 356,
+        "handicap": 5
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 360,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 361,
+        "handicap": 10
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 491,
+        "handicap": 16
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 375,
+        "handicap": 4
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 325,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "distance": 136,
+        "handicap": 2
+      },
+      {
+        "hole": 15,
+        "par": 5,
+        "distance": 475,
+        "handicap": 14
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 372,
+        "handicap": 6
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 153,
+        "handicap": 18
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 367,
+        "handicap": 12
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sh-0005-01",
+    "name": "Shanghai Grand City Golf Club - Shanghai Grand City",
+    "location": "Minhang, China",
+    "city": "Minhang",
+    "country": "China",
+    "latitude": 31.165814,
+    "longitude": 121.328837,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shanghai-grand-city-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:25.301Z",
+      "teeId": "",
+      "teeColor": "Black",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 1110
+    },
+    "teeName": "Black",
+    "par": 27,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 3,
+        "distance": 110,
+        "handicap": 7
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 130,
+        "handicap": 4
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 150,
+        "handicap": 3
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 85,
+        "handicap": 9
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 85,
+        "handicap": 8
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 120,
+        "handicap": 6
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 160,
+        "handicap": 1
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 120,
+        "handicap": 5
+      },
+      {
+        "hole": 9,
+        "par": 3,
+        "distance": 150,
+        "handicap": 2
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sh-0016-01",
+    "name": "Shanghai Hongqiao Golf Club - Shanghai Hongqiao",
+    "location": "Shanghai, China",
+    "city": "Shanghai",
+    "country": "China",
+    "latitude": 31.190671,
+    "longitude": 121.390693,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shanghai-hongqiao-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:26.026Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 4160
+    },
+    "teeName": "White",
+    "par": 67,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 250,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 125,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 300,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 325,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 300,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 230,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 130,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 125,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 305,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 285,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 180,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 250,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 380,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 270,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 255,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 90,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 75,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 285,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sh-0009-01",
+    "name": "Shanghai Links Golf Club - Shanghai Links",
+    "location": "Pudong, China",
+    "city": "Pudong",
+    "country": "China",
+    "latitude": 31.234735,
+    "longitude": 121.757003,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shanghai-links-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:26.701Z",
+      "teeId": "",
+      "teeColor": "Blue",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 7124
+    },
+    "teeName": "Blue",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 374,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 460,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 410,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 173,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 538,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 390,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 219,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 501,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 455,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 462,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 545,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 172,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 456,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 401,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 199,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 334,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 5,
+        "distance": 564,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 471,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sh-0006-01",
+    "name": "Shanghai Qizhong Golf Club - Qizhong",
+    "location": "Minhang, China",
+    "city": "Minhang",
+    "country": "China",
+    "latitude": 31.05764,
+    "longitude": 121.346785,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shanghai-qizhong-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:27.460Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5801
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 362,
+        "handicap": 5
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 117,
+        "handicap": 15
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 289,
+        "handicap": 17
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 483,
+        "handicap": 3
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 346,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 354,
+        "handicap": 1
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 137,
+        "handicap": 7
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 325,
+        "handicap": 13
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 488,
+        "handicap": 11
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 358,
+        "handicap": 6
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 100,
+        "handicap": 18
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 372,
+        "handicap": 8
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 413,
+        "handicap": 16
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 298,
+        "handicap": 14
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 376,
+        "handicap": 2
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 158,
+        "handicap": 4
+      },
+      {
+        "hole": 17,
+        "par": 5,
+        "distance": 475,
+        "handicap": 12
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 350,
+        "handicap": 10
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0003-02",
+    "name": "Shanghai Silport Golf Club - Centre",
+    "location": "Dianshan Lake, China",
+    "city": "Dianshan Lake",
+    "country": "China",
+    "latitude": 31.157722,
+    "longitude": 121.008389,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shanghai-silport-golf-club-centre",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:28.182Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 3022
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 420,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 129,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 378,
+        "handicap": 2
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 309,
+        "handicap": 8
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 520,
+        "handicap": 5
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 334,
+        "handicap": 4
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 306,
+        "handicap": 7
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 140,
+        "handicap": 6
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 486,
+        "handicap": 9
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sh-0017-02",
+    "name": "Shanghai Silport Golf Club - Centre",
+    "location": "Shanghai, China",
+    "city": "Shanghai",
+    "country": "China",
+    "latitude": 31.159138,
+    "longitude": 121.15271,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shanghai-silport-golf-club-centre-shanghai",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:28.977Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 3022
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 420,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 129,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 378,
+        "handicap": 2
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 309,
+        "handicap": 8
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 520,
+        "handicap": 5
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 334,
+        "handicap": 4
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 306,
+        "handicap": 7
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 140,
+        "handicap": 6
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 486,
+        "handicap": 9
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0003-03",
+    "name": "Shanghai Silport Golf Club - East",
+    "location": "Dianshan Lake, China",
+    "city": "Dianshan Lake",
+    "country": "China",
+    "latitude": 31.157722,
+    "longitude": 121.008389,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shanghai-silport-golf-club-east",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:29.701Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2819
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 424,
+        "handicap": 9
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 332,
+        "handicap": 6
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 119,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 329,
+        "handicap": 3
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 289,
+        "handicap": 7
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 166,
+        "handicap": 1
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 368,
+        "handicap": 4
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 446,
+        "handicap": 8
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 346,
+        "handicap": 2
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sh-0017-03",
+    "name": "Shanghai Silport Golf Club - East",
+    "location": "Shanghai, China",
+    "city": "Shanghai",
+    "country": "China",
+    "latitude": 31.159138,
+    "longitude": 121.15271,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shanghai-silport-golf-club-east-shanghai",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:30.581Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2819
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 424,
+        "handicap": 9
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 332,
+        "handicap": 6
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 119,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 329,
+        "handicap": 3
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 289,
+        "handicap": 7
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 166,
+        "handicap": 1
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 368,
+        "handicap": 4
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 446,
+        "handicap": 8
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 346,
+        "handicap": 2
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0003-04",
+    "name": "Shanghai Silport Golf Club - North",
+    "location": "Dianshan Lake, China",
+    "city": "Dianshan Lake",
+    "country": "China",
+    "latitude": 31.157722,
+    "longitude": 121.008389,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shanghai-silport-golf-club-north",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:31.277Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 3017
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 338,
+        "handicap": 3
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 446,
+        "handicap": 8
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 158,
+        "handicap": 2
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 363,
+        "handicap": 4
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 354,
+        "handicap": 5
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 130,
+        "handicap": 7
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 502,
+        "handicap": 1
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 358,
+        "handicap": 9
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 368,
+        "handicap": 6
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sh-0017-04",
+    "name": "Shanghai Silport Golf Club - North",
+    "location": "Shanghai, China",
+    "city": "Shanghai",
+    "country": "China",
+    "latitude": 31.159138,
+    "longitude": 121.15271,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shanghai-silport-golf-club-north-shanghai",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:31.964Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 3017
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 338,
+        "handicap": 3
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 446,
+        "handicap": 8
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 158,
+        "handicap": 2
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 363,
+        "handicap": 4
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 354,
+        "handicap": 5
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 130,
+        "handicap": 7
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 502,
+        "handicap": 1
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 358,
+        "handicap": 9
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 368,
+        "handicap": 6
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sh-0017-01",
+    "name": "Shanghai Silport Golf Club - Silport",
+    "location": "Shanghai, China",
+    "city": "Shanghai",
+    "country": "China",
+    "latitude": 31.159138,
+    "longitude": 121.15271,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shanghai-silport-golf-club-silport",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:32.642Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 3127
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 505,
+        "handicap": 9
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 128,
+        "handicap": 7
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 406,
+        "handicap": 1
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 360,
+        "handicap": 3
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 364,
+        "handicap": 5
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 318,
+        "handicap": 2
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 387,
+        "handicap": 4
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 141,
+        "handicap": 8
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 518,
+        "handicap": 6
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0003-01",
+    "name": "Shanghai Silport Golf Club - West",
+    "location": "Dianshan Lake, China",
+    "city": "Dianshan Lake",
+    "country": "China",
+    "latitude": 31.157722,
+    "longitude": 121.008389,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shanghai-silport-golf-club-west",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:33.329Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 3127
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 505,
+        "handicap": 9
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 128,
+        "handicap": 7
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 406,
+        "handicap": 1
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 360,
+        "handicap": 3
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 364,
+        "handicap": 5
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 318,
+        "handicap": 2
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 387,
+        "handicap": 4
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 141,
+        "handicap": 8
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 518,
+        "handicap": 6
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0004-04",
+    "name": "Shanghai Sun Island International Club - A",
+    "location": "Kun Shan, China",
+    "city": "Kun Shan",
+    "country": "China",
+    "latitude": 31.253717,
+    "longitude": 120.9368,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shanghai-sun-island-international-club-a",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:34.033Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 3079
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 358,
+        "handicap": 10
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 369,
+        "handicap": 6
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 128,
+        "handicap": 18
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 317,
+        "handicap": 16
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 541,
+        "handicap": 2
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 307,
+        "handicap": 14
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 189,
+        "handicap": 12
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 476,
+        "handicap": 8
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 394,
+        "handicap": 4
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0004-01",
+    "name": "Shanghai Sun Island International Club - A-B",
+    "location": "Kun Shan, China",
+    "city": "Kun Shan",
+    "country": "China",
+    "latitude": 31.253717,
+    "longitude": 120.9368,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shanghai-sun-island-international-club-a-b",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:34.744Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6270
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 358,
+        "handicap": 10
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 369,
+        "handicap": 6
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 128,
+        "handicap": 18
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 317,
+        "handicap": 16
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 541,
+        "handicap": 2
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 307,
+        "handicap": 14
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 189,
+        "handicap": 12
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 476,
+        "handicap": 8
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 394,
+        "handicap": 4
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 345,
+        "handicap": 13
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 513,
+        "handicap": 7
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 189,
+        "handicap": 11
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 295,
+        "handicap": 17
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 357,
+        "handicap": 9
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 412,
+        "handicap": 1
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 141,
+        "handicap": 15
+      },
+      {
+        "hole": 17,
+        "par": 5,
+        "distance": 525,
+        "handicap": 3
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 414,
+        "handicap": 5
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0004-05",
+    "name": "Shanghai Sun Island International Club - B",
+    "location": "Kun Shan, China",
+    "city": "Kun Shan",
+    "country": "China",
+    "latitude": 31.253717,
+    "longitude": 120.9368,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shanghai-sun-island-international-club-b",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:35.638Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 3191
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 345,
+        "handicap": 13
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 513,
+        "handicap": 7
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 189,
+        "handicap": 11
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 295,
+        "handicap": 17
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 357,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 412,
+        "handicap": 1
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 141,
+        "handicap": 15
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 525,
+        "handicap": 3
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 414,
+        "handicap": 5
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0004-02",
+    "name": "Shanghai Sun Island International Club - B-C",
+    "location": "Kun Shan, China",
+    "city": "Kun Shan",
+    "country": "China",
+    "latitude": 31.253717,
+    "longitude": 120.9368,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shanghai-sun-island-international-club-b-c",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:36.311Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6123
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 345,
+        "handicap": 13
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 513,
+        "handicap": 7
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 189,
+        "handicap": 11
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 295,
+        "handicap": 17
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 357,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 412,
+        "handicap": 1
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 141,
+        "handicap": 15
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 525,
+        "handicap": 3
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 414,
+        "handicap": 5
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 332,
+        "handicap": 10
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 371,
+        "handicap": 2
+      },
+      {
+        "hole": 12,
+        "par": 5,
+        "distance": 471,
+        "handicap": 14
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 168,
+        "handicap": 6
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "distance": 512,
+        "handicap": 4
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 288,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 147,
+        "handicap": 18
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 290,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 353,
+        "handicap": 8
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0004-06",
+    "name": "Shanghai Sun Island International Club - C",
+    "location": "Kun Shan, China",
+    "city": "Kun Shan",
+    "country": "China",
+    "latitude": 31.253717,
+    "longitude": 120.9368,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shanghai-sun-island-international-club-c",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:36.982Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2932
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 332,
+        "handicap": 9
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 371,
+        "handicap": 1
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 471,
+        "handicap": 13
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 168,
+        "handicap": 5
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 512,
+        "handicap": 3
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 288,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 147,
+        "handicap": 17
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 290,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 353,
+        "handicap": 7
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0004-03",
+    "name": "Shanghai Sun Island International Club - C-A",
+    "location": "Kun Shan, China",
+    "city": "Kun Shan",
+    "country": "China",
+    "latitude": 31.253717,
+    "longitude": 120.9368,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shanghai-sun-island-international-club-c-a",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:37.629Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6011
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 332,
+        "handicap": 9
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 371,
+        "handicap": 1
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 471,
+        "handicap": 13
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 168,
+        "handicap": 5
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 512,
+        "handicap": 3
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 288,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 147,
+        "handicap": 17
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 290,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 353,
+        "handicap": 7
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 358,
+        "handicap": 10
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 369,
+        "handicap": 6
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 128,
+        "handicap": 18
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 317,
+        "handicap": 16
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "distance": 541,
+        "handicap": 2
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 307,
+        "handicap": 14
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 189,
+        "handicap": 12
+      },
+      {
+        "hole": 17,
+        "par": 5,
+        "distance": 476,
+        "handicap": 8
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 394,
+        "handicap": 4
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0005-01",
+    "name": "Shanghai West Golf Club - Shanghai West",
+    "location": "Kunshan, China",
+    "city": "Kunshan",
+    "country": "China",
+    "latitude": 31.132087,
+    "longitude": 120.831303,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shanghai-west-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:38.311Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6147
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 494,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 348,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 392,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 376,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 164,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 342,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 275,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 127,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 532,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 367,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 468,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 349,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 362,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "distance": 135,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 5,
+        "distance": 513,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 138,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 351,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 414,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0049-01",
+    "name": "Shenzhen Airport Golf Resort - Shenzhen Airport",
+    "location": "Shenzhen, China",
+    "city": "Shenzhen",
+    "country": "China",
+    "latitude": 22.654895,
+    "longitude": 113.813956,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shenzhen-airport-golf-resort",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:39.001Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5649
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 303,
+        "handicap": 15
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 451,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 358,
+        "handicap": 1
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 297,
+        "handicap": 17
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 130,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 448,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 355,
+        "handicap": 5
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 141,
+        "handicap": 13
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 365,
+        "handicap": 7
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 318,
+        "handicap": 14
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 121,
+        "handicap": 6
+      },
+      {
+        "hole": 12,
+        "par": 5,
+        "distance": 511,
+        "handicap": 4
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 367,
+        "handicap": 2
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 247,
+        "handicap": 18
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 339,
+        "handicap": 8
+      },
+      {
+        "hole": 16,
+        "par": 5,
+        "distance": 443,
+        "handicap": 10
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 106,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 349,
+        "handicap": 12
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0050-01",
+    "name": "Shenzhen CITIC Green Golf - A",
+    "location": "Shenzhen, China",
+    "city": "Shenzhen",
+    "country": "China",
+    "latitude": 22.701639,
+    "longitude": 114.261311,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shenzhen-citic-green-golf-a",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:39.675Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2926
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 336,
+        "handicap": 6
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 120,
+        "handicap": 5
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 480,
+        "handicap": 8
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 339,
+        "handicap": 3
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 498,
+        "handicap": 1
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 357,
+        "handicap": 4
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 163,
+        "handicap": 2
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 350,
+        "handicap": 7
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 283,
+        "handicap": 9
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0050-02",
+    "name": "Shenzhen CITIC Green Golf - B",
+    "location": "Shenzhen, China",
+    "city": "Shenzhen",
+    "country": "China",
+    "latitude": 22.701639,
+    "longitude": 114.261311,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shenzhen-citic-green-golf-b",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:40.627Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 3034
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 383,
+        "handicap": 6
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 376,
+        "handicap": 1
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 491,
+        "handicap": 2
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 325,
+        "handicap": 9
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 315,
+        "handicap": 5
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 133,
+        "handicap": 4
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 358,
+        "handicap": 3
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 153,
+        "handicap": 7
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 500,
+        "handicap": 8
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0050-03",
+    "name": "Shenzhen CITIC Green Golf - C",
+    "location": "Shenzhen, China",
+    "city": "Shenzhen",
+    "country": "China",
+    "latitude": 22.701639,
+    "longitude": 114.261311,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shenzhen-citic-green-golf-c",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:41.261Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2966
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 350,
+        "handicap": 2
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 171,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 487,
+        "handicap": 6
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 331,
+        "handicap": 4
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 161,
+        "handicap": 1
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 456,
+        "handicap": 7
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 312,
+        "handicap": 9
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 338,
+        "handicap": 8
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 360,
+        "handicap": 5
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0051-01",
+    "name": "Shenzhen Jiulong Hills Golf Club - Shenzhen Jiulong Hills",
+    "location": "Shenzhen, China",
+    "city": "Shenzhen",
+    "country": "China",
+    "latitude": 22.710749,
+    "longitude": 114.016617,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shenzhen-jiulong-hills-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:41.911Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5418
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 298,
+        "handicap": 9
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 123,
+        "handicap": 11
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 473,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 523,
+        "handicap": 1
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 93,
+        "handicap": 13
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 289,
+        "handicap": 7
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 296,
+        "handicap": 15
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 301,
+        "handicap": 17
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 318,
+        "handicap": 3
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 358,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 453,
+        "handicap": 10
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 118,
+        "handicap": 12
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 343,
+        "handicap": 4
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 288,
+        "handicap": 6
+      },
+      {
+        "hole": 15,
+        "par": 5,
+        "distance": 432,
+        "handicap": 14
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 99,
+        "handicap": 18
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 313,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 300,
+        "handicap": 8
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0034-01",
+    "name": "Shenzhen Longgang Public Golf Course - A",
+    "location": "Longgang, China",
+    "city": "Longgang",
+    "country": "China",
+    "latitude": 22.678661,
+    "longitude": 114.196658,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shenzhen-longgang-public-golf-course-a",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:42.604Z",
+      "teeId": "",
+      "teeColor": "Black",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6966
+    },
+    "teeName": "Black",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 345,
+        "handicap": 6
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 408,
+        "handicap": 4
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 198,
+        "handicap": 3
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 538,
+        "handicap": 5
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 438,
+        "handicap": 1
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 222,
+        "handicap": 7
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 608,
+        "handicap": 2
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 425,
+        "handicap": 8
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 350,
+        "handicap": 9
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 390,
+        "handicap": 18
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 403,
+        "handicap": 15
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 229,
+        "handicap": 16
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 542,
+        "handicap": 11
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 428,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 185,
+        "handicap": 14
+      },
+      {
+        "hole": 16,
+        "par": 5,
+        "distance": 590,
+        "handicap": 13
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 155,
+        "handicap": 12
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 512,
+        "handicap": 17
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0034-02",
+    "name": "Shenzhen Longgang Public Golf Course - B",
+    "location": "Longgang, China",
+    "city": "Longgang",
+    "country": "China",
+    "latitude": 22.678661,
+    "longitude": 114.196658,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shenzhen-longgang-public-golf-course-b",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:43.470Z",
+      "teeId": "",
+      "teeColor": "Black",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6993
+    },
+    "teeName": "Black",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 360,
+        "handicap": 9
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 203,
+        "handicap": 8
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 371,
+        "handicap": 2
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 612,
+        "handicap": 1
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 422,
+        "handicap": 4
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 160,
+        "handicap": 7
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 363,
+        "handicap": 6
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 600,
+        "handicap": 3
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 370,
+        "handicap": 5
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 345,
+        "handicap": 15
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 408,
+        "handicap": 13
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 198,
+        "handicap": 12
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 538,
+        "handicap": 14
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 438,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 222,
+        "handicap": 16
+      },
+      {
+        "hole": 16,
+        "par": 5,
+        "distance": 608,
+        "handicap": 11
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 425,
+        "handicap": 17
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 350,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0034-03",
+    "name": "Shenzhen Longgang Public Golf Course - C",
+    "location": "Longgang, China",
+    "city": "Longgang",
+    "country": "China",
+    "latitude": 22.678661,
+    "longitude": 114.196658,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shenzhen-longgang-public-golf-course-c",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:44.177Z",
+      "teeId": "",
+      "teeColor": "Black",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6895
+    },
+    "teeName": "Black",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 360,
+        "handicap": 9
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 203,
+        "handicap": 8
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 371,
+        "handicap": 2
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 612,
+        "handicap": 1
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 422,
+        "handicap": 4
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 160,
+        "handicap": 7
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 363,
+        "handicap": 6
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 600,
+        "handicap": 3
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 370,
+        "handicap": 5
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 390,
+        "handicap": 18
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 403,
+        "handicap": 15
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 229,
+        "handicap": 16
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 542,
+        "handicap": 11
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 428,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 185,
+        "handicap": 14
+      },
+      {
+        "hole": 16,
+        "par": 5,
+        "distance": 590,
+        "handicap": 13
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 155,
+        "handicap": 12
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 512,
+        "handicap": 17
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0052-01",
+    "name": "Shenzhen Noble Merchant Golf Club - Shenzhen Noble Merchant",
+    "location": "Shenzhen, China",
+    "city": "Shenzhen",
+    "country": "China",
+    "latitude": 22.547338,
+    "longitude": 113.963067,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shenzhen-noble-merchant-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:45.228Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5473
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 285,
+        "handicap": 11
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 465,
+        "handicap": 2
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 330,
+        "handicap": 18
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 296,
+        "handicap": 17
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 490,
+        "handicap": 8
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 153,
+        "handicap": 15
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 109,
+        "handicap": 4
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 279,
+        "handicap": 12
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 383,
+        "handicap": 7
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 350,
+        "handicap": 10
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 467,
+        "handicap": 1
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 332,
+        "handicap": 9
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 310,
+        "handicap": 16
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "distance": 110,
+        "handicap": 5
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 252,
+        "handicap": 14
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 157,
+        "handicap": 3
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 225,
+        "handicap": 13
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 480,
+        "handicap": 6
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0053-04",
+    "name": "Shenzhen Tycoon Golf Club - A",
+    "location": "Shenzhen, China",
+    "city": "Shenzhen",
+    "country": "China",
+    "latitude": 22.643808,
+    "longitude": 113.867912,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shenzhen-tycoon-golf-club-a",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:45.893Z",
+      "teeId": "",
+      "teeColor": "Black",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 3550
+    },
+    "teeName": "Black",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 437,
+        "handicap": 3
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 558,
+        "handicap": 2
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 419,
+        "handicap": 4
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 186,
+        "handicap": 6
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 423,
+        "handicap": 5
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 419,
+        "handicap": 7
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 579,
+        "handicap": 1
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 177,
+        "handicap": 8
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 352,
+        "handicap": 9
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0053-01",
+    "name": "Shenzhen Tycoon Golf Club - A-B",
+    "location": "Shenzhen, China",
+    "city": "Shenzhen",
+    "country": "China",
+    "latitude": 22.643808,
+    "longitude": 113.867912,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shenzhen-tycoon-golf-club-a-b",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:46.610Z",
+      "teeId": "",
+      "teeColor": "Black",
+      "rating": 73.3,
+      "slope": 121,
+      "totalDistance": 7009
+    },
+    "teeName": "Black",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 437,
+        "handicap": 3
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 558,
+        "handicap": 2
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 419,
+        "handicap": 4
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 186,
+        "handicap": 6
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 423,
+        "handicap": 5
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 419,
+        "handicap": 7
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 579,
+        "handicap": 1
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 177,
+        "handicap": 8
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 352,
+        "handicap": 9
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 364,
+        "handicap": 16
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 173,
+        "handicap": 17
+      },
+      {
+        "hole": 12,
+        "par": 5,
+        "distance": 567,
+        "handicap": 10
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 417,
+        "handicap": 13
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 374,
+        "handicap": 15
+      },
+      {
+        "hole": 15,
+        "par": 5,
+        "distance": 584,
+        "handicap": 11
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 167,
+        "handicap": 18
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 426,
+        "handicap": 12
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 387,
+        "handicap": 14
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0053-05",
+    "name": "Shenzhen Tycoon Golf Club - B",
+    "location": "Shenzhen, China",
+    "city": "Shenzhen",
+    "country": "China",
+    "latitude": 22.643808,
+    "longitude": 113.867912,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shenzhen-tycoon-golf-club-b",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:47.230Z",
+      "teeId": "",
+      "teeColor": "Black",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 3459
+    },
+    "teeName": "Black",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 364,
+        "handicap": 7
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 173,
+        "handicap": 8
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 567,
+        "handicap": 1
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 417,
+        "handicap": 4
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 374,
+        "handicap": 6
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 584,
+        "handicap": 2
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 167,
+        "handicap": 9
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 426,
+        "handicap": 3
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 387,
+        "handicap": 5
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0053-02",
+    "name": "Shenzhen Tycoon Golf Club - B-C",
+    "location": "Shenzhen, China",
+    "city": "Shenzhen",
+    "country": "China",
+    "latitude": 22.643808,
+    "longitude": 113.867912,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shenzhen-tycoon-golf-club-b-c",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:47.934Z",
+      "teeId": "",
+      "teeColor": "Black",
+      "rating": 74.9,
+      "slope": 123,
+      "totalDistance": 7084
+    },
+    "teeName": "Black",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 364,
+        "handicap": 7
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 173,
+        "handicap": 8
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 567,
+        "handicap": 1
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 417,
+        "handicap": 4
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 374,
+        "handicap": 6
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 584,
+        "handicap": 2
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 167,
+        "handicap": 9
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 426,
+        "handicap": 3
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 387,
+        "handicap": 5
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 406,
+        "handicap": 13
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 571,
+        "handicap": 12
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 213,
+        "handicap": 18
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 456,
+        "handicap": 10
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 419,
+        "handicap": 15
+      },
+      {
+        "hole": 15,
+        "par": 5,
+        "distance": 530,
+        "handicap": 11
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 239,
+        "handicap": 16
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 412,
+        "handicap": 17
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 379,
+        "handicap": 14
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0053-06",
+    "name": "Shenzhen Tycoon Golf Club - C",
+    "location": "Shenzhen, China",
+    "city": "Shenzhen",
+    "country": "China",
+    "latitude": 22.643808,
+    "longitude": 113.867912,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shenzhen-tycoon-golf-club-c",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:48.542Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2763
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 333,
+        "handicap": 4
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 478,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 153,
+        "handicap": 9
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 351,
+        "handicap": 1
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 308,
+        "handicap": 6
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 426,
+        "handicap": 2
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 151,
+        "handicap": 7
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 300,
+        "handicap": 8
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 263,
+        "handicap": 5
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0053-03",
+    "name": "Shenzhen Tycoon Golf Club - C-A",
+    "location": "Shenzhen, China",
+    "city": "Shenzhen",
+    "country": "China",
+    "latitude": 22.643808,
+    "longitude": 113.867912,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/shenzhen-tycoon-golf-club-c-a",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:49.421Z",
+      "teeId": "",
+      "teeColor": "Black",
+      "rating": 74.9,
+      "slope": 131,
+      "totalDistance": 7175
+    },
+    "teeName": "Black",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 406,
+        "handicap": 4
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 571,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 213,
+        "handicap": 9
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 456,
+        "handicap": 1
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 419,
+        "handicap": 6
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 530,
+        "handicap": 2
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 239,
+        "handicap": 7
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 412,
+        "handicap": 8
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 379,
+        "handicap": 5
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 437,
+        "handicap": 13
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 558,
+        "handicap": 12
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 419,
+        "handicap": 18
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 186,
+        "handicap": 10
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 423,
+        "handicap": 15
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 419,
+        "handicap": 11
+      },
+      {
+        "hole": 16,
+        "par": 5,
+        "distance": 579,
+        "handicap": 16
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 177,
+        "handicap": 17
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 352,
+        "handicap": 14
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sh-0022-01",
+    "name": "Sheshan International Golf Club - Sheshan International",
+    "location": "Songijang, China",
+    "city": "Songijang",
+    "country": "China",
+    "latitude": 31.1089,
+    "longitude": 121.220383,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/sheshan-international-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:51.282Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6173
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 403,
+        "handicap": 7
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 480,
+        "handicap": 9
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 306,
+        "handicap": 15
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 154,
+        "handicap": 17
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 389,
+        "handicap": 3
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 146,
+        "handicap": 13
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 289,
+        "handicap": 11
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 539,
+        "handicap": 5
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 402,
+        "handicap": 1
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 355,
+        "handicap": 12
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 395,
+        "handicap": 6
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 192,
+        "handicap": 18
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 344,
+        "handicap": 10
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "distance": 509,
+        "handicap": 8
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 410,
+        "handicap": 2
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 251,
+        "handicap": 16
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 164,
+        "handicap": 14
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 445,
+        "handicap": 4
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-yn-0001-01",
+    "name": "Spring City Golf & Lake Resort - Lake",
+    "location": "Kunming, China",
+    "city": "Kunming",
+    "country": "China",
+    "latitude": 24.929139,
+    "longitude": 103.028964,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/spring-city-golf-lake-resort-lake",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:54.146Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6049
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 494,
+        "handicap": 5
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 341,
+        "handicap": 11
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 364,
+        "handicap": 7
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 138,
+        "handicap": 15
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 325,
+        "handicap": 1
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 359,
+        "handicap": 9
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 334,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 109,
+        "handicap": 17
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 432,
+        "handicap": 3
+      },
+      {
+        "hole": 10,
+        "par": 3,
+        "distance": 158,
+        "handicap": 16
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 557,
+        "handicap": 14
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 326,
+        "handicap": 8
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 359,
+        "handicap": 6
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "distance": 187,
+        "handicap": 18
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 331,
+        "handicap": 10
+      },
+      {
+        "hole": 16,
+        "par": 5,
+        "distance": 500,
+        "handicap": 4
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 360,
+        "handicap": 2
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 375,
+        "handicap": 12
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-yn-0001-02",
+    "name": "Spring City Golf & Lake Resort - Mountain",
+    "location": "Kunming, China",
+    "city": "Kunming",
+    "country": "China",
+    "latitude": 24.929139,
+    "longitude": 103.028964,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/spring-city-golf-lake-resort-mountain",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:54.938Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5943
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 345,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 337,
+        "handicap": 5
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 114,
+        "handicap": 15
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 504,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 381,
+        "handicap": 13
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 341,
+        "handicap": 9
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 348,
+        "handicap": 11
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 104,
+        "handicap": 17
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 479,
+        "handicap": 3
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 366,
+        "handicap": 8
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 293,
+        "handicap": 12
+      },
+      {
+        "hole": 12,
+        "par": 5,
+        "distance": 473,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 152,
+        "handicap": 16
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 312,
+        "handicap": 14
+      },
+      {
+        "hole": 15,
+        "par": 5,
+        "distance": 525,
+        "handicap": 10
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 129,
+        "handicap": 18
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 360,
+        "handicap": 2
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 380,
+        "handicap": 4
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sh-0019-01",
+    "name": "Sun Island Golf Club - Shanghai - New",
+    "location": "Shanghai, China",
+    "city": "Shanghai",
+    "country": "China",
+    "latitude": 31.038201,
+    "longitude": 121.069711,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/sun-island-golf-club-shanghai-new",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:55.847Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": 69.5,
+      "slope": 116,
+      "totalDistance": 5737
+    },
+    "teeName": "White",
+    "par": 71,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 369,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 136,
+        "handicap": 5
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 310,
+        "handicap": 17
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 365,
+        "handicap": 3
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 144,
+        "handicap": 15
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 481,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 319,
+        "handicap": 7
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 488,
+        "handicap": 13
+      },
+      {
+        "hole": 9,
+        "par": 3,
+        "distance": 151,
+        "handicap": 9
+      },
+      {
+        "hole": 10,
+        "par": 5,
+        "distance": 487,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 122,
+        "handicap": 18
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 326,
+        "handicap": 16
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 494,
+        "handicap": 14
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "distance": 187,
+        "handicap": 4
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 404,
+        "handicap": 6
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 316,
+        "handicap": 12
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 173,
+        "handicap": 8
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 465,
+        "handicap": 10
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sh-0019-02",
+    "name": "Sun Island Golf Club - Shanghai - Old",
+    "location": "Shanghai, China",
+    "city": "Shanghai",
+    "country": "China",
+    "latitude": 31.038201,
+    "longitude": 121.069711,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/sun-island-golf-club-shanghai-old",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:56.539Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": 69.8,
+      "slope": 115,
+      "totalDistance": 6088
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 377,
+        "handicap": 7
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 381,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 333,
+        "handicap": 13
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 468,
+        "handicap": 15
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 109,
+        "handicap": 17
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 389,
+        "handicap": 1
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 345,
+        "handicap": 11
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 182,
+        "handicap": 9
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 496,
+        "handicap": 5
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 348,
+        "handicap": 10
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 375,
+        "handicap": 6
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 147,
+        "handicap": 12
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 318,
+        "handicap": 18
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "distance": 466,
+        "handicap": 14
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 382,
+        "handicap": 4
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 137,
+        "handicap": 16
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 355,
+        "handicap": 8
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 480,
+        "handicap": 2
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0019-01",
+    "name": "Sun Island Suzhou - Sun Island Suzhou",
+    "location": "Suzhou, China",
+    "city": "Suzhou",
+    "country": "China",
+    "latitude": 31.364626,
+    "longitude": 120.697145,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/sun-island-suzhou",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:09:57.389Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6243
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 329,
+        "handicap": 15
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 530,
+        "handicap": 1
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 137,
+        "handicap": 7
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 372,
+        "handicap": 5
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 363,
+        "handicap": 11
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 493,
+        "handicap": 13
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 351,
+        "handicap": 9
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 139,
+        "handicap": 17
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 405,
+        "handicap": 3
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 413,
+        "handicap": 4
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 330,
+        "handicap": 10
+      },
+      {
+        "hole": 12,
+        "par": 5,
+        "distance": 478,
+        "handicap": 2
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 356,
+        "handicap": 14
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "distance": 118,
+        "handicap": 18
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 383,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 338,
+        "handicap": 16
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 184,
+        "handicap": 8
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 524,
+        "handicap": 6
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-hi-0019-01",
+    "name": "Sun Valley Golf Club - A",
+    "location": "Sanya, China",
+    "city": "Sanya",
+    "country": "China",
+    "latitude": 18.25292,
+    "longitude": 109.609125,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/sun-valley-golf-club-a",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:00.161Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 3009
+    },
+    "teeName": "White",
+    "par": 35,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 368,
+        "handicap": 5
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 357,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 351,
+        "handicap": 7
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 153,
+        "handicap": 8
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 566,
+        "handicap": 4
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 379,
+        "handicap": 2
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 188,
+        "handicap": 6
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 301,
+        "handicap": 9
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 346,
+        "handicap": 1
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-hi-0019-02",
+    "name": "Sun Valley Golf Club - B",
+    "location": "Sanya, China",
+    "city": "Sanya",
+    "country": "China",
+    "latitude": 18.25292,
+    "longitude": 109.609125,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/sun-valley-golf-club-b",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:00.779Z",
+      "teeId": "",
+      "teeColor": "Gold",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 3971
+    },
+    "teeName": "Gold",
+    "par": 37,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 416,
+        "handicap": 7
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 454,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 582,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 225,
+        "handicap": 4
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 434,
+        "handicap": 6
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 432,
+        "handicap": 2
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 206,
+        "handicap": 9
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 394,
+        "handicap": 8
+      },
+      {
+        "hole": 9,
+        "par": 6,
+        "distance": 828,
+        "handicap": 1
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-hi-0019-03",
+    "name": "Sun Valley Golf Club - C",
+    "location": "Sanya, China",
+    "city": "Sanya",
+    "country": "China",
+    "latitude": 18.25292,
+    "longitude": 109.609125,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/sun-valley-golf-club-c",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:01.478Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2936
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 352,
+        "handicap": 4
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 303,
+        "handicap": 9
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 483,
+        "handicap": 3
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 132,
+        "handicap": 5
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 334,
+        "handicap": 6
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 364,
+        "handicap": 2
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 320,
+        "handicap": 7
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 176,
+        "handicap": 1
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 472,
+        "handicap": 8
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0020-01",
+    "name": "Suzhou Jinji Lake International Golf Club - Forest",
+    "location": "Suzhou, China",
+    "city": "Suzhou",
+    "country": "China",
+    "latitude": 31.285886,
+    "longitude": 120.70031,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/suzhou-jinji-lake-international-golf-club-forest",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:06.015Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 3167
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 388,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 527,
+        "handicap": 13
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 314,
+        "handicap": 17
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 185,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 385,
+        "handicap": 5
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 527,
+        "handicap": 9
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 327,
+        "handicap": 15
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 126,
+        "handicap": 11
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 388,
+        "handicap": 3
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0020-03",
+    "name": "Suzhou Jinji Lake International Golf Club - Links",
+    "location": "Suzhou, China",
+    "city": "Suzhou",
+    "country": "China",
+    "latitude": 31.285886,
+    "longitude": 120.70031,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/suzhou-jinji-lake-international-golf-club-links",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:06.722Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 3232
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 338,
+        "handicap": 18
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 437,
+        "handicap": 4
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 517,
+        "handicap": 8
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 140,
+        "handicap": 10
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 523,
+        "handicap": 16
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 381,
+        "handicap": 6
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 325,
+        "handicap": 14
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 131,
+        "handicap": 12
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 440,
+        "handicap": 2
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0020-02",
+    "name": "Suzhou Jinji Lake International Golf Club - Wetlands",
+    "location": "Suzhou, China",
+    "city": "Suzhou",
+    "country": "China",
+    "latitude": 31.285886,
+    "longitude": 120.70031,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/suzhou-jinji-lake-international-golf-club-wetlands",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:07.310Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 3282
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 412,
+        "handicap": 5
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 580,
+        "handicap": 7
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 352,
+        "handicap": 9
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 412,
+        "handicap": 1
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 328,
+        "handicap": 17
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 138,
+        "handicap": 15
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 370,
+        "handicap": 3
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 136,
+        "handicap": 11
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 554,
+        "handicap": 13
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0021-01",
+    "name": "Suzhou Sunrise Golf Club - A",
+    "location": "Suzhou, China",
+    "city": "Suzhou",
+    "country": "China",
+    "latitude": 31.366926,
+    "longitude": 120.663717,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/suzhou-sunrise-golf-club-a",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:07.948Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2969
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 3,
+        "distance": 147,
+        "handicap": 9
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 343,
+        "handicap": 4
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 475,
+        "handicap": 3
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 282,
+        "handicap": 8
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 315,
+        "handicap": 7
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 356,
+        "handicap": 6
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 529,
+        "handicap": 1
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 148,
+        "handicap": 5
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 374,
+        "handicap": 2
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0021-02",
+    "name": "Suzhou Sunrise Golf Club - B",
+    "location": "Suzhou, China",
+    "city": "Suzhou",
+    "country": "China",
+    "latitude": 31.366926,
+    "longitude": 120.663717,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/suzhou-sunrise-golf-club-b",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:08.704Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2796
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 322,
+        "handicap": 13
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 310,
+        "handicap": 9
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 458,
+        "handicap": 7
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 253,
+        "handicap": 17
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 351,
+        "handicap": 1
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 151,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 331,
+        "handicap": 5
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 140,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 480,
+        "handicap": 3
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0021-03",
+    "name": "Suzhou Sunrise Golf Club - C",
+    "location": "Suzhou, China",
+    "city": "Suzhou",
+    "country": "China",
+    "latitude": 31.366926,
+    "longitude": 120.663717,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/suzhou-sunrise-golf-club-c",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:09.346Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2974
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 336,
+        "handicap": 12
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 185,
+        "handicap": 10
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 481,
+        "handicap": 6
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 361,
+        "handicap": 2
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 343,
+        "handicap": 14
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 438,
+        "handicap": 16
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 146,
+        "handicap": 18
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 311,
+        "handicap": 8
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 373,
+        "handicap": 4
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0022-01",
+    "name": "Suzhou Taihu International Golf Club - Suzhou Taihu International",
+    "location": "Suzhou, China",
+    "city": "Suzhou",
+    "country": "China",
+    "latitude": 31.222025,
+    "longitude": 120.399378,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/suzhou-taihu-international-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:10.610Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6544
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 528,
+        "handicap": 6
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 401,
+        "handicap": 12
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 149,
+        "handicap": 14
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 408,
+        "handicap": 4
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 524,
+        "handicap": 2
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 319,
+        "handicap": 18
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 370,
+        "handicap": 16
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 198,
+        "handicap": 8
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 389,
+        "handicap": 10
+      },
+      {
+        "hole": 10,
+        "par": 5,
+        "distance": 507,
+        "handicap": 9
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 379,
+        "handicap": 13
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 407,
+        "handicap": 5
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 361,
+        "handicap": 17
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "distance": 178,
+        "handicap": 15
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 373,
+        "handicap": 11
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 423,
+        "handicap": 3
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 127,
+        "handicap": 7
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 503,
+        "handicap": 1
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-bj-0024-01",
+    "name": "Taoyuan CITEE Beijing Golf Club - Taoyuan CITEE",
+    "location": "Chaoyang, China",
+    "city": "Chaoyang",
+    "country": "China",
+    "latitude": 40.03411,
+    "longitude": 116.518276,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/taoyuan-citee-beijing-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:11.269Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5677
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 345,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 117,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 296,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 427,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 338,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 473,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 357,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 142,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 345,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 359,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 457,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 98,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 363,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 277,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 92,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 5,
+        "distance": 483,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 346,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 362,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-tj-0006-01",
+    "name": "Tianjin Binhai Forest Golf Club - East",
+    "location": "Tanggu, China",
+    "city": "Tanggu",
+    "country": "China",
+    "latitude": 39.098162,
+    "longitude": 117.685847,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/tianjin-binhai-forest-golf-club-east",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:20.052Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 3182
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 402,
+        "handicap": 4
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 319,
+        "handicap": 7
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 509,
+        "handicap": 1
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 356,
+        "handicap": 6
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 160,
+        "handicap": 8
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 378,
+        "handicap": 5
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 500,
+        "handicap": 3
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 152,
+        "handicap": 9
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 406,
+        "handicap": 2
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-tj-0006-02",
+    "name": "Tianjin Binhai Forest Golf Club - North",
+    "location": "Tanggu, China",
+    "city": "Tanggu",
+    "country": "China",
+    "latitude": 39.098162,
+    "longitude": 117.685847,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/tianjin-binhai-forest-golf-club-north",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:20.685Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 3148
+    },
+    "teeName": "White",
+    "par": 35,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 336,
+        "handicap": 7
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 369,
+        "handicap": 6
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 142,
+        "handicap": 9
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 496,
+        "handicap": 1
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 378,
+        "handicap": 4
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 384,
+        "handicap": 2
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 168,
+        "handicap": 8
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 495,
+        "handicap": 5
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 380,
+        "handicap": 3
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-tj-0006-03",
+    "name": "Tianjin Binhai Forest Golf Club - West",
+    "location": "Tanggu, China",
+    "city": "Tanggu",
+    "country": "China",
+    "latitude": 39.098162,
+    "longitude": 117.685847,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/tianjin-binhai-forest-golf-club-west",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:21.610Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2947
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 354,
+        "handicap": 5
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 481,
+        "handicap": 1
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 329,
+        "handicap": 6
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 133,
+        "handicap": 9
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 506,
+        "handicap": 2
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 142,
+        "handicap": 8
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 456,
+        "handicap": 4
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 153,
+        "handicap": 7
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 393,
+        "handicap": 3
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-tj-0003-01",
+    "name": "Tianjin Fortune Lake Golf Club - Tianjin Fortune Lake",
+    "location": "Jinghai, China",
+    "city": "Jinghai",
+    "country": "China",
+    "latitude": 38.914848,
+    "longitude": 117.159882,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/tianjin-fortune-lake-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:22.293Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6291
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 337,
+        "handicap": 17
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 552,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 382,
+        "handicap": 7
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 197,
+        "handicap": 5
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 316,
+        "handicap": 1
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 513,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 373,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 128,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 378,
+        "handicap": 9
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 366,
+        "handicap": 14
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 329,
+        "handicap": 10
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 370,
+        "handicap": 16
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 144,
+        "handicap": 18
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "distance": 504,
+        "handicap": 4
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 403,
+        "handicap": 2
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 345,
+        "handicap": 12
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 158,
+        "handicap": 8
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 496,
+        "handicap": 6
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-tj-0008-01",
+    "name": "Tianjin International Hot Spring Golf - Tianjin International Hot Spring",
+    "location": "Tianjin, China",
+    "city": "Tianjin",
+    "country": "China",
+    "latitude": 39.144892,
+    "longitude": 117.39018,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/tianjin-international-hot-spring-golf",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:23.045Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5488
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 284,
+        "handicap": 17
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 320,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 134,
+        "handicap": 13
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 425,
+        "handicap": 15
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 324,
+        "handicap": 5
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 143,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 299,
+        "handicap": 9
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 318,
+        "handicap": 1
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 469,
+        "handicap": 7
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 350,
+        "handicap": 4
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 312,
+        "handicap": 10
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 125,
+        "handicap": 14
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 433,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 339,
+        "handicap": 2
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 308,
+        "handicap": 16
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 135,
+        "handicap": 18
+      },
+      {
+        "hole": 17,
+        "par": 5,
+        "distance": 443,
+        "handicap": 12
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 327,
+        "handicap": 6
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sh-0010-01",
+    "name": "Tomson Shanghai Pudong Golf Club - Tomson Shanghai Pudong",
+    "location": "Pudong, China",
+    "city": "Pudong",
+    "country": "China",
+    "latitude": 31.220396,
+    "longitude": 121.582668,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/tomson-shanghai-pudong-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:23.711Z",
+      "teeId": "",
+      "teeColor": "Black",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 7340
+    },
+    "teeName": "champion",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 404,
+        "handicap": 13
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 550,
+        "handicap": 7
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 249,
+        "handicap": 15
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 490,
+        "handicap": 3
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 414,
+        "handicap": 11
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 440,
+        "handicap": 1
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 388,
+        "handicap": 17
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 182,
+        "handicap": 9
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 590,
+        "handicap": 5
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 386,
+        "handicap": 18
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 371,
+        "handicap": 14
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 228,
+        "handicap": 8
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "distance": 568,
+        "handicap": 6
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 356,
+        "handicap": 16
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 477,
+        "handicap": 4
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 461,
+        "handicap": 2
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 216,
+        "handicap": 12
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 570,
+        "handicap": 10
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-sh-0021-01",
+    "name": "West Shanghai Golf and Country Club - West Shanghai",
+    "location": "Shanghai, China",
+    "city": "Shanghai",
+    "country": "China",
+    "latitude": 31.004364,
+    "longitude": 121.317689,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/west-shanghai-golf-and-country-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:26.360Z",
+      "teeId": "",
+      "teeColor": "Blue",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2828
+    },
+    "teeName": "Blue",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 3,
+        "distance": 109,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 546,
+        "handicap": 2
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 311,
+        "handicap": 3
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 544,
+        "handicap": 4
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 285,
+        "handicap": 5
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 424,
+        "handicap": 6
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 150,
+        "handicap": 7
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 147,
+        "handicap": 8
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 312,
+        "handicap": 9
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-hb-0004-01",
+    "name": "Wuhan International Country Club - Wuhan International",
+    "location": "Wuhan, China",
+    "city": "Wuhan",
+    "country": "China",
+    "latitude": 30.642376,
+    "longitude": 114.21839,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/wuhan-international-country-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:29.680Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5769
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 313,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 475,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 316,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 117,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 310,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 377,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 137,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 502,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 370,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 366,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 277,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 5,
+        "distance": 457,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 156,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "distance": 522,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 334,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 331,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 88,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 321,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-hb-0005-01",
+    "name": "Wuhan Orient Golf Country Club - Wuhan Orient",
+    "location": "Wuhan, China",
+    "city": "Wuhan",
+    "country": "China",
+    "latitude": 30.508463,
+    "longitude": 114.188188,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/wuhan-orient-golf-country-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:31.365Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6122
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 347,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 358,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 572,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 385,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 112,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 347,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 172,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 530,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 330,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 368,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 294,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 333,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 156,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "distance": 528,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 360,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 328,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 116,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "distance": 486,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-hb-0006-01",
+    "name": "Wuhan Tianwaitian Golf and Country Club - Wuhan Tianwaitian",
+    "location": "Wuhan, China",
+    "city": "Wuhan",
+    "country": "China",
+    "latitude": 30.397309,
+    "longitude": 114.1143,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/wuhan-tianwaitian-golf-and-country-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:32.444Z",
+      "teeId": "",
+      "teeColor": "Gold",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 7118
+    },
+    "teeName": "Gold",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 432,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 431,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 581,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 408,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 212,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 559,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 208,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 457,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 43,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 420,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 592,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 404,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 230,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "distance": 618,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 446,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 172,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 457,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 448,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-js-0029-01",
+    "name": "Yangzhou Orient Golf Club - Yangzhou Orient",
+    "location": "Yangzhou, China",
+    "city": "Yangzhou",
+    "country": "China",
+    "latitude": 32.242862,
+    "longitude": 119.343398,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/yangzhou-orient-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:33.460Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5798
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 362,
+        "handicap": 3
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 471,
+        "handicap": 15
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 265,
+        "handicap": 9
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 136,
+        "handicap": 11
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 292,
+        "handicap": 13
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 495,
+        "handicap": 5
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 125,
+        "handicap": 17
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 378,
+        "handicap": 1
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 335,
+        "handicap": 7
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 343,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 111,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 5,
+        "distance": 523,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 297,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 305,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 331,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 146,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 5,
+        "distance": 510,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 373,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-bj-0045-01",
+    "name": "Yanxi Golf Club - Beijing Yanxi",
+    "location": "Haidian, China",
+    "city": "Haidian",
+    "country": "China",
+    "latitude": 39.947041,
+    "longitude": 116.219739,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/yanxi-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:34.509Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2816
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 367,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 135,
+        "handicap": 2
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 482,
+        "handicap": 3
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 379,
+        "handicap": 4
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 183,
+        "handicap": 5
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 302,
+        "handicap": 6
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 302,
+        "handicap": 7
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 279,
+        "handicap": 8
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 387,
+        "handicap": 9
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-yn-0007-01",
+    "name": "Yunnan Kunming Skyait Golf Club - Yunnan Kunming Skyait",
+    "location": "Kunming, China",
+    "city": "Kunming",
+    "country": "China",
+    "latitude": 25.605299,
+    "longitude": 103.429509,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/yunnan-kunming-skyait-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:36.685Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 5950
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 333,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 333,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 520,
+        "handicap": 5
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 160,
+        "handicap": 7
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 386,
+        "handicap": 9
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 355,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 165,
+        "handicap": 13
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 365,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 466,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 275,
+        "handicap": 2
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 323,
+        "handicap": 4
+      },
+      {
+        "hole": 12,
+        "par": 5,
+        "distance": 503,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 328,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "distance": 520,
+        "handicap": 10
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 170,
+        "handicap": 12
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "distance": 330,
+        "handicap": 14
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 78,
+        "handicap": 16
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 340,
+        "handicap": 18
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-bj-0053-01",
+    "name": "Yuyang International Golf Club - Beijing Yuyang",
+    "location": "Pinggu, China",
+    "city": "Pinggu",
+    "country": "China",
+    "latitude": 40.077934,
+    "longitude": 117.142589,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/yuyang-international-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:37.656Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6099
+    },
+    "teeName": "White",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 346,
+        "handicap": 11
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 488,
+        "handicap": 6
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 142,
+        "handicap": 17
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 313,
+        "handicap": 14
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 472,
+        "handicap": 8
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 299,
+        "handicap": 13
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 384,
+        "handicap": 1
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 160,
+        "handicap": 16
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 393,
+        "handicap": 2
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 344,
+        "handicap": 12
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 361,
+        "handicap": 7
+      },
+      {
+        "hole": 12,
+        "par": 5,
+        "distance": 498,
+        "handicap": 5
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 336,
+        "handicap": 10
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "distance": 143,
+        "handicap": 18
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 399,
+        "handicap": 4
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 172,
+        "handicap": 15
+      },
+      {
+        "hole": 17,
+        "par": 5,
+        "distance": 454,
+        "handicap": 9
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 395,
+        "handicap": 3
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0066-06",
+    "name": "Zhuhai Golden Gulf Golf Club - Nairn",
+    "location": "Zuhai, China",
+    "city": "Zuhai",
+    "country": "China",
+    "latitude": 22.104328,
+    "longitude": 113.365104,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/zhuhai-golden-gulf-golf-club-nairn",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:38.567Z",
+      "teeId": "",
+      "teeColor": "Black",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 3421
+    },
+    "teeName": "Monty",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 400,
+        "handicap": 2
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 383,
+        "handicap": 6
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 180,
+        "handicap": 8
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 399,
+        "handicap": 4
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 578,
+        "handicap": 1
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 410,
+        "handicap": 3
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 194,
+        "handicap": 9
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 507,
+        "handicap": 5
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 370,
+        "handicap": 7
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0066-03",
+    "name": "Zhuhai Golden Gulf Golf Club - Nairn-Troon",
+    "location": "Zuhai, China",
+    "city": "Zuhai",
+    "country": "China",
+    "latitude": 22.104328,
+    "longitude": 113.365104,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/zhuhai-golden-gulf-golf-club-nairn-troon",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:39.512Z",
+      "teeId": "",
+      "teeColor": "Black",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6656
+    },
+    "teeName": "Monty",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 400,
+        "handicap": 2
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 383,
+        "handicap": 6
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 180,
+        "handicap": 8
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 399,
+        "handicap": 4
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 578,
+        "handicap": 1
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 410,
+        "handicap": 3
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 194,
+        "handicap": 9
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 507,
+        "handicap": 5
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 370,
+        "handicap": 7
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 365,
+        "handicap": 12
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 392,
+        "handicap": 10
+      },
+      {
+        "hole": 12,
+        "par": 5,
+        "distance": 526,
+        "handicap": 15
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 310,
+        "handicap": 18
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "distance": 171,
+        "handicap": 13
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 426,
+        "handicap": 16
+      },
+      {
+        "hole": 16,
+        "par": 5,
+        "distance": 505,
+        "handicap": 11
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 151,
+        "handicap": 17
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 389,
+        "handicap": 14
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0066-04",
+    "name": "Zhuhai Golden Gulf Golf Club - Troon",
+    "location": "Zuhai, China",
+    "city": "Zuhai",
+    "country": "China",
+    "latitude": 22.104328,
+    "longitude": 113.365104,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/zhuhai-golden-gulf-golf-club-troon",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:40.352Z",
+      "teeId": "",
+      "teeColor": "Black",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 3235
+    },
+    "teeName": "Monty",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 365,
+        "handicap": 8
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 392,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 526,
+        "handicap": 1
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 310,
+        "handicap": 6
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 171,
+        "handicap": 7
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 426,
+        "handicap": 2
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 505,
+        "handicap": 5
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 151,
+        "handicap": 9
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 389,
+        "handicap": 4
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0066-01",
+    "name": "Zhuhai Golden Gulf Golf Club - Troon-Turnberry",
+    "location": "Zuhai, China",
+    "city": "Zuhai",
+    "country": "China",
+    "latitude": 22.104328,
+    "longitude": 113.365104,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/zhuhai-golden-gulf-golf-club-troon-turnberry",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:41.328Z",
+      "teeId": "",
+      "teeColor": "Black",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6532
+    },
+    "teeName": "Monty",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 365,
+        "handicap": 8
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 392,
+        "handicap": 3
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 526,
+        "handicap": 1
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 310,
+        "handicap": 6
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "distance": 171,
+        "handicap": 7
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 426,
+        "handicap": 2
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 505,
+        "handicap": 5
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 151,
+        "handicap": 9
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 389,
+        "handicap": 4
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 411,
+        "handicap": 12
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "distance": 537,
+        "handicap": 10
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 375,
+        "handicap": 15
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 154,
+        "handicap": 18
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 393,
+        "handicap": 13
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 369,
+        "handicap": 16
+      },
+      {
+        "hole": 16,
+        "par": 5,
+        "distance": 511,
+        "handicap": 11
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "distance": 155,
+        "handicap": 17
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 392,
+        "handicap": 14
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0066-05",
+    "name": "Zhuhai Golden Gulf Golf Club - Turnberry",
+    "location": "Zuhai, China",
+    "city": "Zuhai",
+    "country": "China",
+    "latitude": 22.104328,
+    "longitude": 113.365104,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/zhuhai-golden-gulf-golf-club-turnberry",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:42.373Z",
+      "teeId": "",
+      "teeColor": "Black",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 3297
+    },
+    "teeName": "Monty",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 411,
+        "handicap": 3
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 537,
+        "handicap": 1
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 375,
+        "handicap": 6
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 154,
+        "handicap": 9
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 393,
+        "handicap": 4
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 369,
+        "handicap": 7
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 511,
+        "handicap": 2
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 155,
+        "handicap": 8
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 392,
+        "handicap": 5
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0066-02",
+    "name": "Zhuhai Golden Gulf Golf Club - Turnberry-Nairn",
+    "location": "Zuhai, China",
+    "city": "Zuhai",
+    "country": "China",
+    "latitude": 22.104328,
+    "longitude": 113.365104,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/zhuhai-golden-gulf-golf-club-turnberry-nairn",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:43.186Z",
+      "teeId": "",
+      "teeColor": "Black",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6718
+    },
+    "teeName": "Monty",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 411,
+        "handicap": 3
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 537,
+        "handicap": 1
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 375,
+        "handicap": 6
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 154,
+        "handicap": 9
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 393,
+        "handicap": 4
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 369,
+        "handicap": 7
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 511,
+        "handicap": 2
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 155,
+        "handicap": 8
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 392,
+        "handicap": 5
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 400,
+        "handicap": 12
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 383,
+        "handicap": 10
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "distance": 180,
+        "handicap": 15
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 399,
+        "handicap": 18
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "distance": 578,
+        "handicap": 13
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 410,
+        "handicap": 16
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 194,
+        "handicap": 11
+      },
+      {
+        "hole": 17,
+        "par": 5,
+        "distance": 507,
+        "handicap": 17
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 370,
+        "handicap": 14
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0063-01",
+    "name": "Zhuhai Golf Club - Zhuhai",
+    "location": "Zhuhai, China",
+    "city": "Zhuhai",
+    "country": "China",
+    "latitude": 22.364613,
+    "longitude": 113.579408,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/zhuhai-golf-club",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:44.585Z",
+      "teeId": "",
+      "teeColor": "Gold",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 7004
+    },
+    "teeName": "Championship",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 427,
+        "handicap": 7
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 547,
+        "handicap": 13
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 410,
+        "handicap": 9
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 186,
+        "handicap": 15
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 400,
+        "handicap": 5
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 213,
+        "handicap": 11
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "distance": 591,
+        "handicap": 1
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "distance": 406,
+        "handicap": 3
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 350,
+        "handicap": 17
+      },
+      {
+        "hole": 10,
+        "par": 5,
+        "distance": 536,
+        "handicap": 10
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 394,
+        "handicap": 14
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 432,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 195,
+        "handicap": 16
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 355,
+        "handicap": 18
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "distance": 432,
+        "handicap": 2
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "distance": 208,
+        "handicap": 12
+      },
+      {
+        "hole": 17,
+        "par": 5,
+        "distance": 551,
+        "handicap": 4
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 371,
+        "handicap": 8
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0064-02",
+    "name": "Zhuhai Lakewood Golf Club - Lakes C",
+    "location": "Zhuhai, China",
+    "city": "Zhuhai",
+    "country": "China",
+    "latitude": 22.356757,
+    "longitude": 113.551412,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/zhuhai-lakewood-golf-club-lakes-c",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:45.263Z",
+      "teeId": "",
+      "teeColor": "Blue",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6094
+    },
+    "teeName": "Blue",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 341,
+        "handicap": 7
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "distance": 155,
+        "handicap": 17
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 394,
+        "handicap": 9
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 374,
+        "handicap": 1
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 338,
+        "handicap": 15
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "distance": 452,
+        "handicap": 3
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "distance": 191,
+        "handicap": 11
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "distance": 465,
+        "handicap": 13
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 359,
+        "handicap": 5
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 373,
+        "handicap": 4
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "distance": 146,
+        "handicap": 18
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "distance": 343,
+        "handicap": 14
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "distance": 380,
+        "handicap": 8
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "distance": 471,
+        "handicap": 2
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 168,
+        "handicap": 16
+      },
+      {
+        "hole": 16,
+        "par": 5,
+        "distance": 457,
+        "handicap": 10
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 335,
+        "handicap": 12
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 352,
+        "handicap": 6
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0064-01",
+    "name": "Zhuhai Lakewood Golf Club - Mountain A",
+    "location": "Zhuhai, China",
+    "city": "Zhuhai",
+    "country": "China",
+    "latitude": 22.356757,
+    "longitude": 113.551412,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/zhuhai-lakewood-golf-club-mountain-a",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:46.044Z",
+      "teeId": "",
+      "teeColor": "Blue",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 6217
+    },
+    "teeName": "Blue",
+    "par": 72,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 295,
+        "handicap": 17
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 517,
+        "handicap": 1
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 348,
+        "handicap": 11
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "distance": 191,
+        "handicap": 13
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 370,
+        "handicap": 3
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 356,
+        "handicap": 9
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 391,
+        "handicap": 7
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 171,
+        "handicap": 15
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 510,
+        "handicap": 5
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "distance": 347,
+        "handicap": 10
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "distance": 350,
+        "handicap": 8
+      },
+      {
+        "hole": 12,
+        "par": 5,
+        "distance": 479,
+        "handicap": 6
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "distance": 154,
+        "handicap": 16
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "distance": 339,
+        "handicap": 4
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "distance": 149,
+        "handicap": 18
+      },
+      {
+        "hole": 16,
+        "par": 5,
+        "distance": 522,
+        "handicap": 2
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "distance": 359,
+        "handicap": 12
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "distance": 369,
+        "handicap": 14
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0065-01",
+    "name": "Zhuhai Orient Golf Club - A",
+    "location": "Zhuhai, China",
+    "city": "Zhuhai",
+    "country": "China",
+    "latitude": 22.142681,
+    "longitude": 113.482978,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/zhuhai-orient-golf-club-a",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:46.946Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 3037
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "distance": 489,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 366,
+        "handicap": 2
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "distance": 489,
+        "handicap": 3
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 372,
+        "handicap": 4
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 324,
+        "handicap": 5
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 164,
+        "handicap": 6
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 298,
+        "handicap": 7
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 161,
+        "handicap": 8
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 374,
+        "handicap": 9
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0065-02",
+    "name": "Zhuhai Orient Golf Club - B",
+    "location": "Zhuhai, China",
+    "city": "Zhuhai",
+    "country": "China",
+    "latitude": 22.142681,
+    "longitude": 113.482978,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/zhuhai-orient-golf-club-b",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:47.845Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2903
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 287,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "distance": 368,
+        "handicap": 2
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "distance": 150,
+        "handicap": 3
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "distance": 365,
+        "handicap": 4
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "distance": 479,
+        "handicap": 5
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "distance": 394,
+        "handicap": 6
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 265,
+        "handicap": 7
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 124,
+        "handicap": 8
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "distance": 471,
+        "handicap": 9
+      }
+    ],
+    "holesVerified": false
+  },
+  {
+    "id": "public-chn-gd-0065-03",
+    "name": "Zhuhai Orient Golf Club - C",
+    "location": "Zhuhai, China",
+    "city": "Zhuhai",
+    "country": "China",
+    "latitude": 22.142681,
+    "longitude": 113.482978,
+    "source": "public-web",
+    "sourceUrl": "https://www.golfify.io/courses/zhuhai-orient-golf-club-c",
+    "sourceProvider": "golfify.io",
+    "sourceMeta": {
+      "provider": "golfify.io",
+      "fetchedAt": "2026-05-27T03:10:48.690Z",
+      "teeId": "",
+      "teeColor": "White",
+      "rating": null,
+      "slope": null,
+      "totalDistance": 2754
+    },
+    "teeName": "White",
+    "par": 36,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "distance": 272,
+        "handicap": 1
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "distance": 503,
+        "handicap": 2
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "distance": 339,
+        "handicap": 3
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "distance": 495,
+        "handicap": 4
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "distance": 310,
+        "handicap": 5
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "distance": 110,
+        "handicap": 6
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "distance": 348,
+        "handicap": 7
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "distance": 115,
+        "handicap": 8
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "distance": 262,
+        "handicap": 9
+      }
+    ],
+    "holesVerified": false
+  }
+]
+
+module.exports = PUBLIC_SCORECARDS

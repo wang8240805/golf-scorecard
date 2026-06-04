@@ -27,8 +27,8 @@
   <!-- 实际内容 - 加载完成后显示 -->
   <block wx:if="{{!pageLoading}}">
   <view class="home-tool-shell">
-    <!-- 主状态卡：继续比赛或快速开局 -->
-    <view class="card home-status-card home-status-active" wx:if="{{ongoingGame}}">
+    <!-- 主状态卡：继续比赛或新建比赛 -->
+    <view class="card home-status-card home-status-active" wx:if="{{hasOngoingGame && ongoingGame}}">
       <view class="home-status-top">
         <view class="home-status-badge">
           <text class="home-status-dot"></text>
@@ -57,7 +57,7 @@
     <view class="card home-status-card home-status-ready" wx:if="{{!hasOngoingGame}}">
       <view class="home-status-top">
         <view class="home-status-badge ready">
-          <text>快速开局</text>
+          <text>新比赛</text>
         </view>
         <text class="home-status-hole" wx:if="{{courseCount > 0}}">{{courseCount}} 个球场</text>
       </view>

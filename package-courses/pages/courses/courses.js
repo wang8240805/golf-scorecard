@@ -1,7 +1,7 @@
 const app = getApp()
 const { calculateDistance } = require('../../../utils/geo-utils.js')
 const OCRService = require('../../../utils/ocr-service.js')
-const ALL_COURSES = require('../../../data/courses-accurate.js')
+const { COURSE_CATALOG_VERSION, buildCourseCatalog } = require('../../../utils/course-catalog.js')
 
 // 开发模式开关
 const DEV_MODE = false
@@ -41,52 +41,12 @@ Page({
 
   // 从本地加载全部球场数据
   loadCoursesLocal: function() {
-    var self = this
-    var courses = ALL_COURSES || []
     var localAllCourses = wx.getStorageSync('courses') || []
-    var localMap = {}
-    localAllCourses.forEach(function(course) {
-      if (course && course.id) {
-        localMap[course.id] = course
-      }
-    })
-
-    // 预处理
-    courses = courses.map(function(course) {
-      var newCourse = {}
-      for (var key in course) {
-        newCourse[key] = course[key]
-      }
-      if (!newCourse.holesVerified) {
-        newCourse.holes = null
-        newCourse.holesVerified = false
-      }
-      return newCourse
-    })
-
-    // 合并本地动态数据，避免覆盖用户已校对/贡献的数据
-    var mergedCourses = courses.map(function(course) {
-      var localCourse = localMap[course.id]
-      if (!localCourse) {
-        return course
-      }
-      return {
-        ...course,
-        ...localCourse
-      }
-    })
-
-    // 保留仅存在于本地的自定义球场
-    localAllCourses.forEach(function(course) {
-      if (!course || !course.id) return
-      var exists = mergedCourses.find(function(c) { return c.id === course.id })
-      if (!exists && course.isCustom) {
-        mergedCourses.push(course)
-      }
-    })
+    var mergedCourses = buildCourseCatalog(localAllCourses)
 
     // 保存到缓存
     wx.setStorageSync('courses', mergedCourses)
+    wx.setStorageSync('coursesDataVersion', COURSE_CATALOG_VERSION)
     this.setData({ courses: mergedCourses })
   },
 
@@ -256,7 +216,7 @@ Page({
   // 跳转到全部球场页面
   goToAllCourses() {
     wx.navigateTo({
-      url: '/package-courses/pages/all-courses/all-courses'
+      url: '/package-courses/pages/all-courses/all-courses?from=new-game'
     })
   },
 

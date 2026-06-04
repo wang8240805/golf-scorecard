@@ -1104,6 +1104,14 @@
   font-size: 32rpx;
 }
 
+.share-timeline-tip {
+  display: block;
+  text-align: center;
+  font-size: 26rpx;
+  color: #666;
+  margin: 4rpx 0 30rpx;
+}
+
 /* 海报预览弹窗 */
 .poster-preview-content {
   background: white;

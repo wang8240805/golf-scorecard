@@ -5,7 +5,6 @@
       <text class="city-name">{{userCity || '定位中...'}}</text>
       <text class="city-count">共 {{courses.length}} 个球场</text>
     </view>
-    <button class="ocr-btn" bindtap="openOcrScanner">拍照识别</button>
   </view>
 
 

@@ -1,4 +1,5 @@
 // 球员选择页面 - 游戏大厅模式
+const ongoingGameStorage = require('../../../utils/ongoing-game-storage.js')
 const DEV_MODE = false
 
 Page({
@@ -34,17 +35,35 @@ Page({
     this.initGame(options)
   },
 
+  getLaunchGameId: function(options) {
+    if (!options) return ''
+    if (options.gameId) return options.gameId
+    if (!options.scene) return ''
+
+    var scene = ''
+    try {
+      scene = decodeURIComponent(options.scene)
+    } catch (e) {
+      scene = options.scene
+    }
+
+    if (!scene) return ''
+    if (scene.indexOf('gameId=') === -1) return scene
+
+    var parts = scene.split('&')
+    for (var i = 0; i < parts.length; i++) {
+      var pair = parts[i].split('=')
+      if (pair[0] === 'gameId' && pair[1]) {
+        return pair[1]
+      }
+    }
+    return ''
+  },
+
   initHoleCount: function() {
     var saved = parseInt(wx.getStorageSync('newGameHoleCount'), 10)
     var holeCount = saved === 9 ? 9 : 18
     this.setData({ holeCount: holeCount })
-  },
-
-  setHoleCount: function(e) {
-    var value = parseInt(e.currentTarget.dataset.value, 10)
-    var holeCount = value === 9 ? 9 : 18
-    this.setData({ holeCount: holeCount })
-    wx.setStorageSync('newGameHoleCount', holeCount)
   },
 
   onUnload: function() {
@@ -137,10 +156,11 @@ Page({
   // 初始化比赛
   initGame: function(options) {
     var self = this
+    var gameId = this.getLaunchGameId(options || {})
 
-    this.getUserInfo().then(function(userInfo) {
-      if (options.gameId) {
-        self.joinGame(options.gameId, userInfo)
+    return this.getUserInfo().then(function(userInfo) {
+      if (gameId) {
+        self.joinGame(gameId, userInfo)
       } else {
         self.createNewGame(userInfo)
       }
@@ -800,7 +820,7 @@ Page({
     })
 
     this.saveLastGameSetup()
-    wx.setStorageSync('currentGame', game)
+    ongoingGameStorage.saveCurrentGame(game)
     this.navigateToScorecard(gameId, players)
   },
 

@@ -1,7 +1,6 @@
 const app = getApp()
 const analysisReport = require('../../../utils/analysis-report.js')
 const posterGenerator = require('../../../utils/poster-generator.js')
-const preferenceManager = require('../../../utils/preference-manager.js')
 const gameCompleteness = require('../../../utils/game-completeness.js')
 const DEFAULT_POSTER_STYLE = 'pro'
 const DEFAULT_POSTER_BG = 'night'
@@ -20,28 +19,22 @@ Page({
     oneLineSummary: '',
     ratingScore: 0,
     ratingLabel: '',
-    showPosterModal: false,
     showPosterPreview: false,
-    posterStyle: DEFAULT_POSTER_STYLE,
     posterImageUrl: '',
     showPlayerSelector: false, // 球员选择弹窗
     currentPlayerSummary: null,
     reportPlayerOptions: [],
-    posterBgType: DEFAULT_POSTER_BG, // 默认高级感背景
-    customBgUrl: '', // 自定义背景图URL
+    reportQrcodeUrl: '',
+    shareText: '',
     hasAdvancedStats: false, // 是否有高级数据
     advancedStats: null // 高级统计数据
   },
 
   onLoad(options) {
     console.log('【report】onLoad, options:', options)
+    this.pageOptions = options || {}
 
-    // 海报改为默认风格直出（不再让用户选择）
-    this.setData({
-      posterStyle: DEFAULT_POSTER_STYLE,
-      posterBgType: DEFAULT_POSTER_BG,
-      customBgUrl: ''
-    })
+    this.enableTimelineShare()
 
     // 保存gameId到data供后续使用
     this.gameId = options?.gameId
@@ -56,23 +49,7 @@ Page({
       eventChannel.on('reportData', (data) => {
         console.log('【report】eventChannel收到数据:', data)
         if (data && data.game) {
-          const player = data.game.players?.find(p => p.isMe) || data.game.players?.[0]
-          if (!player || !gameCompleteness.isPlayerRoundComplete(data.game, player.id)) {
-            this.handleIncompleteReport()
-            return
-          }
-          const historyGames = gameCompleteness.filterAnalyzableGames(wx.getStorageSync('games') || [])
-          const report = data.report || analysisReport.generateGameReport(data.game, historyGames, player)
-          this.setData({
-            game: data.game,
-            currentPlayer: player,
-            currentPlayerSummary: this.buildPlayerSummary(data.game, player),
-            reportPlayerOptions: this.buildReportPlayerOptions(data.game),
-            report: report,
-            oneLineSummary: analysisReport.generateOneLineSummary(data.game, player),
-            posterImageUrl: data.posterUrl || ''
-          })
-          this.calculateRating()
+          this.applyReportGame(data.game, data.report, data.posterUrl || '', data.reportQrcodeUrl || '')
 
           if (data.autoShowPoster && data.posterUrl) {
             this.setData({ showPosterPreview: true })
@@ -80,6 +57,14 @@ Page({
         }
       })
     }
+  },
+
+  enableTimelineShare() {
+    if (!wx.showShareMenu) return
+    wx.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
+    })
   },
 
   onShow() {
@@ -123,35 +108,73 @@ Page({
     }
 
     if (game) {
-      console.log('【report】加载到game数据，players:', game.players?.length)
-      console.log('【report】第一个球员数据:', JSON.stringify(game.players?.[0], null, 2))
-      const currentPlayer = game.players?.find(p => p.isMe) || game.players?.[0] || null
-      console.log('【report】当前球员:', currentPlayer?.name, 'scores:', currentPlayer?.scores?.length)
-
-      if (!currentPlayer || !gameCompleteness.isPlayerRoundComplete(game, currentPlayer.id)) {
-        this.handleIncompleteReport()
-        return
-      }
-
-      const analyzableHistory = gameCompleteness.filterAnalyzableGames(historyGames)
-      const report = analysisReport.generateGameReport(game, analyzableHistory, currentPlayer)
-      console.log('【report】生成的report:', report ? JSON.stringify(report.summary) : 'null')
-      console.log('【report】oneLineSummary:', analysisReport.generateOneLineSummary(game, currentPlayer))
-
-      this.setData({
-        game: game,
-        currentPlayer: currentPlayer,
-        currentPlayerSummary: this.buildPlayerSummary(game, currentPlayer),
-        reportPlayerOptions: this.buildReportPlayerOptions(game),
-        report: report,
-        oneLineSummary: analysisReport.generateOneLineSummary(game, currentPlayer)
-      }, () => {
-        console.log('【report】数据设置完成:', this.data.game ? '有game' : '无game', 'report:', this.data.report ? '有' : '无')
-      })
-      this.calculateRating()
+      this.applyReportGame(game)
     } else {
       console.log('【report】警告：未找到任何比赛数据')
+      this.loadReportFromCloud(gameId)
     }
+  },
+
+  loadReportFromCloud(gameId) {
+    if (!gameId || !wx.cloud) return
+
+    wx.cloud.callFunction({
+      name: 'gameAction',
+      data: {
+        action: 'get',
+        gameId: gameId
+      },
+      success: (res) => {
+        const result = res && res.result ? res.result : {}
+        if (!result.success || !result.game) {
+          wx.showToast({ title: result.error || '未找到比赛数据', icon: 'none' })
+          return
+        }
+        wx.setStorageSync('game_' + gameId, result.game)
+        this.applyReportGame(result.game)
+      },
+      fail: (err) => {
+        console.error('加载云端报告失败:', err)
+        wx.showToast({ title: '加载报告失败', icon: 'none' })
+      }
+    })
+  },
+
+  applyReportGame(game, prebuiltReport, posterUrl, reportQrcodeUrl) {
+    if (!game) return
+
+    console.log('【report】加载到game数据，players:', game.players?.length)
+    const targetPlayerId = this.pageOptions && this.pageOptions.playerId
+    const currentPlayer = (targetPlayerId && game.players?.find(p => p.id === targetPlayerId)) ||
+      game.players?.find(p => p.isMe) ||
+      game.players?.[0] ||
+      null
+    console.log('【report】当前球员:', currentPlayer?.name)
+
+    if (!currentPlayer || !gameCompleteness.isPlayerRoundComplete(game, currentPlayer.id)) {
+      this.handleIncompleteReport()
+      return
+    }
+
+    const analyzableHistory = gameCompleteness.filterAnalyzableGames(wx.getStorageSync('games') || [])
+    const report = prebuiltReport || analysisReport.generateGameReport(game, analyzableHistory, currentPlayer)
+    const oneLineSummary = analysisReport.generateOneLineSummary(game, currentPlayer)
+    const currentPlayerSummary = this.buildPlayerSummary(game, currentPlayer)
+
+    this.setData({
+      game: game,
+      currentPlayer: currentPlayer,
+      currentPlayerSummary: currentPlayerSummary,
+      reportPlayerOptions: this.buildReportPlayerOptions(game),
+      report: report,
+      oneLineSummary: oneLineSummary,
+      posterImageUrl: posterUrl || this.data.posterImageUrl || '',
+      reportQrcodeUrl: reportQrcodeUrl || this.data.reportQrcodeUrl || '',
+      shareText: this.buildShareText(game, currentPlayer, currentPlayerSummary)
+    }, () => {
+      console.log('【report】数据设置完成:', this.data.game ? '有game' : '无game', 'report:', this.data.report ? '有' : '无')
+    })
+    this.calculateRating()
   },
 
   handleIncompleteReport() {
@@ -201,6 +224,7 @@ Page({
       currentPlayerSummary: this.buildPlayerSummary(game, player),
       report: report,
       oneLineSummary: analysisReport.generateOneLineSummary(game, player),
+      shareText: this.buildShareText(game, player, this.buildPlayerSummary(game, player)),
       showPlayerSelector: false
     })
     this.calculateRating()
@@ -387,54 +411,7 @@ Page({
 
   // 显示海报样式选择
   showPosterOptions() {
-    // 简化流程：直接生成海报
     this.generatePoster()
-  },
-
-  hidePosterModal() {
-    this.setData({ showPosterModal: false })
-  },
-
-  selectPosterStyle(e) {
-    const style = e.currentTarget.dataset.style
-    this.setData({ posterStyle: style })
-
-    // 保存用户偏好
-    preferenceManager.setPreference('posterStyle', style)
-
-    // 如果已有海报，立即重新生成预览
-    if (this.data.posterImageUrl) {
-      this.regenerateWithNewStyle(style)
-    }
-  },
-
-  // 使用新风格重新生成海报
-  async regenerateWithNewStyle(style) {
-    const { game, currentPlayer, posterBgType, customBgUrl } = this.data
-    if (!game) return
-
-    const player = currentPlayer || game.players?.find(p => p.isMe) || game.players?.[0]
-    if (!player) return
-
-    wx.showLoading({ title: '更新中...', mask: true })
-
-    try {
-      const posterUrl = await posterGenerator.generatePoster({
-        type: style,
-        game,
-        player,
-        bgType: posterBgType,
-        customBgUrl: posterBgType === 'custom' ? customBgUrl : '',
-        context: this
-      })
-
-      this.setData({ posterImageUrl: posterUrl })
-      preferenceManager.setPreference('posterStyle', style)
-      wx.hideLoading()
-    } catch (err) {
-      console.error('更新海报失败:', err)
-      wx.hideLoading()
-    }
   },
 
   // 生成海报
@@ -459,19 +436,21 @@ Page({
     wx.showLoading({ title: '生成中...' })
 
     try {
+      const qrcodeUrl = await this.ensureReportQrCode(game)
       const posterUrl = await posterGenerator.generatePoster({
         type: DEFAULT_POSTER_STYLE,
         game,
         player,
         bgType: DEFAULT_POSTER_BG,
-        customBgUrl: '',
+        qrcodeUrl: qrcodeUrl,
         context: this
       })
 
       this.setData({
         posterImageUrl: posterUrl,
-        showPosterModal: false,
-        showPosterPreview: true
+        showPosterPreview: true,
+        reportQrcodeUrl: qrcodeUrl,
+        shareText: this.buildShareText(game, player, this.buildPlayerSummary(game, player))
       })
 
       wx.hideLoading()
@@ -480,6 +459,39 @@ Page({
       wx.hideLoading()
       wx.showToast({ title: '生成失败', icon: 'none' })
     }
+  },
+
+  ensureReportQrCode(game) {
+    const gameId = this.getShareGameId(game)
+    if (!gameId || !wx.cloud) return Promise.resolve('')
+    if (this.data.reportQrcodeUrl) return Promise.resolve(this.data.reportQrcodeUrl)
+
+    return new Promise((resolve) => {
+      wx.cloud.callFunction({
+        name: 'gameAction',
+        data: {
+          action: 'getReportQrCode',
+          gameId: gameId
+        },
+        success: (res) => {
+          const result = res && res.result ? res.result : {}
+          if (result.success && result.qrcodeUrl) {
+            resolve(result.qrcodeUrl)
+            return
+          }
+          console.warn('生成成绩回看码失败:', result.error)
+          resolve('')
+        },
+        fail: (err) => {
+          console.warn('生成成绩回看码异常:', err)
+          resolve('')
+        }
+      })
+    })
+  },
+
+  getShareGameId(game) {
+    return (game && (game.gameId || game.id || game._id)) || this.gameId || ''
   },
 
   hidePosterPreview() {
@@ -509,152 +521,6 @@ Page({
       this.setData({ showPosterPreview: true })
     } else {
       this.generatePoster()
-    }
-  },
-
-  // 选择背景类型
-  selectBgType(e) {
-    const type = e.currentTarget.dataset.type
-    this.setData({
-      posterBgType: type,
-      customBgUrl: '' // 选择预设背景时清除自定义背景
-    })
-    preferenceManager.setPreference('posterBgType', type)
-    preferenceManager.setPreference('customBgUrl', '')
-  },
-
-  // 选择自定义背景 - 在样式选择页调用
-  selectCustomBg() {
-    wx.chooseImage({
-      count: 1,
-      sizeType: ['compressed'],
-      sourceType: ['album', 'camera'],
-      success: (res) => {
-        const tempFilePath = res.tempFilePaths[0]
-        this.setData({
-          customBgUrl: tempFilePath,
-          posterBgType: 'custom'
-        })
-        preferenceManager.setPreference('posterBgType', 'custom')
-        preferenceManager.setPreference('customBgUrl', tempFilePath)
-      }
-    })
-  },
-
-  // 在预览页选择自定义背景 - 选择后立即生成
-  async selectCustomBgInPreview() {
-    wx.chooseImage({
-      count: 1,
-      sizeType: ['compressed'],
-      sourceType: ['album', 'camera'],
-      success: async (res) => {
-        const tempFilePath = res.tempFilePaths[0]
-
-        // 保存设置
-        preferenceManager.setPreference('posterBgType', 'custom')
-        preferenceManager.setPreference('customBgUrl', tempFilePath)
-
-        // 立即用新背景重新生成（使用临时变量，避免setData异步问题）
-        await this.regenerateWithNewBgAndUrl('custom', tempFilePath)
-      }
-    })
-  },
-
-  // 移除自定义背景
-  removeCustomBg() {
-    this.setData({
-      customBgUrl: '',
-      posterBgType: 'default'
-    })
-    preferenceManager.setPreference('posterBgType', 'default')
-    preferenceManager.setPreference('customBgUrl', '')
-  },
-
-  // 切换是否使用自定义背景
-  toggleUseCustomBg() {
-    const newBgType = this.data.posterBgType === 'custom' ? 'default' : 'custom'
-    this.setData({
-      posterBgType: newBgType
-    })
-    preferenceManager.setPreference('posterBgType', newBgType)
-  },
-
-  // 在预览页切换背景类型并重新生成
-  async changeBgType(e) {
-    const type = e.currentTarget.dataset.type
-    this.setData({ posterBgType: type })
-
-    if (type !== 'custom') {
-      // 重新生成海报
-      await this.regenerateWithNewBg(type)
-    } else {
-      // 选择自定义背景并立即生成
-      await this.selectCustomBgInPreview()
-    }
-  },
-
-  // 使用新背景重新生成海报
-  async regenerateWithNewBg(bgType) {
-    const { game, posterStyle, currentPlayer, customBgUrl } = this.data
-    if (!game) return
-
-    const player = currentPlayer || game.players?.find(p => p.isMe) || game.players?.[0]
-    if (!player) return
-
-    wx.showLoading({ title: '更新中...' })
-
-    try {
-      const posterUrl = await posterGenerator.generatePoster({
-        type: posterStyle,
-        game,
-        player,
-        bgType: bgType,
-        customBgUrl: bgType === 'custom' ? customBgUrl : '',
-        context: this
-      })
-
-      this.setData({ posterImageUrl: posterUrl })
-      preferenceManager.setPreference('posterBgType', bgType)
-      wx.hideLoading()
-    } catch (err) {
-      console.error('更新海报失败:', err)
-      wx.hideLoading()
-      wx.showToast({ title: '更新失败', icon: 'none' })
-    }
-  },
-
-  // 使用新背景和指定URL重新生成海报（用于自定义背景上传）
-  async regenerateWithNewBgAndUrl(bgType, bgUrl) {
-    const { game, posterStyle, currentPlayer } = this.data
-    if (!game) return
-
-    const player = currentPlayer || game.players?.find(p => p.isMe) || game.players?.[0]
-    if (!player) return
-
-    // 先更新状态
-    this.setData({
-      customBgUrl: bgUrl,
-      posterBgType: 'custom'
-    })
-
-    wx.showLoading({ title: '更新中...' })
-
-    try {
-      const posterUrl = await posterGenerator.generatePoster({
-        type: posterStyle,
-        game,
-        player,
-        bgType: 'custom',
-        customBgUrl: bgUrl,
-        context: this
-      })
-
-      this.setData({ posterImageUrl: posterUrl })
-      wx.hideLoading()
-    } catch (err) {
-      console.error('更新海报失败:', err)
-      wx.hideLoading()
-      wx.showToast({ title: '更新失败', icon: 'none' })
     }
   },
 
@@ -695,6 +561,49 @@ Page({
         }
       }
     })
+  },
+
+  copyShareText() {
+    const text = this.data.shareText || this.buildShareText(this.data.game, this.data.currentPlayer, this.data.currentPlayerSummary)
+    if (!text) return
+    wx.setClipboardData({
+      data: text,
+      success: () => {
+        wx.showToast({ title: '战报已复制', icon: 'success' })
+      }
+    })
+  },
+
+  buildShareText(game, player, summary) {
+    if (!game || !player) return ''
+    const total = summary && summary.total ? summary.total : this.buildPlayerSummary(game, player).total
+    const toParText = summary && summary.toParText ? summary.toParText : this.buildPlayerSummary(game, player).toParText
+    const courseName = game.courseName || '高尔夫球场'
+    return `${player.name || '我'}在${courseName}完成18洞，成绩${total}杆 ${toParText}。用 WinPAR 记录本场战报。`
+  },
+
+  buildShareTitle() {
+    return this.data.shareText || this.buildShareText(this.data.game, this.data.currentPlayer, this.data.currentPlayerSummary) || 'WinPAR 高尔夫成绩战报'
+  },
+
+  onShareAppMessage() {
+    const gameId = this.getShareGameId(this.data.game)
+    const playerId = this.data.currentPlayer ? this.data.currentPlayer.id : ''
+    return {
+      title: this.buildShareTitle(),
+      path: `/package-game/pages/game-report/game-report?gameId=${encodeURIComponent(gameId)}&playerId=${encodeURIComponent(playerId)}&readonly=1`,
+      imageUrl: this.data.posterImageUrl || ''
+    }
+  },
+
+  onShareTimeline() {
+    const gameId = this.getShareGameId(this.data.game)
+    const playerId = this.data.currentPlayer ? this.data.currentPlayer.id : ''
+    return {
+      title: this.buildShareTitle(),
+      query: `gameId=${encodeURIComponent(gameId)}&playerId=${encodeURIComponent(playerId)}&readonly=1`,
+      imageUrl: this.data.posterImageUrl || ''
+    }
   },
 
   preventHide() {

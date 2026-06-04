@@ -1,16 +1,4 @@
 <view class="container">
-  <view class="card select-mode-tip" wx:if="{{fromNewGame}}">
-    <text class="tip-title">为本场比赛选择球场</text>
-    <text class="tip-desc">优先从本地球场库选择。找不到时，可以手动新增或先快速开局。</text>
-    <view class="tip-steps">
-      <text class="tip-step">地图补全只补名称、地址和定位；标准杆仍以本地库、拍卡和手动校准为准。</text>
-    </view>
-    <view class="tip-action-row">
-      <button class="tip-add-btn" bindtap="openAddCourseModal">手动新增</button>
-      <button class="tip-temp-btn" bindtap="useTemporaryCourse">快速开局</button>
-    </view>
-  </view>
-
   <!-- 搜索框 -->
   <view class="card search-card">
     <view class="search-box">
@@ -32,7 +20,20 @@
 
   <!-- 工具栏 -->
   <view class="card toolbar-card">
-    <view class="toolbar-actions">
+    <view class="province-filter-row" wx:if="{{fromNewGame && provinceQuickFilters.length > 0}}">
+      <view class="province-filter-list">
+        <view
+          wx:for="{{provinceQuickFilters}}"
+          wx:key="value"
+          class="province-filter-chip {{selectedProvinceFilter === item.value ? 'active' : ''}}"
+          bindtap="selectProvinceFilter"
+          data-value="{{item.value}}"
+        >
+          {{item.label}}
+        </view>
+      </view>
+    </view>
+    <view class="toolbar-actions" wx:if="{{!fromNewGame}}">
       <button class="toolbar-btn {{showFavoritesOnly ? 'active' : ''}}" bindtap="toggleFavoritesOnly" wx:if="{{!fromNewGame}}">
         {{showFavoritesOnly ? '显示全部' : '仅看收藏'}}
       </button>
@@ -89,9 +90,30 @@
       <text class="empty-text">{{searchKeyword ? '没有找到匹配的球场' : showFavoritesOnly ? '还没有收藏任何球场' : '暂无球场数据'}}</text>
       <view class="empty-action-row" wx:if="{{fromNewGame}}">
         <button class="empty-add-btn" bindtap="openAddCourseModal">手动新增</button>
-        <button class="empty-temp-btn" bindtap="useTemporaryCourse">快速开局</button>
       </view>
       <button class="empty-map-btn" wx:if="{{searchKeyword}}" bindtap="searchOnlineByKeyword" loading="{{onlineSyncing}}" disabled="{{onlineSyncing}}">用地图补全名称地址</button>
+    </view>
+  </view>
+
+  <!-- 全部省份选择 -->
+  <view class="modal {{showProvincePicker ? 'show' : ''}}" wx:if="{{showProvincePicker}}" bindtap="closeProvincePicker">
+    <view class="modal-content province-picker-content" catchtap="preventHide">
+      <view class="modal-header">
+        <text class="modal-title">选择省份</text>
+        <text class="modal-close" bindtap="closeProvincePicker">×</text>
+      </view>
+      <scroll-view class="province-picker-body" scroll-y>
+        <view
+          class="province-picker-item {{selectedProvinceFilter === item.value ? 'active' : ''}}"
+          wx:for="{{allProvinceOptions}}"
+          wx:key="value"
+          bindtap="selectProvinceFromPicker"
+          data-value="{{item.value}}"
+        >
+          <text class="province-picker-name">{{item.label}}</text>
+          <text class="province-picker-count">{{item.count}} 个球场</text>
+        </view>
+      </scroll-view>
     </view>
   </view>
 

@@ -1,5 +1,6 @@
 const { formatDate } = require('../../../utils/date-utils.js')
 const gameCompleteness = require('../../../utils/game-completeness.js')
+const ongoingGameStorage = require('../../../utils/ongoing-game-storage.js')
 
 Page({
   data: {
@@ -32,10 +33,9 @@ Page({
 
     // 从所有比赛中收集球员信息
     const playerMap = new Map()
-    const allGames = [...games]
-    if (currentGame && !currentGame.completed) {
-      allGames.push(currentGame)
-    }
+    const allGames = currentGame && !currentGame.completed
+      ? ongoingGameStorage.mergeGameIntoList(games, currentGame)
+      : games.slice()
 
     allGames.forEach(game => {
       if (game.players) {

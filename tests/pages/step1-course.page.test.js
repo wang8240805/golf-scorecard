@@ -26,6 +26,18 @@ describe("step1-course page", function() {
     expect(wx.getStorageSync("currentCourseId")).toBe("c1")
   })
 
+  test("setHoleCount should save selected hole count before player step", function() {
+    const page = loadPage(path.resolve(__dirname, "../../package-courses/pages/new-game/step1-course/step1-course.js"))
+
+    page.setHoleCount({ currentTarget: { dataset: { value: "9" } } })
+    expect(page.data.holeCount).toBe(9)
+    expect(wx.getStorageSync("newGameHoleCount")).toBe(9)
+
+    page.setHoleCount({ currentTarget: { dataset: { value: "18" } } })
+    expect(page.data.holeCount).toBe(18)
+    expect(wx.getStorageSync("newGameHoleCount")).toBe(18)
+  })
+
   test("nearby-course data should match snapshot", function() {
     const page = loadPage(path.resolve(__dirname, "../../package-courses/pages/new-game/step1-course/step1-course.js"))
     page.data = { userLocation: { latitude: 39.9, longitude: 116.4 } }

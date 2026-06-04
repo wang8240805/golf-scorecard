@@ -271,6 +271,44 @@
   margin: 0 20rpx;
 }
 
+.game-config-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16rpx;
+  padding: 18rpx 20rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 10rpx 24rpx rgba(0, 0, 0, 0.08);
+}
+
+.config-title {
+  display: block;
+  font-size: 26rpx;
+  color: #1f2b23;
+  font-weight: 600;
+  margin-bottom: 14rpx;
+}
+
+.hole-count-segment {
+  display: flex;
+  border: 1rpx solid #c8dacc;
+  border-radius: 12rpx;
+  overflow: hidden;
+}
+
+.hole-count-option {
+  flex: 1;
+  text-align: center;
+  font-size: 26rpx;
+  line-height: 64rpx;
+  color: #355344;
+  background: #ffffff;
+}
+
+.hole-count-option.active {
+  color: #ffffff;
+  font-weight: 600;
+  background: #2c8f4e;
+}
+
 /* 18洞表格区域 */
 .holes-section {
   flex: 1;
@@ -444,10 +482,11 @@
   background: #ffffff;
   box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.06);
   z-index: 100;
+  display: flex;
 }
 
 .btn-primary-large {
-  width: 100%;
+  flex: 1;
   height: 88rpx;
   line-height: 88rpx;
   background: linear-gradient(135deg, #2c8f4e 0%, #1a5c34 100%);
@@ -459,6 +498,10 @@
   text-align: center;
   white-space: nowrap;
   padding: 0;
+}
+
+.btn-primary-large::after {
+  border: none;
 }
 
 /* OCR校对弹窗 - 全新设计 */

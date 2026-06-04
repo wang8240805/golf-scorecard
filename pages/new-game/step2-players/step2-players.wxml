@@ -74,17 +74,6 @@
       </view>
     </view>
 
-    <view class="game-config-card" wx:if="{{isCreator}}">
-      <view class="config-title-row">
-        <text class="config-title">比赛洞数</text>
-        <text class="config-desc">建议日常快打用9洞，正式轮用18洞</text>
-      </view>
-      <view class="hole-count-segment">
-        <view class="hole-count-option {{holeCount === 9 ? 'active' : ''}}" bindtap="setHoleCount" data-value="9">9洞</view>
-        <view class="hole-count-option {{holeCount === 18 ? 'active' : ''}}" bindtap="setHoleCount" data-value="18">18洞</view>
-      </view>
-    </view>
-
     <!-- 邀请二维码区域 - 直接展示给面对面扫码 -->
     <view class="qrcode-section" wx:if="{{isCreator && qrcodeUrl}}">
       <view class="qrcode-header">

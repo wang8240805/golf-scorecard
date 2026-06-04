@@ -144,92 +144,6 @@
     </view>
   </view>
 
-  <!-- 海报样式选择弹窗 - 简化版，只选模板 -->
-  <view class="poster-modal {{showPosterModal ? 'show' : ''}}" wx:if="{{showPosterModal}}" bindtap="hidePosterModal">
-    <view class="poster-modal-content" catchtap="preventHide">
-      <view class="poster-modal-header">
-        <text class="poster-modal-title">选择海报风格</text>
-        <text class="poster-modal-close" bindtap="hidePosterModal">×</text>
-      </view>
-      <view class="poster-modal-body">
-        <text class="section-subtitle">海报模板（点击预览效果）</text>
-
-        <!-- 职业选手风格 -->
-        <view class="style-option {{posterStyle === 'pro' ? 'selected' : ''}}" bindtap="selectPosterStyle" data-style="pro">
-          <view class="style-preview-thumbnail">
-            <view class="thumb-pro">
-              <text class="thumb-icon">🏆</text>
-              <text class="thumb-title">87</text>
-            </view>
-          </view>
-          <view class="style-info">
-            <text class="style-name">职业选手</text>
-            <text class="style-desc">深色背景 · 金色点缀 · 专业数据</text>
-          </view>
-          <text class="style-check" wx:if="{{posterStyle === 'pro'}}">✓</text>
-        </view>
-
-        <!-- 清新简约风格 -->
-        <view class="style-option {{posterStyle === 'minimal' ? 'selected' : ''}}" bindtap="selectPosterStyle" data-style="minimal">
-          <view class="style-preview-thumbnail">
-            <view class="thumb-minimal">
-              <text class="thumb-icon">🌿</text>
-              <text class="thumb-title">87</text>
-            </view>
-          </view>
-          <view class="style-info">
-            <text class="style-name">清新简约</text>
-            <text class="style-desc">绿色主题 · 白色卡片 · 清新自然</text>
-          </view>
-          <text class="style-check" wx:if="{{posterStyle === 'minimal'}}">✓</text>
-        </view>
-
-        <!-- 趣味漫画风格 -->
-        <view class="style-option {{posterStyle === 'fun' ? 'selected' : ''}}" bindtap="selectPosterStyle" data-style="fun">
-          <view class="style-preview-thumbnail">
-            <view class="thumb-fun">
-              <text class="thumb-icon">🎨</text>
-              <text class="thumb-title">87</text>
-            </view>
-          </view>
-          <view class="style-info">
-            <text class="style-name">趣味漫画</text>
-            <text class="style-desc">彩色渐变 · 活泼风格 · 趣味标签</text>
-          </view>
-          <text class="style-check" wx:if="{{posterStyle === 'fun'}}">✓</text>
-        </view>
-
-        <!-- 上传自定义背景 -->
-        <view class="section-divider"></view>
-        <text class="section-subtitle">自定义背景</text>
-        <view class="custom-bg-upload" bindtap="selectCustomBg">
-          <view class="upload-area {{customBgUrl ? 'has-image' : ''}}">
-            <block wx:if="{{!customBgUrl}}">
-              <text class="upload-icon">📷</text>
-              <text class="upload-text">点击上传自定义背景图</text>
-              <text class="upload-tip">支持 JPG、PNG 格式</text>
-            </block>
-            <block wx:else>
-              <image class="upload-preview" src="{{customBgUrl}}" mode="aspectFill"></image>
-              <view class="upload-overlay">
-                <text class="reupload-text">更换背景图</text>
-              </view>
-            </block>
-          </view>
-        </view>
-        <view wx:if="{{customBgUrl}}" class="use-custom-bg-option">
-          <view class="checkbox-item" bindtap="toggleUseCustomBg">
-            <view class="checkbox {{posterBgType === 'custom' ? 'checked' : ''}}">
-              <text wx:if="{{posterBgType === 'custom'}}">✓</text>
-            </view>
-            <text class="checkbox-label">使用自定义背景生成海报</text>
-          </view>
-        </view>
-      </view>
-      <button class="btn btn-primary generate-btn" bindtap="generatePoster">生成海报</button>
-    </view>
-  </view>
-
   <!-- 海报预览弹窗 -->
   <view class="poster-modal {{showPosterPreview ? 'show' : ''}}" wx:if="{{showPosterPreview}}" bindtap="hidePosterPreview">
     <view class="poster-preview-content-wide">
@@ -238,8 +152,10 @@
 
         <view class="poster-actions-vertical">
           <button class="btn btn-primary btn-large" bindtap="savePoster">保存到相册</button>
+          <button class="btn btn-secondary" bindtap="copyShareText">复制战报文案</button>
           <button class="btn btn-secondary" bindtap="goBackHome">返回主页</button>
         </view>
+        <text class="share-timeline-tip">可通过右上角菜单分享到朋友圈</text>
         <view class="bottom-spacer"></view>
       </scroll-view>
     </view>

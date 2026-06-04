@@ -18,6 +18,7 @@ function readPatchedValue(data, dottedKey, fallbackGetter) {
 
 describe("scorecard full flow regression", function() {
   test("finishGame should allow saving partial rounds without report/stat eligibility", function() {
+    jest.useFakeTimers()
     const page = loadPage(path.resolve(__dirname, "../../pages/scorecard/scorecard.js"))
     page.data = {
       pendingCount: 0,
@@ -55,6 +56,17 @@ describe("scorecard full flow regression", function() {
     expect(savedGames).toHaveLength(1)
     expect(savedGames[0].roundType).toBe("partial")
     expect(savedGames[0].isCompleteRound).toBe(false)
+    expect(savedGames[0].status).toBe("completed")
+    expect(wx.getStorageSync("completedGameKeys")).toContain("g1")
+    expect(wx.getStorageSync("currentGame")).toBeUndefined()
+    expect(wx.getStorageSync("viewMode")).toBeUndefined()
+    expect(wx.navigateTo).not.toHaveBeenCalled()
+
+    jest.runOnlyPendingTimers()
+    expect(wx.switchTab).toHaveBeenCalledWith({
+      url: "/pages/index/index"
+    })
+    jest.useRealTimers()
   })
 
   test("finishGame should generate poster directly for complete rounds", function() {

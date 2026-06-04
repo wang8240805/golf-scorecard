@@ -1,6 +1,6 @@
 /* 页面容器 */
 .container {
-  padding: 20rpx;
+  padding: 16rpx 20rpx 20rpx;
   padding-bottom: 120rpx;
 }
 
@@ -203,6 +203,46 @@
   color: white;
 }
 .toolbar-btn::after {
+  border: none;
+}
+
+.province-filter-row {
+  width: 100%;
+}
+
+.province-filter-list {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14rpx 12rpx;
+}
+
+.province-filter-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  height: 56rpx;
+  line-height: 56rpx;
+  padding: 0 8rpx;
+  margin: 0;
+  border-radius: 28rpx;
+  background: #f0f5f2;
+  color: #315542;
+  border: 1rpx solid #d8e7dd;
+  font-size: 23rpx;
+  font-weight: 600;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.province-filter-chip.active {
+  background: #2c8f4e;
+  color: #fff;
+  border-color: #2c8f4e;
+  font-weight: 700;
+}
+
+.province-filter-chip::after {
   border: none;
 }
 
@@ -486,6 +526,40 @@
 .modal-body {
   max-height: 60vh;
   padding: 30rpx;
+}
+
+.province-picker-content {
+  width: 84%;
+  max-height: 72vh;
+}
+
+.province-picker-body {
+  max-height: 56vh;
+  padding: 12rpx 0;
+}
+
+.province-picker-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 86rpx;
+  padding: 0 30rpx;
+  border-bottom: 1rpx solid #eef2ef;
+}
+
+.province-picker-item.active {
+  background: #f0faf3;
+}
+
+.province-picker-name {
+  font-size: 29rpx;
+  color: #20392b;
+  font-weight: 600;
+}
+
+.province-picker-count {
+  font-size: 24rpx;
+  color: #6f8a78;
 }
 
 .add-course-guide {
