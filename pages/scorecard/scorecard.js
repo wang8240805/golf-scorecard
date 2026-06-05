@@ -1,9 +1,7 @@
 const app = getApp()
 const { GAME_MODES } = require('../../data/game-modes.js')
-const { COURSE_CATALOG_VERSION, buildCourseCatalog } = require('../../utils/course-catalog.js')
 const storageDebounced = require('../../utils/storage-debounce.js')
 const OCRService = require('../../utils/ocr-service.js')
-const analysisReport = require('../../utils/analysis-report.js')
 const gameCompleteness = require('../../utils/game-completeness.js')
 const ongoingGameStorage = require('../../utils/ongoing-game-storage.js')
 const { PLAYER_COLORS } = require('../../utils/constants.js')
@@ -98,7 +96,7 @@ Page({
     // 获取gameId参数（多人同步比赛）
     if (options && options.gameId) {
       this.gameId = options.gameId
-      this.isCloudGame = this.shouldLoadGameFromCloud(options.gameId)
+      this.isCloudGame = this.isReadonlyMode ? false : this.shouldLoadGameFromCloud(options.gameId)
     }
 
     // 检查系统信息
@@ -388,17 +386,7 @@ Page({
   },
 
   loadCourses() {
-    let courses = wx.getStorageSync('courses') || []
-    if (!courses || courses.length === 0) {
-      courses = buildCourseCatalog([])
-      wx.setStorageSync('courses', courses)
-      wx.setStorageSync('coursesInitialized', true)
-      wx.setStorageSync('coursesDataVersion', COURSE_CATALOG_VERSION)
-    } else {
-      courses = buildCourseCatalog(courses)
-      wx.setStorageSync('courses', courses)
-      wx.setStorageSync('coursesDataVersion', COURSE_CATALOG_VERSION)
-    }
+    const courses = wx.getStorageSync('courses') || []
     this.setData({ courses })
   },
 
@@ -409,19 +397,24 @@ Page({
       return
     }
 
-    // 本地比赛从storage加载；currentGame 丢失时从 games 恢复最新未完成比赛
-    let currentGame = ongoingGameStorage.getRestoredOngoingGame() || wx.getStorageSync('currentGame')
+    // 本地比赛从storage加载；带 gameId 时必须精确匹配，避免被最新进行中比赛覆盖。
+    let currentGame = wx.getStorageSync('currentGame')
     if (this.gameId) {
       const currentMatchesGameId = currentGame && (currentGame.id === this.gameId || currentGame.gameId === this.gameId)
       const games = wx.getStorageSync('games') || []
       const storedGame = games.find(g => g && (g.id === this.gameId || g.gameId === this.gameId))
-      if (
-        (!currentMatchesGameId || !ongoingGameStorage.isOngoingGame(currentGame)) &&
-        ongoingGameStorage.isOngoingGame(storedGame)
-      ) {
+      if (!currentMatchesGameId && storedGame) {
         currentGame = storedGame
+      } else if (!currentMatchesGameId) {
+        currentGame = null
+      }
+
+      if (ongoingGameStorage.isOngoingGame(currentGame)) {
         ongoingGameStorage.saveCurrentGame(currentGame)
       }
+    } else if (!this.isReadonlyMode) {
+      // 无指定 gameId 的普通入口才恢复最新进行中比赛。
+      currentGame = ongoingGameStorage.getRestoredOngoingGame() || currentGame
     }
     if (!currentGame) {
       this.setData({ currentGame: null })
@@ -3362,6 +3355,7 @@ Page({
   async generateAndShare(game) {
     wx.showLoading({ title: '生成海报...' })
     const player = gameCompleteness.getPlayer(game) || game.players[0] || { name: '球员', color: '#2c8f4e' }
+    const reportGameId = this.getReportGameId(game)
 
     try {
       const reportQrcodeUrl = await this.ensureReportQrCode(game)
@@ -3378,12 +3372,14 @@ Page({
       wx.hideLoading()
 
       // 跳转到报告页面，并带上海报地址（使用分包路径）
+      if (reportGameId) {
+        wx.setStorageSync('game_' + reportGameId, game)
+      }
       wx.navigateTo({
-        url: `/package-game/pages/game-report/game-report?gameId=${game.id}`,
+        url: `/package-game/pages/game-report/game-report?gameId=${encodeURIComponent(reportGameId)}&poster=1`,
         success: (res) => {
           res.eventChannel.emit('reportData', {
             game: game,
-            report: analysisReport.generateGameReport(game, [], player),
             posterUrl: posterUrl,
             reportQrcodeUrl: reportQrcodeUrl,
             autoShowPoster: true
@@ -3395,20 +3391,27 @@ Page({
       wx.hideLoading()
 
       // 生成失败也跳转到报告页面（使用分包路径）
+      if (reportGameId) {
+        wx.setStorageSync('game_' + reportGameId, game)
+      }
       wx.navigateTo({
-        url: `/package-game/pages/game-report/game-report?gameId=${game.id}`,
+        url: `/package-game/pages/game-report/game-report?gameId=${encodeURIComponent(reportGameId)}&poster=1`,
         success: (res) => {
           res.eventChannel.emit('reportData', {
             game: game,
-            report: analysisReport.generateGameReport(game, [], player)
+            autoGeneratePoster: true
           })
         }
       })
     }
   },
 
+  getReportGameId(game) {
+    return (game && (game.gameId || game.id || game._id)) || ''
+  },
+
   ensureReportQrCode(game) {
-    const gameId = (game && (game.gameId || game.id || game._id)) || ''
+    const gameId = this.getReportGameId(game)
     if (!gameId || !wx.cloud) return Promise.resolve('')
 
     return new Promise((resolve) => {
@@ -3512,24 +3515,20 @@ Page({
     return stats
   },
 
-  // ========== 智能分析报告 ==========
-  generateAnalysisReport() {
-    const historyGames = wx.getStorageSync('games') || []
+  openGamePoster() {
     const game = this.data.currentGame
-    const player = gameCompleteness.getPlayer(game)
-    if (!player || !gameCompleteness.isPlayerRoundComplete(game, player.id)) {
-      wx.showToast({ title: '完成18洞后可复盘', icon: 'none' })
+    if (!game) {
+      wx.showToast({ title: '比赛数据错误', icon: 'none' })
       return
     }
 
-    const report = analysisReport.generateGameReport(game, historyGames, player)
+    const player = gameCompleteness.getPlayer(game) || (game.players && game.players[0])
+    if (!player || !gameCompleteness.isPlayerRoundComplete(game, player.id)) {
+      wx.showToast({ title: '完成18洞后可生成海报', icon: 'none' })
+      return
+    }
 
-    wx.navigateTo({
-      url: '/package-game/pages/game-report/game-report',
-      success: (res) => {
-        res.eventChannel.emit('reportData', { report, game: game })
-      }
-    })
+    this.generateAndShare(game)
   },
 
   // ========== OCR拍计分卡 ==========

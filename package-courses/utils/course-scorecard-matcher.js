@@ -1,4 +1,4 @@
-const { calculateDistance } = require("./geo-utils.js")
+const { calculateDistance } = require("../../utils/geo-utils.js")
 
 const MAX_MATCH_DISTANCE = 3000
 const AMBIGUOUS_NINE_HOLE_DISTANCE = 600

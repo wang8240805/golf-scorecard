@@ -1,6 +1,6 @@
 const { calculateDistance, formatDistance } = require('../../../../utils/geo-utils.js')
 const OCRService = require('../../../../utils/ocr-service.js')
-const { COURSE_CATALOG_VERSION, buildCourseCatalog } = require('../../../../utils/course-catalog.js')
+const { COURSE_CATALOG_VERSION, buildCourseCatalog } = require('../../../utils/course-catalog.js')
 
 Page({
   data: {

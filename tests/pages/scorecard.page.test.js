@@ -10,14 +10,13 @@ function createHoles(count) {
 }
 
 describe("scorecard page", function() {
-  test("loadCourses should initialize packaged courses for invited first-time players", function() {
+  test("loadCourses should read cached courses without bundling packaged catalog data", function() {
     const page = loadPage(path.resolve(__dirname, "../../pages/scorecard/scorecard.js"))
 
     page.loadCourses()
 
-    expect(page.data.courses.length).toBeGreaterThan(0)
-    expect(wx.getStorageSync("courses").length).toBe(page.data.courses.length)
-    expect(wx.getStorageSync("coursesInitialized")).toBe(true)
+    expect(page.data.courses).toEqual([])
+    expect(wx.getStorageSync("coursesInitialized")).toBeUndefined()
   })
 
   test("updateSyncStateText should show local state when not cloud game", function() {
@@ -38,6 +37,36 @@ describe("scorecard page", function() {
     page.updateSyncStateText()
 
     expect(page.data.syncStateText).toBe("待同步 2 条")
+  })
+
+  test("getReportGameId should prefer cloud gameId over missing local id", function() {
+    const page = loadPage(path.resolve(__dirname, "../../pages/scorecard/scorecard.js"))
+
+    expect(page.getReportGameId({ gameId: "cloud-game-1" })).toBe("cloud-game-1")
+    expect(page.getReportGameId({ id: "local-game-1" })).toBe("local-game-1")
+    expect(page.getReportGameId({ _id: "doc-game-1" })).toBe("doc-game-1")
+  })
+
+  test("openGamePoster should generate poster for completed gameId-only scorecard", function() {
+    const page = loadPage(path.resolve(__dirname, "../../pages/scorecard/scorecard.js"))
+    const scores = {}
+    for (let i = 1; i <= 18; i++) {
+      scores[i] = 4
+    }
+    page.data.currentGame = {
+      gameId: "completed-cloud-game",
+      courseName: "History Course",
+      players: [{ id: "p1", name: "A", isMe: true }],
+      scores: { p1: scores },
+      completed: true,
+      status: "completed"
+    }
+    page.generateAndShare = jest.fn()
+
+    page.openGamePoster()
+
+    expect(page.generateAndShare).toHaveBeenCalledWith(page.data.currentGame)
+    expect(wx.navigateTo).not.toHaveBeenCalled()
   })
 
   test("sync-status summary should match snapshot", function() {
@@ -86,6 +115,79 @@ describe("scorecard page", function() {
 
     expect(page.data.currentGame.id).toBe("wanted")
     expect(wx.getStorageSync("currentGame").id).toBe("wanted")
+  })
+
+  test("loadGame should keep requested readonly history game when another game is ongoing", function() {
+    const page = loadPage(path.resolve(__dirname, "../../pages/scorecard/scorecard.js"))
+    const holes = createHoles(18)
+    page.gameId = "history-1"
+    page.isCloudGame = false
+    page.isReadonlyMode = true
+    page.data.courses = [
+      { id: "c-history", name: "History Course", holes: holes },
+      { id: "c-live", name: "Live Course", holes: holes }
+    ]
+    page.calculateLeader = jest.fn()
+
+    wx.setStorageSync("currentGame", {
+      id: "history-1",
+      courseId: "c-history",
+      courseName: "History Course",
+      players: [{ id: "p1", name: "A" }],
+      scores: { p1: { 1: 4 } },
+      completed: true,
+      status: "completed"
+    })
+    wx.setStorageSync("games", [{
+      id: "live-1",
+      courseId: "c-live",
+      courseName: "Live Course",
+      players: [{ id: "p1", name: "A" }],
+      scores: { p1: { 1: 5 } },
+      completed: false,
+      updateTime: Date.now()
+    }])
+
+    page.loadGame()
+
+    expect(page.data.currentGame.id).toBe("history-1")
+    expect(page.calculateLeader.mock.calls[0][1].name).toBe("History Course")
+  })
+
+  test("loadGame should not restore ongoing game for readonly storage entry without gameId", function() {
+    const page = loadPage(path.resolve(__dirname, "../../pages/scorecard/scorecard.js"))
+    const holes = createHoles(18)
+    page.isCloudGame = false
+    page.isReadonlyMode = true
+    page.data.courses = [
+      { id: "c-history", name: "History Course", holes: holes },
+      { id: "c-live", name: "Live Course", holes: holes }
+    ]
+    page.calculateLeader = jest.fn()
+
+    wx.setStorageSync("currentGame", {
+      gameId: "history-gameid-only",
+      courseId: "c-history",
+      courseName: "History Course",
+      players: [{ id: "p1", name: "A" }],
+      scores: { p1: { 1: 4 } },
+      completed: true,
+      status: "completed"
+    })
+    wx.setStorageSync("games", [{
+      id: "live-1",
+      courseId: "c-live",
+      courseName: "Live Course",
+      players: [{ id: "p1", name: "A" }],
+      scores: { p1: { 1: 5 } },
+      completed: false,
+      updateTime: Date.now()
+    }])
+
+    page.loadGame()
+
+    expect(page.data.currentGame.gameId).toBe("history-gameid-only")
+    expect(page.calculateLeader.mock.calls[0][1].name).toBe("History Course")
   })
 
   test("loadGame should initialize missing score maps for restored games", function() {

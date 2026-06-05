@@ -3,7 +3,7 @@ const path = require('path')
 const https = require('https')
 const { execSync } = require('child_process')
 
-const DATA_FILE = path.join(__dirname, '..', 'data', 'courses-accurate.js')
+const DATA_FILE = path.join(__dirname, '..', 'package-courses', 'data', 'courses-accurate.js')
 const AMAP_KEY = process.env.AMAP_WEB_KEY || 'dbed49028a00db65170a3aaba16364fa'
 
 const REGIONS = [
@@ -90,7 +90,7 @@ function defaultHoles() {
 
 function loadBaselineCourses() {
   try {
-    const raw = execSync('git show HEAD:data/courses-accurate.js', { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] })
+    const raw = execSync('git show HEAD:package-courses/data/courses-accurate.js', { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] })
     const tmp = path.join(__dirname, '.tmp-courses-baseline.js')
     fs.writeFileSync(tmp, raw, 'utf8')
     delete require.cache[require.resolve(tmp)]

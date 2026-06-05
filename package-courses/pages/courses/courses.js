@@ -1,7 +1,7 @@
 const app = getApp()
 const { calculateDistance } = require('../../../utils/geo-utils.js')
 const OCRService = require('../../../utils/ocr-service.js')
-const { COURSE_CATALOG_VERSION, buildCourseCatalog } = require('../../../utils/course-catalog.js')
+const { COURSE_CATALOG_VERSION, buildCourseCatalog } = require('../../utils/course-catalog.js')
 
 // 开发模式开关
 const DEV_MODE = false

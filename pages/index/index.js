@@ -3,7 +3,6 @@ const { calculateDistance } = require('../../utils/geo-utils.js')
 const { formatDate } = require('../../utils/date-utils.js')
 const gameCompleteness = require('../../utils/game-completeness.js')
 const ongoingGameStorage = require('../../utils/ongoing-game-storage.js')
-const { COURSE_CATALOG_VERSION, buildCourseCatalog } = require('../../utils/course-catalog.js')
 
 Page({
   data: {
@@ -46,10 +45,9 @@ Page({
     this.setData({ isFirstVisit: !hasVisited })
     wx.setStorageSync('indexVisited', true)
 
-    // 从本地加载全部球场数据，异步处理不卡界面
+    // 首页只读取缓存，完整球场目录由 package-courses 分包初始化，避免主包包含大数据。
     var self = this
     setTimeout(function() {
-      self.initCoursesLocal()
       self.loadData()
     }, 0)
     this.getUserLocation()
@@ -68,7 +66,7 @@ Page({
 
     setTimeout(function() {
       wx.navigateTo({
-        url: '/package-game/pages/game-report/game-report?gameId=' + encodeURIComponent(target.gameId) + '&readonly=1'
+        url: '/package-game/pages/game-report/game-report?gameId=' + encodeURIComponent(target.gameId) + '&poster=1&readonly=1'
       })
     }, 120)
   },
@@ -213,31 +211,6 @@ Page({
       return Math.round(distance) + 'm'
     }
     return (distance / 1000).toFixed(1) + 'km'
-  },
-
-  // 从本地打包初始化全部球场数据（带缓存检查优化）
-  initCoursesLocal: function() {
-    // 检查是否已初始化，避免重复处理
-    const isInitialized = wx.getStorageSync('coursesInitialized')
-    const cachedCourses = wx.getStorageSync('courses')
-
-    if (isInitialized && cachedCourses && cachedCourses.length > 0) {
-      // 已初始化，轻量重建 catalog，保证公开标准杆数据和本地校正都在
-      var enrichedCourses = buildCourseCatalog(cachedCourses)
-      wx.setStorageSync('courses', enrichedCourses)
-      wx.setStorageSync('coursesDataVersion', COURSE_CATALOG_VERSION)
-      this.setData({ courseCount: enrichedCourses.length })
-      return
-    }
-
-    var courses = buildCourseCatalog(cachedCourses || [])
-
-    // 保存到缓存
-    wx.setStorageSync('courses', courses)
-    wx.setStorageSync('coursesInitialized', true)
-    wx.setStorageSync('coursesDataVersion', COURSE_CATALOG_VERSION)
-
-    this.setData({ courseCount: courses.length })
   },
 
   loadData() {
@@ -891,8 +864,9 @@ Page({
     wx.setStorageSync('currentGame', game)
     wx.setStorageSync('viewMode', 'readonly') // 标记为只读模式
 
+    const gameId = game?.id || game?.gameId || ''
     wx.navigateTo({
-      url: '/pages/scorecard/scorecard?mode=readonly&gameId=' + (game?.id || '')
+      url: '/pages/scorecard/scorecard?mode=readonly&gameId=' + gameId
     })
   },
 
@@ -905,16 +879,17 @@ Page({
       return
     }
 
+    const gameId = game?.id || game?.gameId || ''
     // 确保有完整的比赛数据存入storage供详情页读取
-    if (game && game.id) {
-      wx.setStorageSync('game_' + game.id, game)
+    if (gameId) {
+      wx.setStorageSync('game_' + gameId, game)
     }
     if (game) {
       wx.setStorageSync('currentGame', game)
     }
 
     wx.navigateTo({
-      url: '/package-game/pages/game-report/game-report?gameId=' + (game?.id || ''),
+      url: '/package-game/pages/game-report/game-report?gameId=' + gameId + '&poster=1',
       success: (res) => {
         // 同时通过eventChannel传递数据
         if (res.eventChannel) {

@@ -2,7 +2,7 @@ const {
   buildCourseCatalog,
   dedupeCatalogCourses,
   normalizeCatalogNameKey
-} = require("../../utils/course-catalog")
+} = require("../../package-courses/utils/course-catalog")
 
 describe("course catalog", function() {
   test("normalizeCatalogNameKey should remove routing suffixes", function() {
