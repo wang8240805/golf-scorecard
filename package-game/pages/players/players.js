@@ -100,7 +100,7 @@ Page({
 
     this.setData({
       players,
-      totalGames: allGames.length
+      totalGames: gameCompleteness.countUserCompletedGames(allGames)
     })
   },
 

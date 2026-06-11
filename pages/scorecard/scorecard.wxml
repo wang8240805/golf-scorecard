@@ -125,7 +125,8 @@
   </view>
 
   <view class="action-bar-fixed">
-    <view class="finish-game-btn btn-pill btn-pill-lg action-finish-btn" bindtap="finishGame">完成比赛</view>
+    <view wx:if="{{currentGame.completed || currentGame.status === 'completed'}}" class="finish-game-btn btn-pill btn-pill-lg action-finish-btn" bindtap="openGamePoster">比赛总结</view>
+    <view wx:else class="finish-game-btn btn-pill btn-pill-lg action-finish-btn" bindtap="finishGame">完成比赛</view>
   </view>
 
   </block>
@@ -453,3 +454,5 @@
     </view>
   </view>
 </view>
+
+<privacy-popup />

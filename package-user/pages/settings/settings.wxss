@@ -21,6 +21,20 @@
   color: var(--text-primary);
 }
 
+.setting-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+  flex: 1;
+  min-width: 0;
+}
+
+.setting-desc {
+  font-size: 24rpx;
+  line-height: 1.4;
+  color: var(--text-light);
+}
+
 .setting-value {
   display: flex;
   align-items: center;

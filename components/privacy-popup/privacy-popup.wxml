@@ -6,7 +6,12 @@
       <text class="privacy-title">用户隐私保护提示</text>
     </view>
     <view class="privacy-body">
-      <text class="privacy-text">感谢您使用WinPAR高尔夫记分卡。在使用头像、昵称等功能前，我们需要获取您的同意。</text>
+      <text class="privacy-text">感谢您使用WinPAR高尔夫记分卡。为提供比赛创建、成绩同步、附近球场推荐、头像昵称展示、手机号找回数据及拍照OCR校对功能，我们会在您授权后收集并使用必要的微信身份标识、头像昵称、手机号、大致位置、比赛记录和计分卡图片。</text>
+      <view class="privacy-links">
+        <text class="privacy-link" bindtap="openUserAgreement">《用户服务协议》</text>
+        <text class="privacy-link" bindtap="openPrivacyPolicy">《隐私政策》</text>
+      </view>
+      <text class="privacy-text privacy-small">点击“同意”即表示您已阅读并同意上述协议；拒绝后仍可浏览部分本地内容，但无法使用需要个人信息的功能。</text>
     </view>
     <view class="privacy-footer">
       <button class="btn-reject" bindtap="handleDisagree">拒绝</button>

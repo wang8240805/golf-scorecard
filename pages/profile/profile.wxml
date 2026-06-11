@@ -17,7 +17,7 @@
     <view class="stats-grid">
       <view class="stat-item">
         <text class="stat-value">{{stats.games || 0}}</text>
-        <text class="stat-label">总场次</text>
+        <text class="stat-label">完成场次</text>
       </view>
       <view class="stat-item">
         <text class="stat-value">{{stats.holes || 0}}</text>
@@ -65,15 +65,24 @@
     </view>
   </view>
 
-  <!-- 设置列表 - 使用Vant cells -->
+  <!-- 服务入口 - 详细设置保留在独立设置页 -->
   <view class="card setting-card">
-    <view class="setting-title">设置与服务</view>
+    <view class="setting-title">服务与支持</view>
     <van-cell-group>
       <van-cell title="设置" is-link bind:click="goToSettings"></van-cell>
       <van-cell title="意见反馈" is-link bind:click="goToFeedback"></van-cell>
-      <van-cell title="关于" value="v{{version}}" is-link bind:click="goToAbout"></van-cell>
-      <van-cell title="登出" is-link bind:click="logout" wx:if="{{userInfo}}"></van-cell>
+      <van-cell title="用户协议与隐私" is-link bind:click="goToAgreements"></van-cell>
+      <van-cell title="关于 WinPAR" value="v{{version}}" is-link bind:click="goToAbout"></van-cell>
+      <van-cell
+        wx:if="{{hasLoginInfo}}"
+        title="登出"
+        title-class="logout-cell-title"
+        custom-class="logout-cell"
+        bind:click="logout"
+      ></van-cell>
     </van-cell-group>
   </view>
 
 </view>
+
+<privacy-popup />

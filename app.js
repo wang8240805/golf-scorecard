@@ -1,23 +1,31 @@
+const PRIVACY_AGREED_KEY = "winparPrivacyAgreedAt"
+
 // 初始化微信云开发
 if (!wx.cloud) {
   console.error('请使用 2.2.3 或以上的基础库以使用云开发能力')
 } else {
   wx.cloud.init({
     env: 'cloudbase-3g7ya74db1a5f864',
-    traceUser: true
+    traceUser: false
   })
 }
 
 const OCRService = require('./utils/ocr-service.js')
 const ongoingGameCloudSync = require('./utils/ongoing-game-cloud-sync.js')
 const ongoingGameStorage = require('./utils/ongoing-game-storage.js')
+const devFirstUseReset = require('./utils/dev-first-use-reset.js')
 
 App({
   privacyResolve: null,
+  privacyCallbacks: [],
+  postPrivacyTasksStarted: false,
 
   onLaunch() {
+    devFirstUseReset.resetOnLaunchIfNeeded()
+
     // 清理存储空间（删除旧的日志文件等）
     this.cleanStorage()
+    this.registerPrivacyAuthorization()
 
     // 检查本地存储的数据
     const courses = wx.getStorageSync('courses') || []
@@ -25,12 +33,100 @@ App({
       // 初始化默认球场数据（将在首页被覆盖）
     }
 
-    // 从云端拉取公开贡献的球场数据，合并到本地
+    // 初始化全局数据
+    this.globalData = {
+      currentCourse: null,
+      currentPlayers: [],
+      currentScores: {},
+      tabBarSelected: 0
+    }
+
+    // 暴露cloud引用供其他模块使用
+    this.cloud = wx.cloud
+
+    if (this.hasPrivacyAgreed()) {
+      this.startPostPrivacyTasks()
+    }
+  },
+
+  registerPrivacyAuthorization() {
+    if (wx.onNeedPrivacyAuthorization) {
+      wx.onNeedPrivacyAuthorization((resolve) => {
+        this.privacyResolve = resolve
+        this.notifyPrivacyCallbacks(true)
+      })
+    }
+  },
+
+  addPrivacyCallback(callback) {
+    if (typeof callback !== "function") return
+    this.privacyCallbacks = this.privacyCallbacks || []
+    if (this.privacyCallbacks.indexOf(callback) === -1) {
+      this.privacyCallbacks.push(callback)
+    }
+  },
+
+  removePrivacyCallback(callback) {
+    if (!this.privacyCallbacks || !callback) return
+    this.privacyCallbacks = this.privacyCallbacks.filter(function(item) {
+      return item !== callback
+    })
+  },
+
+  notifyPrivacyCallbacks(show) {
+    const callbacks = this.privacyCallbacks || []
+    callbacks.forEach(function(callback) {
+      callback(show)
+    })
+  },
+
+  hasPrivacyAgreed() {
+    return !!wx.getStorageSync(PRIVACY_AGREED_KEY)
+  },
+
+  runAfterPrivacyAuthorization(callback, rejectCallback) {
+    if (this.hasPrivacyAgreed() || !wx.requirePrivacyAuthorize) {
+      if (typeof callback === "function") {
+        callback()
+      }
+      return Promise.resolve(true)
+    }
+
+    return new Promise((resolve) => {
+      wx.requirePrivacyAuthorize({
+        success: () => {
+          wx.setStorageSync(PRIVACY_AGREED_KEY, Date.now())
+          this.startPostPrivacyTasks()
+          if (typeof callback === "function") {
+            callback()
+          }
+          resolve(true)
+        },
+        fail: (err) => {
+          if (typeof rejectCallback === "function") {
+            rejectCallback(err)
+          }
+          resolve(false)
+        }
+      })
+    })
+  },
+
+  startPostPrivacyTasks() {
+    if (this.postPrivacyTasksStarted) return
+    this.postPrivacyTasksStarted = true
+    this.syncPublicCourseData()
+    this.syncUserIdentityAndGames()
+  },
+
+  syncPublicCourseData() {
     OCRService.syncPublicCourseData()
       .catch((err) => {
         console.warn('[App] 同步公开球场数据失败:', err)
       })
+  },
 
+  syncUserIdentityAndGames() {
     // 确保有 openid 后再同步云端数据；本地缓存被清空时也能拉回比赛记录
     this.ensureOpenId()
       .then(() => {
@@ -48,28 +144,6 @@ App({
       .catch((err) => {
         console.warn('[App] 同步历史比赛记录失败:', err)
       })
-
-    // 初始化全局数据
-    this.globalData = {
-      currentCourse: null,
-      currentPlayers: [],
-      currentScores: {},
-      tabBarSelected: 0
-    }
-
-    // 暴露cloud引用供其他模块使用
-    this.cloud = wx.cloud
-
-    // 注册隐私授权回调
-    if (wx.onNeedPrivacyAuthorization) {
-      wx.onNeedPrivacyAuthorization((resolve) => {
-        this.privacyResolve = resolve
-        // 通知所有页面显示隐私弹窗
-        if (this.privacyCallback) {
-          this.privacyCallback(true)
-        }
-      })
-    }
   },
 
   ensureOpenId() {
@@ -317,24 +391,23 @@ App({
 
   // 同意隐私协议
   agreePrivacy() {
+    wx.setStorageSync(PRIVACY_AGREED_KEY, Date.now())
     if (this.privacyResolve) {
       this.privacyResolve({ event: 'agree', buttonId: 'agree-btn' })
       this.privacyResolve = null
     }
-    if (this.privacyCallback) {
-      this.privacyCallback(false)
-    }
+    this.startPostPrivacyTasks()
+    this.notifyPrivacyCallbacks(false)
   },
 
   // 拒绝隐私协议
   disagreePrivacy() {
+    wx.removeStorageSync(PRIVACY_AGREED_KEY)
     if (this.privacyResolve) {
       this.privacyResolve({ event: 'disagree' })
       this.privacyResolve = null
     }
-    if (this.privacyCallback) {
-      this.privacyCallback(false)
-    }
+    this.notifyPrivacyCallbacks(false)
   },
 
   // 设置TabBar选中状态

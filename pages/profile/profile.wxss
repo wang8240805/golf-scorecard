@@ -285,6 +285,15 @@
   border-bottom: 1rpx solid var(--border-color);
 }
 
+.logout-cell {
+  margin-top: 16rpx;
+  border-top: 12rpx solid var(--bg-gray);
+}
+
+.logout-cell-title {
+  color: var(--danger) !important;
+}
+
 .setting-list {
   padding: 0 30rpx;
 }

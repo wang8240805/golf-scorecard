@@ -1,6 +1,8 @@
 const cloudSync = require("./ongoing-game-cloud-sync.js")
 const COMPLETED_GAME_KEYS_STORAGE = "completedGameKeys"
 const ONGOING_GAME_MAX_AGE_MS = 14 * 24 * 60 * 60 * 1000
+const BACKUP_DIR_NAME = "ongoing-game-backups"
+const BACKUP_FILE_SUFFIX = ".json"
 
 /**
  * 进行中比赛存储保护。
@@ -58,6 +60,7 @@ function markGameCompleted(game) {
     }
   })
   wx.setStorageSync(COMPLETED_GAME_KEYS_STORAGE, completedKeys)
+  removeGameFileBackup(game)
 }
 
 function getGameKey(game) {
@@ -165,7 +168,149 @@ function saveCurrentGame(game) {
   game.updateTime = Date.now()
   wx.setStorageSync("currentGame", game)
   mirrorGameToGames(game)
+  writeGameFileBackup(game)
   cloudSync.queueSync(game)
+}
+
+function getFileSystem() {
+  if (!wx || !wx.env || !wx.env.USER_DATA_PATH) return null
+  if (typeof wx.getFileSystemManager !== "function") return null
+  try {
+    return wx.getFileSystemManager()
+  } catch (e) {
+    return null
+  }
+}
+
+function getBackupDirPath() {
+  if (!wx || !wx.env || !wx.env.USER_DATA_PATH) return ""
+  return wx.env.USER_DATA_PATH + "/" + BACKUP_DIR_NAME
+}
+
+function ensureBackupDir(fs) {
+  var dirPath = getBackupDirPath()
+  if (!fs || !dirPath) return ""
+
+  try {
+    if (typeof fs.accessSync === "function") {
+      fs.accessSync(dirPath)
+      return dirPath
+    }
+  } catch (e) {}
+
+  try {
+    if (typeof fs.mkdirSync === "function") {
+      fs.mkdirSync(dirPath, true)
+      return dirPath
+    }
+  } catch (e2) {}
+
+  return dirPath
+}
+
+function encodeFileKey(value) {
+  return encodeURIComponent(String(value || "unknown")).replace(/%/g, "_")
+}
+
+function getBackupFilePath(game) {
+  var fs = getFileSystem()
+  var dirPath = ensureBackupDir(fs)
+  var key = getGameKey(game)
+  if (!fs || !dirPath || !key) return ""
+  return dirPath + "/" + encodeFileKey(key) + BACKUP_FILE_SUFFIX
+}
+
+function writeGameFileBackup(game) {
+  if (!isOngoingGame(game)) return
+
+  var fs = getFileSystem()
+  var filePath = getBackupFilePath(game)
+  if (!fs || !filePath || typeof fs.writeFileSync !== "function") return
+
+  try {
+    fs.writeFileSync(filePath, JSON.stringify(game), "utf8")
+  } catch (e) {
+    console.warn("[ongoing-game-storage] 写入进行中比赛文件备份失败:", e)
+  }
+}
+
+function removeGameFileBackup(game) {
+  var fs = getFileSystem()
+  var filePath = getBackupFilePath(game)
+  if (!fs || !filePath || typeof fs.unlinkSync !== "function") return
+
+  try {
+    fs.unlinkSync(filePath)
+  } catch (e) {}
+}
+
+function readGameFileBackups() {
+  var fs = getFileSystem()
+  var dirPath = ensureBackupDir(fs)
+  if (!fs || !dirPath || typeof fs.readdirSync !== "function" || typeof fs.readFileSync !== "function") {
+    return []
+  }
+
+  try {
+    return fs.readdirSync(dirPath)
+      .filter(function(file) {
+        return String(file).indexOf(BACKUP_FILE_SUFFIX, String(file).length - BACKUP_FILE_SUFFIX.length) >= 0
+      })
+      .map(function(file) {
+        try {
+          return JSON.parse(fs.readFileSync(dirPath + "/" + file, "utf8"))
+        } catch (e) {
+          return null
+        }
+      })
+      .filter(function(game) {
+        return !!game
+      })
+  } catch (e2) {
+    return []
+  }
+}
+
+function findStoredGameById(gameId) {
+  if (!gameId) return null
+  var target = String(gameId)
+  var currentGame = wx.getStorageSync("currentGame")
+  if (
+    currentGame &&
+    (String(currentGame.id || "") === target || String(currentGame.gameId || "") === target || String(currentGame._id || "") === target)
+  ) {
+    return currentGame
+  }
+
+  var games = wx.getStorageSync("games") || []
+  if (Array.isArray(games)) {
+    for (var i = 0; i < games.length; i++) {
+      var game = games[i]
+      if (
+        game &&
+        (String(game.id || "") === target || String(game.gameId || "") === target || String(game._id || "") === target)
+      ) {
+        return game
+      }
+    }
+  }
+
+  var backedUpGames = readGameFileBackups()
+  for (var j = 0; j < backedUpGames.length; j++) {
+    var backedUpGame = backedUpGames[j]
+    if (
+      backedUpGame &&
+      (String(backedUpGame.id || "") === target || String(backedUpGame.gameId || "") === target || String(backedUpGame._id || "") === target)
+    ) {
+      if (isRecoverableOngoingGame(backedUpGame)) {
+        wx.setStorageSync("currentGame", backedUpGame)
+        mirrorGameToGames(backedUpGame)
+      }
+      return backedUpGame
+    }
+  }
+
+  return null
 }
 
 function findLatestOngoingGame(games) {
@@ -199,8 +344,12 @@ function getRestoredOngoingGame() {
   }
 
   var latest = findLatestOngoingGame(wx.getStorageSync("games") || [])
+  if (!latest) {
+    latest = findLatestOngoingGame(readGameFileBackups())
+  }
   if (latest) {
     wx.setStorageSync("currentGame", latest)
+    mirrorGameToGames(latest)
     cloudSync.queueSync(latest)
   }
   return latest
@@ -218,6 +367,10 @@ module.exports = {
   mergeGameIntoList: mergeGameIntoList,
   mirrorGameToGames: mirrorGameToGames,
   saveCurrentGame: saveCurrentGame,
+  writeGameFileBackup: writeGameFileBackup,
+  removeGameFileBackup: removeGameFileBackup,
+  readGameFileBackups: readGameFileBackups,
+  findStoredGameById: findStoredGameById,
   findLatestOngoingGame: findLatestOngoingGame,
   getRestoredOngoingGame: getRestoredOngoingGame
 }

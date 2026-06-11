@@ -57,8 +57,8 @@
       <text wx:else>全部球场 ({{filteredCourses.length}})</text>
     </view>
     <view class="course-list">
-      <view class="course-item {{fromNewGame && currentCourseId === item.id ? 'selected' : ''}}" wx:for="{{filteredCourses}}" wx:key="id">
-        <view class="course-info" bindtap="onCourseTap" data-course="{{item}}">
+      <view class="course-item {{fromNewGame && currentCourseId === item.id ? 'selected' : ''}}" wx:for="{{filteredCourses}}" wx:key="id" bindtap="onCourseTap" data-course="{{item}}">
+        <view class="course-info">
           <view class="course-header">
             <text class="course-name">{{item.name}}</text>
             <view class="course-tag favorite-tag" wx:if="{{item.isFavorite && !fromNewGame}}">已收藏</view>
@@ -69,13 +69,11 @@
             <text class="course-location" wx:if="{{item.location}}">{{item.location}}</text>
             <text class="play-count" wx:if="{{item.playCount > 0}}">打过 {{item.playCount}} 次</text>
             <text class="play-count new-course" wx:if="{{item.playCount === 0}}">未打过</text>
-            <text class="course-data-status verified" wx:if="{{item.holes && item.holes.length > 0}}">有标准杆</text>
-            <text class="course-data-status missing" wx:else>需校准</text>
+            <text class="course-data-status missing" wx:if="{{!item.holes || item.holes.length === 0}}">需校准par</text>
           </view>
         </view>
-        <view class="course-actions">
-          <view class="quick-select-btn" wx:if="{{fromNewGame}}" bindtap="onCourseTap" data-course="{{item}}">选用</view>
-          <view class="action-icon favorite-icon" wx:if="{{!fromNewGame}}" bindtap="toggleFavorite" data-course-id="{{item.id}}">
+        <view class="course-actions" wx:if="{{!fromNewGame}}">
+          <view class="action-icon favorite-icon" wx:if="{{!fromNewGame}}" catchtap="toggleFavorite" data-course-id="{{item.id}}">
             {{item.isFavorite ? '❤️' : '🤍'}}
           </view>
         </view>
@@ -205,3 +203,5 @@
     </view>
   </view>
 </view>
+
+<privacy-popup />

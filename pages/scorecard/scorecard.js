@@ -96,7 +96,20 @@ Page({
     // 获取gameId参数（多人同步比赛）
     if (options && options.gameId) {
       this.gameId = options.gameId
-      this.isCloudGame = this.isReadonlyMode ? false : this.shouldLoadGameFromCloud(options.gameId)
+      const shouldLoadCloudGame = this.shouldLoadGameFromCloud(options.gameId)
+      const storedGame = ongoingGameStorage.findStoredGameById(options.gameId)
+      const hasCloudIdentity = !!(
+        storedGame &&
+        (
+          storedGame.gameId ||
+          storedGame._id ||
+          (Array.isArray(storedGame.pendingScoreSyncQueue) && storedGame.pendingScoreSyncQueue.length > 0)
+        )
+      )
+      this.preferLocalGame = !shouldLoadCloudGame
+      this.isCloudGame = this.isReadonlyMode
+        ? false
+        : String(options.gameId).indexOf('local_') !== 0 && (shouldLoadCloudGame || hasCloudIdentity)
     }
 
     // 检查系统信息
@@ -110,22 +123,7 @@ Page({
     if (!gameId) return false
     if (String(gameId).indexOf('local_') === 0) return false
 
-    const currentGame = wx.getStorageSync('currentGame')
-    if (
-      currentGame &&
-      (currentGame.id === gameId || currentGame.gameId === gameId) &&
-      ongoingGameStorage.isOngoingGame(currentGame)
-    ) {
-      return false
-    }
-
-    const games = wx.getStorageSync('games') || []
-    const storedGame = Array.isArray(games)
-      ? games.find(function(game) {
-        return game && (game.id === gameId || game.gameId === gameId)
-      })
-      : null
-
+    const storedGame = ongoingGameStorage.findStoredGameById(gameId)
     return !ongoingGameStorage.isOngoingGame(storedGame)
   },
 
@@ -260,7 +258,7 @@ Page({
     return {
       title: '来一起打高尔夫吧！',
       path: '/pages/new-game/step2-players/step2-players?gameId=' + gameId,
-      imageUrl: '/images/share-game.png'
+      imageUrl: '/images/default-course.jpg'
     }
   },
 
@@ -392,7 +390,7 @@ Page({
 
   loadGame() {
     // 如果是云端多人比赛，从云数据库加载
-    if (this.isCloudGame && this.gameId) {
+    if (this.isCloudGame && this.gameId && !this.preferLocalGame) {
       this.loadCloudGame(this.gameId)
       return
     }
@@ -401,8 +399,7 @@ Page({
     let currentGame = wx.getStorageSync('currentGame')
     if (this.gameId) {
       const currentMatchesGameId = currentGame && (currentGame.id === this.gameId || currentGame.gameId === this.gameId)
-      const games = wx.getStorageSync('games') || []
-      const storedGame = games.find(g => g && (g.id === this.gameId || g.gameId === this.gameId))
+      const storedGame = ongoingGameStorage.findStoredGameById(this.gameId)
       if (!currentMatchesGameId && storedGame) {
         currentGame = storedGame
       } else if (!currentMatchesGameId) {
@@ -509,6 +506,7 @@ Page({
     const savedHole = parseInt(wx.getStorageSync('currentHole'), 10)
     const initialHole = savedHole && savedHole <= activeHoles.length ? savedHole : 1
     this.setCurrentHole(initialHole)
+    this.flushPendingScoreSync(currentGame)
   },
 
   // 检查球场是否有完整的Par数据
@@ -793,6 +791,12 @@ Page({
     }).catch(err => {
       wx.hideLoading()
       console.error('加载云端比赛失败:', err)
+      const fallbackGame = ongoingGameStorage.findStoredGameById(gameId)
+      if (fallbackGame && ongoingGameStorage.isRecoverableOngoingGame(fallbackGame)) {
+        wx.showToast({ title: '已恢复本地草稿', icon: 'none' })
+        self.processCloudGame(fallbackGame)
+        return
+      }
       wx.showToast({ title: '加载比赛失败', icon: 'none' })
     })
   },
@@ -1233,10 +1237,14 @@ Page({
 
   // 更新比赛数据到云端
   updateCloudGame(game) {
-    if (!this.isCloudGame || !this.gameId || !wx.cloud) return
+    if (!this.isCloudGame || !this.gameId || !game) return
 
     // 更新本地时间戳
     game.updateTime = Date.now()
+    // 云端比赛也先落本地恢复点，弱网或小程序被杀时优先保住用户刚录入的数据。
+    ongoingGameStorage.saveCurrentGame(game)
+
+    if (!wx.cloud) return
 
     const db = wx.cloud.database()
 
@@ -1278,6 +1286,109 @@ Page({
         }
       }
     })
+  },
+
+  getPendingScoreSyncKey(entry) {
+    if (!entry) return ''
+    return [entry.gameId || '', entry.playerId || '', entry.hole || ''].join(':')
+  },
+
+  queueCloudScoreSync(game, entry) {
+    if (!game || !entry || !entry.gameId || !entry.playerId || entry.hole === undefined) return
+
+    const queue = Array.isArray(game.pendingScoreSyncQueue)
+      ? game.pendingScoreSyncQueue.slice()
+      : []
+    const nextEntry = {
+      ...entry,
+      syncKey: this.getPendingScoreSyncKey(entry),
+      updatedAt: Date.now()
+    }
+    if (!nextEntry.createdAt) {
+      nextEntry.createdAt = nextEntry.updatedAt
+    }
+
+    const index = queue.findIndex(item => item && item.syncKey === nextEntry.syncKey)
+    if (index >= 0) {
+      queue[index] = {
+        ...queue[index],
+        ...nextEntry,
+        createdAt: queue[index].createdAt || nextEntry.createdAt
+      }
+    } else {
+      queue.push(nextEntry)
+    }
+
+    game.pendingScoreSyncQueue = queue
+    ongoingGameStorage.saveCurrentGame(game)
+  },
+
+  removePendingScoreSync(game, syncKey) {
+    if (!game || !syncKey || !Array.isArray(game.pendingScoreSyncQueue)) return
+
+    game.pendingScoreSyncQueue = game.pendingScoreSyncQueue.filter(function(item) {
+      return item && item.syncKey !== syncKey
+    })
+    ongoingGameStorage.saveCurrentGame(game)
+  },
+
+  flushPendingScoreSync(game) {
+    if (!this.isCloudGame || !game || !wx.cloud || typeof wx.cloud.callFunction !== 'function') return
+
+    const queue = Array.isArray(game.pendingScoreSyncQueue) ? game.pendingScoreSyncQueue.slice() : []
+    if (queue.length === 0) return
+
+    queue.forEach((entry) => {
+      if (!entry || entry.syncing) return
+
+      if (!entry.syncKey) {
+        entry.syncKey = this.getPendingScoreSyncKey(entry)
+      }
+      entry.syncing = true
+      wx.cloud.callFunction({
+        name: 'updateScore',
+        data: {
+          gameId: entry.gameId,
+          playerId: entry.playerId,
+          hole: entry.hole,
+          strokes: entry.strokes,
+          putts: entry.putts,
+          modifierName: entry.modifierName
+        },
+        success: (res) => {
+          console.log('[离线补同步] 成绩同步成功', res.result)
+          this.removePendingScoreSync(game, entry.syncKey)
+          this.markSyncSuccess()
+          if (res.result && res.result.needsConfirmation) {
+            wx.showToast({
+              title: '已提交，待确认',
+              icon: 'none',
+              duration: 2000
+            })
+          }
+        },
+        fail: (err) => {
+          console.error('[离线补同步] 成绩同步失败:', err)
+          entry.syncing = false
+          this.markSyncFailed()
+          ongoingGameStorage.saveCurrentGame(game)
+        }
+      })
+    })
+  },
+
+  queueAndFlushCloudScore(game, playerId, hole, strokes, putts, modifierName) {
+    if (!game || !this.isCloudGame) return
+
+    this.queueCloudScoreSync(game, {
+      gameId: game.gameId || game.id,
+      playerId: playerId,
+      hole: hole,
+      strokes: strokes,
+      putts: putts,
+      modifierName: modifierName || '球友'
+    })
+    this.flushPendingScoreSync(game)
   },
 
   // 计算领先者
@@ -2134,10 +2245,8 @@ Page({
       penalty: Math.max(0, parseInt(penalty, 10) || 0)
     }
 
-    // 如果是本地比赛，立即写入 currentGame 与 games 镜像，避免退出/缓存清理造成丢失
-    if (!this.isCloudGame) {
-      ongoingGameStorage.saveCurrentGame(game)
-    }
+    // 先写入本地恢复点，避免云端失败、小程序被杀或缓存键丢失造成刚录入的成绩消失。
+    ongoingGameStorage.saveCurrentGame(game)
 
     // 优化：只更新当前球员的数据，而不是重新计算所有
     const currentHoleData = this.data.currentHoleData
@@ -2191,38 +2300,7 @@ Page({
       // 获取当前用户信息（修改者）
       const userInfo = wx.getStorageSync('userInfo') || {}
       const modifierName = userInfo.nickName || '球友'
-
-      wx.cloud.callFunction({
-        name: 'updateScore',
-        data: {
-          gameId: game.gameId || game.id,
-          playerId: playerId,
-          hole: currentHole,
-          strokes: strokes,
-          putts: putts,
-          modifierName: modifierName
-        },
-        success: (res) => {
-          console.log('[权限校验] 成绩确认更新成功', res.result)
-          this.markSyncSuccess()
-          // 如果需要确认，提示用户
-          if (res.result && res.result.needsConfirmation) {
-            wx.showToast({
-              title: '已提交，待确认',
-              icon: 'none',
-              duration: 2000
-            })
-          }
-        },
-        fail: (err) => {
-          console.error('[权限校验] 成绩确认更新失败:', err)
-          this.markSyncFailed()
-          wx.showToast({
-            title: err.result && err.result.error ? err.result.error : '更新失败',
-            icon: 'none'
-          })
-        }
-      })
+      this.queueAndFlushCloudScore(game, playerId, currentHole, strokes, putts, modifierName)
     }
 
     // 检查是否所有球员都已完成当前洞，如果是则自动跳到下一洞
@@ -2410,18 +2488,13 @@ Page({
       changed++
 
       if (this.isCloudGame) {
-        wx.cloud.callFunction({
-          name: 'updateScore',
-          data: {
-            gameId: game.gameId || game.id,
-            playerId: p.id,
-            hole: hole,
-            strokes: v,
-            putts: finalPutts,
-            modifierName: modifierName
-          },
-          success: () => this.markSyncSuccess(),
-          fail: () => this.markSyncFailed()
+        this.queueCloudScoreSync(game, {
+          gameId: game.gameId || game.id,
+          playerId: p.id,
+          hole: hole,
+          strokes: v,
+          putts: finalPutts,
+          modifierName: modifierName
         })
       }
     })
@@ -2431,9 +2504,8 @@ Page({
       return
     }
 
-    if (!this.isCloudGame) {
-      ongoingGameStorage.saveCurrentGame(game)
-    }
+    ongoingGameStorage.saveCurrentGame(game)
+    this.flushPendingScoreSync(game)
 
     this.setData({
       currentGame: game,
@@ -2856,31 +2928,19 @@ Page({
 
     this.setData({ currentGame: newGame })
 
-    if (!this.isCloudGame) {
-      ongoingGameStorage.saveCurrentGame(newGame)
-    } else {
+    ongoingGameStorage.saveCurrentGame(newGame)
+    if (this.isCloudGame) {
       // 云端游戏：单个成绩修改通过云函数更新，带服务端权限校验
       // 只有球员本人（openid匹配）能修改自己的成绩
-      wx.cloud.callFunction({
-        name: 'updateScore',
-        data: {
-          gameId: this.data.currentGame.gameId || this.data.currentGame.id,
-          playerId: playerId,
-          hole: this.data.currentHole,
-          strokes: score,
-          putts: currentPutts
-        },
-        success: () => {
-          console.log('[权限校验] 成绩更新成功')
-        },
-        fail: (err) => {
-          console.error('[权限校验] 成绩更新失败:', err)
-          wx.showToast({
-            title: err.result && err.result.error ? err.result.error : '更新失败',
-            icon: 'none'
-          })
-        }
-      })
+      const userInfo = wx.getStorageSync('userInfo') || {}
+      this.queueAndFlushCloudScore(
+        newGame,
+        playerId,
+        this.data.currentHole,
+        score,
+        currentPutts,
+        userInfo.nickName || '球友'
+      )
     }
 
     // 更新领先者（延迟执行，避免频繁计算）

@@ -5,7 +5,7 @@
     <view class="overview-grid">
       <view class="overview-item">
         <text class="overview-value">{{stats.totalGames}}</text>
-        <text class="overview-label">总场次</text>
+        <text class="overview-label">完成场次</text>
       </view>
       <view class="overview-item">
         <text class="overview-value">{{stats.avgScore}}</text>

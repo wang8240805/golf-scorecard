@@ -23,7 +23,7 @@
   position: relative;
   width: 600rpx;
   background: #fff;
-  border-radius: 24rpx;
+  border-radius: 16rpx;
   overflow: hidden;
 }
 
@@ -46,6 +46,26 @@
   font-size: 28rpx;
   color: #666;
   line-height: 1.6;
+}
+
+.privacy-small {
+  display: block;
+  margin-top: 18rpx;
+  font-size: 24rpx;
+  color: #8a8a8a;
+}
+
+.privacy-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  margin-top: 20rpx;
+}
+
+.privacy-link {
+  font-size: 26rpx;
+  color: #2c8f4e;
+  line-height: 1.5;
 }
 
 .privacy-footer {

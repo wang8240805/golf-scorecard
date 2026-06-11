@@ -11,7 +11,7 @@
     <view class="card overview-card">
       <view class="overview-header">
         <text class="section-title">我的技术统计</text>
-        <text class="overview-subtitle">共 {{totalStats.games}} 场 · {{totalStats.rounds}} 轮 · {{totalStats.holes}} 洞</text>
+        <text class="overview-subtitle">完成 {{totalStats.games}} 场 · {{totalStats.rounds}} 轮 · {{totalStats.holes}} 洞</text>
       </view>
       <view class="overview-grid">
         <view class="overview-item">

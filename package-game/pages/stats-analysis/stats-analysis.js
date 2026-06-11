@@ -46,13 +46,7 @@ Page({
 
   loadStats() {
     const allGames = wx.getStorageSync('games') || []
-    const candidateGames = Array.isArray(allGames)
-      ? allGames.filter(g => g && Array.isArray(g.players) && g.players.length > 0)
-      : []
-    const games = candidateGames.filter(function(game) {
-      const player = gameCompleteness.getPlayer(game)
-      return player && gameCompleteness.isPlayerRoundComplete(game, player.id)
-    })
+    const games = gameCompleteness.filterUserCompletedGames(allGames)
     if (games.length === 0) {
       this.setData({
         unlocks: this.buildUnlocks(0),

@@ -132,6 +132,18 @@ function filterAnalyzableGames(games, playerId) {
   })
 }
 
+function filterUserCompletedGames(games, playerId) {
+  if (!Array.isArray(games)) return []
+  return games.filter(function(game) {
+    var player = getPlayer(game, playerId)
+    return player && isPlayerRoundComplete(game, player.id)
+  })
+}
+
+function countUserCompletedGames(games, playerId) {
+  return filterUserCompletedGames(games, playerId).length
+}
+
 function getGameTimestamp(game) {
   if (!game) return 0
   return game.timestamp || game.endTime || game.updateTime || game.createTime || 0
@@ -154,6 +166,8 @@ module.exports = {
   getValidScorePlayerIds: getValidScorePlayerIds,
   isGameAnalyzable: isGameAnalyzable,
   filterAnalyzableGames: filterAnalyzableGames,
+  filterUserCompletedGames: filterUserCompletedGames,
+  countUserCompletedGames: countUserCompletedGames,
   getGameTimestamp: getGameTimestamp,
   sortByLatest: sortByLatest
 }

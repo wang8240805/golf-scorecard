@@ -7,6 +7,11 @@ function createPage() {
 }
 
 describe("all courses province filters", function() {
+  afterEach(function() {
+    delete global.getCurrentPages
+    jest.useRealTimers()
+  })
+
   test("buildProvinceQuickFilters should show nearby, top provinces by count, and other", function() {
     const page = createPage()
     page.data.fromNewGame = true
@@ -172,5 +177,57 @@ describe("all courses province filters", function() {
     expect(wxml).toContain('class="province-filter-chip {{selectedProvinceFilter === item.value ? \'active\' : \'\'}}"')
     expect(wxml).toContain('bindtap="selectProvinceFromPicker"')
     expect(wxml).not.toContain("province-filter-scroll")
+  })
+
+  test("template should make the whole course item selectable in new game mode", function() {
+    const wxml = fs.readFileSync(
+      path.resolve(__dirname, "../../package-courses/pages/all-courses/all-courses.wxml"),
+      "utf8"
+    )
+
+    expect(wxml).toContain('wx:for="{{filteredCourses}}" wx:key="id" bindtap="onCourseTap" data-course="{{item}}"')
+    expect(wxml).not.toContain('quick-select-btn')
+    expect(wxml).not.toContain('>选用<')
+    expect(wxml).toContain('catchtap="toggleFavorite"')
+    expect(wxml).toContain('需校准par')
+    expect(wxml).not.toContain('有标准杆')
+  })
+
+  test("quickSelectCourse should return to new-game course step when it is previous page", function() {
+    jest.useFakeTimers()
+    const page = createPage()
+    const course = { id: "c-select", name: "Selected Course" }
+    global.getCurrentPages = function() {
+      return [
+        { route: "pages/index/index" },
+        { route: "package-courses/pages/new-game/step1-course/step1-course" },
+        { route: "package-courses/pages/all-courses/all-courses" }
+      ]
+    }
+
+    page.quickSelectCourse(course)
+    jest.runOnlyPendingTimers()
+
+    expect(wx.getStorageSync("currentCourseId")).toBe("c-select")
+    expect(wx.getStorageSync("selectedCourseForNewGame")).toEqual(course)
+    expect(wx.navigateBack).toHaveBeenCalledWith(expect.objectContaining({ delta: 1 }))
+    expect(wx.redirectTo).not.toHaveBeenCalled()
+  })
+
+  test("returnToNewGameCourse should redirect when page stack is not from course step", function() {
+    const page = createPage()
+    global.getCurrentPages = function() {
+      return [
+        { route: "pages/index/index" },
+        { route: "package-courses/pages/all-courses/all-courses" }
+      ]
+    }
+
+    page.returnToNewGameCourse()
+
+    expect(wx.redirectTo).toHaveBeenCalledWith({
+      url: "/package-courses/pages/new-game/step1-course/step1-course"
+    })
+    expect(wx.navigateBack).not.toHaveBeenCalled()
   })
 })

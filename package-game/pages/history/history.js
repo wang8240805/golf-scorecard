@@ -8,6 +8,8 @@ Page({
     totalPlayers: 0,
     avgScore: null,
     bestScore: null,
+    completedGameCount: 0,
+    totalGameCount: 0,
     hasMore: false,
     pageSize: 10,
     currentPage: 1
@@ -21,7 +23,9 @@ Page({
     this.gameDataChangeCallback = () => {
       this.loadData()
     }
-    app.eventBus.on('gameDataChanged', this.gameDataChangeCallback)
+    if (app && app.eventBus && app.eventBus.on) {
+      app.eventBus.on('gameDataChanged', this.gameDataChangeCallback)
+    }
   },
 
   onShow() {
@@ -33,7 +37,9 @@ Page({
     // 移除事件监听
     if (this.gameDataChangeCallback) {
       const app = getApp()
-      app.eventBus.off('gameDataChanged', this.gameDataChangeCallback)
+      if (app && app.eventBus && app.eventBus.off) {
+        app.eventBus.off('gameDataChanged', this.gameDataChangeCallback)
+      }
     }
   },
 
@@ -52,19 +58,21 @@ Page({
     games = games.reverse()
 
     // 格式化数据
-    const formattedGames = this.formatGames(games)
+    const formattedGames = this.formatGames(games.slice(0, this.data.pageSize))
 
     this.setData({
       courses,
       games: formattedGames,
-      hasMore: games.length > this.data.pageSize
+      totalGameCount: games.length,
+      hasMore: games.length > this.data.pageSize,
+      completedGameCount: gameCompleteness.countUserCompletedGames(games)
     })
 
-    this.calculateOverview(gameCompleteness.filterAnalyzableGames(games))
+    this.calculateOverview(gameCompleteness.filterUserCompletedGames(games))
   },
 
   formatGames(games) {
-    return games.slice(0, this.data.pageSize).map(game => {
+    return games.map(game => {
       // 兼容老数据：使用 timestamp，如果没有则使用 endTime，如果都没有使用当前时间
       const timestamp = game.timestamp || game.endTime || Date.now()
       let date = new Date(timestamp)
@@ -78,7 +86,10 @@ Page({
 
       return {
         ...game,
+        historyKey: this.getGameHistoryKey(game),
         date: `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`,
+        dateYear: String(date.getFullYear()),
+        dateMonthDay: `${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`,
         playerResults,
         stats,
         myScore: summary.myScore,
@@ -90,9 +101,39 @@ Page({
         statusText: summary.statusText,
         statusClass: summary.statusClass,
         incompleteTip: summary.incompleteTip,
-        expanded: false
+        actionText: summary.isCompleted ? '查看' : '继续',
+        playerCount: Array.isArray(game.players) ? game.players.length : 0
       }
     })
+  },
+
+  getDisplayGameId(game) {
+    if (!game) return ''
+    const timestamp = game.timestamp || game.endTime || game.createTime || 0
+    return game.id || game.gameId || game._id || (timestamp ? 'local_' + timestamp : '')
+  },
+
+  getGameWithDisplayId(game) {
+    if (!game) return game
+    const displayId = this.getDisplayGameId(game)
+    if (!displayId || game.id || game.gameId || game._id) return game
+    return Object.assign({}, game, { id: displayId })
+  },
+
+  getGameHistoryKey(game) {
+    if (!game) return ''
+    if (game.id) return 'id-' + game.id
+    if (game.gameId) return 'gameId-' + game.gameId
+    if (game._id) return 'cloud-' + game._id
+    if (game.timestamp && game.courseId) return 'time-' + game.timestamp + '-' + game.courseId
+    return 'unknown-' + (game.courseName || '') + '-' + (game.endTime || '')
+  },
+
+  hasDeletableIdentity(game) {
+    return !!(
+      game &&
+      (game.id || game.gameId || game._id || (game.timestamp && game.courseId))
+    )
   },
 
   buildGameSummary(game) {
@@ -191,7 +232,14 @@ Page({
   },
 
   calculateOverview(completedGames) {
-    if (completedGames.length === 0) return
+    if (completedGames.length === 0) {
+      this.setData({
+        totalPlayers: 0,
+        avgScore: null,
+        bestScore: null
+      })
+      return
+    }
 
     // 统计球员数
     const allPlayers = new Set()
@@ -222,37 +270,43 @@ Page({
     })
   },
 
-  toggleExpand(e) {
-    const index = e.currentTarget.dataset.index
-    const games = this.data.games
-    games[index].expanded = !games[index].expanded
-    this.setData({ games })
-  },
-
   continueGame(e) {
     const game = e.currentTarget.dataset.game
-    wx.setStorageSync('currentGame', game)
-    wx.switchTab({
-      url: '/pages/scorecard/scorecard'
-    })
+    this.openScorecard(game)
   },
 
   viewDetail(e) {
     const game = e.currentTarget.dataset.game
-    // 可以导航到详情页面
-    wx.showModal({
-      title: game.courseName,
-      content: `比赛时间：${game.date}\n\n球员成绩：\n${game.playerResults.map(p =>
-        `${p.name}: ${p.total}杆 (${p.toParDisplay})`
-      ).join('\n')}`,
-      showCancel: false
+    this.openScorecard(game)
+  },
+
+  openScorecard(game) {
+    const viewGame = this.getGameWithDisplayId(game)
+    const gameId = this.getDisplayGameId(viewGame)
+    if (!viewGame || !gameId) {
+      wx.showToast({ title: '无法打开比赛记录', icon: 'none' })
+      return
+    }
+
+    wx.setStorageSync('currentGame', viewGame)
+    if (gameCompleteness.isCompletedGame(viewGame)) {
+      wx.setStorageSync('viewMode', 'readonly')
+      wx.navigateTo({
+        url: '/pages/scorecard/scorecard?mode=readonly&gameId=' + gameId
+      })
+      return
+    }
+
+    wx.removeStorageSync('viewMode')
+    ongoingGameStorage.saveCurrentGame(viewGame)
+    wx.navigateTo({
+      url: '/pages/scorecard/scorecard?gameId=' + gameId
     })
   },
 
   deleteGame(e) {
     const game = e.currentTarget.dataset.game
-    const hasIdentity = game && (game.id || game.gameId || game._id)
-    if (!hasIdentity) {
+    if (!this.hasDeletableIdentity(game)) {
       wx.showToast({ title: '无法识别比赛记录', icon: 'none' })
       return
     }
@@ -273,6 +327,9 @@ Page({
           if (currentGame && ongoingGameStorage.isSameGame(currentGame, game)) {
             wx.removeStorageSync('currentGame')
           }
+          if (ongoingGameStorage.removeGameFileBackup) {
+            ongoingGameStorage.removeGameFileBackup(game)
+          }
 
           // 同步删除到云端：标记 deleted = true
           if (wx.cloud && game._id) {
@@ -291,6 +348,13 @@ Page({
 
           wx.showToast({ title: '已删除', icon: 'success' })
           this.loadData()
+          const app = getApp()
+          if (app && app.eventBus && app.eventBus.emit) {
+            app.eventBus.emit('gameDataChanged', {
+              type: 'delete',
+              game: game
+            })
+          }
         }
       }
     })
@@ -318,6 +382,7 @@ Page({
     this.setData({
       games: formattedGames,
       currentPage,
+      totalGameCount: games.length,
       hasMore: games.length > end
     })
   }

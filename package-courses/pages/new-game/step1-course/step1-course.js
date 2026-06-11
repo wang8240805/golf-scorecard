@@ -7,6 +7,7 @@ Page({
     userLocation: null,
     recommendedCourse: null,
     selectedCourseId: '',
+    manualCourseSelected: false,
     coursesLoaded: false,
     holeCount: 18,
     // OCR识别弹窗
@@ -58,7 +59,8 @@ Page({
       }
       this.setData({
         selectedCourseId: selectedCourse.id,
-        recommendedCourse: patchedCourse
+        recommendedCourse: patchedCourse,
+        manualCourseSelected: true
       })
       wx.removeStorageSync('selectedCourseForNewGame')
     }
@@ -104,32 +106,55 @@ Page({
 
   // 获取用户位置
   getUserLocation: function() {
-    const self = this
-    function handleLocationFail() {
+    var self = this
+    var app = getApp()
+    if (app && app.runAfterPrivacyAuthorization) {
+      app.runAfterPrivacyAuthorization(function() {
+        self.requestUserLocation()
+      }, function(err) {
+        console.warn("[Location] privacy authorization failed:", err)
+        self.setData({ userLocation: null })
+      })
+      return
+    }
+    this.requestUserLocation()
+  },
+
+  requestUserLocation: function() {
+    var self = this
+    function handleLocationFail(stage, err) {
+      console.warn("[Location] " + stage + " failed:", err)
       // 定位失败，不使用默认位置，保持等待状态
       self.setData({ userLocation: null })
     }
 
     wx.authorize({
-      scope: 'scope.userFuzzyLocation',
+      scope: "scope.userFuzzyLocation",
       success: function() {
         wx.getFuzzyLocation({
-          type: 'gcj02',
+          type: "gcj02",
           success: function(res) {
             const location = { latitude: res.latitude, longitude: res.longitude }
             self.setData({ userLocation: location })
             self.calculateNearbyCourses(location)
           },
-          fail: handleLocationFail
+          fail: function(err) {
+            handleLocationFail("getFuzzyLocation", err)
+          }
         })
       },
-      fail: handleLocationFail
+      fail: function(err) {
+        handleLocationFail("authorize scope.userFuzzyLocation", err)
+      }
     })
   },
 
   // 计算附近球场
   calculateNearbyCourses: function(userLoc) {
     const self = this
+    if (this.data.manualCourseSelected && this.data.recommendedCourse) {
+      return
+    }
     const allCourses = wx.getStorageSync('courses') || []
     const builtinCourses = allCourses.filter(function(c) {
       return c &&
@@ -179,12 +204,29 @@ Page({
     }
   },
 
-  // 用户手动选择使用默认位置
-  useDefaultLocation: function() {
-    const DEFAULT_LOCATION = { latitude: 39.90, longitude: 116.40 }
-    this.setData({ userLocation: DEFAULT_LOCATION })
-    this.calculateNearbyCourses(DEFAULT_LOCATION)
-    wx.showToast({ title: '已使用默认位置', icon: 'none' })
+  // 用户手动打开定位权限设置
+  openLocationSetting: function() {
+    var self = this
+    if (!wx.openSetting) {
+      self.requestUserLocation()
+      return
+    }
+
+    wx.openSetting({
+      success: function(res) {
+        var authSetting = res.authSetting || {}
+        if (authSetting["scope.userFuzzyLocation"]) {
+          self.requestUserLocation()
+          return
+        }
+        console.warn("[Location] scope.userFuzzyLocation is still disabled:", res)
+        wx.showToast({ title: "请开启位置信息权限", icon: "none" })
+      },
+      fail: function(err) {
+        console.warn("[Location] openSetting failed:", err)
+        wx.showToast({ title: "无法打开设置", icon: "none" })
+      }
+    })
   },
 
   // 跳转到全部球场页面

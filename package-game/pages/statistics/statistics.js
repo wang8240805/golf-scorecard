@@ -25,10 +25,7 @@ Page({
   calculateStatistics() {
     const games = wx.getStorageSync('games') || []
     // 只统计当前用户18洞完整有效成绩
-    const completedGames = games.filter(g => {
-      const player = gameCompleteness.getPlayer(g)
-      return player && gameCompleteness.isPlayerRoundComplete(g, player.id)
-    })
+    const completedGames = gameCompleteness.filterUserCompletedGames(games)
 
     if (completedGames.length < 1) {
       this.setData({ hasData: false })

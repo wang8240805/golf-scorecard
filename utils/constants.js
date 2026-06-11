@@ -50,17 +50,6 @@ const THEME = {
   divider: '#eeeeee'
 }
 
-// 默认设置
-const DEFAULT_SETTINGS = {
-  defaultTee: '蓝Tee',
-  autoLock: false,
-  defaultPlayer: '我',
-  voiceBroadcast: true,
-  vibration: true,
-  autoCompleteConfirm: true,
-  defaultMatchPlay: false
-}
-
 // 存储键名
 const STORAGE_KEYS = {
   COURSES: 'courses',
@@ -83,6 +72,5 @@ module.exports = {
   SCORE_RATINGS,
   PAR_VALIDATION,
   THEME,
-  DEFAULT_SETTINGS,
   STORAGE_KEYS
 }

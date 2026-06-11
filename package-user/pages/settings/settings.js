@@ -1,26 +1,19 @@
 const { formatDate } = require('../../../utils/date-utils.js')
+const devFirstUseReset = require('../../../utils/dev-first-use-reset.js')
 
 Page({
   data: {
     gameCount: 0,
     courseCount: 0,
-    // 通用设置
-    defaultTee: '蓝Tee',
-    autoLock: false,
-    defaultPlayer: '我',
-    // 记分设置
-    voiceBroadcast: true,
-    vibration: true,
-    autoCompleteConfirm: true,
-    defaultMatchPlay: false,
     // 导入状态
     isImportingCourses: false,
-    isDeveloperMode: false
+    isDeveloperMode: false,
+    isDevtools: false,
+    devAlwaysFreshUser: false
   },
 
   onLoad() {
     this.loadData()
-    this.loadSettings()
   },
 
   onShow() {
@@ -32,10 +25,13 @@ Page({
     const games = wx.getStorageSync('games') || []
     const courses = wx.getStorageSync('courses') || []
     const isDeveloperMode = wx.getStorageSync('developerMode') === true
+    const devAlwaysFreshUser = wx.getStorageSync(devFirstUseReset.AUTO_RESET_KEY) === true
     this.setData({
       gameCount: games.length,
       courseCount: courses.length,
-      isDeveloperMode
+      isDeveloperMode,
+      isDevtools: devFirstUseReset.isDevtools(),
+      devAlwaysFreshUser
     })
   },
 
@@ -82,110 +78,6 @@ Page({
           icon: 'none'
         })
       }
-    })
-  },
-
-  // 加载用户设置
-  loadSettings() {
-    const settings = wx.getStorageSync('appSettings') || {}
-    this.setData({
-      defaultTee: settings.defaultTee || '蓝Tee',
-      autoLock: settings.autoLock || false,
-      defaultPlayer: settings.defaultPlayer || '我',
-      voiceBroadcast: settings.voiceBroadcast !== false,
-      vibration: settings.vibration !== false,
-      autoCompleteConfirm: settings.autoCompleteConfirm !== false,
-      defaultMatchPlay: settings.defaultMatchPlay || false
-    })
-  },
-
-  // 保存设置
-  saveSettings() {
-    const settings = {
-      defaultTee: this.data.defaultTee,
-      autoLock: this.data.autoLock,
-      defaultPlayer: this.data.defaultPlayer,
-      voiceBroadcast: this.data.voiceBroadcast,
-      vibration: this.data.vibration,
-      autoCompleteConfirm: this.data.autoCompleteConfirm,
-      defaultMatchPlay: this.data.defaultMatchPlay
-    }
-    wx.setStorageSync('appSettings', settings)
-  },
-
-  // 选择默认发球台
-  selectDefaultTee() {
-    const tees = ['蓝Tee', '白Tee', '红Tee', '金Tee', '黑Tee']
-    wx.showActionSheet({
-      itemList: tees,
-      success: (res) => {
-        this.setData({ defaultTee: tees[res.tapIndex] })
-        this.saveSettings()
-      }
-    })
-  },
-
-  // 切换自动锁屏
-  toggleAutoLock(e) {
-    this.setData({ autoLock: e.detail.value })
-    this.saveSettings()
-    wx.showToast({
-      title: e.detail.value ? '自动锁屏已开启' : '自动锁屏已关闭',
-      icon: 'none'
-    })
-  },
-
-  // 选择默认球员
-  selectDefaultPlayer() {
-    const players = wx.getStorageSync('savedPlayers') || []
-    const playerNames = players.map(p => p.name).concat(['我'])
-
-    wx.showActionSheet({
-      itemList: playerNames,
-      success: (res) => {
-        this.setData({ defaultPlayer: playerNames[res.tapIndex] })
-        this.saveSettings()
-      }
-    })
-  },
-
-  // 切换语音播报
-  toggleVoiceBroadcast(e) {
-    this.setData({ voiceBroadcast: e.detail.value })
-    this.saveSettings()
-    wx.showToast({
-      title: e.detail.value ? '语音播报已开启' : '语音播报已关闭',
-      icon: 'none'
-    })
-  },
-
-  // 切换震动反馈
-  toggleVibration(e) {
-    this.setData({ vibration: e.detail.value })
-    this.saveSettings()
-    wx.showToast({
-      title: e.detail.value ? '震动反馈已开启' : '震动反馈已关闭',
-      icon: 'none'
-    })
-  },
-
-  // 切换自动完成确认
-  toggleAutoCompleteConfirm(e) {
-    this.setData({ autoCompleteConfirm: e.detail.value })
-    this.saveSettings()
-    wx.showToast({
-      title: e.detail.value ? '自动确认已开启' : '自动确认已关闭',
-      icon: 'none'
-    })
-  },
-
-  // 切换默认显示比洞赛
-  toggleDefaultMatchPlay(e) {
-    this.setData({ defaultMatchPlay: e.detail.value })
-    this.saveSettings()
-    wx.showToast({
-      title: e.detail.value ? '默认比洞赛已开启' : '默认比杆赛已开启',
-      icon: 'none'
     })
   },
 
@@ -349,7 +241,6 @@ Page({
 
           // 刷新页面数据
           this.loadData()
-          this.loadSettings()
         }
       }
     })
@@ -389,9 +280,6 @@ Page({
             gameCount: 0
           })
 
-          // 重新初始化默认设置
-          this.loadSettings()
-
           wx.showToast({
             title: '已重置',
             icon: 'success',
@@ -402,6 +290,45 @@ Page({
             wx.switchTab({ url: '/pages/index/index' })
           }, 1500)
         }
+      }
+    })
+  },
+
+  toggleDevAlwaysFreshUser(e) {
+    const enabled = e.detail.value === true
+    wx.setStorageSync(devFirstUseReset.AUTO_RESET_KEY, enabled)
+    this.setData({ devAlwaysFreshUser: enabled })
+    wx.showToast({
+      title: enabled ? '启动时将模拟新用户' : '已关闭自动重置',
+      icon: 'none'
+    })
+  },
+
+  resetFirstUseExperience() {
+    if (!this.data.isDevtools) {
+      wx.showToast({ title: '仅微信开发者工具可用', icon: 'none' })
+      return
+    }
+
+    wx.showModal({
+      title: '重置新用户体验',
+      content: '将清除本地缓存、登录信息、隐私同意状态和当前比赛，并保留开发者模式。重启或返回首页后，可重新体验首次创建比赛流程。',
+      confirmColor: '#f44336',
+      success: (res) => {
+        if (!res.confirm) return
+
+        devFirstUseReset.resetFirstUseState()
+        this.loadData()
+
+        wx.showToast({
+          title: '已重置',
+          icon: 'success',
+          duration: 1200
+        })
+
+        setTimeout(() => {
+          wx.switchTab({ url: '/pages/index/index' })
+        }, 1200)
       }
     })
   },

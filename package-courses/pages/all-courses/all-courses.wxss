@@ -390,24 +390,6 @@
   padding: 8rpx;
 }
 
-.quick-select-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 44rpx;
-  width: 92rpx;
-  border: none;
-  border-radius: 22rpx;
-  background: #2c8f4e;
-  color: #fff;
-  font-size: 22rpx;
-  line-height: 1;
-  padding: 0;
-  margin: 0;
-  white-space: nowrap;
-  flex: none;
-}
-
 /* 空状态 */
 .empty-card {
   padding: 80rpx 0;

@@ -50,6 +50,107 @@ describe("index ongoing game recovery", function() {
     })
   })
 
+  test("viewScorecard should pass gameId-only history game to readonly scorecard", function() {
+    const page = loadPage(path.resolve(__dirname, "../../pages/index/index.js"))
+    const game = {
+      gameId: "history-gameid-only",
+      courseName: "History Course",
+      players: [{ id: "p1", name: "A", isMe: true }],
+      scores: { p1: { 1: 4 } },
+      completed: true,
+      status: "completed"
+    }
+
+    page.viewScorecard(game)
+
+    expect(wx.getStorageSync("currentGame").gameId).toBe("history-gameid-only")
+    expect(wx.getStorageSync("viewMode")).toBe("readonly")
+    expect(wx.navigateTo).toHaveBeenCalledWith({
+      url: "/pages/scorecard/scorecard?mode=readonly&gameId=history-gameid-only"
+    })
+  })
+
+  test("viewGame should open legacy recent game without stored id", function() {
+    const page = loadPage(path.resolve(__dirname, "../../pages/index/index.js"))
+    const legacyTimestamp = 1770000000000
+    wx.setStorageSync("games", [{
+      courseName: "Legacy Course",
+      timestamp: legacyTimestamp,
+      players: [{ id: "p1", name: "A", isMe: true }],
+      scores: { p1: Object.fromEntries(Array.from({ length: 18 }, function(_, index) {
+        return [index + 1, 4]
+      })) },
+      completed: true,
+      status: "completed"
+    }])
+
+    page.viewGame({
+      currentTarget: {
+        dataset: {
+          gameid: "local_" + legacyTimestamp
+        }
+      }
+    })
+
+    expect(wx.showToast).not.toHaveBeenCalledWith(expect.objectContaining({
+      title: "比赛数据不存在"
+    }))
+    expect(wx.getStorageSync("currentGame").courseName).toBe("Legacy Course")
+    expect(wx.getStorageSync("currentGame").id).toBe("local_" + legacyTimestamp)
+    expect(wx.navigateTo).toHaveBeenCalledWith({
+      url: "/pages/scorecard/scorecard?mode=readonly&gameId=local_" + legacyTimestamp
+    })
+  })
+
+  test("loadData should exclude ongoing games from recent games", function() {
+    const page = loadPage(path.resolve(__dirname, "../../pages/index/index.js"))
+    const completedScores = Object.fromEntries(Array.from({ length: 18 }, function(_, index) {
+      return [index + 1, 4]
+    }))
+    wx.setStorageSync("games", [
+      Object.assign(createOngoingGame(), {
+        id: "ongoing-newer",
+        timestamp: 2000
+      }),
+      {
+        id: "completed-older",
+        courseName: "Completed Course",
+        timestamp: 1000,
+        players: [{ id: "p1", name: "A", isMe: true }],
+        scores: { p1: completedScores },
+        completed: true,
+        status: "completed"
+      }
+    ])
+
+    page.loadData()
+
+    expect(page.data.recentGames).toHaveLength(1)
+    expect(page.data.recentGames[0].id).toBe("completed-older")
+    expect(page.data.recentGames[0].courseName).toBe("Completed Course")
+  })
+
+  test("viewGameReport should pass gameId-only history game to report page", function() {
+    const page = loadPage(path.resolve(__dirname, "../../pages/index/index.js"))
+    const game = {
+      gameId: "report-gameid-only",
+      courseName: "Report Course",
+      players: [{ id: "p1", name: "A", isMe: true }],
+      scores: { p1: Object.fromEntries(Array.from({ length: 18 }, function(_, index) {
+        return [index + 1, 4]
+      })) },
+      completed: true,
+      status: "completed"
+    }
+
+    page.viewGameReport(game)
+
+    expect(wx.getStorageSync("game_report-gameid-only").gameId).toBe("report-gameid-only")
+    expect(wx.navigateTo).toHaveBeenCalledWith(expect.objectContaining({
+      url: "/package-game/pages/game-report/game-report?gameId=report-gameid-only&poster=1"
+    }))
+  })
+
   test("quickContinueLatest should restore ongoing game before replay history", function() {
     const page = loadPage(path.resolve(__dirname, "../../pages/index/index.js"))
     wx.setStorageSync("games", [

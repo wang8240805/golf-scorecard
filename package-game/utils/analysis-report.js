@@ -3,7 +3,7 @@
  */
 
 const app = getApp()
-const gameCompleteness = require('./game-completeness.js')
+const gameCompleteness = require('../../utils/game-completeness.js')
 
 /**
  * 检查比赛是否完整完成（打满18洞）

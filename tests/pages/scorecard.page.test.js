@@ -1,5 +1,6 @@
 const path = require("path")
 const { loadPage } = require("../helpers/load-page")
+const ongoingGameStorage = require("../../utils/ongoing-game-storage")
 
 function createHoles(count) {
   const holes = []
@@ -213,6 +214,136 @@ describe("scorecard page", function() {
     expect(page.data.currentGame.putts.p1).toEqual({})
     expect(page.data.currentGame.fairways.p1).toEqual({})
     expect(page.data.currentGame.penalties.p1).toEqual({})
+  })
+
+  test("confirmScore should persist cloud game locally before cloud update succeeds", function() {
+    const page = loadPage(path.resolve(__dirname, "../../pages/scorecard/scorecard.js"))
+    const holes = createHoles(18)
+    page.isCloudGame = true
+    page.gameId = "cloud-game-1"
+    page.hideScoreInput = jest.fn()
+    page.calculateLeader = jest.fn()
+    page.checkAndAutoAdvance = jest.fn()
+    page.data = {
+      currentHole: 1,
+      currentHoleData: { hole: 1, par: 4 },
+      holes: holes,
+      courses: [{ id: "c1", name: "Cloud Course", holes: holes }],
+      scoreGridData: [{
+        hole: 1,
+        scores: [{ playerId: "p1", display: "-", class: "" }]
+      }],
+      scoreActionStack: [],
+      editingScore: {
+        playerId: "p1",
+        strokes: 5,
+        putts: 2,
+        fairway: "hit",
+        penalty: 0
+      },
+      currentGame: {
+        id: "cloud-game-1",
+        gameId: "cloud-game-1",
+        courseId: "c1",
+        courseName: "Cloud Course",
+        players: [{ id: "p1", name: "A" }],
+        scores: { p1: {} },
+        putts: { p1: {} },
+        fairways: { p1: {} },
+        penalties: { p1: {} },
+        completed: false,
+        status: "playing"
+      }
+    }
+    wx.cloud = {
+      callFunction: jest.fn(function(options) {
+        options.fail({ errMsg: "network unavailable" })
+      })
+    }
+
+    page.confirmScore()
+
+    expect(wx.cloud.callFunction).toHaveBeenCalled()
+    expect(wx.getStorageSync("currentGame").scores.p1[1]).toBe(5)
+    expect(wx.getStorageSync("games")[0].scores.p1[1]).toBe(5)
+    expect(ongoingGameStorage.findStoredGameById("cloud-game-1").scores.p1[1]).toBe(5)
+    expect(wx.getStorageSync("currentGame").pendingScoreSyncQueue).toHaveLength(1)
+    expect(wx.getStorageSync("currentGame").pendingScoreSyncQueue[0]).toEqual(expect.objectContaining({
+      gameId: "cloud-game-1",
+      playerId: "p1",
+      hole: 1,
+      strokes: 5,
+      putts: 2
+    }))
+  })
+
+  test("shouldLoadGameFromCloud should prefer file-backed ongoing cloud game", function() {
+    const page = loadPage(path.resolve(__dirname, "../../pages/scorecard/scorecard.js"))
+    ongoingGameStorage.saveCurrentGame({
+      id: "cloud-game-file",
+      gameId: "cloud-game-file",
+      courseId: "c1",
+      courseName: "Cloud Course",
+      players: [{ id: "p1", name: "A" }],
+      scores: { p1: { 1: 5 } },
+      completed: false,
+      status: "playing",
+      updateTime: Date.now()
+    })
+    wx.clearStorageSync()
+
+    expect(page.shouldLoadGameFromCloud("cloud-game-file")).toBe(false)
+    expect(wx.getStorageSync("currentGame").scores.p1[1]).toBe(5)
+  })
+
+  test("onLoad should restore file-backed cloud draft and flush pending score sync", function() {
+    const page = loadPage(path.resolve(__dirname, "../../pages/scorecard/scorecard.js"))
+    const holes = createHoles(18)
+    ongoingGameStorage.saveCurrentGame({
+      id: "cloud-game-restore",
+      gameId: "cloud-game-restore",
+      courseId: "c1",
+      courseName: "Cloud Course",
+      players: [{ id: "p1", name: "A" }],
+      scores: { p1: { 1: 5 } },
+      putts: { p1: { 1: 2 } },
+      holes: holes,
+      pendingScoreSyncQueue: [{
+        syncKey: "cloud-game-restore:p1:1",
+        gameId: "cloud-game-restore",
+        playerId: "p1",
+        hole: 1,
+        strokes: 5,
+        putts: 2,
+        modifierName: "球友"
+      }],
+      completed: false,
+      status: "playing",
+      updateTime: Date.now()
+    })
+    wx.clearStorageSync()
+    wx.cloud = {
+      callFunction: jest.fn(function(options) {
+        options.success({ result: { success: true } })
+      })
+    }
+    page.calculateLeader = jest.fn()
+
+    page.onLoad({ gameId: "cloud-game-restore" })
+
+    expect(page.isCloudGame).toBe(true)
+    expect(page.preferLocalGame).toBe(true)
+    expect(wx.cloud.callFunction).toHaveBeenCalledWith(expect.objectContaining({
+      name: "updateScore",
+      data: expect.objectContaining({
+        gameId: "cloud-game-restore",
+        playerId: "p1",
+        hole: 1,
+        strokes: 5,
+        putts: 2
+      })
+    }))
+    expect(wx.getStorageSync("currentGame").pendingScoreSyncQueue).toEqual([])
   })
 
   test("onLoad should keep local gameId in local mode", function() {

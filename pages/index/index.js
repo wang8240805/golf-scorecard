@@ -118,6 +118,19 @@ Page({
   // 获取用户位置
   getUserLocation() {
     const self = this
+    if (app && app.runAfterPrivacyAuthorization) {
+      app.runAfterPrivacyAuthorization(function() {
+        self.requestUserLocation()
+      }, function() {
+        self.setData({ locationAuth: false })
+      })
+      return
+    }
+    this.requestUserLocation()
+  },
+
+  requestUserLocation() {
+    const self = this
     function handleLocationFail() {
       self.setData({ locationAuth: false })
     }
@@ -222,7 +235,7 @@ Page({
     if (courses.length === 0) {
       // 加载最近比赛
       const games = wx.getStorageSync('games') || []
-      const recentGames = (games || [])
+      const recentGames = gameCompleteness.filterUserCompletedGames(games || [])
         .slice()
         .sort(function(a, b) {
           const at = a.timestamp || a.endTime || a.createTime || 0
@@ -272,9 +285,9 @@ Page({
           ? (toParValue < 0 ? "under" : (toParValue > 0 ? "over" : "even"))
           : "empty"
         // 兼容老数据：使用 timestamp，如果没有则使用 endTime，如果都没有使用当前时间
-        const timestamp = game.timestamp || game.endTime || Date.now()
+        const timestamp = game.timestamp || game.endTime || game.createTime || Date.now()
         // 确保每个比赛都有id（兼容老数据）
-        const gameId = game.id || game.gameId || 'local_' + timestamp
+        const gameId = this.getDisplayGameId(game) || 'local_' + timestamp
         return {
           ...game,
           id: gameId,
@@ -347,7 +360,7 @@ Page({
       seen.add(key)
       return true
     })
-    const recentGames = uniqueGames
+    const recentGames = gameCompleteness.filterUserCompletedGames(uniqueGames)
       .slice()
       .sort(function(a, b) {
         const at = a.timestamp || a.endTime || a.createTime || 0
@@ -397,9 +410,9 @@ Page({
         ? (toParValue < 0 ? "under" : (toParValue > 0 ? "over" : "even"))
         : "empty"
       // 兼容老数据：使用 timestamp，如果没有则使用 endTime，如果都没有使用当前时间
-      const timestamp = game.timestamp || game.endTime || Date.now()
+      const timestamp = game.timestamp || game.endTime || game.createTime || Date.now()
       // 确保每个比赛都有id（兼容老数据）
-      const gameId = game.id || game.gameId || 'local_' + timestamp
+      const gameId = this.getDisplayGameId(game) || 'local_' + timestamp
       return {
         ...game,
         id: gameId,
@@ -452,7 +465,7 @@ Page({
     if (!latest) return null
 
     const timestamp = gameCompleteness.getGameTimestamp(latest) || Date.now()
-    const gameId = latest.id || latest.gameId || 'local_' + timestamp
+    const gameId = this.getDisplayGameId(latest) || 'local_' + timestamp
     return {
       ...latest,
       id: gameId,
@@ -462,15 +475,11 @@ Page({
   },
 
   filterUserAnalyzableGames(games) {
-    if (!Array.isArray(games)) return []
-    return games.filter(function(game) {
-      const player = gameCompleteness.getPlayer(game)
-      return player && gameCompleteness.isPlayerRoundComplete(game, player.id)
-    })
+    return gameCompleteness.filterUserCompletedGames(games)
   },
 
   buildWelcomeStats(games) {
-    const analyzableGames = gameCompleteness.filterAnalyzableGames(games || [])
+    const analyzableGames = gameCompleteness.filterUserCompletedGames(games || [])
     const totalRounds = analyzableGames.length
     const posters = (games || []).filter(function(g) {
       return g && (g.posterGenerated || g.posterUrl)
@@ -506,6 +515,31 @@ Page({
     }
 
     return null
+  },
+
+  getDisplayGameId(game) {
+    if (!game) return ''
+    const timestamp = game.timestamp || game.endTime || game.createTime || 0
+    return game.id || game.gameId || game._id || (timestamp ? 'local_' + timestamp : '')
+  },
+
+  getGameWithDisplayId(game) {
+    if (!game) return game
+    const displayId = this.getDisplayGameId(game)
+    if (!displayId || game.id || game.gameId || game._id) return game
+    return Object.assign({}, game, { id: displayId })
+  },
+
+  findGameByDisplayId(games, gameId) {
+    if (!Array.isArray(games) || !gameId) return null
+    const target = String(gameId)
+    return games.find(game => {
+      if (!game) return false
+      if (String(game.id || '') === target) return true
+      if (String(game.gameId || '') === target) return true
+      if (String(game._id || '') === target) return true
+      return this.getDisplayGameId(game) === target
+    }) || null
   },
 
   quickReuseLastSetup() {
@@ -621,13 +655,18 @@ Page({
   loadUserStats() {
     const games = wx.getStorageSync('games') || []
 
-    if (games.length === 0) return
+    if (games.length === 0) {
+      this.setData({
+        userStats: {
+          totalGames: 0,
+          bestScore: 0
+        }
+      })
+      return
+    }
 
     const scores = []
-    const validGames = games.filter(function(g) {
-      const player = gameCompleteness.getPlayer(g)
-      return player && gameCompleteness.isPlayerRoundComplete(g, player.id)
-    })
+    const validGames = gameCompleteness.filterUserCompletedGames(games)
 
     validGames.forEach(function(g) {
       const player = gameCompleteness.getPlayer(g)
@@ -822,8 +861,7 @@ Page({
 
     // 获取完整比赛数据
     const games = wx.getStorageSync('games') || []
-    // 兼容两种字段：id 或 gameId
-    const game = games.find(g => g.id === gameId || g.gameId === gameId)
+    const game = this.findGameByDisplayId(games, gameId)
 
     if (!game) {
       wx.showToast({ title: '比赛数据不存在', icon: 'none' })
@@ -860,11 +898,12 @@ Page({
 
   // 查看比赛记分卡（历史比赛只读模式）
   viewScorecard(game) {
+    const viewGame = this.getGameWithDisplayId(game)
     // 将比赛数据存入storage供记分卡页面读取
-    wx.setStorageSync('currentGame', game)
+    wx.setStorageSync('currentGame', viewGame)
     wx.setStorageSync('viewMode', 'readonly') // 标记为只读模式
 
-    const gameId = game?.id || game?.gameId || ''
+    const gameId = this.getDisplayGameId(viewGame)
     wx.navigateTo({
       url: '/pages/scorecard/scorecard?mode=readonly&gameId=' + gameId
     })

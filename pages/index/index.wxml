@@ -59,7 +59,6 @@
         <view class="home-status-badge ready">
           <text>新比赛</text>
         </view>
-        <text class="home-status-hole" wx:if="{{courseCount > 0}}">{{courseCount}} 个球场</text>
       </view>
       <text class="home-status-title">{{homeReadyTitle}}</text>
       <text class="home-status-subtitle">{{homeReadySubtitle}}</text>
@@ -87,7 +86,7 @@
       <view class="home-summary-main">
         <view class="home-summary-item">
           <text class="home-summary-value">{{userStats.totalGames}}</text>
-          <text class="home-summary-label">总场次</text>
+          <text class="home-summary-label">完成场次</text>
         </view>
         <view class="home-summary-item">
           <text class="home-summary-value">{{userStats.bestScore}}</text>
@@ -162,7 +161,7 @@
         <view class="stats-detail-grid">
           <view class="stats-detail-item">
             <text class="stats-detail-num">{{userStats.totalGames}}</text>
-            <text class="stats-detail-label">总场次</text>
+            <text class="stats-detail-label">完成场次</text>
           </view>
           <view class="stats-detail-item">
             <text class="stats-detail-num">{{userStats.bestScore}}</text>
@@ -174,3 +173,5 @@
   </view>
 </block>
 </view>
+
+<privacy-popup />

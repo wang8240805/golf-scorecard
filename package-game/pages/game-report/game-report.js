@@ -1,5 +1,5 @@
 const app = getApp()
-const analysisReport = require('../../../utils/analysis-report.js')
+const analysisReport = require('../../utils/analysis-report.js')
 const posterGenerator = require('../../../utils/poster-generator.js')
 const gameCompleteness = require('../../../utils/game-completeness.js')
 const DEFAULT_POSTER_STYLE = 'pro'
@@ -26,6 +26,7 @@ Page({
     reportPlayerOptions: [],
     reportQrcodeUrl: '',
     shareText: '',
+    posterGenerating: false,
     hasAdvancedStats: false, // 是否有高级数据
     advancedStats: null // 高级统计数据
   },
@@ -38,6 +39,9 @@ Page({
 
     // 保存gameId到data供后续使用
     this.gameId = options?.gameId
+    this.autoGeneratePoster = !!(options && (options.poster === '1' || options.autoPoster === '1'))
+    this.pendingAutoGeneratePoster = false
+    this.posterAutoStarted = false
     console.log('【report】保存的gameId:', this.gameId)
 
     // 先尝试直接加载
@@ -49,6 +53,7 @@ Page({
       eventChannel.on('reportData', (data) => {
         console.log('【report】eventChannel收到数据:', data)
         if (data && data.game) {
+          this.pendingAutoGeneratePoster = !!data.autoGeneratePoster
           this.applyReportGame(data.game, data.report, data.posterUrl || '', data.reportQrcodeUrl || '')
 
           if (data.autoShowPoster && data.posterUrl) {
@@ -96,7 +101,7 @@ Page({
       console.log('【report】从game_获取:', game ? '成功' : '失败')
       if (!game) {
         // 如果没有完整数据，从历史列表获取
-        game = historyGames.find(g => g.id === gameId)
+        game = historyGames.find(g => this.isSameReportGame(g, gameId))
         console.log('【report】从games列表获取:', game ? '成功' : '失败')
       }
     }
@@ -113,6 +118,11 @@ Page({
       console.log('【report】警告：未找到任何比赛数据')
       this.loadReportFromCloud(gameId)
     }
+  },
+
+  isSameReportGame(game, gameId) {
+    if (!game || !gameId) return false
+    return game.id === gameId || game.gameId === gameId || game._id === gameId
   },
 
   loadReportFromCloud(gameId) {
@@ -173,8 +183,21 @@ Page({
       shareText: this.buildShareText(game, currentPlayer, currentPlayerSummary)
     }, () => {
       console.log('【report】数据设置完成:', this.data.game ? '有game' : '无game', 'report:', this.data.report ? '有' : '无')
+      this.generatePosterIfRequested()
     })
     this.calculateRating()
+  },
+
+  generatePosterIfRequested() {
+    if ((!this.autoGeneratePoster && !this.pendingAutoGeneratePoster) || this.posterAutoStarted || this.data.posterImageUrl) {
+      return
+    }
+    this.posterAutoStarted = true
+    setTimeout(() => {
+      if (!this.data.posterImageUrl) {
+        this.generatePoster()
+      }
+    }, 80)
   },
 
   handleIncompleteReport() {
@@ -433,6 +456,7 @@ Page({
       return
     }
 
+    this.setData({ posterGenerating: true })
     wx.showLoading({ title: '生成中...' })
 
     try {
@@ -450,13 +474,15 @@ Page({
         posterImageUrl: posterUrl,
         showPosterPreview: true,
         reportQrcodeUrl: qrcodeUrl,
-        shareText: this.buildShareText(game, player, this.buildPlayerSummary(game, player))
+        shareText: this.buildShareText(game, player, this.buildPlayerSummary(game, player)),
+        posterGenerating: false
       })
 
       wx.hideLoading()
     } catch (err) {
       console.error('生成海报失败:', err)
       wx.hideLoading()
+      this.setData({ posterGenerating: false })
       wx.showToast({ title: '生成失败', icon: 'none' })
     }
   },
@@ -591,7 +617,7 @@ Page({
     const playerId = this.data.currentPlayer ? this.data.currentPlayer.id : ''
     return {
       title: this.buildShareTitle(),
-      path: `/package-game/pages/game-report/game-report?gameId=${encodeURIComponent(gameId)}&playerId=${encodeURIComponent(playerId)}&readonly=1`,
+      path: `/package-game/pages/game-report/game-report?gameId=${encodeURIComponent(gameId)}&playerId=${encodeURIComponent(playerId)}&poster=1&readonly=1`,
       imageUrl: this.data.posterImageUrl || ''
     }
   },
@@ -601,7 +627,7 @@ Page({
     const playerId = this.data.currentPlayer ? this.data.currentPlayer.id : ''
     return {
       title: this.buildShareTitle(),
-      query: `gameId=${encodeURIComponent(gameId)}&playerId=${encodeURIComponent(playerId)}&readonly=1`,
+      query: `gameId=${encodeURIComponent(gameId)}&playerId=${encodeURIComponent(playerId)}&poster=1&readonly=1`,
       imageUrl: this.data.posterImageUrl || ''
     }
   },

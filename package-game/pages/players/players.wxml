@@ -8,7 +8,7 @@
       </view>
       <view class="stat-item">
         <text class="stat-value">{{totalGames}}</text>
-        <text class="stat-label">总场次</text>
+        <text class="stat-label">完成场次</text>
       </view>
     </view>
   </view>

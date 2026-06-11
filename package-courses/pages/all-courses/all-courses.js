@@ -89,6 +89,19 @@ Page({
 
   // 获取用户位置
   getUserLocation() {
+    var self = this
+    if (app && app.runAfterPrivacyAuthorization) {
+      app.runAfterPrivacyAuthorization(function() {
+        self.requestUserLocation()
+      }, function() {
+        self.processAndDisplayCourses()
+      })
+      return
+    }
+    this.requestUserLocation()
+  },
+
+  requestUserLocation() {
     // 开发模式：使用模拟位置
     if (DEV_MODE) {
       this.setData({
@@ -542,8 +555,27 @@ Page({
     this.setData({ currentCourseId: course.id })
     wx.showToast({ title: '已选中球场', icon: 'success' })
     setTimeout(() => {
-      wx.navigateBack()
+      this.returnToNewGameCourse()
     }, 250)
+  },
+
+  returnToNewGameCourse() {
+    const targetRoute = 'package-courses/pages/new-game/step1-course/step1-course'
+    const targetUrl = '/' + targetRoute
+    const pages = typeof getCurrentPages === 'function' ? getCurrentPages() : []
+    const previousPage = Array.isArray(pages) && pages.length >= 2 ? pages[pages.length - 2] : null
+
+    if (previousPage && previousPage.route === targetRoute) {
+      wx.navigateBack({
+        delta: 1,
+        fail: function() {
+          wx.redirectTo({ url: targetUrl })
+        }
+      })
+      return
+    }
+
+    wx.redirectTo({ url: targetUrl })
   },
 
   // 关闭详情弹窗
@@ -565,12 +597,7 @@ Page({
     // 保存选中的球场完整数据供创建比赛页面使用
     wx.setStorageSync('selectedCourseForNewGame', course)
 
-    // 返回上一页
-    wx.navigateBack({
-      success: () => {
-        console.log('已选择球场并返回:', course.name)
-      }
-    })
+    this.returnToNewGameCourse()
   },
 
   preventHide() {
@@ -806,7 +833,7 @@ Page({
       wx.setStorageSync('selectedCourseForNewGame', newCourse)
       wx.showToast({ title: '已添加并选中', icon: 'success' })
       setTimeout(() => {
-        wx.navigateBack()
+        this.returnToNewGameCourse()
       }, 300)
       return
     }

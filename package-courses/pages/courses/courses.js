@@ -52,6 +52,19 @@ Page({
 
   // 获取用户位置
   getUserLocation() {
+    var self = this
+    if (app && app.runAfterPrivacyAuthorization) {
+      app.runAfterPrivacyAuthorization(function() {
+        self.requestUserLocation()
+      }, function() {
+        self.processAndDisplayCourses()
+      })
+      return
+    }
+    this.requestUserLocation()
+  },
+
+  requestUserLocation() {
     // 开发模式：使用模拟位置
     if (DEV_MODE) {
       this.setData({

@@ -166,7 +166,8 @@ async function getReportQrCode(event) {
 
     const gameRes = await db.collection('games').where(_.or([
       { gameId: _.eq(gameId) },
-      { id: _.eq(gameId) }
+      { id: _.eq(gameId) },
+      { _id: _.eq(gameId) }
     ])).limit(1).get()
 
     if (gameRes.data.length > 0) {

@@ -3,7 +3,10 @@ const path = require('path')
 const https = require('https')
 const { execSync } = require('child_process')
 
-const DATA_FILE = path.join(__dirname, '..', 'package-courses', 'data', 'courses-accurate.js')
+const DATA_DIR = path.join(__dirname, '..', 'package-courses', 'data')
+const DATA_FILE = path.join(DATA_DIR, 'courses-accurate.js')
+const DATA_CHUNK_PREFIX = 'courses-accurate-part'
+const DATA_CHUNK_LIMIT = 150 * 1024
 const AMAP_KEY = process.env.AMAP_WEB_KEY || 'dbed49028a00db65170a3aaba16364fa'
 
 const REGIONS = [
@@ -271,7 +274,37 @@ function mergeCourses(base, fetched) {
 }
 
 function writeCoursesFile(courses) {
-  const content = 'const CHINA_COURSES = ' + JSON.stringify(courses) + ';\nmodule.exports = CHINA_COURSES;\n'
+  fs.readdirSync(DATA_DIR).forEach((file) => {
+    if (file.indexOf(DATA_CHUNK_PREFIX) === 0 && file.endsWith('.js')) {
+      fs.unlinkSync(path.join(DATA_DIR, file))
+    }
+  })
+
+  const chunks = []
+  let current = []
+  let currentSize = 0
+  courses.forEach((course) => {
+    const encoded = JSON.stringify(course)
+    const itemSize = Buffer.byteLength(encoded, 'utf8') + 2
+    if (current.length > 0 && currentSize + itemSize > DATA_CHUNK_LIMIT) {
+      chunks.push(current)
+      current = []
+      currentSize = 0
+    }
+    current.push(encoded)
+    currentSize += itemSize
+  })
+  if (current.length > 0) chunks.push(current)
+
+  chunks.forEach((chunk, index) => {
+    const content = 'module.exports = [' + chunk.join(',') + ']\n'
+    fs.writeFileSync(path.join(DATA_DIR, `${DATA_CHUNK_PREFIX}${index + 1}.js`), content, 'utf8')
+  })
+
+  const requires = chunks
+    .map((_, index) => `require('./${DATA_CHUNK_PREFIX}${index + 1}.js')`)
+    .join(',\n  ')
+  const content = 'const CHINA_COURSES_PARTS = [\n  ' + requires + '\n]\n\nmodule.exports = [].concat.apply([], CHINA_COURSES_PARTS)\n'
   fs.writeFileSync(DATA_FILE, content, 'utf8')
 }
 

@@ -32,6 +32,17 @@ Page({
   onLoad: function(options) {
     this.initHoleCount()
     this.loadCourse()
+    var self = this
+    var app = getApp()
+    if (app && app.runAfterPrivacyAuthorization) {
+      app.runAfterPrivacyAuthorization(function() {
+        self.initGame(options)
+      }, function() {
+        self.setData({ isLoading: false })
+        wx.showToast({ title: '请先同意隐私政策后创建比赛', icon: 'none' })
+      })
+      return
+    }
     this.initGame(options)
   },
 
@@ -170,130 +181,104 @@ Page({
     })
   },
 
+  hasCompleteUserInfo: function(userInfo) {
+    return !!(
+      userInfo &&
+      userInfo.openid &&
+      String(userInfo.nickName || '').trim() &&
+      userInfo.avatarUrl
+    )
+  },
+
+  loadCloudUserInfo: function(cachedInfo) {
+    if (!cachedInfo || !cachedInfo.openid || !wx.cloud || !wx.cloud.database) {
+      return Promise.resolve(null)
+    }
+
+    var self = this
+    var db = wx.cloud.database()
+    return db.collection('users').where({ openid: cachedInfo.openid }).get().then(function(res) {
+      if (!res.data || res.data.length === 0) return null
+
+      var cloudUser = res.data[0]
+      var userInfo = {
+        ...cachedInfo,
+        openid: cachedInfo.openid,
+        nickName: cloudUser.nickName || cachedInfo.nickName || '',
+        avatarUrl: cloudUser.avatarUrl || cachedInfo.avatarUrl || '',
+        unionid: cloudUser.unionid || cachedInfo.unionid,
+        phoneNumber: cloudUser.phoneNumber || cachedInfo.phoneNumber || ''
+      }
+
+      return self.hasCompleteUserInfo(userInfo) ? userInfo : null
+    }).catch(function(err) {
+      console.error('从云端加载用户信息失败:', err)
+      return null
+    })
+  },
+
+  persistUserInfo: function(userInfo) {
+    wx.setStorageSync('userInfo', userInfo)
+
+    if (!wx.cloud || !wx.cloud.callFunction) return
+    wx.cloud.callFunction({
+      name: 'userAction',
+      data: {
+        action: 'upsert',
+        nickName: userInfo.nickName,
+        avatarUrl: userInfo.avatarUrl,
+        unionid: userInfo.unionid || null,
+        phoneNumber: userInfo.phoneNumber || ''
+      },
+      success: function(res) {
+        if (res.result && res.result.success) {
+          console.log('用户信息同步云端成功')
+        } else {
+          console.error('用户信息同步云端失败:', res.result ? res.result.error : '未知错误')
+        }
+      },
+      fail: function(err) {
+        console.error('调用userAction失败:', err)
+      }
+    })
+  },
+
   // 获取用户信息
   getUserInfo: function() {
     var self = this
 
     var cachedInfo = wx.getStorageSync('userInfo')
-    if (cachedInfo && cachedInfo.openid && cachedInfo.nickName) {
+    if (this.hasCompleteUserInfo(cachedInfo)) {
       // 本地已有完整信息，直接返回
       return Promise.resolve(cachedInfo)
     }
 
-    // 已有openid但缺少昵称头像，尝试从云端拉取
-    if (cachedInfo && cachedInfo.openid && !cachedInfo.nickName) {
-      var db = wx.cloud.database()
-      return new Promise(function(resolve, reject) {
-        db.collection('users').where({ openid: cachedInfo.openid }).get().then(function(res) {
-          if (res.data.length > 0) {
-            // 从云端加载
-            var cloudUser = res.data[0]
-            var userInfo = {
-              openid: cachedInfo.openid,
-              nickName: cloudUser.nickName,
-              avatarUrl: cloudUser.avatarUrl,
-              unionid: cloudUser.unionid || cachedInfo.unionid,
-              phoneNumber: cloudUser.phoneNumber || ''
-            }
-            wx.setStorageSync('userInfo', userInfo)
-            console.log('从云端加载用户信息成功')
-            // 还是调用upsert更新时间戳
-            wx.cloud.callFunction({
-              name: 'userAction',
-              data: {
-                action: 'upsert',
-                nickName: userInfo.nickName,
-                avatarUrl: userInfo.avatarUrl,
-                unionid: userInfo.unionid || null,
-                phoneNumber: userInfo.phoneNumber || ''
-              }
-            })
-            resolve(userInfo)
-          } else {
-            // 云端没找到，需要用户输入
-            var openidPromise = Promise.resolve(cachedInfo.openid)
-            var profilePromise = self.getUserProfile()
-            Promise.all([openidPromise, profilePromise]).then(function(results) {
-              var openid = results[0]
-              var profile = results[1]
-
-              var userInfo = {
-                openid: openid,
-                nickName: profile.nickName,
-                avatarUrl: profile.avatarUrl,
-                phoneNumber: profile.phoneNumber || ''
-              }
-
-              wx.setStorageSync('userInfo', userInfo)
-
-              // 保存/更新用户信息到云端 users 集合
-              wx.cloud.callFunction({
-                name: 'userAction',
-                data: {
-                  action: 'upsert',
-                  nickName: profile.nickName,
-                  avatarUrl: profile.avatarUrl,
-                  unionid: null,
-                  phoneNumber: profile.phoneNumber || ''
-                },
-                success: function(res) {
-                  if (res.result && res.result.success) {
-                    console.log('用户信息同步云端成功')
-                  } else {
-                    console.error('用户信息同步云端失败:', res.result ? res.result.error : '未知错误')
-                  }
-                },
-                fail: function(err) {
-                  console.error('调用userAction失败:', err)
-                }
-              })
-              resolve(userInfo)
-            }).catch(reject)
-          }
-        }).catch(reject)
-      })
-    }
-
-    // 没有任何缓存，从头开始
-    var openidPromise = this.getOpenid()
-    var profilePromise = this.getUserProfile()
-
-    return Promise.all([openidPromise, profilePromise]).then(function(results) {
-      var openid = results[0]
-      var profile = results[1]
-
-      var userInfo = {
-        openid: openid,
-        nickName: profile.nickName,
-        avatarUrl: profile.avatarUrl,
-        phoneNumber: profile.phoneNumber || ''
+    return this.loadCloudUserInfo(cachedInfo).then(function(cloudInfo) {
+      if (self.hasCompleteUserInfo(cloudInfo)) {
+        self.persistUserInfo(cloudInfo)
+        return cloudInfo
       }
 
-      wx.setStorageSync('userInfo', userInfo)
+      var hasProfile = !!(cachedInfo && String(cachedInfo.nickName || '').trim() && cachedInfo.avatarUrl)
+      var openidPromise = cachedInfo && cachedInfo.openid ? Promise.resolve(cachedInfo.openid) : self.getOpenid()
+      var profilePromise = hasProfile ? Promise.resolve(cachedInfo) : self.getUserProfile()
 
-      // 保存/更新用户信息到云端 users 集合
-      wx.cloud.callFunction({
-        name: 'userAction',
-        data: {
-          action: 'upsert',
-          nickName: profile.nickName,
+      return Promise.all([openidPromise, profilePromise]).then(function(results) {
+        var openid = results[0]
+        var profile = results[1]
+
+        var userInfo = {
+          ...(cachedInfo || {}),
+          openid: openid,
+          nickName: String(profile.nickName || '').trim(),
           avatarUrl: profile.avatarUrl,
-          unionid: null,
-          phoneNumber: profile.phoneNumber || ''
-        },
-        success: function(res) {
-          if (res.result && res.result.success) {
-            console.log('用户信息同步云端成功')
-          } else {
-            console.error('用户信息同步云端失败:', res.result ? res.result.error : '未知错误')
-          }
-        },
-        fail: function(err) {
-          console.error('调用userAction失败:', err)
+          unionid: cachedInfo ? cachedInfo.unionid : null,
+          phoneNumber: profile.phoneNumber || (cachedInfo && cachedInfo.phoneNumber) || ''
         }
-      })
 
-      return userInfo
+        self.persistUserInfo(userInfo)
+        return userInfo
+      })
     })
   },
 
@@ -357,11 +342,11 @@ Page({
     this.setData({ tempNickName: e.detail.value })
   },
 
-  // 获取手机号
+  // 可选账号同步
   onGetPhoneNumber: function(e) {
     var self = this
     if (!e.detail || e.detail.errMsg !== 'getPhoneNumber:ok' || !e.detail.code) {
-      wx.showToast({ title: '未授权手机号', icon: 'none' })
+      wx.showToast({ title: '暂未完成同步', icon: 'none' })
       return
     }
     wx.cloud.callFunction({
@@ -375,25 +360,29 @@ Page({
             tempPhone: phone,
             tempPhoneMasked: masked
           })
-          wx.showToast({ title: '手机号已授权', icon: 'success' })
+          wx.showToast({ title: '账号已同步', icon: 'success' })
         } else {
-          wx.showToast({ title: '手机号授权失败', icon: 'none' })
+          wx.showToast({ title: '同步失败', icon: 'none' })
         }
       },
       fail: function() {
-        wx.showToast({ title: '手机号授权失败', icon: 'none' })
+        wx.showToast({ title: '同步失败', icon: 'none' })
       }
     })
   },
 
   // 确认授权
   confirmAuth: function() {
-    var tempNickName = this.data.tempNickName
+    var tempNickName = String(this.data.tempNickName || '').trim()
     var tempAvatar = this.data.tempAvatar
     var tempPhone = this.data.tempPhone
 
     if (!tempNickName) {
       wx.showToast({ title: '请输入昵称', icon: 'none' })
+      return
+    }
+    if (!tempAvatar) {
+      wx.showToast({ title: '请选择微信头像', icon: 'none' })
       return
     }
 
@@ -735,7 +724,7 @@ Page({
     return {
       title: myInfo ? (myInfo.name + '邀请你加入' + (currentCourse ? currentCourse.name : '') + '的比赛') : '邀请你加入高尔夫比赛',
       path: '/pages/new-game/step2-players/step2-players?gameId=' + gameId,
-      imageUrl: '/images/share-game.png'
+      imageUrl: '/images/default-course.jpg'
     }
   },
 

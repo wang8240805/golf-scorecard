@@ -17,7 +17,8 @@ Page({
       avgScore: '-',
       bestScore: '-'
     },
-    level: null
+    level: null,
+    hasLoginInfo: false
   },
 
   onLoad() {
@@ -43,7 +44,8 @@ Page({
     if (userInfo) {
       this.setData({
         userInfo,
-        avatarUrl: userInfo.avatarUrl || defaultAvatarUrl
+        avatarUrl: userInfo.avatarUrl || defaultAvatarUrl,
+        hasLoginInfo: this.hasLoginInfo(userInfo)
       })
       // 如果有用户信息但是还没有openid，尝试获取
       if (userInfo.nickName && !userInfo.openid) {
@@ -54,20 +56,37 @@ Page({
     } else {
       this.setData({
         userInfo: null,
-        avatarUrl: defaultAvatarUrl
+        avatarUrl: defaultAvatarUrl,
+        hasLoginInfo: false
       })
     }
+  },
+
+  hasLoginInfo(userInfo) {
+    return !!(userInfo && userInfo.nickName && userInfo.nickName.trim && userInfo.nickName.trim())
   },
 
   // 选择头像（官方最新API - 完全遵循官方示例）
   onChooseAvatar(e) {
     const { avatarUrl } = e.detail
+    var self = this
+    if (app && app.runAfterPrivacyAuthorization && !app.hasPrivacyAgreed()) {
+      app.runAfterPrivacyAuthorization(function() {
+        self.saveAvatar(avatarUrl)
+      })
+      return
+    }
+    this.saveAvatar(avatarUrl)
+  },
+
+  saveAvatar(avatarUrl) {
     let userInfo = wx.getStorageSync('userInfo') || {}
     userInfo.avatarUrl = avatarUrl
     wx.setStorageSync('userInfo', userInfo)
     this.setData({
       avatarUrl,
-      userInfo
+      userInfo,
+      hasLoginInfo: this.hasLoginInfo(userInfo)
     })
     wx.showToast({ title: '头像已更新', icon: 'success' })
 
@@ -92,11 +111,24 @@ Page({
   onNickNameInput(e) {
     const nickName = e.detail.value
     if (!nickName || nickName.trim().length === 0) return
+    var self = this
+    if (app && app.runAfterPrivacyAuthorization && !app.hasPrivacyAgreed()) {
+      app.runAfterPrivacyAuthorization(function() {
+        self.saveNickName(nickName)
+      })
+      return
+    }
+    this.saveNickName(nickName)
+  },
 
+  saveNickName(nickName) {
     let userInfo = wx.getStorageSync('userInfo') || {}
     userInfo.nickName = nickName
     wx.setStorageSync('userInfo', userInfo)
-    this.setData({ userInfo })
+    this.setData({
+      userInfo,
+      hasLoginInfo: this.hasLoginInfo(userInfo)
+    })
     wx.showToast({ title: '昵称已保存', icon: 'success' })
 
     // 同步到云端 users 集合
@@ -110,6 +142,14 @@ Page({
 
   // 获取微信openid
   getWxOpenid() {
+    var self = this
+    if (app && app.runAfterPrivacyAuthorization && !app.hasPrivacyAgreed()) {
+      app.runAfterPrivacyAuthorization(function() {
+        self.getWxOpenid()
+      })
+      return
+    }
+
     wx.login({
       success: (res) => {
         if (res.code) {
@@ -130,7 +170,11 @@ Page({
                 // 如果本地已经有昵称和头像，直接保存
                 if (userInfo.nickName && userInfo.avatarUrl) {
                   wx.setStorageSync('userInfo', userInfo)
-                  this.setData({ userInfo, avatarUrl: userInfo.avatarUrl })
+                  this.setData({
+                    userInfo,
+                    avatarUrl: userInfo.avatarUrl,
+                    hasLoginInfo: this.hasLoginInfo(userInfo)
+                  })
                   this.syncUserInfoToCloud(userInfo)
                   // 登录成功，启动全局游戏数据监听
                   getApp().startGlobalGameWatch()
@@ -145,16 +189,26 @@ Page({
                       userInfo.avatarUrl = cloudUser.avatarUrl
                       userInfo.unionid = cloudUser.unionid || userInfo.unionid
                       wx.setStorageSync('userInfo', userInfo)
-                      this.setData({ userInfo, avatarUrl: cloudUser.avatarUrl })
+                      this.setData({
+                        userInfo,
+                        avatarUrl: cloudUser.avatarUrl,
+                        hasLoginInfo: this.hasLoginInfo(userInfo)
+                      })
                     } else {
                       // 云端没有，保存现有信息等待用户输入
                       wx.setStorageSync('userInfo', userInfo)
-                      this.setData({ userInfo })
+                      this.setData({
+                        userInfo,
+                        hasLoginInfo: this.hasLoginInfo(userInfo)
+                      })
                     }
                   }).catch(err => {
                     console.error('[微信登录] 从云端加载用户信息失败:', err)
                     wx.setStorageSync('userInfo', userInfo)
-                    this.setData({ userInfo })
+                    this.setData({
+                      userInfo,
+                      hasLoginInfo: this.hasLoginInfo(userInfo)
+                    })
                   })
                 }
               } else {
@@ -191,12 +245,9 @@ Page({
     const currentGame = wx.getStorageSync('currentGame')
 
     // 过滤出用户本人18洞完整有效成绩（和首页/复盘口径一致）
-    const completedGames = games.filter(game => {
-      const player = gameCompleteness.getPlayer(game)
-      return player && gameCompleteness.isPlayerRoundComplete(game, player.id)
-    })
+    const completedGames = gameCompleteness.filterUserCompletedGames(games)
 
-    // 总场次（和首页统计口径一致，统计所有已完成比赛）
+    // 完成场次（和首页统计口径一致，统计当前用户18洞完整有效比赛）
     const totalGames = completedGames.length
 
     // 总洞数
@@ -321,6 +372,31 @@ Page({
     })
   },
 
+  goToUserAgreement() {
+    wx.navigateTo({
+      url: '/package-user/pages/webview/webview?type=userAgreement'
+    })
+  },
+
+  goToPrivacyPolicy() {
+    wx.navigateTo({
+      url: '/package-user/pages/webview/webview?type=privacyPolicy'
+    })
+  },
+
+  goToAgreements() {
+    wx.showActionSheet({
+      itemList: ['用户服务协议', '隐私政策'],
+      success: (res) => {
+        if (res.tapIndex === 0) {
+          this.goToUserAgreement()
+        } else if (res.tapIndex === 1) {
+          this.goToPrivacyPolicy()
+        }
+      }
+    })
+  },
+
   // 跳转关于页面
   goToAbout() {
     wx.showModal({
@@ -335,7 +411,7 @@ Page({
     return {
       title: '推荐你一个好用的高尔夫记分工具',
       path: '/pages/index/index',
-      imageUrl: '/assets/share-cover.png' // 如果有分享封面图的话
+      imageUrl: '/images/default-course.jpg'
     }
   },
 
@@ -373,7 +449,8 @@ Page({
           wx.removeStorageSync('userInfo')
           this.setData({
             userInfo: null,
-            avatarUrl: defaultAvatarUrl
+            avatarUrl: defaultAvatarUrl,
+            hasLoginInfo: false
           })
           wx.showToast({ title: '已登出', icon: 'success' })
         }

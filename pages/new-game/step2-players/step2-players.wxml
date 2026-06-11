@@ -109,32 +109,32 @@
   <!-- 授权弹窗 -->
   <view class="auth-modal" wx:if="{{showAuth}}" catchtouchmove="preventTouchMove">
     <view class="auth-content">
+      <view class="auth-sheet-handle"></view>
       <view class="auth-header">
-        <text class="auth-title">加入比赛</text>
-        <text class="auth-subtitle">设置你在比赛中的身份</text>
+        <text class="auth-eyebrow">WinPAR 比赛身份</text>
+        <text class="auth-title">设置你的球员名片</text>
+        <text class="auth-subtitle">头像和昵称会显示在记分卡、同组球员和历史记录中</text>
       </view>
       <view class="auth-body">
-        <view class="avatar-row">
+        <view class="auth-profile-row">
           <button class="avatar-picker" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
-            <image wx:if="{{tempAvatar}}" src="{{tempAvatar}}" class="preview-avatar"></image>
+            <image wx:if="{{tempAvatar}}" src="{{tempAvatar}}" mode="aspectFill" class="preview-avatar"></image>
             <view wx:else class="avatar-placeholder-large">
-              <text class="plus-icon">📷</text>
-              <text class="avatar-hint">点击选择头像</text>
+              <text class="avatar-placeholder-text">头像</text>
             </view>
           </button>
+          <view class="auth-profile-copy">
+            <text class="auth-field-title">{{tempAvatar ? '已选择头像' : '添加头像'}}</text>
+            <text class="auth-field-note">{{tempAvatar ? '点击头像可更换' : '作为比赛中的球员标识'}}</text>
+          </view>
         </view>
         <view class="nickname-row">
-          <input type="nickname" class="nickname-input" placeholder="点击填写昵称" bindblur="onNickNameInput" bindinput="onNickNameInput" value="{{tempNickName}}"/>
-        </view>
-        <view class="phone-row">
-          <button class="phone-auth-btn" open-type="getPhoneNumber" bindgetphonenumber="onGetPhoneNumber">
-            {{tempPhoneMasked ? ('已授权手机号：' + tempPhoneMasked) : '一键授权手机号（推荐）'}}
-          </button>
-          <text class="phone-hint">用于与微信身份关联，便于跨设备找回数据</text>
+          <text class="input-label">昵称</text>
+          <input type="nickname" class="nickname-input" placeholder="填写比赛昵称" bindblur="onNickNameInput" bindinput="onNickNameInput" value="{{tempNickName}}"/>
         </view>
       </view>
       <view class="auth-footer">
-        <button class="btn-confirm" bindtap="confirmAuth">{{tempNickName ? '加入比赛' : '请先填写昵称'}}</button>
+        <button class="btn-confirm" bindtap="confirmAuth" disabled="{{!tempNickName || !tempAvatar}}">{{tempNickName && tempAvatar ? '开始创建比赛' : '完成头像和昵称后继续'}}</button>
       </view>
     </view>
   </view>

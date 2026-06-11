@@ -37,6 +37,66 @@ describe("utils/ongoing-game-storage", function() {
     expect(wx.getStorageSync("currentGame").id).toBe("latest")
   })
 
+  test("getRestoredOngoingGame should restore from file backup when storage is cleared", function() {
+    jest.spyOn(Date, "now").mockReturnValue(5000)
+    const game = {
+      id: "file-backed",
+      courseId: "c1",
+      courseName: "File Backed Course",
+      players: [{ id: "p1", name: "A" }],
+      scores: { p1: { 1: 4 } },
+      completed: false,
+      updateTime: 4000
+    }
+
+    ongoingGameStorage.saveCurrentGame(game)
+    wx.clearStorageSync()
+
+    const restored = ongoingGameStorage.getRestoredOngoingGame()
+
+    expect(restored.id).toBe("file-backed")
+    expect(wx.getStorageSync("currentGame").id).toBe("file-backed")
+    expect(wx.getStorageSync("games")[0].id).toBe("file-backed")
+  })
+
+  test("findStoredGameById should restore exact game from file backup after storage is cleared", function() {
+    const game = {
+      id: "local_exact",
+      courseId: "c1",
+      courseName: "Exact Course",
+      players: [{ id: "p1", name: "A" }],
+      scores: { p1: { 1: 5 } },
+      completed: false,
+      updateTime: 4000
+    }
+
+    ongoingGameStorage.saveCurrentGame(game)
+    wx.clearStorageSync()
+
+    const restored = ongoingGameStorage.findStoredGameById("local_exact")
+
+    expect(restored.id).toBe("local_exact")
+    expect(wx.getStorageSync("currentGame").id).toBe("local_exact")
+    expect(wx.getStorageSync("games")[0].scores.p1[1]).toBe(5)
+  })
+
+  test("markGameCompleted should remove file backup for finished game", function() {
+    const game = {
+      id: "finished-file-backed",
+      completed: false,
+      updateTime: 4000
+    }
+
+    ongoingGameStorage.saveCurrentGame(game)
+    expect(ongoingGameStorage.readGameFileBackups()).toHaveLength(1)
+
+    ongoingGameStorage.markGameCompleted(game)
+    wx.clearStorageSync()
+
+    expect(ongoingGameStorage.readGameFileBackups()).toHaveLength(0)
+    expect(ongoingGameStorage.getRestoredOngoingGame()).toBeNull()
+  })
+
   test("getRestoredOngoingGame should ignore completed games", function() {
     wx.setStorageSync("games", [
       { id: "done", completed: true, updateTime: 3000 },

@@ -8,7 +8,68 @@ const {
   translatePlaceName
 } = require("./course-name-translator.js")
 
-const COURSE_CATALOG_VERSION = "catalog-v2-public-scorecard-first"
+const COURSE_CATALOG_VERSION = "catalog-v4-course-audit-dedupe"
+const EXCLUDED_AMAP_COURSE_IDS = {
+  "amap-B0JRCZ5VU9": true,
+  "amap-B0KRT5T3OB": true,
+  "amap-B0LBT539LA": true,
+  "amap-B0FFJQPOWG": true,
+  "amap-B0KKOC2DYI": true,
+  "amap-B0IRODXBJE": true,
+  "amap-B0K03AY86Q": true,
+  "amap-B0K2LM3LYV": true,
+  "amap-B0IKUC9QOE": true,
+  "amap-B013C0HX2E": true,
+  "amap-B0KDXBYXUC": true,
+  "amap-B0LROCWTOM": true,
+  "amap-B0LGFCLYPT": true,
+  "amap-B0LGTCYH1T": true,
+  "amap-B0LKX7P2X6": true,
+  "amap-B0K1ZC30W4": true,
+  "amap-B0LD9UY12K": true,
+  "amap-B0IUPR8GKY": true,
+  "amap-B0JKTRAZK9": true,
+  "amap-B0HD0DYYEC": true,
+  "amap-B0KRO7TNYL": true,
+  "amap-B00160DTJ0": true,
+  "amap-B0H2OSCOD7": true,
+  "amap-B0LAXH3NZG": true,
+  "amap-B0LDLMH6V6": true,
+  "amap-B03670YL97": true,
+  "amap-B0KBLZ15NZ": true
+}
+const GENERIC_DEDUP_NAMES = {
+  "北京": true,
+  "上海": true,
+  "天津": true,
+  "重庆": true,
+  "广州": true,
+  "深圳": true,
+  "南山": true,
+  "阳光": true,
+  "东方": true,
+  "西郊": true,
+  "新东阳": true
+}
+const LOCATION_PREFIX_NAMES = [
+  "北京", "上海", "天津", "重庆",
+  "河北", "山西", "辽宁", "吉林", "黑龙江",
+  "江苏", "浙江", "安徽", "福建", "江西", "山东",
+  "河南", "湖北", "湖南", "广东", "海南",
+  "四川", "贵州", "云南", "陕西", "甘肃", "青海",
+  "台湾", "内蒙古", "广西", "宁夏", "新疆", "西藏",
+  "香港", "澳门",
+  "广州", "深圳", "东莞", "珠海", "杭州", "南京",
+  "苏州", "厦门", "青岛", "大连", "昆明", "武汉",
+  "成都", "通州", "昌平", "顺义", "朝阳", "房山"
+]
+const MANUAL_DEDUP_GROUPS = [
+  [
+    "public-chn-js-0003-02",
+    "public-chn-sh-0017-02"
+  ]
+]
+const NEARBY_DEDUP_DISTANCE_METERS = 1500
 
 function cloneCourse(course) {
   var out = {}
@@ -50,6 +111,127 @@ function validHoles(course) {
 
 function hasStandardPar(course) {
   return validHoles(course).length >= 9 && !isPlaceholderHoles(course)
+}
+
+function hasUserVerifiedCourseData(course) {
+  return !!course && (
+    course.isCustom ||
+    course.holesVerified === true ||
+    course.holesSource === "manual" ||
+    course.holesSource === "ocr" ||
+    course.holesSource === "user-corrected"
+  )
+}
+
+function hasCoordinate(course) {
+  return !!course &&
+    isFinite(parseFloat(course.latitude)) &&
+    isFinite(parseFloat(course.longitude))
+}
+
+function getDistanceMeters(a, b) {
+  if (!hasCoordinate(a) || !hasCoordinate(b)) return Infinity
+  var lat1 = parseFloat(a.latitude) * Math.PI / 180
+  var lat2 = parseFloat(b.latitude) * Math.PI / 180
+  var dLat = lat2 - lat1
+  var dLng = (parseFloat(b.longitude) - parseFloat(a.longitude)) * Math.PI / 180
+  var sinLat = Math.sin(dLat / 2)
+  var sinLng = Math.sin(dLng / 2)
+  var h = sinLat * sinLat + Math.cos(lat1) * Math.cos(lat2) * sinLng * sinLng
+  return 6371000 * 2 * Math.atan2(Math.sqrt(h), Math.sqrt(1 - h))
+}
+
+function normalizeLocationName(value) {
+  var name = String(value || "").trim().replace(/\s+/g, "")
+  if (!name) return ""
+  return name
+    .replace(/特别行政区$/, "")
+    .replace(/壮族自治区$/, "")
+    .replace(/回族自治区$/, "")
+    .replace(/维吾尔自治区$/, "")
+    .replace(/自治区$/, "")
+    .replace(/[省市区县]$/, "")
+}
+
+function collectLocationPrefixNames(course) {
+  var names = []
+  function add(value) {
+    var name = normalizeLocationName(value)
+    if (name && names.indexOf(name) < 0) names.push(name)
+  }
+  add(course && course.province)
+  add(course && course.city)
+  add(course && course.district)
+  LOCATION_PREFIX_NAMES.forEach(add)
+  return names.sort(function(a, b) {
+    return b.length - a.length
+  })
+}
+
+function isGenericDedupName(name) {
+  if (!name || name.length < 2) return true
+  return GENERIC_DEDUP_NAMES[name] === true
+}
+
+function getNormalizedDedupName(course) {
+  var nameKey = normalizeCatalogNameKey(course && course.name)
+  if (!nameKey) return ""
+  var prefixes = collectLocationPrefixNames(course)
+  for (var i = 0; i < prefixes.length; i += 1) {
+    var prefix = prefixes[i]
+    if (nameKey.indexOf(prefix) !== 0) continue
+    var stripped = nameKey.slice(prefix.length)
+    if (stripped.length >= 2) {
+      return stripped
+    }
+  }
+  return nameKey
+}
+
+function isWeakAmapRecord(course) {
+  return !!course &&
+    course.source === "amap-poi" &&
+    !hasUserVerifiedCourseData(course) &&
+    !hasStandardPar(course)
+}
+
+function getCourseExclusionReason(course) {
+  if (!course || course.source !== "amap-poi") return ""
+  if (hasUserVerifiedCourseData(course) || hasStandardPar(course)) return ""
+  if (EXCLUDED_AMAP_COURSE_IDS[course.id] === true) return "confirmed-non-course-poi"
+
+  var name = String(course.name || "")
+  var location = String(course.location || course.address || "")
+  var text = [name, location].join(" ")
+  var score = 0
+  var reason = ""
+
+  if (/练习场|训练|教学|培训|青少年|学院/.test(text)) {
+    score += 3
+    reason = "suspected-practice-range"
+  }
+  if (/室内|模拟|包房|负一|B1|b1|KTV|ktv/.test(text)) {
+    score += 3
+    reason = "suspected-indoor-simulator"
+  }
+  if (/商务楼|商厦|商业区|商场|购物中心|产业园|体育馆|运动中心/.test(location)) {
+    score += 2
+    if (!reason) reason = "suspected-indoor-simulator"
+  }
+  if (/后勤基地|营销中心|接待中心|码头/.test(text)) {
+    score += 2
+    if (!reason) reason = "suspected-non-course-poi"
+  }
+  if (/(AI|ai|智能)/.test(name) && /高尔夫/.test(name)) {
+    score += 2
+    if (!reason) reason = "suspected-indoor-simulator"
+  }
+
+  return score >= 3 ? reason : ""
+}
+
+function isExcludedBuiltinCourse(course) {
+  return getCourseExclusionReason(course) !== ""
 }
 
 function shouldPreserveLocalOnly(course) {
@@ -153,6 +335,89 @@ function getCourseDedupKey(course) {
   var nameKey = normalizeCatalogNameKey(course && course.name)
   if (!nameKey) return ""
   return nameKey + "|" + getDedupLocationKey(course)
+}
+
+function shouldMergeNearbySameName(existing, candidate) {
+  return shouldMergeCourseRecords(existing, candidate)
+}
+
+function hasCompatibleAdministrativeArea(existing, candidate) {
+  var existingCity = normalizeLocationName(existing && existing.city)
+  var candidateCity = normalizeLocationName(candidate && candidate.city)
+  if (!existingCity || !candidateCity || existingCity === candidateCity) return true
+  return isWeakAmapRecord(existing) || isWeakAmapRecord(candidate)
+}
+
+function shouldMergeCourseRecords(existing, candidate) {
+  var existingNameKey = getNormalizedDedupName(existing)
+  var candidateNameKey = getNormalizedDedupName(candidate)
+  if (isGenericDedupName(existingNameKey) || isGenericDedupName(candidateNameKey)) return false
+
+  var shorter = existingNameKey.length < candidateNameKey.length ? existingNameKey : candidateNameKey
+  var longer = existingNameKey.length < candidateNameKey.length ? candidateNameKey : existingNameKey
+  var nameMatched = existingNameKey === candidateNameKey || (
+    shorter.length >= 3 && longer.indexOf(shorter) >= 0
+  )
+  if (!nameMatched) return false
+  if (getDistanceMeters(existing, candidate) > NEARBY_DEDUP_DISTANCE_METERS) return false
+  if (!hasCompatibleAdministrativeArea(existing, candidate)) return false
+  return true
+}
+
+function dedupeNearbySameNameCourses(courses) {
+  var result = []
+
+  ;(courses || []).forEach(function(course) {
+    var index = result.findIndex(function(existing) {
+      return shouldMergeNearbySameName(existing, course)
+    })
+    if (index < 0) {
+      result.push(course)
+      return
+    }
+    result[index] = mergeDuplicateCourse(result[index], course)
+  })
+
+  return result
+}
+
+function getManualDedupGroupId(course) {
+  if (!course || !course.id) return ""
+  for (var i = 0; i < MANUAL_DEDUP_GROUPS.length; i += 1) {
+    if (MANUAL_DEDUP_GROUPS[i].indexOf(course.id) >= 0) {
+      return "manual-" + i
+    }
+  }
+  return ""
+}
+
+function dedupeManualGroups(courses) {
+  var byGroup = {}
+  var result = []
+
+  ;(courses || []).forEach(function(course) {
+    var groupId = getManualDedupGroupId(course)
+    if (!groupId) {
+      result.push(course)
+      return
+    }
+    if (!byGroup[groupId]) {
+      byGroup[groupId] = course
+      result.push(course)
+      return
+    }
+
+    var merged = mergeDuplicateCourse(byGroup[groupId], course)
+    byGroup[groupId] = merged
+    var index = result.findIndex(function(item) {
+      return getManualDedupGroupId(item) === groupId
+    })
+    if (index >= 0) {
+      result[index] = merged
+    }
+  })
+
+  return result
 }
 
 function getDedupScore(course) {
@@ -275,16 +540,25 @@ function sortCatalog(courses) {
 }
 
 function buildCourseCatalog(localCourses) {
-  var baseCourses = (ALL_COURSES || []).map(normalizeBuiltinCourse)
+  var baseCourses = (ALL_COURSES || []).filter(function(course) {
+    return !isExcludedBuiltinCourse(course)
+  }).map(normalizeBuiltinCourse)
   var mergedCourses = mergeLocalCourses(baseCourses, localCourses || [])
   mergedCourses = mergePublicScorecards(mergedCourses, PUBLIC_SCORECARDS)
-  return sortCatalog(dedupeCatalogCourses(mergedCourses.map(enrichCourse)))
+  var catalog = dedupeCatalogCourses(mergedCourses.map(enrichCourse))
+  catalog = dedupeNearbySameNameCourses(catalog)
+  catalog = dedupeManualGroups(catalog)
+  return sortCatalog(catalog)
 }
 
 module.exports = {
   COURSE_CATALOG_VERSION,
   buildCourseCatalog,
+  getCourseExclusionReason,
+  getNormalizedDedupName,
   hasStandardPar,
+  isExcludedBuiltinCourse,
   normalizeCatalogNameKey,
+  shouldMergeCourseRecords,
   dedupeCatalogCourses
 }

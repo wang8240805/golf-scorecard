@@ -1,52 +1,4 @@
 <view class="container">
-  <!-- 通用设置 -->
-  <view class="card">
-    <view class="section-title">通用设置</view>
-    <view class="setting-list">
-      <view class="setting-item" bindtap="selectDefaultTee">
-        <text class="setting-label">默认发球台</text>
-        <view class="setting-value">
-          <text class="setting-text">{{defaultTee}}</text>
-          <text class="setting-arrow">›</text>
-        </view>
-      </view>
-      <view class="setting-item">
-        <text class="setting-label">自动锁屏</text>
-        <switch class="setting-switch" checked="{{autoLock}}" bindchange="toggleAutoLock" />
-      </view>
-      <view class="setting-item" bindtap="selectDefaultPlayer">
-        <text class="setting-label">默认记分员</text>
-        <view class="setting-value">
-          <text class="setting-text">{{defaultPlayer}}</text>
-          <text class="setting-arrow">›</text>
-        </view>
-      </view>
-    </view>
-  </view>
-
-  <!-- 记分设置 -->
-  <view class="card">
-    <view class="section-title">记分设置</view>
-    <view class="setting-list">
-      <view class="setting-item">
-        <text class="setting-label">语音播报</text>
-        <switch class="setting-switch" checked="{{voiceBroadcast}}" bindchange="toggleVoiceBroadcast" />
-      </view>
-      <view class="setting-item">
-        <text class="setting-label">震动反馈</text>
-        <switch class="setting-switch" checked="{{vibration}}" bindchange="toggleVibration" />
-      </view>
-      <view class="setting-item">
-        <text class="setting-label">自动完成确认</text>
-        <switch class="setting-switch" checked="{{autoCompleteConfirm}}" bindchange="toggleAutoCompleteConfirm" />
-      </view>
-      <view class="setting-item">
-        <text class="setting-label">默认显示比洞赛</text>
-        <switch class="setting-switch" checked="{{defaultMatchPlay}}" bindchange="toggleDefaultMatchPlay" />
-      </view>
-    </view>
-  </view>
-
   <!-- 数据管理 -->
   <view class="card">
     <view class="section-title">数据管理</view>
@@ -73,11 +25,25 @@
     </view>
   </view>
 
-  <!-- 管理员功能 -->
-  <view class="card" wx:if="{{isDeveloperMode}}">
-    <view class="section-title">管理员功能</view>
+  <!-- 开发调试 -->
+  <view class="card" wx:if="{{isDevtools || isDeveloperMode}}">
+    <view class="section-title">{{isDeveloperMode ? '管理员功能' : '开发调试'}}</view>
     <view class="setting-list">
-      <view class="setting-item" bindtap="importOfficialCourses">
+      <view class="setting-item" wx:if="{{isDevtools}}">
+        <view class="setting-copy">
+          <text class="setting-label">启动时模拟新用户</text>
+          <text class="setting-desc">每次重新编译后清空本地状态，方便测试首次流程</text>
+        </view>
+        <switch class="setting-switch" checked="{{devAlwaysFreshUser}}" bindchange="toggleDevAlwaysFreshUser" />
+      </view>
+      <view class="setting-item" bindtap="resetFirstUseExperience" wx:if="{{isDevtools}}">
+        <view class="setting-copy">
+          <text class="setting-label">重置新用户体验</text>
+          <text class="setting-desc">立即清除本地登录、隐私同意和当前比赛</text>
+        </view>
+        <text class="setting-arrow">›</text>
+      </view>
+      <view class="setting-item" bindtap="importOfficialCourses" wx:if="{{isDeveloperMode}}">
         <text class="setting-label">导入官方球场数据</text>
         <view class="setting-value">
           <text class="setting-text">{{courseCount}} 个</text>
