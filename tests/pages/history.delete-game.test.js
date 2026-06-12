@@ -30,9 +30,14 @@ describe("history delete game", function() {
         courseName: "Course " + index,
         timestamp: 1710000000000 + index,
         players: [{ id: "p1", name: "A", isMe: true }],
-        scores: { p1: {} },
-        completed: false,
-        status: "playing"
+        scores: {
+          p1: Array.from({ length: 18 }).reduce(function(acc, _, holeIndex) {
+            acc[holeIndex + 1] = 4
+            return acc
+          }, {})
+        },
+        completed: true,
+        status: "completed"
       }
     })
     wx.setStorageSync("games", games)
@@ -45,6 +50,52 @@ describe("history delete game", function() {
     page.loadMore()
     expect(page.data.games).toHaveLength(12)
     expect(page.data.hasMore).toBe(false)
+  })
+
+  test("loadData should remove mock games and match completed history only", function() {
+    const page = loadPage(path.resolve(__dirname, "../../package-game/pages/history/history.js"))
+    const scores = Array.from({ length: 18 }).reduce(function(acc, _, index) {
+      acc[index + 1] = 4
+      return acc
+    }, {})
+    wx.setStorageSync("games", [
+      {
+        id: "mock-game-1",
+        courseName: "Mock Course",
+        timestamp: 3000,
+        players: [{ id: "p1", name: "A", isMe: true }],
+        scores: { p1: scores },
+        completed: true,
+        status: "completed"
+      },
+      {
+        id: "real-game",
+        courseName: "Real Course",
+        timestamp: 2000,
+        players: [{ id: "p1", name: "A", isMe: true }],
+        scores: { p1: scores },
+        completed: true,
+        status: "completed"
+      },
+      {
+        id: "unfinished-game",
+        courseName: "Unfinished Course",
+        timestamp: 4000,
+        players: [{ id: "p1", name: "A", isMe: true }],
+        scores: { p1: { 1: 4 } },
+        completed: false,
+        status: "playing"
+      }
+    ])
+
+    page.loadData()
+
+    expect(page.data.games).toHaveLength(1)
+    expect(page.data.games[0].id).toBe("real-game")
+    expect(wx.getStorageSync("games").map(function(game) { return game.id })).toEqual([
+      "real-game",
+      "unfinished-game"
+    ])
   })
 
   test("deleteGame should delete only matching gameId when games have no id", function() {

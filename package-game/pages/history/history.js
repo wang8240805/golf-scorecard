@@ -1,5 +1,6 @@
 const gameCompleteness = require('../../../utils/game-completeness.js')
 const ongoingGameStorage = require('../../../utils/ongoing-game-storage.js')
+const gameRecords = require('../../../utils/game-records.js')
 
 Page({
   data: {
@@ -51,11 +52,10 @@ Page({
 
   loadData() {
     const courses = wx.getStorageSync('courses') || []
+    const storedGames = gameRecords.getStoredGames()
     const currentGame = wx.getStorageSync('currentGame')
-    let games = ongoingGameStorage.mergeGameIntoList(wx.getStorageSync('games') || [], currentGame)
-
-    // 反转顺序，最新的在前
-    games = games.reverse()
+    const mergedGames = ongoingGameStorage.mergeGameIntoList(storedGames, currentGame)
+    const games = gameRecords.getRecentCompletedGames(mergedGames)
 
     // 格式化数据
     const formattedGames = this.formatGames(games.slice(0, this.data.pageSize))
@@ -65,10 +65,10 @@ Page({
       games: formattedGames,
       totalGameCount: games.length,
       hasMore: games.length > this.data.pageSize,
-      completedGameCount: gameCompleteness.countUserCompletedGames(games)
+      completedGameCount: games.length
     })
 
-    this.calculateOverview(gameCompleteness.filterUserCompletedGames(games))
+    this.calculateOverview(games)
   },
 
   formatGames(games) {
@@ -362,11 +362,10 @@ Page({
 
   loadMore() {
     const currentPage = this.data.currentPage + 1
-    const allGames = wx.getStorageSync('games') || []
+    const allGames = gameRecords.getStoredGames()
     const currentGame = wx.getStorageSync('currentGame')
 
-    let games = ongoingGameStorage.mergeGameIntoList(allGames, currentGame)
-    games = games.reverse()
+    const games = gameRecords.getRecentCompletedGames(ongoingGameStorage.mergeGameIntoList(allGames, currentGame))
 
     const start = this.data.pageSize * (currentPage - 1)
     const end = start + this.data.pageSize

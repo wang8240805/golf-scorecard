@@ -86,7 +86,10 @@ describe("course catalog", function() {
       "amap-B0KRT5T3OB",
       "amap-B0LBT539LA",
       "amap-B0LROCWTOM",
-      "amap-B0KBLZ15NZ"
+      "amap-B0KBLZ15NZ",
+      "amap-B0J32HAMJI",
+      "amap-B0L2PLQQKW",
+      "amap-B0JDOUI1JG"
     ]
 
     excludedIds.forEach(function(id) {
@@ -122,6 +125,48 @@ describe("course catalog", function() {
       location: "高尔夫练习场二楼",
       holes: null
     })).toBe("suspected-practice-range")
+    expect(getCourseExclusionReason({
+      id: "amap-B0J32HAMJI",
+      source: "amap-poi",
+      name: "朗迪斯特高尔夫俱乐部",
+      location: "五常街道大华西溪风情新天地1-28号",
+      holes: null
+    })).toBe("suspected-urban-commercial-poi")
+    expect(getCourseExclusionReason({
+      id: "amap-new-office",
+      source: "amap-poi",
+      name: "城市高尔夫俱乐部",
+      location: "万众国际B座1403",
+      holes: null
+    })).toBe("suspected-urban-commercial-poi")
+    expect(getCourseExclusionReason({
+      id: "amap-industrial-park-only",
+      source: "amap-poi",
+      name: "城市高尔夫俱乐部",
+      location: "城阳街道兴阳产业园",
+      holes: null
+    })).toBe("")
+    expect(getCourseExclusionReason({
+      id: "amap-B0L2PLQQKW",
+      source: "amap-poi",
+      name: "依文高尔夫俱乐部",
+      location: "澳门路口纵横体育公园内103",
+      holes: null
+    })).toBe("suspected-urban-facility-poi")
+    expect(getCourseExclusionReason({
+      id: "amap-B0JDOUI1JG",
+      source: "amap-poi",
+      name: "斯外戈高尔夫俱乐部",
+      location: "轨道交通2号线王家墩东站(王家墩东地铁站D1口旁)",
+      holes: null
+    })).toBe("suspected-urban-facility-poi")
+    expect(getCourseExclusionReason({
+      id: "amap-sports-park-only",
+      source: "amap-poi",
+      name: "城市高尔夫俱乐部",
+      location: "山亭镇妈祖体育公园内",
+      holes: null
+    })).toBe("")
   })
 
   test("getCourseExclusionReason should only hide unverified amap POI records", function() {

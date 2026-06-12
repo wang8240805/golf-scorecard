@@ -1,6 +1,7 @@
 const { formatDate } = require('../../../utils/date-utils.js')
 const gameCompleteness = require('../../../utils/game-completeness.js')
 const ongoingGameStorage = require('../../../utils/ongoing-game-storage.js')
+const gameRecords = require('../../../utils/game-records.js')
 
 Page({
   data: {
@@ -28,7 +29,7 @@ Page({
 
   // 加载球员数据
   loadPlayers() {
-    const games = wx.getStorageSync('games') || []
+    const games = gameRecords.getStoredGames()
     const currentGame = wx.getStorageSync('currentGame')
 
     // 从所有比赛中收集球员信息
@@ -100,7 +101,7 @@ Page({
 
     this.setData({
       players,
-      totalGames: gameCompleteness.countUserCompletedGames(allGames)
+      totalGames: gameRecords.getUserCompletedGames(allGames).length
     })
   },
 
@@ -134,7 +135,7 @@ Page({
   // 查看球员统计
   viewPlayerStats(e) {
     const player = e.currentTarget.dataset.player
-    const games = wx.getStorageSync('games') || []
+    const games = gameRecords.getStoredGames()
 
     // 获取该球员的最近比赛
     const recentGames = games
@@ -272,7 +273,7 @@ Page({
   // 更新所有比赛中的球员信息
   updatePlayerInAllGames(playerId, updates) {
     // 更新历史比赛
-    let games = wx.getStorageSync('games') || []
+    let games = gameRecords.getStoredGames()
     games = games.map(game => {
       if (game.players) {
         game.players = game.players.map(p => {

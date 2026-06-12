@@ -1,6 +1,7 @@
 const fs = require("fs")
 const path = require("path")
 const { loadPage } = require("../helpers/load-page")
+const { COURSE_CATALOG_VERSION } = require("../../package-courses/utils/course-catalog-version")
 
 function createPage() {
   return loadPage(path.resolve(__dirname, "../../package-courses/pages/all-courses/all-courses.js"))
@@ -124,6 +125,36 @@ describe("all courses province filters", function() {
     expect(page.data.filteredCourses.map(function(course) { return course.id })).toEqual(["near", "mid", "far"])
   })
 
+  test("loadCoursesLocal should show cached courses without waiting for catalog rebuild", function() {
+    const page = createPage()
+    wx.setStorageSync("coursesDataVersion", COURSE_CATALOG_VERSION)
+    wx.setStorageSync("courses", [
+      { id: "cached-1", name: "Cached Course", province: "北京", holes: [{ hole: 1, par: 4 }] }
+    ])
+
+    page.loadCoursesLocal()
+
+    expect(page.data.coursesLoading).toBe(false)
+    expect(page.data.filteredCourses.map(function(course) { return course.id })).toEqual(["cached-1"])
+  })
+
+  test("loadCoursesLocal should show stale cached courses before catalog refresh", function() {
+    jest.useFakeTimers()
+    const page = createPage()
+    wx.setStorageSync("coursesDataVersion", "old-catalog")
+    wx.setStorageSync("courses", [
+      { id: "cached-1", name: "Cached Course", province: "北京", holes: [{ hole: 1, par: 4 }] }
+    ])
+
+    page.loadCoursesLocal()
+
+    expect(page.data.coursesLoading).toBe(false)
+    expect(page.data.filteredCourses.map(function(course) { return course.id })).toEqual(["cached-1"])
+
+    jest.clearAllTimers()
+    jest.useRealTimers()
+  })
+
   test("selectProvinceFilter should open province picker for other", function() {
     const page = createPage()
 
@@ -172,6 +203,9 @@ describe("all courses province filters", function() {
     )
 
     expect(wxml).toContain('province-filter-row" wx:if="{{fromNewGame && provinceQuickFilters.length > 0}}"')
+    expect(wxml).toContain('wx:if="{{coursesLoading}}"')
+    expect(wxml).toContain('正在加载球场...')
+    expect(wxml).toContain('wx:if="{{!coursesLoading && filteredCourses.length === 0}}"')
     expect(wxml).toContain('class="toolbar-actions" wx:if="{{!fromNewGame}}"')
     expect(wxml).toContain("选择省份")
     expect(wxml).toContain('class="province-filter-chip {{selectedProvinceFilter === item.value ? \'active\' : \'\'}}"')

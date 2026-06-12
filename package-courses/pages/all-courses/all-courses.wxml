@@ -49,8 +49,16 @@
     </view>
   </view>
 
+  <!-- 加载状态 -->
+  <view class="card empty-card" wx:if="{{coursesLoading}}">
+    <view class="empty-state">
+      <view class="empty-icon">⛳</view>
+      <text class="empty-text">正在加载球场...</text>
+    </view>
+  </view>
+
   <!-- 球场列表 -->
-  <view class="card" wx:if="{{filteredCourses.length > 0}}">
+  <view class="card" wx:if="{{!coursesLoading && filteredCourses.length > 0}}">
     <view class="section-title flex-between">
       <text wx:if="{{searchKeyword}}">搜索结果 ({{filteredCourses.length}})</text>
       <text wx:elif="{{showFavoritesOnly}}">我的收藏 ({{filteredCourses.length}})</text>
@@ -82,7 +90,7 @@
   </view>
 
   <!-- 空状态 -->
-  <view class="card empty-card" wx:if="{{filteredCourses.length === 0}}">
+  <view class="card empty-card" wx:if="{{!coursesLoading && filteredCourses.length === 0}}">
     <view class="empty-state">
       <view class="empty-icon">⛳</view>
       <text class="empty-text">{{searchKeyword ? '没有找到匹配的球场' : showFavoritesOnly ? '还没有收藏任何球场' : '暂无球场数据'}}</text>
@@ -90,6 +98,7 @@
         <button class="empty-add-btn" bindtap="openAddCourseModal">手动新增</button>
       </view>
       <button class="empty-map-btn" wx:if="{{searchKeyword}}" bindtap="searchOnlineByKeyword" loading="{{onlineSyncing}}" disabled="{{onlineSyncing}}">用地图补全名称地址</button>
+      <button class="empty-feedback-btn" wx:if="{{searchKeyword}}" bindtap="goToMissingCourseFeedback">没找到球场？反馈给我们</button>
     </view>
   </view>
 

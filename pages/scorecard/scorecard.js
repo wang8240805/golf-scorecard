@@ -7,6 +7,7 @@ const ongoingGameStorage = require('../../utils/ongoing-game-storage.js')
 const { PLAYER_COLORS } = require('../../utils/constants.js')
 const { formatDate } = require('../../utils/date-utils.js')
 const posterGenerator = require('../../utils/poster-generator.js')
+const feedback = require('../../utils/feedback.js')
 
 Page({
   data: {
@@ -284,16 +285,27 @@ Page({
               qrcodeUrl: res.result.qrcodeUrl
             })
           } else {
-            wx.showToast({
-              title: res.result && res.result.error ? res.result.error : '生成二维码失败',
-              icon: 'none'
+            feedback.showFeedbackModal({
+              type: 'scorecard_error',
+              sourcePage: 'scorecard',
+              gameId: currentGame.gameId || currentGame.id || '',
+              message: res.result && res.result.error ? res.result.error : '生成二维码失败',
+              title: '生成二维码失败',
+              content: '邀请二维码生成失败，可以反馈问题并继续本地记分。'
             })
           }
         },
         fail: function(err) {
           wx.hideLoading()
           console.error('生成二维码失败:', err)
-          wx.showToast({ title: '生成二维码失败', icon: 'none' })
+          feedback.showFeedbackModal({
+            type: 'scorecard_error',
+            sourcePage: 'scorecard',
+            gameId: currentGame.gameId || currentGame.id || '',
+            message: err.errMsg || '生成二维码失败',
+            title: '生成二维码失败',
+            content: '邀请二维码生成失败，可以反馈问题并继续本地记分。'
+          })
         }
       })
     }
@@ -797,7 +809,14 @@ Page({
         self.processCloudGame(fallbackGame)
         return
       }
-      wx.showToast({ title: '加载比赛失败', icon: 'none' })
+      feedback.showFeedbackModal({
+        type: 'scorecard_error',
+        sourcePage: 'scorecard',
+        gameId: gameId,
+        message: err.errMsg || err.message || '加载比赛失败',
+        title: '加载比赛失败',
+        content: '比赛数据加载失败，可以反馈问题并附带当前比赛信息。'
+      })
     })
   },
 
@@ -892,7 +911,15 @@ Page({
         fail: function(err) {
           wx.hideLoading()
           console.error('获取球洞数据失败:', err)
-          wx.showToast({ title: '加载球洞数据失败', icon: 'none' })
+          feedback.showFeedbackModal({
+            type: 'scorecard_error',
+            sourcePage: 'scorecard',
+            gameId: cloudGame.gameId || cloudGame.id || '',
+            courseName: course.name || '',
+            message: err.errMsg || err.message || '加载球洞数据失败',
+            title: '加载球洞数据失败',
+            content: '该球场标准杆数据加载失败，可以反馈问题并继续手动处理。'
+          })
         }
       })
       return
@@ -1278,10 +1305,10 @@ Page({
           }, 2000)
         } else {
           // 重试失败，提示用户
-          wx.showToast({
-            title: '同步失败，请检查网络',
-            icon: 'none',
-            duration: 3000
+          feedback.showFeedbackModal({
+            ...this.getScorecardFeedbackContext('同步失败，请检查网络'),
+            title: '同步失败',
+            content: '成绩已先保存在本地，但云端同步失败。可以反馈问题并稍后重试。'
           })
         }
       }
@@ -3638,15 +3665,21 @@ Page({
         }))
         this.compareData(ocrHoles)
       } else {
-        wx.showModal({
+        feedback.showFeedbackModal({
+          ...this.getScorecardFeedbackContext(result.error || '未能识别出有效的计分卡数据，请确保图片清晰并包含完整的18洞标准杆信息'),
+          type: 'ocr_error',
           title: '识别失败',
-          content: result.error || '未能识别出有效的计分卡数据，请确保图片清晰并包含完整的18洞标准杆信息',
-          showCancel: false
+          content: result.error || '未能识别出有效的计分卡数据，请确保图片清晰并包含完整的18洞标准杆信息'
         })
       }
     } catch (err) {
       console.error('OCR识别失败:', err)
-      wx.showToast({ title: '识别失败', icon: 'none' })
+      feedback.showFeedbackModal({
+        ...this.getScorecardFeedbackContext(err.message || '识别失败'),
+        type: 'ocr_error',
+        title: '识别失败',
+        content: err.message || '请稍后重试'
+      })
     }
   },
 
@@ -3664,15 +3697,21 @@ Page({
         }))
         this.compareData(ocrHoles)
       } else {
-        wx.showModal({
+        feedback.showFeedbackModal({
+          ...this.getScorecardFeedbackContext(result.error || '未能识别出有效的计分卡数据'),
+          type: 'ocr_error',
           title: '识别失败',
-          content: result.error || '未能识别出有效的计分卡数据',
-          showCancel: false
+          content: result.error || '未能识别出有效的计分卡数据'
         })
       }
     }).catch(err => {
       console.error('OCR识别失败:', err)
-      wx.showToast({ title: '识别失败', icon: 'none' })
+      feedback.showFeedbackModal({
+        ...this.getScorecardFeedbackContext(err.message || '识别失败'),
+        type: 'ocr_error',
+        title: '识别失败',
+        content: err.message || '请稍后重试'
+      })
     })
   },
 
@@ -3922,13 +3961,21 @@ Page({
           })
           this.continueFinalizeIfReady()
         } else {
-          wx.showToast({ title: res.result?.error || '确认失败', icon: 'none' })
+          feedback.showFeedbackModal({
+            ...this.getScorecardFeedbackContext(res.result?.error || '确认失败'),
+            title: '确认失败',
+            content: '成绩确认失败，可以反馈问题并稍后重试。'
+          })
         }
       },
       fail: (err) => {
         wx.hideLoading()
         console.error('确认成绩失败:', err)
-        wx.showToast({ title: '确认失败', icon: 'none' })
+        feedback.showFeedbackModal({
+          ...this.getScorecardFeedbackContext(err.errMsg || err.message || '确认失败'),
+          title: '确认失败',
+          content: '成绩确认失败，可以反馈问题并稍后重试。'
+        })
       }
     })
   },
@@ -3989,13 +4036,21 @@ Page({
                 })
                 this.continueFinalizeIfReady()
               } else {
-                wx.showToast({ title: res.result?.error || '拒绝失败', icon: 'none' })
+                feedback.showFeedbackModal({
+                  ...this.getScorecardFeedbackContext(res.result?.error || '拒绝失败'),
+                  title: '拒绝失败',
+                  content: '成绩拒绝失败，可以反馈问题并稍后重试。'
+                })
               }
             },
             fail: (err) => {
               wx.hideLoading()
               console.error('拒绝成绩失败:', err)
-              wx.showToast({ title: '拒绝失败', icon: 'none' })
+              feedback.showFeedbackModal({
+                ...this.getScorecardFeedbackContext(err.errMsg || err.message || '拒绝失败'),
+                title: '拒绝失败',
+                content: '成绩拒绝失败，可以反馈问题并稍后重试。'
+              })
             }
           })
         }
@@ -4092,6 +4147,18 @@ Page({
     }
 
     processNext(0)
+  },
+
+  getScorecardFeedbackContext(message) {
+    var game = this.data.currentGame || {}
+    var course = this.data.currentCourse || {}
+    return {
+      type: 'scorecard_error',
+      sourcePage: 'scorecard',
+      message: message || '',
+      gameId: game.gameId || game.id || this.gameId || '',
+      courseName: game.courseName || course.name || ''
+    }
   },
 
   // 拦截左上角返回按钮，直接返回首页

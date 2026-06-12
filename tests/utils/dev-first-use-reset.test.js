@@ -8,6 +8,9 @@ describe("utils/dev-first-use-reset", function() {
     wx.setStorageSync("winparPrivacyAgreedAt", Date.now())
     wx.setStorageSync("currentGame", { id: "game_1" })
     wx.setStorageSync("currentHole", 3)
+    wx.setStorageSync("courses", [{ id: "course_1" }])
+    wx.setStorageSync("coursesDataVersion", "catalog-v1")
+    wx.setStorageSync("coursesInitialized", true)
 
     devFirstUseReset.resetFirstUseState()
 
@@ -17,6 +20,9 @@ describe("utils/dev-first-use-reset", function() {
     expect(wx.getStorageSync("winparPrivacyAgreedAt")).toBeUndefined()
     expect(wx.getStorageSync("currentGame")).toBeUndefined()
     expect(wx.getStorageSync("currentHole")).toBeUndefined()
+    expect(wx.getStorageSync("courses")).toEqual([{ id: "course_1" }])
+    expect(wx.getStorageSync("coursesDataVersion")).toBe("catalog-v1")
+    expect(wx.getStorageSync("coursesInitialized")).toBe(true)
   })
 
   test("resetOnLaunchIfNeeded should only run in devtools with auto reset enabled", function() {

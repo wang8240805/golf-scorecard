@@ -1,7 +1,8 @@
 const app = getApp()
 const { calculateDistance } = require('../../../utils/geo-utils.js')
 const OCRService = require('../../../utils/ocr-service.js')
-const { COURSE_CATALOG_VERSION, buildCourseCatalog } = require('../../utils/course-catalog.js')
+const { COURSE_CATALOG_VERSION } = require('../../utils/course-catalog-version.js')
+const feedback = require('../../../utils/feedback.js')
 
 // 开发模式开关
 const DEV_MODE = false
@@ -15,6 +16,8 @@ Page({
     detailCourse: { holes: [] },
     userCity: '', // 用户所在城市
     userLocation: null,
+    showAllCourses: false,
+    coursesLoading: true,
     showOcrResult: false,
     recognizedCourse: { name: '', holes: [] }
   },
@@ -41,13 +44,57 @@ Page({
 
   // 从本地加载全部球场数据
   loadCoursesLocal: function() {
-    var localAllCourses = wx.getStorageSync('courses') || []
-    var mergedCourses = buildCourseCatalog(localAllCourses)
+    var cachedCourses = wx.getStorageSync('courses') || []
+    var cachedVersion = wx.getStorageSync('coursesDataVersion')
+    var hasCachedCourses = Array.isArray(cachedCourses) && cachedCourses.length > 0
 
-    // 保存到缓存
-    wx.setStorageSync('courses', mergedCourses)
-    wx.setStorageSync('coursesDataVersion', COURSE_CATALOG_VERSION)
-    this.setData({ courses: mergedCourses })
+    if (hasCachedCourses) {
+      this.showCachedCourses(cachedCourses)
+
+      if (cachedVersion === COURSE_CATALOG_VERSION) {
+        return
+      }
+    } else {
+      this.setData({ coursesLoading: true })
+    }
+
+    this.refreshCourseCatalogAsync(cachedCourses)
+  },
+
+  showCachedCourses: function(courses) {
+    var self = this
+    this.setData({
+      courses: courses,
+      coursesLoading: false
+    }, function() {
+      self.processAndDisplayCourses()
+    })
+  },
+
+  refreshCourseCatalogAsync: function(seedCourses) {
+    if (this._catalogRefreshScheduled) return
+    this._catalogRefreshScheduled = true
+
+    var self = this
+    setTimeout(function() {
+      try {
+        var courseCatalog = require('../../utils/course-catalog.js')
+        var localAllCourses = wx.getStorageSync('courses') || seedCourses || []
+        var mergedCourses = courseCatalog.buildCourseCatalog(localAllCourses)
+
+        // 保存到缓存
+        wx.setStorageSync('courses', mergedCourses)
+        wx.setStorageSync('coursesInitialized', true)
+        wx.setStorageSync('coursesDataVersion', COURSE_CATALOG_VERSION)
+        self._catalogRefreshScheduled = false
+        self.showCachedCourses(mergedCourses)
+      } catch (err) {
+        console.error('[courses] load course catalog failed:', err)
+        self._catalogRefreshScheduled = false
+        self.setData({ coursesLoading: false })
+        wx.showToast({ title: '球场数据加载失败', icon: 'none' })
+      }
+    }, 30)
   },
 
   // 获取用户位置
@@ -208,6 +255,21 @@ Page({
       return newCourse
     }).filter(function(c) { return c !== null }) // 过滤掉无效数据
 
+    // 全部球场模式在当前页内展开，避免跳到新建比赛的选球场页面
+    if (this.data.showAllCourses) {
+      coursesWithStats.sort(function(a, b) {
+        if (a.isFavorite !== b.isFavorite) return a.isFavorite ? -1 : 1
+        if (b.playCount !== a.playCount) return b.playCount - a.playCount
+        return a.distance - b.distance
+      })
+
+      this.setData({
+        courses: coursesWithStats,
+        filteredCourses: coursesWithStats
+      })
+      return
+    }
+
     // 1. 先筛选收藏的球场
     var favoriteCourses = coursesWithStats.filter(function(c) { return c.isFavorite })
 
@@ -226,10 +288,17 @@ Page({
     })
   },
 
-  // 跳转到全部球场页面
+  // 在当前球场页内展开全部球场
   goToAllCourses() {
-    wx.navigateTo({
-      url: '/package-courses/pages/all-courses/all-courses?from=new-game'
+    this.setData({ showAllCourses: true }, () => {
+      this.loadCourses()
+    })
+  },
+
+  // 收起到收藏和附近球场
+  showNearbyCourses() {
+    this.setData({ showAllCourses: false }, () => {
+      this.loadCourses()
     })
   },
 
@@ -369,20 +438,33 @@ Page({
           })
         }
       } else {
-        wx.showModal({
+        feedback.showFeedbackModal({
+          type: 'ocr_error',
+          sourcePage: 'courses',
+          message: result.error || '未能识别到任何洞数据，请确保图片清晰包含完整计分卡',
           title: '识别失败',
-          content: result.error || '未能识别到任何洞数据，请确保图片清晰包含完整计分卡',
-          showCancel: false
+          content: result.error || '未能识别到任何洞数据，请确保图片清晰包含完整计分卡'
         })
       }
     } catch (err) {
       console.error('OCR识别失败:', err)
-      wx.showModal({
+      feedback.showFeedbackModal({
+        type: 'ocr_error',
+        sourcePage: 'courses',
+        message: err.message || '请稍后重试',
         title: '识别失败',
-        content: err.message || '请稍后重试',
-        showCancel: false
+        content: err.message || '请稍后重试'
       })
     }
+  },
+
+  goToCourseFeedback: function() {
+    feedback.goToFeedback({
+      type: 'course_missing',
+      sourcePage: 'courses',
+      message: this.data.showAllCourses ? '暂无球场数据' : '暂无收藏或附近球场',
+      city: this.data.userCity || ''
+    })
   },
 
   // 解析OCR文本提取洞数据

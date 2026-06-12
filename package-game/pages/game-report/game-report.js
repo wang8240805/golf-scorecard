@@ -2,6 +2,8 @@ const app = getApp()
 const analysisReport = require('../../utils/analysis-report.js')
 const posterGenerator = require('../../../utils/poster-generator.js')
 const gameCompleteness = require('../../../utils/game-completeness.js')
+const gameRecords = require('../../../utils/game-records.js')
+const feedback = require('../../../utils/feedback.js')
 const DEFAULT_POSTER_STYLE = 'pro'
 const DEFAULT_POSTER_BG = 'night'
 
@@ -92,7 +94,7 @@ Page({
     console.log('【report】loadFromStorage, gameId:', gameId)
 
     let game = null
-    const historyGames = wx.getStorageSync('games') || []
+    const historyGames = gameRecords.getStoredGames()
     console.log('【report】historyGames数量:', historyGames.length)
 
     if (gameId) {
@@ -145,7 +147,11 @@ Page({
       },
       fail: (err) => {
         console.error('加载云端报告失败:', err)
-        wx.showToast({ title: '加载报告失败', icon: 'none' })
+        feedback.showFeedbackModal({
+          ...this.getReportFeedbackContext(err.errMsg || err.message || '加载报告失败'),
+          title: '加载报告失败',
+          content: '战报数据加载失败，可以反馈问题并附带当前比赛信息。'
+        })
       }
     })
   },
@@ -166,7 +172,7 @@ Page({
       return
     }
 
-    const analyzableHistory = gameCompleteness.filterAnalyzableGames(wx.getStorageSync('games') || [])
+    const analyzableHistory = gameRecords.getUserCompletedGames(gameRecords.getStoredGames())
     const report = prebuiltReport || analysisReport.generateGameReport(game, analyzableHistory, currentPlayer)
     const oneLineSummary = analysisReport.generateOneLineSummary(game, currentPlayer)
     const currentPlayerSummary = this.buildPlayerSummary(game, currentPlayer)
@@ -239,7 +245,7 @@ Page({
       return
     }
 
-    const historyGames = gameCompleteness.filterAnalyzableGames(wx.getStorageSync('games') || [])
+    const historyGames = gameRecords.getUserCompletedGames(gameRecords.getStoredGames())
     const report = analysisReport.generateGameReport(game, historyGames, player)
 
     this.setData({
@@ -483,7 +489,11 @@ Page({
       console.error('生成海报失败:', err)
       wx.hideLoading()
       this.setData({ posterGenerating: false })
-      wx.showToast({ title: '生成失败', icon: 'none' })
+      feedback.showFeedbackModal({
+        ...this.getReportFeedbackContext(err.message || '生成失败'),
+        title: '生成海报失败',
+        content: '海报生成失败，可以反馈问题并稍后重试。'
+      })
     }
   },
 
@@ -583,7 +593,11 @@ Page({
             }
           })
         } else {
-          wx.showToast({ title: '保存失败', icon: 'none' })
+          feedback.showFeedbackModal({
+            ...this.getReportFeedbackContext(err.errMsg || '保存失败'),
+            title: '保存失败',
+            content: '海报保存失败，可以反馈问题并附带当前比赛信息。'
+          })
         }
       }
     })
@@ -610,6 +624,17 @@ Page({
 
   buildShareTitle() {
     return this.data.shareText || this.buildShareText(this.data.game, this.data.currentPlayer, this.data.currentPlayerSummary) || 'WinPAR 高尔夫成绩战报'
+  },
+
+  getReportFeedbackContext(message) {
+    var game = this.data.game || {}
+    return {
+      type: 'report_error',
+      sourcePage: 'game-report',
+      message: message || '',
+      gameId: this.getShareGameId(game) || this.gameId || '',
+      courseName: game.courseName || ''
+    }
   },
 
   onShareAppMessage() {

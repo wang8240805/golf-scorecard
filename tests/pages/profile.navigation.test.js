@@ -78,4 +78,33 @@ describe("profile navigation", function() {
     page.loadUserInfo()
     expect(page.data.hasLoginInfo).toBe(true)
   })
+
+  test("loadUserInfo should discard expired temporary avatar urls", function() {
+    const page = loadPage(path.resolve(__dirname, "../../pages/profile/profile.js"))
+    wx.setStorageSync("userInfo", {
+      nickName: "小王",
+      openid: "openid-1",
+      avatarUrl: "http://127.0.0.1:32138/__tmp__/avatar.jpeg"
+    })
+
+    page.loadUserInfo()
+
+    expect(page.data.avatarUrl).toContain("mmbiz.qpic.cn")
+    expect(wx.getStorageSync("userInfo").avatarUrl).toBeUndefined()
+  })
+
+  test("saveAvatar should persist temporary avatar before storing it", function() {
+    const page = loadPage(path.resolve(__dirname, "../../pages/profile/profile.js"))
+    wx.setStorageSync("userInfo", {
+      nickName: "小王"
+    })
+
+    page.saveAvatar("http://127.0.0.1:32138/__tmp__/avatar.jpeg")
+
+    expect(wx.saveFile).toHaveBeenCalledWith(expect.objectContaining({
+      tempFilePath: "http://127.0.0.1:32138/__tmp__/avatar.jpeg"
+    }))
+    expect(wx.getStorageSync("userInfo").avatarUrl).toBe("wxfile://usr/saved-avatar.jpg")
+    expect(page.data.avatarUrl).toBe("wxfile://usr/saved-avatar.jpg")
+  })
 })

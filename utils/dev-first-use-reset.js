@@ -1,6 +1,11 @@
 const PRIVACY_AGREED_KEY = "winparPrivacyAgreedAt"
 const AUTO_RESET_KEY = "devAlwaysFreshUser"
 const DEVELOPER_MODE_KEY = "developerMode"
+const COURSE_CACHE_KEYS = [
+  "courses",
+  "coursesDataVersion",
+  "coursesInitialized"
+]
 
 function isDevtools() {
   try {
@@ -14,6 +19,14 @@ function isDevtools() {
 function resetFirstUseState() {
   const keepDeveloperMode = wx.getStorageSync(DEVELOPER_MODE_KEY) === true
   const keepAutoReset = wx.getStorageSync(AUTO_RESET_KEY) === true
+  const courseCache = {}
+
+  COURSE_CACHE_KEYS.forEach(function(key) {
+    const value = wx.getStorageSync(key)
+    if (typeof value !== "undefined") {
+      courseCache[key] = value
+    }
+  })
 
   wx.clearStorageSync()
 
@@ -23,6 +36,12 @@ function resetFirstUseState() {
   if (keepAutoReset) {
     wx.setStorageSync(AUTO_RESET_KEY, true)
   }
+
+  COURSE_CACHE_KEYS.forEach(function(key) {
+    if (Object.prototype.hasOwnProperty.call(courseCache, key)) {
+      wx.setStorageSync(key, courseCache[key])
+    }
+  })
 }
 
 function resetOnLaunchIfNeeded() {

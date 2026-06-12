@@ -307,6 +307,21 @@
   border: none;
 }
 
+.empty-feedback {
+  margin-top: 18rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  border-radius: 30rpx;
+  padding: 0 28rpx;
+  background: transparent;
+  color: #2c8f4e;
+  font-size: 24rpx;
+}
+
+.empty-feedback::after {
+  border: none;
+}
+
 .empty-subtext {
   font-size: 26rpx;
   color: var(--text-secondary);

@@ -119,6 +119,10 @@
         <text class="home-empty-text">完成第一场后，这里会显示最近成绩</text>
       </view>
     </view>
+
+    <view class="home-feedback-link" bindtap="goToFeedback">
+      <text>遇到问题？反馈给我们</text>
+    </view>
   </view>
 
   <!-- 进行中的比赛详情弹窗 -->

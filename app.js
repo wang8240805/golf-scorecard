@@ -14,6 +14,7 @@ const OCRService = require('./utils/ocr-service.js')
 const ongoingGameCloudSync = require('./utils/ongoing-game-cloud-sync.js')
 const ongoingGameStorage = require('./utils/ongoing-game-storage.js')
 const devFirstUseReset = require('./utils/dev-first-use-reset.js')
+const gameRecords = require('./utils/game-records.js')
 
 App({
   privacyResolve: null,
@@ -22,6 +23,7 @@ App({
 
   onLaunch() {
     devFirstUseReset.resetOnLaunchIfNeeded()
+    gameRecords.cleanStoredGames()
 
     // 清理存储空间（删除旧的日志文件等）
     this.cleanStorage()
@@ -290,7 +292,7 @@ App({
           }
 
           // 读取本地现有数据
-          const localGames = wx.getStorageSync('games') || []
+          const localGames = gameRecords.sanitizeGames(wx.getStorageSync('games') || [])
           let mergedCount = 0
 
           // cloud数据结构：每条有 _id, openId, ...gameFields
@@ -304,6 +306,11 @@ App({
 
           // 合并策略：基于ID查找，找到重复则保留最新版本（updateTime较大的）
           cloudGames.forEach(cloudGame => {
+            if (gameRecords.isTestGameRecord(cloudGame)) {
+              this.markCloudGameDeleted(cloudGame)
+              return
+            }
+
             if (
               ongoingGameStorage.isOngoingGame(cloudGame) &&
               ongoingGameStorage.hasCompletedMarker(cloudGame)
@@ -377,7 +384,7 @@ App({
           })
 
           // 保存合并后的数据回本地存储
-          if (mergedCount > 0) {
+          if (mergedCount > 0 || localGames.length !== (wx.getStorageSync('games') || []).length) {
             wx.setStorageSync('games', localGames)
           }
 
@@ -387,6 +394,20 @@ App({
           reject(err)
         })
     })
+  },
+
+  markCloudGameDeleted(game) {
+    if (!this.cloud || !game || !game._id) return
+    try {
+      this.cloud.database().collection('games').doc(game._id).update({
+        data: { deleted: true },
+        fail: function(err) {
+          console.warn('[App] 标记测试比赛删除失败:', err)
+        }
+      })
+    } catch (e) {
+      console.warn('[App] 标记测试比赛删除异常:', e)
+    }
   },
 
   // 同意隐私协议

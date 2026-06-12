@@ -1,4 +1,5 @@
 const gameCompleteness = require('../../../utils/game-completeness.js')
+const gameRecords = require('../../../utils/game-records.js')
 
 Page({
   data: {
@@ -23,9 +24,9 @@ Page({
   },
 
   calculateStatistics() {
-    const games = wx.getStorageSync('games') || []
+    const games = gameRecords.getStoredGames()
     // 只统计当前用户18洞完整有效成绩
-    const completedGames = gameCompleteness.filterUserCompletedGames(games)
+    const completedGames = gameRecords.getUserCompletedGames(games)
 
     if (completedGames.length < 1) {
       this.setData({ hasData: false })

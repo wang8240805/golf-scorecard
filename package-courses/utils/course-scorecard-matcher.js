@@ -254,14 +254,21 @@ function nearbyPublicCount(scorecard, publicScorecards, maxDistance) {
 
 function findBestScorecard(course, publicScorecards, usedIds) {
   if (!hasCoordinate(course)) return null
+  var courseLat = parseFloat(course.latitude)
+  var courseLng = parseFloat(course.longitude)
+  var maxLatDelta = 0.04
+  var maxLngDelta = 0.04 / Math.max(Math.cos(courseLat * Math.PI / 180), 0.2)
   var best = null
   publicScorecards.forEach(function(scorecard) {
     if (!scorecard || usedIds[scorecard.id] || !hasUsableHoles(scorecard) || !hasCoordinate(scorecard)) return
+    var scorecardLat = parseFloat(scorecard.latitude)
+    var scorecardLng = parseFloat(scorecard.longitude)
+    if (Math.abs(scorecardLat - courseLat) > maxLatDelta || Math.abs(scorecardLng - courseLng) > maxLngDelta) return
     var distance = calculateDistance(
-      parseFloat(course.latitude),
-      parseFloat(course.longitude),
-      parseFloat(scorecard.latitude),
-      parseFloat(scorecard.longitude)
+      courseLat,
+      courseLng,
+      scorecardLat,
+      scorecardLng
     )
     if (distance > MAX_MATCH_DISTANCE) return
     var scorecardNameScore = nameScore(course.name, scorecard.name)
@@ -369,7 +376,9 @@ function inferProvince(scorecard) {
 }
 
 function mergePublicScorecards(courses, publicScorecards) {
-  var scorecards = Array.isArray(publicScorecards) ? publicScorecards : []
+  var scorecards = (Array.isArray(publicScorecards) ? publicScorecards : []).filter(function(scorecard) {
+    return !!scorecard && !!scorecard.id && hasUsableHoles(scorecard) && hasCoordinate(scorecard)
+  })
   var usedIds = {}
   var courseIds = {}
   var merged = (Array.isArray(courses) ? courses : []).map(function(course) {
@@ -386,7 +395,6 @@ function mergePublicScorecards(courses, publicScorecards) {
 
   scorecards.forEach(function(scorecard) {
     if (!scorecard || !scorecard.id || usedIds[scorecard.id] || courseIds[scorecard.id]) return
-    if (!hasUsableHoles(scorecard) || !hasCoordinate(scorecard)) return
     merged.push(makePublicCourse(scorecard))
     courseIds[scorecard.id] = true
   })

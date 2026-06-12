@@ -150,6 +150,53 @@ describe("utils/ongoing-game-storage", function() {
     expect(wx.getStorageSync("currentGame").id).toBe("recent-playing")
   })
 
+  test("getRestoredOngoingGame should remove expired temporary player avatars", function() {
+    wx.setStorageSync("games", [{
+      id: "tmp-avatar-game",
+      completed: false,
+      updateTime: Date.now(),
+      players: [
+        {
+          id: "p1",
+          name: "A",
+          avatarUrl: "http://127.0.0.1:32138/__tmp__/avatar.jpeg",
+          avatar: "wxfile://tmp/avatar.jpeg"
+        },
+        {
+          id: "p2",
+          name: "B",
+          avatarUrl: "wxfile://usr/saved-avatar.jpg"
+        }
+      ]
+    }])
+
+    const restored = ongoingGameStorage.getRestoredOngoingGame()
+
+    expect(restored.players[0].avatarUrl).toBe("")
+    expect(restored.players[0].avatar).toBe("")
+    expect(restored.players[1].avatarUrl).toBe("wxfile://usr/saved-avatar.jpg")
+    expect(wx.getStorageSync("currentGame").players[0].avatarUrl).toBe("")
+    expect(wx.getStorageSync("games")[0].players[0].avatarUrl).toBe("")
+  })
+
+  test("findStoredGameById should remove temporary avatars from exact restored game", function() {
+    wx.setStorageSync("currentGame", {
+      id: "exact-tmp-avatar",
+      completed: false,
+      updateTime: Date.now(),
+      players: [{
+        id: "p1",
+        name: "A",
+        avatarUrl: "http://localhost:32138/__tmp__/avatar.jpeg"
+      }]
+    })
+
+    const restored = ongoingGameStorage.findStoredGameById("exact-tmp-avatar")
+
+    expect(restored.players[0].avatarUrl).toBe("")
+    expect(wx.getStorageSync("currentGame").players[0].avatarUrl).toBe("")
+  })
+
   test("mergeGameIntoList should replace the same game instead of duplicating it", function() {
     const merged = ongoingGameStorage.mergeGameIntoList([
       { id: "same", courseName: "Old" }

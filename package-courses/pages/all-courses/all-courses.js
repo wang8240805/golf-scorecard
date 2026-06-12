@@ -1,6 +1,7 @@
 const app = getApp()
 const { calculateDistance } = require('../../../utils/geo-utils.js')
-const { COURSE_CATALOG_VERSION, buildCourseCatalog } = require('../../utils/course-catalog.js')
+const { COURSE_CATALOG_VERSION } = require('../../utils/course-catalog-version.js')
+const feedback = require('../../../utils/feedback.js')
 
 // 开发模式开关
 const DEV_MODE = false
@@ -38,6 +39,7 @@ Page({
     provinceQuickFilters: [],
     allProvinceOptions: [],
     showProvincePicker: false,
+    coursesLoading: true,
     sampleCourseNames: [
       '北京高尔夫球俱乐部',
       '观澜湖高尔夫球会',
@@ -77,14 +79,57 @@ Page({
 
   // 从本地加载全部球场数据
   loadCoursesLocal: function() {
-    var localAllCourses = wx.getStorageSync('courses') || []
-    var mergedCourses = buildCourseCatalog(localAllCourses)
+    var cachedCourses = wx.getStorageSync('courses') || []
+    var cachedVersion = wx.getStorageSync('coursesDataVersion')
+    var hasCachedCourses = Array.isArray(cachedCourses) && cachedCourses.length > 0
 
-    // 保存到缓存
-    wx.setStorageSync('courses', mergedCourses)
-    wx.setStorageSync('coursesDataVersion', COURSE_CATALOG_VERSION)
-    this.setData({ courses: mergedCourses })
-    this.processAndDisplayCourses()
+    if (hasCachedCourses) {
+      this.showCachedCourses(cachedCourses)
+
+      if (cachedVersion === COURSE_CATALOG_VERSION) {
+        return
+      }
+    } else {
+      this.setData({ coursesLoading: true })
+    }
+
+    this.refreshCourseCatalogAsync(cachedCourses)
+  },
+
+  showCachedCourses: function(courses) {
+    var self = this
+    this.setData({
+      courses: courses,
+      coursesLoading: false
+    }, function() {
+      self.processAndDisplayCourses()
+    })
+  },
+
+  refreshCourseCatalogAsync: function(seedCourses) {
+    if (this._catalogRefreshScheduled) return
+    this._catalogRefreshScheduled = true
+
+    var self = this
+    setTimeout(function() {
+      try {
+        var courseCatalog = require('../../utils/course-catalog.js')
+        var localAllCourses = wx.getStorageSync('courses') || seedCourses || []
+        var mergedCourses = courseCatalog.buildCourseCatalog(localAllCourses)
+
+        // 保存到缓存
+        wx.setStorageSync('courses', mergedCourses)
+        wx.setStorageSync('coursesInitialized', true)
+        wx.setStorageSync('coursesDataVersion', COURSE_CATALOG_VERSION)
+        self._catalogRefreshScheduled = false
+        self.showCachedCourses(mergedCourses)
+      } catch (err) {
+        console.error('[all-courses] load course catalog failed:', err)
+        self._catalogRefreshScheduled = false
+        self.setData({ coursesLoading: false })
+        wx.showToast({ title: '球场数据加载失败', icon: 'none' })
+      }
+    }, 30)
   },
 
   // 获取用户位置
@@ -718,15 +763,15 @@ Page({
         wx.hideLoading()
         const result = res && res.result ? res.result : {}
         if (!result.success) {
-          wx.showToast({ title: result.error || '在线检索失败', icon: 'none' })
           this.setData({ onlineSyncing: false })
+          this.showCourseMissingFeedback(result.error || '在线检索失败')
           return
         }
 
         const pois = Array.isArray(result.data) ? result.data : []
         if (pois.length === 0) {
-          wx.showToast({ title: '地图未找到', icon: 'none' })
           this.setData({ onlineSyncing: false })
+          this.showCourseMissingFeedback('地图未找到相关球场')
           return
         }
 
@@ -745,9 +790,31 @@ Page({
         wx.hideLoading()
         console.error('[syncOnlineCourses] failed:', err)
         this.setData({ onlineSyncing: false })
-        wx.showToast({ title: '地图补全失败', icon: 'none' })
+        this.showCourseMissingFeedback('地图补全失败')
       }
     })
+  },
+
+  goToMissingCourseFeedback() {
+    feedback.goToFeedback(this.getCourseMissingContext('用户未找到球场'))
+  },
+
+  showCourseMissingFeedback(message) {
+    feedback.showFeedbackModal({
+      ...this.getCourseMissingContext(message),
+      title: '没找到球场？',
+      content: '如果地图补全也没有找到，可以把球场名称和城市反馈给我们。'
+    })
+  },
+
+  getCourseMissingContext(message) {
+    return {
+      type: 'course_missing',
+      sourcePage: this.data.fromNewGame ? 'new-game-course' : 'all-courses',
+      message: message || '',
+      keyword: this.data.searchKeyword || '',
+      city: this.data.userCity || ''
+    }
   },
 
   openAddCourseModal() {

@@ -1,5 +1,6 @@
 const path = require("path")
 const { loadPage } = require("../helpers/load-page")
+const { COURSE_CATALOG_VERSION } = require("../../package-courses/utils/course-catalog-version")
 
 describe("step1-course page", function() {
   test("getMatchConfidence should classify by thresholds", function() {
@@ -24,6 +25,43 @@ describe("step1-course page", function() {
     expect(page.data.recommendedCourse.id).toBe("c1")
     expect(page.data.selectedCourseId).toBe("c1")
     expect(wx.getStorageSync("currentCourseId")).toBe("c1")
+  })
+
+  test("loadCoursesLocal should use initialized cache without rebuilding catalog", function() {
+    const page = loadPage(path.resolve(__dirname, "../../package-courses/pages/new-game/step1-course/step1-course.js"))
+    page.data = {
+      userLocation: { latitude: 39.9, longitude: 116.4 },
+      coursesLoaded: false
+    }
+    page.calculateNearbyCourses = jest.fn()
+    wx.setStorageSync("coursesInitialized", true)
+    wx.setStorageSync("coursesDataVersion", COURSE_CATALOG_VERSION)
+    wx.setStorageSync("courses", [{ id: "cached", name: "Cached Course" }])
+
+    page.loadCoursesLocal()
+
+    expect(page.data.coursesLoaded).toBe(true)
+    expect(page.calculateNearbyCourses).toHaveBeenCalledWith({ latitude: 39.9, longitude: 116.4 })
+  })
+
+  test("loadCoursesLocal should show stale cached courses before refreshing catalog", function() {
+    jest.useFakeTimers()
+    const page = loadPage(path.resolve(__dirname, "../../package-courses/pages/new-game/step1-course/step1-course.js"))
+    page.data = {
+      userLocation: { latitude: 39.9, longitude: 116.4 },
+      coursesLoaded: false
+    }
+    page.calculateNearbyCourses = jest.fn()
+    wx.setStorageSync("coursesDataVersion", "old-catalog")
+    wx.setStorageSync("courses", [{ id: "cached", name: "Cached Course" }])
+
+    page.loadCoursesLocal()
+
+    expect(page.data.coursesLoaded).toBe(true)
+    expect(page.calculateNearbyCourses).toHaveBeenCalledWith({ latitude: 39.9, longitude: 116.4 })
+
+    jest.clearAllTimers()
+    jest.useRealTimers()
   })
 
   test("calculateNearbyCourses should not overwrite manually selected course", function() {

@@ -1,6 +1,7 @@
 const app = getApp()
 const { USER_LEVELS } = require('../../utils/constants.js')
 const gameCompleteness = require('../../utils/game-completeness.js')
+const gameRecords = require('../../utils/game-records.js')
 
 // 默认头像 - 按照官方文档示例
 const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
@@ -40,7 +41,7 @@ Page({
 
   // 加载用户信息
   loadUserInfo() {
-    const userInfo = wx.getStorageSync('userInfo')
+    const userInfo = this.normalizeUserInfo(wx.getStorageSync('userInfo'))
     if (userInfo) {
       this.setData({
         userInfo,
@@ -66,6 +67,30 @@ Page({
     return !!(userInfo && userInfo.nickName && userInfo.nickName.trim && userInfo.nickName.trim())
   },
 
+  normalizeUserInfo(userInfo) {
+    if (!userInfo) return null
+    var normalized = {}
+    for (var key in userInfo) {
+      normalized[key] = userInfo[key]
+    }
+
+    if (this.isTemporaryAvatarUrl(normalized.avatarUrl)) {
+      delete normalized.avatarUrl
+      wx.setStorageSync('userInfo', normalized)
+    }
+
+    return normalized
+  },
+
+  isTemporaryAvatarUrl(avatarUrl) {
+    if (!avatarUrl || typeof avatarUrl !== 'string') return false
+    return avatarUrl.indexOf('__tmp__') >= 0 ||
+      avatarUrl.indexOf('127.0.0.1') >= 0 ||
+      avatarUrl.indexOf('localhost') >= 0 ||
+      avatarUrl.indexOf('wxfile://tmp') === 0 ||
+      avatarUrl.indexOf('/tmp/') >= 0
+  },
+
   // 选择头像（官方最新API - 完全遵循官方示例）
   onChooseAvatar(e) {
     const { avatarUrl } = e.detail
@@ -80,6 +105,40 @@ Page({
   },
 
   saveAvatar(avatarUrl) {
+    var self = this
+    this.getPersistentAvatarUrl(avatarUrl, function(persistentAvatarUrl) {
+      if (!persistentAvatarUrl) {
+        wx.showToast({ title: '头像保存失败', icon: 'none' })
+        self.loadUserInfo()
+        return
+      }
+      self.persistAvatar(persistentAvatarUrl)
+    })
+  },
+
+  getPersistentAvatarUrl(avatarUrl, callback) {
+    if (!this.isTemporaryAvatarUrl(avatarUrl)) {
+      callback(avatarUrl)
+      return
+    }
+
+    if (typeof wx.saveFile !== 'function') {
+      callback('')
+      return
+    }
+
+    wx.saveFile({
+      tempFilePath: avatarUrl,
+      success: function(res) {
+        callback(res.savedFilePath || '')
+      },
+      fail: function() {
+        callback('')
+      }
+    })
+  },
+
+  persistAvatar(avatarUrl) {
     let userInfo = wx.getStorageSync('userInfo') || {}
     userInfo.avatarUrl = avatarUrl
     wx.setStorageSync('userInfo', userInfo)
@@ -241,11 +300,11 @@ Page({
 
   // 加载统计数据
   loadStats() {
-    const games = wx.getStorageSync('games') || []
+    const games = gameRecords.getStoredGames()
     const currentGame = wx.getStorageSync('currentGame')
 
     // 过滤出用户本人18洞完整有效成绩（和首页/复盘口径一致）
-    const completedGames = gameCompleteness.filterUserCompletedGames(games)
+    const completedGames = gameRecords.getUserCompletedGames(games)
 
     // 完成场次（和首页统计口径一致，统计当前用户18洞完整有效比赛）
     const totalGames = completedGames.length

@@ -1,5 +1,6 @@
 const ALL_COURSES = require("../data/courses-accurate.js")
 const PUBLIC_SCORECARDS = require("../data/public-scorecards.js")
+const { COURSE_CATALOG_VERSION } = require("./course-catalog-version.js")
 const { mergePublicScorecards, isPlaceholderHoles } = require("./course-scorecard-matcher.js")
 const {
   normalizeVisibleCourseName,
@@ -8,7 +9,6 @@ const {
   translatePlaceName
 } = require("./course-name-translator.js")
 
-const COURSE_CATALOG_VERSION = "catalog-v4-course-audit-dedupe"
 const EXCLUDED_AMAP_COURSE_IDS = {
   "amap-B0JRCZ5VU9": true,
   "amap-B0KRT5T3OB": true,
@@ -174,6 +174,7 @@ function isGenericDedupName(name) {
 }
 
 function getNormalizedDedupName(course) {
+  if (course && course.normalizedDedupName) return course.normalizedDedupName
   var nameKey = normalizeCatalogNameKey(course && course.name)
   if (!nameKey) return ""
   var prefixes = collectLocationPrefixNames(course)
@@ -214,9 +215,29 @@ function getCourseExclusionReason(course) {
     score += 3
     reason = "suspected-indoor-simulator"
   }
-  if (/商务楼|商厦|商业区|商场|购物中心|产业园|体育馆|运动中心/.test(location)) {
+  if (/商务楼|商厦|商业区|商场|购物中心|体育馆|运动中心/.test(location)) {
     score += 2
     if (!reason) reason = "suspected-indoor-simulator"
+  }
+  if (/新天地|新座|写字楼|大厦|商场|购物中心|综合体|生活馆|休闲娱乐|下午茶|公馆|公寓|酒店|马术院|健身/.test(location)) {
+    score += 3
+    if (!reason) reason = "suspected-urban-commercial-poi"
+  }
+  if (/([A-Z]|[a-z])座\s*\d{3,}|[0-9]+幢[0-9]+号|[0-9]+室/.test(location)) {
+    score += 3
+    if (!reason) reason = "suspected-urban-commercial-poi"
+  }
+  if (/产业园|科技园|创意园|园区/.test(location)) {
+    score += 2
+    if (!reason) reason = "suspected-urban-commercial-poi"
+  }
+  if (/轨道交通|地铁站|地铁.*[A-Z0-9]+口|[A-Z0-9]+口旁|出入口|步行[0-9]+米/.test(location)) {
+    score += 3
+    if (!reason) reason = "suspected-urban-facility-poi"
+  }
+  if (/体育公园内[0-9A-Za-z-]+/.test(location)) {
+    score += 3
+    if (!reason) reason = "suspected-urban-facility-poi"
   }
   if (/后勤基地|营销中心|接待中心|码头/.test(text)) {
     score += 2
@@ -324,6 +345,7 @@ function normalizeCatalogNameKey(name) {
 }
 
 function getDedupLocationKey(course) {
+  if (course && course.dedupLocationKey) return course.dedupLocationKey
   return [
     course.province || "",
     course.city || "",
@@ -332,6 +354,7 @@ function getDedupLocationKey(course) {
 }
 
 function getCourseDedupKey(course) {
+  if (course && course.courseDedupKey) return course.courseDedupKey
   var nameKey = normalizeCatalogNameKey(course && course.name)
   if (!nameKey) return ""
   return nameKey + "|" + getDedupLocationKey(course)
@@ -519,6 +542,9 @@ function enrichCourse(course) {
   enriched.courseDataQuality = getCourseDataQuality(enriched)
   enriched.catalogRank = getCatalogRank(enriched)
   enriched.searchAliases = buildSearchAliases(enriched)
+  enriched.normalizedDedupName = getNormalizedDedupName(enriched)
+  enriched.dedupLocationKey = getDedupLocationKey(enriched)
+  enriched.courseDedupKey = enriched.normalizedDedupName ? enriched.normalizedDedupName + "|" + enriched.dedupLocationKey : ""
   if (!enriched.totalPar && holes.length > 0) {
     enriched.totalPar = holes.reduce(function(sum, hole) {
       return sum + (parseInt(hole.par, 10) || 0)

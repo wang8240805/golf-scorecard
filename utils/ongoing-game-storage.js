@@ -102,6 +102,31 @@ function isRecoverableOngoingGame(game) {
   return isOngoingGame(game) && !hasCompletedMarker(game) && !isStaleOngoingGame(game)
 }
 
+function isTemporaryImageUrl(url) {
+  if (!url || typeof url !== "string") return false
+  return url.indexOf("__tmp__") >= 0 ||
+    url.indexOf("127.0.0.1") >= 0 ||
+    url.indexOf("localhost") >= 0 ||
+    url.indexOf("wxfile://tmp") === 0 ||
+    url.indexOf("/tmp/") >= 0
+}
+
+function sanitizeGameTemporaryImages(game) {
+  if (!game || !Array.isArray(game.players)) return game
+
+  game.players.forEach(function(player) {
+    if (!player) return
+    if (isTemporaryImageUrl(player.avatarUrl)) {
+      player.avatarUrl = ""
+    }
+    if (isTemporaryImageUrl(player.avatar)) {
+      player.avatar = ""
+    }
+  })
+
+  return game
+}
+
 function findGameIndex(games, game) {
   if (!Array.isArray(games) || !game) return -1
 
@@ -164,6 +189,7 @@ function mergeGameIntoList(games, game) {
 
 function saveCurrentGame(game) {
   if (!game) return
+  sanitizeGameTemporaryImages(game)
   if (isOngoingGame(game) && hasCompletedMarker(game)) return
   game.updateTime = Date.now()
   wx.setStorageSync("currentGame", game)
@@ -279,6 +305,8 @@ function findStoredGameById(gameId) {
     currentGame &&
     (String(currentGame.id || "") === target || String(currentGame.gameId || "") === target || String(currentGame._id || "") === target)
   ) {
+    sanitizeGameTemporaryImages(currentGame)
+    wx.setStorageSync("currentGame", currentGame)
     return currentGame
   }
 
@@ -290,6 +318,8 @@ function findStoredGameById(gameId) {
         game &&
         (String(game.id || "") === target || String(game.gameId || "") === target || String(game._id || "") === target)
       ) {
+        sanitizeGameTemporaryImages(game)
+        wx.setStorageSync("games", games)
         return game
       }
     }
@@ -302,6 +332,7 @@ function findStoredGameById(gameId) {
       backedUpGame &&
       (String(backedUpGame.id || "") === target || String(backedUpGame.gameId || "") === target || String(backedUpGame._id || "") === target)
     ) {
+      sanitizeGameTemporaryImages(backedUpGame)
       if (isRecoverableOngoingGame(backedUpGame)) {
         wx.setStorageSync("currentGame", backedUpGame)
         mirrorGameToGames(backedUpGame)
@@ -337,6 +368,8 @@ function getRestoredOngoingGame() {
     if (!isRecoverableOngoingGame(currentGame)) {
       wx.removeStorageSync("currentGame")
     } else {
+      sanitizeGameTemporaryImages(currentGame)
+      wx.setStorageSync("currentGame", currentGame)
       mirrorGameToGames(currentGame)
       cloudSync.queueSync(currentGame)
       return currentGame
@@ -348,6 +381,7 @@ function getRestoredOngoingGame() {
     latest = findLatestOngoingGame(readGameFileBackups())
   }
   if (latest) {
+    sanitizeGameTemporaryImages(latest)
     wx.setStorageSync("currentGame", latest)
     mirrorGameToGames(latest)
     cloudSync.queueSync(latest)
@@ -360,6 +394,8 @@ module.exports = {
   isCompletedGame: isCompletedGame,
   isStaleOngoingGame: isStaleOngoingGame,
   isRecoverableOngoingGame: isRecoverableOngoingGame,
+  isTemporaryImageUrl: isTemporaryImageUrl,
+  sanitizeGameTemporaryImages: sanitizeGameTemporaryImages,
   getGameIds: getGameIds,
   hasCompletedMarker: hasCompletedMarker,
   markGameCompleted: markGameCompleted,

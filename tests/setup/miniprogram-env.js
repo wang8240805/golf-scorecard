@@ -65,6 +65,11 @@ global.wx = {
   navigateBack: jest.fn(),
   redirectTo: jest.fn(),
   switchTab: jest.fn(),
+  saveFile: jest.fn(function(options) {
+    options.success({
+      savedFilePath: "wxfile://usr/saved-avatar.jpg"
+    })
+  }),
   login: jest.fn(),
   authorize: jest.fn(),
   openSetting: jest.fn(),

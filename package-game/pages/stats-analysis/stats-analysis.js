@@ -1,4 +1,5 @@
 const gameCompleteness = require('../../../utils/game-completeness.js')
+const gameRecords = require('../../../utils/game-records.js')
 
 Page({
   data: {
@@ -45,8 +46,8 @@ Page({
   },
 
   loadStats() {
-    const allGames = wx.getStorageSync('games') || []
-    const games = gameCompleteness.filterUserCompletedGames(allGames)
+    const allGames = gameRecords.getStoredGames()
+    const games = gameRecords.getUserCompletedGames(allGames)
     if (games.length === 0) {
       this.setData({
         unlocks: this.buildUnlocks(0),

@@ -3,6 +3,8 @@ const { calculateDistance } = require('../../utils/geo-utils.js')
 const { formatDate } = require('../../utils/date-utils.js')
 const gameCompleteness = require('../../utils/game-completeness.js')
 const ongoingGameStorage = require('../../utils/ongoing-game-storage.js')
+const gameRecords = require('../../utils/game-records.js')
+const feedback = require('../../utils/feedback.js')
 
 Page({
   data: {
@@ -234,73 +236,8 @@ Page({
     // 懒加载：用户点击开始新比赛后，在选择球场页面加载
     if (courses.length === 0) {
       // 加载最近比赛
-      const games = wx.getStorageSync('games') || []
-      const recentGames = gameCompleteness.filterUserCompletedGames(games || [])
-        .slice()
-        .sort(function(a, b) {
-          const at = a.timestamp || a.endTime || a.createTime || 0
-          const bt = b.timestamp || b.endTime || b.createTime || 0
-          return bt - at
-        })
-        .slice(0, 2)
-        .map(game => {
-        const me = game.players?.find(p => p.isMe) || game.players?.[0]
-        // 从 statistics 或直接计算获取成绩
-        let myScore = 0
-        if (game.statistics && me && game.statistics[me.id]) {
-          myScore = game.statistics[me.id].totalScore || 0
-        } else if (me && game.scores && game.scores[me.id]) {
-          // 兼容旧数据：从 scores 直接计算
-          const scores = game.scores[me.id]
-          Object.values(scores).forEach(s => {
-            const strokes = typeof s === 'object' ? s.strokes : s
-            myScore += parseInt(strokes) || 0
-          })
-        }
-        const gameHoles = Array.isArray(game.holes) ? game.holes : []
-        const holeParMap = {}
-        gameHoles.forEach(function(h) {
-          if (h && h.hole) {
-            holeParMap[Number(h.hole)] = Number(h.par) || 4
-          }
-        })
-        let holesPlayed = 0
-        let playedPar = 0
-        if (me && game.scores && game.scores[me.id]) {
-          const myHoleScores = game.scores[me.id]
-          Object.keys(myHoleScores).forEach(function(holeKey) {
-            const holeNum = Number(holeKey)
-            const raw = myHoleScores[holeKey]
-            const strokes = typeof raw === "object" ? raw.strokes : raw
-            const parsed = parseInt(strokes) || 0
-            if (parsed > 0) {
-              holesPlayed++
-              playedPar += holeParMap[holeNum] || 4
-            }
-          })
-        }
-        const toParValue = holesPlayed > 0 ? (myScore - playedPar) : 0
-        const toParText = holesPlayed > 0 ? (toParValue === 0 ? "E" : ((toParValue > 0 ? "+" : "") + toParValue)) : "-"
-        const toParClass = holesPlayed > 0
-          ? (toParValue < 0 ? "under" : (toParValue > 0 ? "over" : "even"))
-          : "empty"
-        // 兼容老数据：使用 timestamp，如果没有则使用 endTime，如果都没有使用当前时间
-        const timestamp = game.timestamp || game.endTime || game.createTime || Date.now()
-        // 确保每个比赛都有id（兼容老数据）
-        const gameId = this.getDisplayGameId(game) || 'local_' + timestamp
-        return {
-          ...game,
-          id: gameId,
-          courseName: game.courseName || '未知球场',
-          date: formatDate(timestamp),
-          myScore: myScore > 0 ? myScore : '-',
-          holesPlayed: holesPlayed,
-          holesTotal: gameHoles.length || 18,
-          toParText: toParText,
-          toParClass: toParClass,
-          toParClassName: 'to-par-' + toParClass
-        }
-      }) // 保留所有比赛记录，分数缺失时在UI显示为“-”
+      const games = gameRecords.getStoredGames()
+      const recentGames = this.buildRecentGames(games, 2)
 
       const latestFinishedGame = this.getLatestFinishedGame(games)
       const quickStartSetup = this.buildQuickStartSetup(games)
@@ -347,7 +284,7 @@ Page({
     }
 
     // 加载最近比赛
-    const games = wx.getStorageSync('games') || []
+    const games = gameRecords.getStoredGames()
     // 去重：基于 id/timestamp 去重
     const seen = new Set()
     const uniqueGames = games.filter(game => {
@@ -360,15 +297,41 @@ Page({
       seen.add(key)
       return true
     })
-    const recentGames = gameCompleteness.filterUserCompletedGames(uniqueGames)
-      .slice()
-      .sort(function(a, b) {
-        const at = a.timestamp || a.endTime || a.createTime || 0
-        const bt = b.timestamp || b.endTime || b.createTime || 0
-        return bt - at
-      })
-      .slice(0, 2)
-      .map(game => {
+    const recentGames = this.buildRecentGames(uniqueGames, 2)
+
+    // 计算当前球场的平均杆数
+    const averageScore = this.calculateAverageScore(currentCourse?.id)
+
+    const latestFinishedGame = this.getLatestFinishedGame(uniqueGames)
+    const quickStartSetup = this.buildQuickStartSetup(uniqueGames)
+    const homeState = this.buildHomeState(recentGames, quickStartSetup, builtinCourses.length)
+
+    this.setData({
+      courses: customCourses,
+      builtinCourses,
+      currentCourse,
+      recentGames,
+      latestFinishedGame,
+      courseCount: builtinCourses.length,
+      totalPar: currentCourse?.holes?.reduce((sum, h) => sum + h.par, 0) || 0,
+      averageScore,
+      hasOngoingGame: false,
+      ongoingGame: null,
+      pageLoading: false,
+      welcomeStats: this.buildWelcomeStats(uniqueGames),
+      quickStartSetup: quickStartSetup,
+      homeReadyTitle: homeState.homeReadyTitle,
+      homeReadySubtitle: homeState.homeReadySubtitle,
+      homeShowNewUserTip: homeState.homeShowNewUserTip,
+      homeHasRecentGames: homeState.homeHasRecentGames
+    }, () => {
+      // 数据设置完成后，检查是否有进行中的比赛
+      this.checkOngoingGame()
+    })
+  },
+
+  buildRecentGames(games, limit) {
+    return gameRecords.getRecentCompletedGames(games || [], limit).map(game => {
       const me = game.players?.find(p => p.isMe) || game.players?.[0]
       // 从 statistics 或直接计算获取成绩
       let myScore = 0
@@ -425,36 +388,6 @@ Page({
         toParClass: toParClass,
         toParClassName: 'to-par-' + toParClass
       }
-    }) // 保留所有比赛记录，分数缺失时在UI显示为“-”
-
-    // 计算当前球场的平均杆数
-    const averageScore = this.calculateAverageScore(currentCourse?.id)
-
-    const latestFinishedGame = this.getLatestFinishedGame(uniqueGames)
-    const quickStartSetup = this.buildQuickStartSetup(uniqueGames)
-    const homeState = this.buildHomeState(recentGames, quickStartSetup, builtinCourses.length)
-
-    this.setData({
-      courses: customCourses,
-      builtinCourses,
-      currentCourse,
-      recentGames,
-      latestFinishedGame,
-      courseCount: builtinCourses.length,
-      totalPar: currentCourse?.holes?.reduce((sum, h) => sum + h.par, 0) || 0,
-      averageScore,
-      hasOngoingGame: false,
-      ongoingGame: null,
-      pageLoading: false,
-      welcomeStats: this.buildWelcomeStats(uniqueGames),
-      quickStartSetup: quickStartSetup,
-      homeReadyTitle: homeState.homeReadyTitle,
-      homeReadySubtitle: homeState.homeReadySubtitle,
-      homeShowNewUserTip: homeState.homeShowNewUserTip,
-      homeHasRecentGames: homeState.homeHasRecentGames
-    }, () => {
-      // 数据设置完成后，检查是否有进行中的比赛
-      this.checkOngoingGame()
     })
   },
 
@@ -475,11 +408,11 @@ Page({
   },
 
   filterUserAnalyzableGames(games) {
-    return gameCompleteness.filterUserCompletedGames(games)
+    return gameRecords.getUserCompletedGames(games)
   },
 
   buildWelcomeStats(games) {
-    const analyzableGames = gameCompleteness.filterUserCompletedGames(games || [])
+    const analyzableGames = gameRecords.getUserCompletedGames(games || [])
     const totalRounds = analyzableGames.length
     const posters = (games || []).filter(function(g) {
       return g && (g.posterGenerated || g.posterUrl)
@@ -653,7 +586,7 @@ Page({
   },
 
   loadUserStats() {
-    const games = wx.getStorageSync('games') || []
+    const games = gameRecords.getStoredGames()
 
     if (games.length === 0) {
       this.setData({
@@ -666,7 +599,7 @@ Page({
     }
 
     const scores = []
-    const validGames = gameCompleteness.filterUserCompletedGames(games)
+    const validGames = gameRecords.getUserCompletedGames(games)
 
     validGames.forEach(function(g) {
       const player = gameCompleteness.getPlayer(g)
@@ -723,7 +656,7 @@ Page({
     if (!courseId) return '-'
 
     // 从 storage 获取所有比赛记录
-    const games = wx.getStorageSync('games') || []
+    const games = gameRecords.getStoredGames()
 
     // 筛选出在该球场完成的比赛
     const courseGames = gameCompleteness.filterAnalyzableGames(games).filter(game =>
@@ -833,7 +766,7 @@ Page({
 
   // 跳转到高级数据分析页面
   goToStatsAnalysis() {
-    const games = wx.getStorageSync('games') || []
+    const games = gameRecords.getStoredGames()
     if (this.filterUserAnalyzableGames(games).length === 0) {
       wx.showToast({ title: '完成18洞后可查看数据', icon: 'none' })
       return
@@ -860,7 +793,7 @@ Page({
     }
 
     // 获取完整比赛数据
-    const games = wx.getStorageSync('games') || []
+    const games = gameRecords.getStoredGames()
     const game = this.findGameByDisplayId(games, gameId)
 
     if (!game) {
@@ -911,7 +844,7 @@ Page({
 
   // 查看比赛报告
   viewGameReport(game) {
-    const historyGames = wx.getStorageSync('games') || []
+    const historyGames = gameRecords.getStoredGames()
     const player = gameCompleteness.getPlayer(game)
     if (!player || !gameCompleteness.isPlayerRoundComplete(game, player.id)) {
       wx.showToast({ title: '完成18洞后可复盘', icon: 'none' })
@@ -956,8 +889,10 @@ Page({
 
   // 跳转到意见反馈页面
   goToFeedback() {
-    wx.navigateTo({
-      url: '/package-user/pages/feedback/feedback'
+    feedback.goToFeedback({
+      type: 'general',
+      sourcePage: 'index',
+      message: '首页反馈入口'
     })
   },
 
@@ -972,7 +907,7 @@ Page({
     }
 
     // 2) 否则进入最近一场有18洞有效成绩的复盘页
-    const games = wx.getStorageSync('games') || []
+    const games = gameRecords.getStoredGames()
     const completedGames = this.filterUserAnalyzableGames(games)
 
     if (completedGames.length === 0) {

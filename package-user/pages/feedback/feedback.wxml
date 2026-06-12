@@ -1,31 +1,72 @@
-<view class="container">
-  <view class="card">
-    <view class="section-title">意见反馈</view>
-    <view class="feedback-desc">
-      <text class="desc-text">您的建议是我们进步的动力！无论是功能建议、使用问题还是想说的话，都欢迎告诉我们。</text>
+<view class="feedback-page">
+  <view class="feedback-header">
+    <text class="header-kicker">联系 WinPAR</text>
+    <text class="header-title">告诉我们问题，也留下能联系到你的方式</text>
+    <text class="header-subtitle">手机号可一键授权；邮箱和微信号需要手动填写。</text>
+  </view>
+
+  <view class="contact-panel">
+    <view class="panel-head">
+      <text class="panel-title">联系方式</text>
+      <text class="required-tag">必填</text>
     </view>
 
-    <view class="form-group">
-      <text class="form-label">反馈内容</text>
-      <textarea class="feedback-textarea" placeholder="说说你的想法..." maxlength="500" bindinput="onContentInput" value="{{content}}"></textarea>
-      <view class="input-footer">
-        <text class="char-count">{{content.length}}/500</text>
+    <view class="contact-tabs">
+      <view
+        wx:for="{{contactOptions}}"
+        wx:key="type"
+        class="contact-tab {{contactType === item.type ? 'active' : ''}}"
+        data-type="{{item.type}}"
+        bindtap="onContactTypeTap"
+      >
+        <text>{{item.label}}</text>
       </view>
     </view>
 
-    <view class="form-group">
-      <text class="form-label">联系方式（选填）</text>
-      <input class="form-input" placeholder="手机号 / 微信 / 邮箱，方便我们联系你" bindinput="onContactInput" value="{{contact}}" />
-      <text class="contact-hint">{{contactSource || '如账号里已有手机号会自动带入，也可以手动修改'}}</text>
+    <view class="phone-auth-row" wx:if="{{contactType === 'phone'}}">
+      <button class="phone-auth-btn" open-type="getPhoneNumber" bindgetphonenumber="onGetPhoneNumber">
+        <text wx:if="{{phoneMasked}}">已授权 {{phoneMasked}}</text>
+        <text wx:else>一键授权手机号</text>
+      </button>
+      <text class="phone-auth-note">授权后会自动填入下方输入框</text>
     </view>
 
-    <button class="btn btn-primary submit-btn" bindtap="submitFeedback" disabled="{{!content}}">提交反馈</button>
+    <input
+      class="contact-input"
+      type="{{contactInputType}}"
+      placeholder="{{contactPlaceholder}}"
+      bindinput="onContactInput"
+      value="{{contact}}"
+    />
+    <text class="contact-hint">{{contactSource || '我们只会用于处理本次反馈和必要回访'}}</text>
   </view>
 
-  <!-- 感谢提示 -->
+  <view class="content-panel">
+    <view class="panel-head">
+      <text class="panel-title">反馈内容</text>
+      <text class="required-tag">必填</text>
+    </view>
+    <view class="context-strip" wx:if="{{feedbackContextText}}">
+      <text>{{feedbackContextText}}</text>
+    </view>
+    <textarea
+      class="feedback-textarea"
+      placeholder="{{contentPlaceholder}}"
+      maxlength="500"
+      bindinput="onContentInput"
+      value="{{content}}"
+    ></textarea>
+    <view class="input-footer">
+      <text class="char-count">{{content.length}}/500</text>
+    </view>
+  </view>
+
+  <button class="submit-btn" bindtap="submitFeedback" disabled="{{!content || !contact}}">
+    提交反馈
+  </button>
+
   <view class="thank-you" wx:if="{{showThanks}}">
-    <text class="thanks-icon">🙏</text>
-    <text class="thanks-text">感谢您的反馈！</text>
-    <text class="thanks-subtext">我们会认真阅读每一条建议</text>
+    <text class="thanks-text">已收到反馈</text>
+    <text class="thanks-subtext">我们会根据你留下的联系方式回访。</text>
   </view>
 </view>

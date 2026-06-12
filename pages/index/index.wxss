@@ -1901,3 +1901,11 @@
   font-size: 23rpx;
   color: #7c8981;
 }
+
+.home-feedback-link {
+  display: flex;
+  justify-content: center;
+  padding: 10rpx 0 6rpx;
+  color: #4f7e60;
+  font-size: 24rpx;
+}
